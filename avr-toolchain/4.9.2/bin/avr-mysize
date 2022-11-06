@@ -1,0 +1,63 @@
+#!/bin/tcsh
+
+# avr-mysize
+#
+# A utility used in connection with Arduino's Makefile by Sudar that was
+# based on M J Oldfield work
+#
+# Put this in a sibling directory where avr-size resides and insert a line
+#
+#   SIZE_NAME = avr-mysize
+#
+# into your project's Makefile. You'll get a history of sketch sizes in
+# the file .sizes-<type>-<name> in the current directory
+#
+# Published under GNU General Public License, version 3 (GPL-3.0)
+# author Stefan Rueger
+#
+# v 1.1
+# 18.01.2015
+
+set lst = $argv[$#argv]
+set dat = `date "+%H.%M %d.%m.%Y"`
+
+if ( $lst:q =~ "*.elf" ) then
+  set type = `dirname $lst | sed -e s/build-// -e 's/^\.$/cp/'`
+  set sizf = .sizes-$type:q-`basename $lst:q .elf`
+  set hex = $lst:r.hex
+  set hexcp = .$type:q-`basename $hex`
+
+  set comment = "unknown"
+  if ( -r $hex & ! -r $hexcp ) then
+    cp -a $hex $hexcp
+    set comment = "new"
+  else if ( -r $hex && -r $hexcp ) then
+    if ( { cmp -s $hex $hexcp } ) then
+      set comment = "unchanged"
+    else
+      set comment = "modified"
+      cp -a $hex $hexcp
+    endif
+  endif
+
+  if (! -r $sizf:q) then
+    echo " time       date   text  data   bss   dec filename" > $sizf:q
+  endif
+
+#  set add = "`avr-size $lst | tail -1 | expand | ct -f1-4,6- | sed -e's/\([0-9] \)  /\1/g' -e's/  *build/ build/'` (hex $comment)"
+  set add = "`avr-size $lst | tail -1 | cut -f1-4,6- | expand | sed 's/\([0-9] \)  /\1/g'` (hex $comment)"
+  set old = "`tail -1 $sizf:q | cut -c17-`"
+
+  # echo $add:q x >>.sss
+  # echo $old:q x >>.sss
+  if ( x$add:q != x$old:q || ($comment != "unchanged" && $comment != "unknown")) then
+    if ( x$old:q =~ "*(hex unchanged)"  ||  x$old:q =~ "*(hex unknown)" ) then
+      grep -v $old:q $sizf:q >.2$sizf:q; mv .2$sizf:q $sizf:q
+    endif
+    echo $dat$add:q >> $sizf:q
+  endif
+
+  head -1 $sizf:q; tail -n +2 $sizf:q | tail -10
+else
+  avr-size $*
+endif

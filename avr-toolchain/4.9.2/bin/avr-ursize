@@ -1,0 +1,133 @@
+#!/bin/bash
+
+# avr-ursize
+#
+# A utility used in connection with Arduino's Makefile by Sudar
+#
+# Put this in a sibling directory where avr-size resides and insert a line
+#
+#   SIZE_NAME = avr-ursize
+#
+# into your project's Makefile. You'll get a history of sketch sizes in
+# the file .sizes-<name>-<type>.txt in the current directory
+#
+# Published under GNU General Public License, version 3 (GPL-3.0)
+# author Stefan Rueger
+#
+# v 1.3
+# 18.01.2015 - 26.11.2021
+
+
+progname=`basename "$0"`
+
+# avr-ursense passes calls avr-size "$@", so need to choose own options that are invalid for avr-size
+Usage() {
+cat <<END
+Syntax: $progname [<one $progname option>] | [avr-size command line]
+Function: format output of avr-size, keep a tab in .sizes*hex and copy file.hex file to .sketch*.hex
+Options:
+    -b output base name <file>-<type> and exit
+    -c output name .sketch-<file>-<type>.hex of copied file.hex and exit
+    -s output name .sizes-<file>-<type>.txt of created size file and exit
+Note: <file> and <type> depend on the current directory and/or the file.elf argument
+END
+}
+
+elf="${@: -1}"
+dat="$(date "+%Y-%m-%d %H.%M")"
+
+opt=
+[[ $# == 1 && "$1" =~ ^-[bcsh]$ ]] && { opt=$1; elf=build-type/unknown.elf; }
+
+if [[ "$opt" == -h ]]; then
+  Usage; exit
+fi
+
+if [[ -n "$opt" || "$elf" == *.elf ]]; then
+  # identify sketch base name from the last segment of the current directory
+  base="${PWD##*/}"
+  # if that does not exist go by .ino file in directory if called with -c/-s option
+  if [[ -z "$base" && -n "$opt" ]]; then
+    nullglobcp=$(shopt -p nullglob); shopt -s nullglob
+    sketches=(*.ino)
+    $nullglobcp
+    [[ ${#sketches[@]} == 1 ]] && base=${sketches[0]%.ino}
+  fi
+  # if that does not exist and we have a .elf file go by base of that  [[ -z $base ]] && base="$(basename "$elf" .elf)"
+  [[ -z $base ]] && base=file
+
+  # find a config-what.h file that is hard-linked to config.h (the current config file) and use what as <type> identifier
+  type=
+  [[ -r config.h ]] && type=$(find . -maxdepth 1 -type f -inum "$(ls -i config.h | cut -f1 -d" ")" | cut -c3- | grep -v ^config.h$ | sort | head -1 | sed -es/^config-// -es/\.h$//)
+  # failing that: when there is an .elf file, it's the last component of dirname of .elf file (minus build-)
+  [[ -z "$opt" && -z "$type" ]] && type="$(dirname "$elf" | sed -e s/.*build-// -e 's/^\.$//')"
+  # failing that it's what of the build-what directory in the current working directory
+  if [[ -z "$type" ]]; then
+    nullglobcp=$(shopt -p nullglob); shopt -s nullglob
+    builds=(build-*)
+    $nullglobcp
+    [[ ${#builds[@]} == 1 ]] && type=${builds[0]#build-}
+  fi
+  type=${type:-type}
+
+  sizf=.sizes-"$base-$type".txt
+  hexf="${elf%.elf}.hex"
+  hexcp=.sketch-"$base-$type".hex
+
+  # just output the filenames that would have been created
+  if [[ -n "$opt" ]]; then
+    [[ $opt == -b ]] && echo "$base-$type"
+    [[ $opt == -c ]] && echo "$hexcp"
+    [[ $opt == -s ]] && echo "$sizf"
+    exit
+  fi
+
+  if [[ ! -r "$elf" ]]; then
+    echo "$progname: cannot open $elf" 1>&2
+    exit 1
+  fi
+
+  comment="unknown"
+  if [[ -r "$hexf" && ! -r "$hexcp" ]]; then
+    cp -a "$hexf" "$hexcp"
+    comment="new"
+  elif [[ -r "$hexf" && -r "$hexcp" ]]; then
+    if cmp -s "$hexf" "$hexcp"; then
+      comment="unchanged"
+    else
+      comment="modified"
+      cp -a "$hexf" "$hexcp"
+    fi
+  fi
+
+  if [[ ! -r "$sizf" ]]; then
+    echo "      date  time  flash  SRAM   text  pdata idata   bss eepr $base-$type" > "$sizf"
+  fi
+
+  declare -A mem
+  # parse detailed avr-size output into associative array mem
+  part=($(avr-size -A "$elf"))
+  for (( j=0; j<${#part[@]}; j++ )); do
+    what=${part[$j]}
+    if [[ ${what:0:1} == . ]]; then
+      mem[${what:1}]=${part[$(( $j+1 ))]}
+    fi
+  done
+
+  add=$(printf " %6d %5d %6d %6d %5d %5d %4d $elf (hex $comment)\n" $(("${mem[text]}"+"${mem[progdata]}"+"${mem[data]}")) $(("${mem[bss]}"+"${mem[data]}")) "${mem[text]}" "${mem[progdata]}" "${mem[data]}" "${mem[bss]}" "${mem[eeprom]}")
+
+  # add="$(avr-size "$elf" | tail -1 | cut -f1-4,6- | expand | sed 's/\([0-9] \)  /\1/g') (hex $comment)"
+  old="$(tail -1 "$sizf" | cut -c17-)"
+
+  if [[ "$add" != "$old" || ( "$comment" != "unchanged" && "$comment" != "unknown" ) ]]; then
+    if [[ "$old" == *"(hex unchanged)" || "$old" == *"(hex unknown)" ]]; then
+      # The following sed command removes the last line of a file
+      sed -i \$d "$sizf"
+    fi
+    echo "$dat$add" >> "$sizf"
+  fi
+
+  head -1 "$sizf"; tail -n +2 "$sizf" | tail -10
+else
+  avr-size "$@"
+fi
