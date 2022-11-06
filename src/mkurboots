@@ -1,0 +1,751 @@
+#!/bin/bash
+
+# published under GNU General Public License, version 3 (GPL-3.0)
+# author Stefan Rueger <stefan.rueger@urclocks.com>
+# 06.11.2022
+
+# Compile bootloaders for one MCU
+
+progname=$(basename $0)
+
+Usage() {
+cat <<END
+Syntax: $progname [<opt>] <mcu>
+Function: create bootloaders for the 8-bit AVR MCU <mcu> (all lower case)
+Option:
+    -b <dir>  directory in which the bootloaders are created (default bootloaders)
+    -f <fcpu> only create bootloaders for certain F_CPU values, eg, -f auto,16000000,8000000
+    -B <baud> only create bootloaders for certain baud rates, eg, -B auto,115200,38400
+    -d        dry run: show which bootloaders would be created
+END
+}
+
+run=1
+bootloaders=bootloaders
+fcpulist=""
+baudlist=""
+here=$(pwd)
+
+while getopts ":db:f:B:" opt; do
+  case ${opt} in
+    b) bootloaders=$OPTARG
+        ;;
+    f) fcpulist=$OPTARG
+        ;;
+    B) baudlist=$OPTARG
+        ;;
+    d) run=0
+        ;;
+    --) shift;
+        break
+        ;;
+   \?) echo "Invalid option: $OPTARG" 1>&2
+       Usage 1>&2; exit 1
+       ;;
+   : ) echo "Invalid option: $OPTARG requires an argument" 1>&2
+       Usage 1>&2; exit 1
+       ;;
+  esac
+done
+shift $((OPTIND -1))
+
+if [ $# != 1 ]; then Usage 1>&2; exit 1; fi
+
+mcu="$1"
+
+
+####
+# Set out for which targets, F_CPUs, baud rates and I/O lines (for SW I/O) to compile
+#
+
+####
+# Baud rate and F_CPU combinations
+#
+
+# Map F_CPU to baud rates: compile for these combinations
+# (Some are redundant as 16 MHz @ 115200 baud is the same as 8 MHz @ 57600 baud)
+declare -A baud
+
+baud[auto]=auto
+baud[24000000]=1000000/500000/250000/230400/115200/57600/38400/19200
+baud[22118400]=460800/230400/115200/57600/38400/19200
+baud[20000000]=500000/250000/115200/19200
+baud[18432000]=460800/230400/115200/57600/38400/19200/9600
+baud[16000000]=1000000/500000/250000/115200/38400/19200/9600
+baud[14745600]=460800/230400/115200/57600/38400/19200/9600
+baud[12000000]=500000/250000/115200/57600/19200/9600
+baud[11059200]=460800/230400/115200/57600/38400/19200/9600
+baud[8000000]=1000000/500000/250000/115200/57600/38400/19200/9600
+baud[7372800]=460800/230400/115200/57600/38400/19200/9600
+baud[4000000]=500000/250000/19200/9600
+baud[3686400]=460800/230400/115200/57600/38400/19200/9600
+baud[2000000]=250000/19200/9600
+baud[1843200]=230400/115200/57600/38400/19200/9600
+baud[1000000]=9600
+
+# Remove computation for F_CPU values not mentioned in -f
+if [[ -n $fcpulist ]]; then
+  readarray -d , -t flist <<<$fcpulist
+  declare -A fcpuok
+  for ff in ${flist[@]}; do
+     fcpuok[$ff]=1;
+  done
+  for fcpu in ${!baud[@]}; do
+     if [[ -z ${fcpuok[$fcpu]} ]]; then
+       unset baud[$fcpu]
+     fi
+  done
+fi
+
+# Create list of -B baud rates
+declare -A baudok
+if [[ -n $baudlist ]]; then
+  readarray -d , -t blist <<<$baudlist
+  for bb in ${blist[@]}; do
+     baudok[$bb]=1
+  done
+fi
+
+# for fcpu in ${!baud[@]}; do
+#   readarray -d / -t bauds <<<${baud[$fcpu]}
+#   for b in ${bauds[@]}; do
+#     if [[ -n $baudlist && -z ${baudok[$b]} ]]; then
+#       continue
+#     fi
+#     echo $fcpu/$b
+#   done
+# done
+# exit
+
+# Problematic combinations for USART (high baud rate error)
+declare -A nousart
+
+nousart[8000000/115200]=1
+
+# Baud rate too fast/slow for SWIO
+declare -A noswio
+
+noswio[16000000/1000000]=1
+noswio[8000000/1000000]=1
+noswio[8000000/500000]=1
+noswio[7372800/460800]=1
+noswio[4000000/500000]=1
+noswio[4000000/250000]=1
+noswio[3686400/460800]=1
+noswio[3686400/230400]=1
+noswio[2000000/250000]=1
+noswio[1843200/230400]=1
+noswio[1843200/115200]=1
+
+noswio[18432000/9600]=1
+noswio[16000000/9600]=1
+
+
+####
+# Known boards
+#
+
+# At least generate a template bootloader (with placeholder nops)
+board=none:TEMPLATE=1
+
+# Various boards have the LED on different pins, some low active
+if [[ $mcu == atmega328p ]]; then
+  board+=/urclock,timeduino,jeenode:LEDPOLARITY=-1_LED=AtmelPB1
+  board+=/anarduino,moteino:LED=AtmelPB1
+  board+=/urclockusb:LED=AtmelPD5
+  board+=/ursense:LEDPOLARITY=-1_LED=AtmelPD5
+  board+=/uno,rbbb,promini:LED=AtmelPB5
+  board+=/dual:TEMPLATE=1_DUAL=1
+  board+=/urclock,timeduino:LEDPOLARITY=-1_LED=AtmelPB1_SFMCS=AtmelPB0_DUAL=1
+  board+=/anarduino:LED=AtmelPB1_SFMCS=AtmelPD5_DUAL=1
+  board+=/moteino:LED=AtmelPB1_SFMCS=AtmelPB0_DUAL=1
+  board+=/urclockusb:LED=AtmelPD5_SFMCS=AtmelPB0_DUAL=1
+  board+=/ursense:LEDPOLARITY=-1_LED=AtmelPD5_SFMCS=AtmelPB0_DUAL=1
+fi
+if [[ $mcu == attiny85 ]]; then
+  board+=/digispark:LED=AtmelPB1
+fi
+if [[ $mcu == attiny88 ]]; then
+  board+=/mh-tiny:LED=AtmelPB0
+fi
+if [[ $mcu == attiny167 ]]; then
+  board+=/digispark-pro:LED=AtmelPB1
+fi
+if [[ $mcu == attiny84 ]]; then
+  board+=/luminet:LED=AtmelPA4
+fi
+if [[ $mcu == atmega1284p ]]; then
+  board+=/bobuino,mighty1284,wildfire-v2:LED=AtmelPB7
+  board+=/wildfire:LED=AtmelPB5
+  board+=/moteinomega:LED=AtmelPD7
+  board+=/urclockmega:LED=AtmelPC7
+  board+=/dual:TEMPLATE=1_DUAL=1
+  board+=/moteinomega:LED=AtmelPD7_SFMCS=AtmelPC7_DUAL=1
+  board+=/urclockmega:LED=AtmelPC7_SFMCS=AtmelPB3_DUAL=1
+fi
+if [[ $mcu == atmega644p ]]; then
+  board+=/sanguino:LED=AtmelPB0
+fi
+if [[ $mcu == atmega2560 ]]; then
+  board+=/mega-r3:LED=AtmelPB7
+fi
+if [[ $mcu == atmega1280 ]]; then
+  board+=/mega1280:LED=AtmelPB7
+fi
+
+
+####
+# I/O pins for MCUs without USART for software I/O
+#
+declare -A swio
+
+# Generally, we don't know which lines are used by a board for SWIO, but cater for known boards
+swio[attiny84]="SWIO=1 RX=AtmelPA3 TX=AtmelPA2"  # Luminet
+swio[attiny85]="SWIO=1 RX=AtmelPB4 TX=AtmelPB3"  # Digispark
+swio[attiny167]="SWIO=1 RX=AtmelPB6 TX=AtmelPB3" # Digispark Pro
+swio[attiny88]="SWIO=1 RX=AtmelPD7 TX=AtmelPD6"  # MH Tiny
+
+# Unknown I/O: set RX=B0 and TX=B1 but this vvv unlikely what you want!
+
+# Parts with ATDF that do not have an USART
+
+mcusnousart=(at90pwm1 at90pwm161 at90pwm81 ata5272 ata5505 ata5700m322 ata5702m322 ata5781 \
+  ata5782 ata5783 ata5787 ata5790 ata5790n ata5791 ata5795 ata5831 ata5832 ata5833 ata5835 \
+  ata6285 ata6286 ata6612c ata6613c ata6614q ata6616c ata6617c ata664251 ata8210 ata8215 ata8510 \
+  ata8515 atmega16hva atmega16hvb atmega16hvbrevb atmega16m1 atmega32c1 atmega32hvb \
+  atmega32hvbrevb atmega32m1 atmega406 atmega64c1 atmega64hve2 atmega64m1 atmega8hva attiny10 \
+  attiny11 attiny12 attiny13 attiny13a attiny15 attiny167 attiny20 attiny24 attiny24a attiny25 \
+  attiny26 attiny261 attiny261a attiny28 attiny4 attiny40 attiny43u attiny44 attiny44a attiny45 \
+  attiny461 attiny461a attiny48 attiny5 attiny84 attiny84a attiny85 attiny861 attiny861a attiny87 \
+  attiny88 attiny9)
+
+# Manually added
+mcusnousart+=(ata6289 atmega16hva2 atmega64hve)
+
+for part in ${mcusnousart[@]}; do
+  [[ -z ${swio[$part]} ]] && swio[$part]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+done
+
+
+####
+# Some intell about parts in general
+#
+
+####
+# MCUs with known HW bootloader support
+#
+blmcus=(at90can128 at90can32 at90can64 at90pwm1 at90pwm161 at90pwm2 at90pwm216 at90pwm2b \
+  at90pwm3 at90pwm316 at90pwm3b at90pwm81 at90scr100 at90usb1286 at90usb1287 at90usb162 \
+  at90usb646 at90usb647 at90usb82 ata5782 ata5790 ata5790n ata5791 ata5795 ata5831 ata6285 \
+  ata6286 ata6289 ata6612c ata6613c ata6614q ata8210 ata8510 atmega128 atmega1280 atmega1281 \
+  atmega1284 atmega1284p atmega1284rfr2 atmega128a atmega128rfa1 atmega128rfr2 atmega16 \
+  atmega1608 atmega1609 atmega161 atmega162 atmega163 atmega164a atmega164p atmega164pa atmega165 \
+  atmega165a atmega165p atmega165pa atmega168 atmega168a atmega168p atmega168pa atmega168pb \
+  atmega169 atmega169a atmega169p atmega169pa atmega16a atmega16hvb atmega16hvbrevb atmega16m1 \
+  atmega16u2 atmega16u4 atmega2560 atmega2561 atmega2564rfr2 atmega256rfr2 atmega32 atmega3208 \
+  atmega3209 atmega323 atmega324a atmega324p atmega324pa atmega325 atmega3250 atmega3250a \
+  atmega3250p atmega3250pa atmega325a atmega325p atmega325pa atmega328 atmega328p atmega328pb \
+  atmega329 atmega3290 atmega3290a atmega3290p atmega3290pa atmega329a atmega329p atmega329pa \
+  atmega32a atmega32c1 atmega32hvb atmega32hvbrevb atmega32m1 atmega32u2 atmega32u4 atmega32u6 \
+  atmega406 atmega4808 atmega4809 atmega64 atmega640 atmega644 atmega644a atmega644p atmega644pa \
+  atmega644rfr2 atmega645 atmega6450 atmega6450a atmega6450p atmega645a atmega645p atmega649 \
+  atmega6490 atmega6490a atmega6490p atmega649a atmega649p atmega64a atmega64c1 atmega64hve \
+  atmega64hve2 atmega64m1 atmega64rfr2 atmega8 atmega808 atmega809 atmega8515 atmega8535 atmega88 \
+  atmega88a atmega88p atmega88pa atmega88pb atmega8a atmega8u2 attiny1604 attiny1606 attiny1607 \
+  attiny1614 attiny1616 attiny1617 attiny202 attiny204 attiny212 attiny214 attiny3214 attiny3216 \
+  attiny3217 attiny402 attiny404 attiny406 attiny412 attiny414 attiny416 attiny417 attiny804 \
+  attiny806 attiny807 attiny814 attiny816 attiny817 attiny828 atxmega128a1 atxmega128a1u \
+  atxmega128a3 atxmega128a3u atxmega128a4u atxmega128b1 atxmega128b3 atxmega128c3 atxmega128d3 \
+  atxmega128d4 atxmega16a4 atxmega16a4u atxmega16c4 atxmega16d4 atxmega16e5 atxmega192a3 \
+  atxmega192a3u atxmega192c3 atxmega192d3 atxmega256a3 atxmega256a3b atxmega256a3bu atxmega256a3u \
+  atxmega256c3 atxmega256d3 atxmega32a4 atxmega32a4u atxmega32c3 atxmega32c4 atxmega32d3 \
+  atxmega32d4 atxmega32e5 atxmega384c3 atxmega384d3 atxmega64a1 atxmega64a1u atxmega64a3 \
+  atxmega64a3u atxmega64a4u atxmega64b1 atxmega64b3 atxmega64c3 atxmega64d3 atxmega64d4 \
+  atxmega8e5)
+
+# Set ${hwboot[$part]} iff $part is known to have HW bootloader support
+declare -A hwboot
+for part in ${blmcus[@]}; do hwboot[$part]=1; done
+
+
+####
+# USART IO pins (some are missing)
+#
+declare -A usartio
+
+# From ATDFs are here
+usartio[at90can128]="RX=AtmelPD2 TX=AtmelPD3"
+usartio[at90can32]="RX=AtmelPD2 TX=AtmelPD3"
+usartio[at90can64]="RX=AtmelPD2 TX=AtmelPD3"
+usartio[atmega1280]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega1281]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega1284p]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega1284]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega128a]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega128]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega1608]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[atmega1609]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[atmega164a]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega164pa]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega164p]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega168a]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega168pa]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega168pb]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega168p]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega168]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega169a]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega169pa]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega169p]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega16a]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega16]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega16u2]="RX=AtmelPD2 TX=AtmelPD3"
+usartio[atmega16u4]="RX=AtmelPD2 TX=AtmelPD3"
+usartio[atmega2560]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega2561]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega3208]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[atmega3209]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[atmega324a]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega324pa]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega324pb]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega324p]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega328pb]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega328p]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega328]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega329pa]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega329p]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega329]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega32a]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega32]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega32u2]="RX=AtmelPD2 TX=AtmelPD3"
+usartio[atmega32u4]="RX=AtmelPD2 TX=AtmelPD3"
+usartio[atmega4808]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[atmega4809]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[atmega48a]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega48pa]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega48pb]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega48p]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega48]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega640]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega644a]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega644pa]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega644p]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega644]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega649a]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega649p]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega649]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega64a]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega64]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega808]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[atmega809]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[atmega88a]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega88pa]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega88pb]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega88p]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega88]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega8a]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega8]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega8u2]="RX=AtmelPD2 TX=AtmelPD3"
+usartio[attiny102]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny104]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny1604]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny1606]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny1607]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny1614]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny1616]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny1617]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny1624]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny1626]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny1627]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny202]="RX=AtmelPA7 TX=AtmelPA6"
+usartio[attiny204]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny212]="RX=AtmelPA7 TX=AtmelPA6"
+usartio[attiny214]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny3216]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny3217]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny3224]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny3226]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny3227]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny402]="RX=AtmelPA7 TX=AtmelPA6"
+usartio[attiny404]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny406]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny412]="RX=AtmelPA7 TX=AtmelPA6"
+usartio[attiny414]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny416auto]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny416]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny417]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny424]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny426]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny427]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny441]="RX=AtmelPA4 TX=AtmelPA5"
+usartio[attiny804]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny806]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny807]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny814]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny816]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny817]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny824]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny826]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny827]="RX=AtmelPB3 TX=AtmelPB2"
+usartio[attiny841]="RX=AtmelPA4 TX=AtmelPA5"
+usartio[atxmega128a1u]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega128a3u]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega128a4u]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega128b1]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega128b3]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega128c3]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega128d3]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega128d4]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega16a4u]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega16c4]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega16d4]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega16e5]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega192a3u]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega192d3]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega256a3bu]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega256a3u]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega256c3]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega256d3]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega32a4u]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega32c3]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega32c4]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega32d3]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega32d4]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega32e5]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega384c3]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega384d3]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega64a1u]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega64a3u]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega64a4u]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega64b1]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega64b3]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega64c3]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega64d3]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega64d4]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[atxmega8e5]="RX=AtmelPC2 TX=AtmelPC3"
+usartio[avr128da28]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr128da32]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr128da48]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr128da64]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr128db28]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr128db32]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr128db48]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr128db64]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr16dd14]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr16dd20]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr16dd28]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr16dd32]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr32da28]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr32da32]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr32da48]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr32db28]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr32db32]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr32db48]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr32dd14]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr32dd20]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr32dd28]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr32dd32]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64da28]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64da32]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64da48]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64da64]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64db28]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64db32]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64db48]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64db64]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64dd14]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64dd20]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64dd28]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64dd32]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64ea28]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64ea32]="RX=AtmelPA1 TX=AtmelPA0"
+usartio[avr64ea48]="RX=AtmelPA1 TX=AtmelPA0"
+
+# Manually added
+usartio[atmega1284rfr2]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega128rfa1]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega128rfr2]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega161]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega162]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega163]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega165]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega165a]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega165p]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega165pa]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega169]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega2564rfr2]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega256rfr2]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega323]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega325]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega3250]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega3250a]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega3250p]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega3250pa]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega325a]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega325p]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega325pa]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega3290]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega3290a]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega3290p]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega3290pa]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega329a]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega644rfr2]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega645]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega6450]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega6450a]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega6450p]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega645a]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega645p]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega6490]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega6490a]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega6490p]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega64rfr2]="RX=AtmelPE0 TX=AtmelPE1"
+usartio[atmega8515]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[atmega8535]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[attiny1634]="RX=AtmelPA7 TX=AtmelPB0"
+usartio[attiny2313]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[attiny2313a]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[attiny4313]="RX=AtmelPD0 TX=AtmelPD1"
+usartio[attiny828]="RX=AtmelPC2 TX=AtmelPC3"
+
+
+####
+# Put human readable F_CPU into variable fcpunm
+#
+mkfcpunm() {
+  local frq=$1;
+  if [[ "$frq" == auto ]]; then
+    :
+  elif [[ ${#1} > 6 ]]; then
+    frq=${1%??????}mhz${1:${#1}-6:6}
+    frq=${frq%000}; frq=${frq%00}; frq=${frq%0}
+  elif  [[ ${#1} > 3 ]]; then
+    frq=${1%???}khz${1:0:${#1}-3}
+    frq=${frq%00}; frq=${frq%0}
+  fi
+  fcpunm=$frq
+}
+
+####
+# Construct a global variable filename for the basename of the bootloader
+#
+mkfilename() {
+  local cfg=$8
+  [[ "$cfg" == TEMPLATE=1 ]] && cfg=_lednop
+  [[ "$cfg" == TEMPLATE=1_DUAL=1 ]] && cfg=_template_dual
+  cfg=${cfg/LEDPOLARITY=-1_LED=AtmelP/_led-}; cfg=${cfg/LED=AtmelP/_led+}
+  cfg=${cfg/_SFMCS=AtmelP/_cs}
+  cfg=${cfg/_DUAL=1/_dual}
+  cfg=${cfg,,}
+  local swio=$9; swio=${swio/SWIO=1/}
+  swio=${swio/ RX=AtmelP/_rx}; swio=${swio/ TX=AtmelP/_tx}; swio=${swio,,}
+
+  if [[ $2 == auto ]]; then
+    filename=urboot_$1_autobaud$swio
+  else
+    filename=urboot_$1_$2_$3bps$swio
+  fi
+  [[ $5 -eq 1 ]] && filename+=_ee
+  # Do not makes LEDs part of filename for FRILLS=0
+  [[ $7 -eq 0 ]] || filename+=$cfg
+#  # But use _dual when on FRILLS=0
+#  [[ $7 -eq 0 && $cfg == *_dual* ]] && filename+=$cfg
+  [[ $7 -eq 6 ]] && filename+=_fr
+  [[ $7 -eq 7 ]] && filename+=_fr_ce
+  [[ $6 -eq 1 ]] && filename+=_ur
+  [[ $4 -eq 1 ]] && filename+=_vbl
+}
+
+
+declare -A duplicate
+declare -A hexuse
+declare -A hexprotect
+declare -A hexassoc
+declare -A hexdirs
+
+[[ $run == 1 ]] && mkdir -p "$bootloaders/$mcu"
+for fcpu in ${!baud[@]}; do
+  mkfcpunm $fcpu
+
+  readarray -d / -t bauds <<<${baud[$fcpu]}
+  for b in ${bauds[@]}; do
+    if [[ -n $baudlist && -z ${baudok[$b]} ]]; then
+      continue
+    fi
+
+    io="${swio[$mcu]}"        # Empty when USART is available and used
+    if [[ $b == auto && -z ${usartio[$mcu]} ]]; then # autobaud only works with USART where RX is known
+      continue;
+    fi
+    # USART experiences too high baud rate error for this F_CPU/baud combo
+    if [[ -z "$io" && "${nousart[$fcpu/$b]}" -eq 1 ]]; then
+      if [[ -n "${usartio[$mcu]}" ]]; then
+        io="SWIO=1 ${usartio[$mcu]}" # Switch to SWIO instead of using the USART
+      else
+        continue              # Don't know the IO lines of the USART: bail
+      fi
+    fi
+    # SWIO cannot deal with certain F_CPU/baud rate combos
+    if [[ -n "$io" && "${noswio[$fcpu/$b]}" -eq 1 ]]; then
+      continue
+    fi
+    if [[ $b == auto ]]; then
+      dir="$bootloaders/$mcu/autobaud"
+      fcpu=16000000
+    else
+      dir="$bootloaders/$mcu/fcpu_$fcpunm/${b}_bps"
+    fi
+    if [[ $b == auto ]]; then
+      br=AUTOBAUD=1
+    else
+      br=BAUD_RATE=$b
+    fi
+
+    for ur in 0 1; do
+      # Only generate STK500 bootloaders ($ur = 0) for MCUs that have HW boot sections
+      if [[ $ur -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
+        continue;
+      fi
+
+      for ee in 0 1; do
+
+        readarray -d / -t brd <<<$board
+        for bb in ${brd[@]}; do
+          bcfg=${bb#*:}
+          bname=${bb%:*}
+
+          for vbl in 0 1; do
+            # Don't generate hardware-supported bootloaders (vbl=0) for MCUs that don't have HW boot sections
+            if [[ $vbl -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
+              continue;
+            fi
+            # Don't generate vector boot loaders for STK500 protocol
+            if [[ $vbl -eq 1 && $ur -eq 0 ]]; then
+              continue;
+            fi
+
+            hexname=()
+            for f in 0 1 6 7; do
+              if [[ $f -eq 0 && $bname != none ]]; then
+                continue
+              fi
+              if [[ $ee -eq 0 && $f -gt 7 ]]; then
+                continue;
+              fi
+
+              mkfilename $mcu $fcpunm $b $vbl $ee $ur $f "$bcfg" "$io"
+              args="MCU=$mcu F_CPU=${fcpu}L $br $io VBL=$vbl EEPROM=$ee ${bcfg//_/ } URPROTOCOL=$ur FRILLS=$f MOVETO=$filename"
+              if [[ $run -eq 1 ]]; then
+                make $args >& $filename.out
+                if [[ -r $filename.hex ]]; then
+                  hexname+=("$filename")
+                  hexlsout=($(hexls $filename.hex))
+                  hexuse[$filename]=${hexlsout[1]}
+                  hexprotect[$filename]=${hexlsout[3]:5:1} # p or P
+                else
+                  echo warning compilation for $filename failed
+                fi
+              else
+                echo make $args
+                # echo "$dir/$filename.hex"
+                if [[ -n ${duplicate[$filename]} ]]; then
+                  echo duplicate $filename ${duplicate[$filename]}
+                  echo duplicate $filename $args
+                else
+                  duplicate[$filename]="$args"
+                fi
+              fi
+            done
+            if [[ $run -eq 1 ]]; then
+              # Delete bootloaders of same size that have fewer features and same protection
+              for (( i=0; i<${#hexname[@]}-1; i++ )); do
+                if [[ ${hexuse[${hexname[$i]}]} -ge ${hexuse[${hexname[$i+1]}]} ]]; then
+                  if [[ ${hexprotect[${hexname[$i]}]} == ${hexprotect[${hexname[$i+1]}]} ]]; then
+                    rm "${hexname[$i]}".{lst,elf,hex,out}
+                  fi
+                fi
+              done
+              for hxn in ${hexname[@]}; do
+                if [[ -r $hxn.hex ]]; then
+                  hexassoc[$hxn]="$dir/$hxn"
+                  if [[ -z ${hexdirs[$dir]} ]]; then
+                    mkdir -p "$dir"
+                    hexdirs[$dir]=1
+                  fi
+                  mv $hxn.{hex,out,elf,lst} "$dir/"
+                  readarray -d , -t brdali <<<$bname
+                  for ba in ${brdali[@]}; do
+                    if [[ $ba != none && $ba != dual ]]; then
+                      # Make bootloader available under board names, too
+                      badir=${dir/$mcu/board_$ba}
+                      banam=${hxn/$mcu/$ba}
+                      if [[ -z ${hexdirs[$badir]} ]]; then
+                        mkdir -p $badir
+                        hexdirs[$badir]=1
+                      fi
+                      hexassoc[$hxn]+="|$badir/$banam"
+                      for ext in hex out elf lst; do
+                        ln -f $dir/$hxn.$ext $badir/$banam.$ext
+                      done
+                    fi
+                  done
+                fi
+              done
+            fi
+          done
+        done
+      done
+    done
+  done
+done
+
+if [[ $run -eq 1 ]]; then
+  # Remove all non _ee bootloaders that have the same usage as the _ee ones and the same protection
+  todel=()
+  for hxn in "${!hexassoc[@]}"; do
+    if [[ $hxn == *_ee_* ]]; then
+      hxnoee=${hxn//_ee/}
+      if [[ -n ${hexassoc[$hxnoee]} ]]; then
+        if [[ ${hexuse[$hxn]} -le ${hexuse[$hxnoee]} ]]; then
+          if [[ ${hexprotect[$hxn]} == ${hexprotect[$hxnoee]} ]]; then
+            readarray -d \| -t torm <<<${hexassoc[$hxnoee]}
+            for tormfn in ${torm[@]}; do
+              rm $tormfn.{hex,lst,elf,out}
+            done
+            todel+=($hxnoee)
+          fi
+        fi
+      fi
+    fi
+  done
+  for torm in ${todel[@]}; do
+    unset hexassoc[$torm]
+  done
+
+  # Remove all _vbl bootloaders that have the same usage as non _vbl ones (protection might differ)
+  todel=()
+  for hxvbl in "${!hexassoc[@]}"; do
+    if [[ $hxvbl == *_vbl* ]]; then
+      hxhard=${hxvbl//_vbl/}
+      if [[ -n ${hexassoc[$hxhard]} ]]; then
+        if [[ ${hexuse[$hxhard]} -le ${hexuse[$hxvbl]} ]]; then
+          readarray -d \| -t torm <<<${hexassoc[$hxvbl]}
+          for tormfn in ${torm[@]}; do
+            rm $tormfn.{hex,lst,elf,out}
+          done
+          todel+=($hxhard)
+        fi
+      fi
+    fi
+  done
+  for torm in ${todel[@]}; do
+    unset hexassoc[$torm]
+  done
+
+  # Generate the README.md files
+  for dir in "${!hexdirs[@]}"; do
+    cd "$dir"
+    "$here/hexls" -sort -md "https://raw.githubusercontent.com/stefanrueger/urboot/main/$dir" *.hex >README.md
+    cd "$here"
+  done
+  hash cmpls 2>/dev/null && cmpls -p $bootloaders/$mcu | grep \\.hex >>/tmp/equivalent-hex-files.txt
+fi

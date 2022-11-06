@@ -1,0 +1,28 @@
+The urboot project was written by:
+
+	Stefan Rueger <stefan.rueger@urclocks.com>
+
+For minor contributions, please see the git log files.
+
+Acknowledgements. At some point in 2016 this project took optiboot as a
+basis and rewrote it over the years in the quest for functionality,
+reliability and, most importantly, space savings. Like the ship of Theseus
+it has had virtually all of its original constructs replaced. It is fair
+to say that without optiboot, and in particular Bill Westfield's work,
+this project would never have happened. Therefore the acknowledgements
+from 2016's optiboot are carried over:
+
+The code builds on [the following work]
+ - stk500boot.c          by Jason P. Kyle
+ - Arduino bootloader    http://arduino.cc
+ - Spiff's 1K bootloader [link no longer working]
+ - avr-libc project      [https://github.com/avrdudes/avr-libc]
+ - Adaboot               [http://www.ladyada.net]
+ - AVR305                Atmel Application Note
+
+Copyright 2013-2015 by Bill Westfield
+Copyright 2010 by Peter Knight
+
+--
+
+Copyright 2016-2022 by Stefan Rueger

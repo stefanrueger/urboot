@@ -1,0 +1,11 @@
+prefix=/home/jenkins/jenkins/jobs/toolchain-avr-3.4.3-linux64/workspace/objdir
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libusb-1.0
+Description: C API for USB device access from Linux, Mac OS X, Windows and OpenBSD/NetBSD userspace
+Version: 1.0.18
+Libs: -L${libdir} -lusb-1.0
+Libs.private: -lrt  -pthread
+Cflags: -I${includedir}/libusb-1.0
