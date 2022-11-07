@@ -69,7 +69,10 @@ host/laptop/PC (without a physical programmer), eg, through
 Voila!
 
 **Comparison.** The table below lists a sample of `urboot` bootloaders and their features alongside
-vanilla optiboot:
+vanilla optiboot. They are all for a 16 MHz MCU and 115200 baud serial communication speed, except
+where noted differently. Note that the USART on an 8 MHz ATmega328P cannot produce 115200 baud
+within a 2.5% tolerance. The examples shown use software I/O that allows for a finer baud
+granularity.
 
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
@@ -98,8 +101,8 @@ vanilla optiboot:
 |460|512|u7.6|`wes-hpr`|[atmega328p_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/atmega328p_16mhz_115200bps_ee_led+b5_fr_ce.hex)|
 |460|512|u7.6|`wes-hpr`|[atmega328p_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/atmega328p_16mhz_115200bps_ee_lednop_fr_ce.hex)|
 |474|512|o8.3|`?-s-h?r`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/all/optiboot_atmega328.hex)|
-|490|512|u7.6|`weudhpr`|[atmega328p_16mhz_115200bps_ee_led+b1_csb0_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/atmega328p_16mhz_115200bps_ee_led+b1_csb0_fr_ce_ur.hex)|
-|498|512|u7.6|`weudhpr`|[atmega328p_16mhz_115200bps_ee_lednop_csnop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/atmega328p_16mhz_115200bps_ee_lednop_csnop_fr_ce_ur.hex)|
+|490|512|u7.6|`weudhpr`|[atmega328p_ee_led+b1_csb0_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/atmega328p_16mhz_115200bps_ee_led+b1_csb0_fr_ce_ur.hex)|
+|498|512|u7.6|`weudhpr`|[atmega328p_ee_lednop_csnop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/atmega328p_16mhz_115200bps_ee_lednop_csnop_fr_ce_ur.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of MCU flash are needed, ie, HW boot section or a multiple of the page size
@@ -118,7 +121,7 @@ vanilla optiboot:
   + `rxd0 txd1` software I/O using, in this example, lines RX `D0` and TX `D1`
   + `ee` bootloader supports EEPROM read/write
   + `led-b1` toggles an active-low LED on pin `B1`, `+` designates an active-high LED
-  + `lednop` "template" bootloader contains `mov rx,rx` nops that can be replaced to toggle LEDs
+  + `lednop` template bootloader contains `mov rx,rx` nops that can be replaced to toggle LEDs
   + `csb0` for dual boot uses, in this example, pin B0 as chip select of external SPI flash memory
   + `csnop` like `lednop` generates nops that can be replaced to toggle the correct CS pin
   + `fr` bootloader provides non-essential code for smoother error handing
