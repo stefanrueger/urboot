@@ -54,11 +54,19 @@ $ avrdude -c usbasp -p m328p -U flash:w:bootloader.hex:i
 Particular attention is needed as to whether
  - The bootloader assumes hardware support (`h`, see below) and sits in a dedicated HW boot
    section, in which case the fuses need to be set to ensure that on reset the MCU jumps to the
-   correct HW boot section, or whether
+   correct bootloader start and that the lock bits do not preclude writing to the boot sections
+   (otherwise this space cannot be used), or whether
  - The bootloader is a vector bootloader (`j`, `v` or `V`, see below), in which case the fuses need
-   to be programmed so that on reset the MCU jumps to the reset vector 0.
+   to be programmed so that on reset the MCU jumps to the reset vector 0. Strictly speaking vector
+   bootloaders also need a `jmp` or `rjmp` from the reset vector at address 0 to the bootloader.
+   However, if the chip was erased before putting the bootloader on, then this is not necessary:
+   Erased words read `0xffff`, and although this is not an official opcode, it behaves as `sbrs
+   r31,7` (skip one instruction if bit 7 in R31 is set). A reset to address 0 on an otherwise
+   erased flash will therefore eventually run into the start of the bootloader. Uploading the first
+   sketch with `avrdude -c urboot` will then set the reset vector correctly to jump to the
+   bootloader.
 
-Then the board can be directly connected to and prgrammed from the
+Once the board has its bootloader it can be directly connected to and programmed from the
 host/laptop/PC (without a physical programmer), eg, through
 ```
  $ avrdude -c urclock -p m328p -b 115200 -P /dev/ttyUSB0 -U flash:w:mysketch.hex:i
@@ -67,6 +75,9 @@ host/laptop/PC (without a physical programmer), eg, through
 ```
 
 Voila!
+
+**Fun fact.** `avrdude -c urclock` can keep bootloaders in terminal mode `-t` without the
+bootloader resetting itself through the watchdocg timer.
 
 **Comparison.** The table below lists a sample of `urboot` bootloaders and their features alongside
 vanilla optiboot. They are all for a 16 MHz MCU and 115200 baud serial communication speed, except
