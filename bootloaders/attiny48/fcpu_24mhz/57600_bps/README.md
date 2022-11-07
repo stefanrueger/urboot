@@ -1,17 +1,17 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|248|256|u7.6|`w-u-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/attiny48_24mhz_57600bps_rxb0_txb1_ur_vbl.hex)|
-|254|256|u7.6|`w-u-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/attiny48_24mhz_57600bps_rxb0_txb1_lednop_ur_vbl.hex)|
-|310|320|u7.6|`weu-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/attiny48_24mhz_57600bps_rxb0_txb1_ee_ur_vbl.hex)|
-|316|320|u7.6|`weu-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
-|334|384|u7.6|`weu-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
-|346|384|u7.6|`w-s-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/attiny48_24mhz_57600bps_rxb0_txb1_vbl.hex)|
-|352|384|u7.6|`w-s-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/attiny48_24mhz_57600bps_rxb0_txb1_lednop_vbl.hex)|
-|362|384|u7.6|`weu-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
-|398|448|u7.6|`wes-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/attiny48_24mhz_57600bps_rxb0_txb1_ee_vbl.hex)|
-|404|448|u7.6|`wes-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_vbl.hex)|
-|434|448|u7.6|`wes-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_vbl.hex)|
-|472|512|u7.6|`wes-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_ce_vbl.hex)|
+|248|256|u7.6|`w-u-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_24mhz/57600_bps/attiny48_24mhz_57600bps_rxb0_txb1_ur_vbl.hex)|
+|254|256|u7.6|`w-u-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_24mhz/57600_bps/attiny48_24mhz_57600bps_rxb0_txb1_lednop_ur_vbl.hex)|
+|310|320|u7.6|`weu-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_24mhz/57600_bps/attiny48_24mhz_57600bps_rxb0_txb1_ee_ur_vbl.hex)|
+|316|320|u7.6|`weu-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_24mhz/57600_bps/attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
+|334|384|u7.6|`weu-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_24mhz/57600_bps/attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
+|346|384|u7.6|`w-s-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_24mhz/57600_bps/attiny48_24mhz_57600bps_rxb0_txb1_vbl.hex)|
+|352|384|u7.6|`w-s-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_24mhz/57600_bps/attiny48_24mhz_57600bps_rxb0_txb1_lednop_vbl.hex)|
+|362|384|u7.6|`weu-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_24mhz/57600_bps/attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|398|448|u7.6|`wes-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_24mhz/57600_bps/attiny48_24mhz_57600bps_rxb0_txb1_ee_vbl.hex)|
+|404|448|u7.6|`wes-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_24mhz/57600_bps/attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_vbl.hex)|
+|434|448|u7.6|`wes-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_24mhz/57600_bps/attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_vbl.hex)|
+|472|512|u7.6|`wes-jpr`|[attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_24mhz/57600_bps/attiny48_24mhz_57600bps_rxb0_txb1_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Useage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

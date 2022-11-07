@@ -1,29 +1,29 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|236|256|u7.6|`w-u-jpr`|[at90scr100_4mhz_500000bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ur_vbl.hex)|
-|242|256|u7.6|`w-u-jpr`|[at90scr100_4mhz_500000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_lednop_ur_vbl.hex)|
-|236|512|u7.6|`w-u-hpr`|[at90scr100_4mhz_500000bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ur.hex)|
-|242|512|u7.6|`w-u-hpr`|[at90scr100_4mhz_500000bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_lednop_ur.hex)|
-|298|512|u7.6|`weu-hpr`|[at90scr100_4mhz_500000bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_ur.hex)|
-|298|512|u7.6|`weu-jpr`|[at90scr100_4mhz_500000bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_ur_vbl.hex)|
-|304|512|u7.6|`weu-hpr`|[at90scr100_4mhz_500000bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_lednop_ur.hex)|
-|304|512|u7.6|`weu-jpr`|[at90scr100_4mhz_500000bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_lednop_ur_vbl.hex)|
-|322|512|u7.6|`weu-hpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_lednop_fr_ur.hex)|
-|322|512|u7.6|`weu-jpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_lednop_fr_ur_vbl.hex)|
-|330|512|u7.6|`w-s-hpr`|[at90scr100_4mhz_500000bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps.hex)|
-|330|512|u7.6|`w-s-jpr`|[at90scr100_4mhz_500000bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_vbl.hex)|
-|336|512|u7.6|`w-s-hpr`|[at90scr100_4mhz_500000bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_lednop.hex)|
-|336|512|u7.6|`w-s-jpr`|[at90scr100_4mhz_500000bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_lednop_vbl.hex)|
-|348|512|u7.6|`weu-hpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_lednop_fr_ce_ur.hex)|
-|348|512|u7.6|`weu-jpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|386|512|u7.6|`wes-hpr`|[at90scr100_4mhz_500000bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee.hex)|
-|386|512|u7.6|`wes-jpr`|[at90scr100_4mhz_500000bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_vbl.hex)|
-|392|512|u7.6|`wes-hpr`|[at90scr100_4mhz_500000bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_lednop.hex)|
-|392|512|u7.6|`wes-jpr`|[at90scr100_4mhz_500000bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_lednop_vbl.hex)|
-|422|512|u7.6|`wes-hpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_lednop_fr.hex)|
-|422|512|u7.6|`wes-jpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_lednop_fr_vbl.hex)|
-|462|512|u7.6|`wes-hpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_lednop_fr_ce.hex)|
-|462|512|u7.6|`wes-jpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/at90scr100_4mhz_500000bps_ee_lednop_fr_ce_vbl.hex)|
+|236|256|u7.6|`w-u-jpr`|[at90scr100_4mhz_500000bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ur_vbl.hex)|
+|242|256|u7.6|`w-u-jpr`|[at90scr100_4mhz_500000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_lednop_ur_vbl.hex)|
+|236|512|u7.6|`w-u-hpr`|[at90scr100_4mhz_500000bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ur.hex)|
+|242|512|u7.6|`w-u-hpr`|[at90scr100_4mhz_500000bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_lednop_ur.hex)|
+|298|512|u7.6|`weu-hpr`|[at90scr100_4mhz_500000bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_ur.hex)|
+|298|512|u7.6|`weu-jpr`|[at90scr100_4mhz_500000bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_ur_vbl.hex)|
+|304|512|u7.6|`weu-hpr`|[at90scr100_4mhz_500000bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_lednop_ur.hex)|
+|304|512|u7.6|`weu-jpr`|[at90scr100_4mhz_500000bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_lednop_ur_vbl.hex)|
+|322|512|u7.6|`weu-hpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_lednop_fr_ur.hex)|
+|322|512|u7.6|`weu-jpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_lednop_fr_ur_vbl.hex)|
+|330|512|u7.6|`w-s-hpr`|[at90scr100_4mhz_500000bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps.hex)|
+|330|512|u7.6|`w-s-jpr`|[at90scr100_4mhz_500000bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_vbl.hex)|
+|336|512|u7.6|`w-s-hpr`|[at90scr100_4mhz_500000bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_lednop.hex)|
+|336|512|u7.6|`w-s-jpr`|[at90scr100_4mhz_500000bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_lednop_vbl.hex)|
+|348|512|u7.6|`weu-hpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_lednop_fr_ce_ur.hex)|
+|348|512|u7.6|`weu-jpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|386|512|u7.6|`wes-hpr`|[at90scr100_4mhz_500000bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee.hex)|
+|386|512|u7.6|`wes-jpr`|[at90scr100_4mhz_500000bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_vbl.hex)|
+|392|512|u7.6|`wes-hpr`|[at90scr100_4mhz_500000bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_lednop.hex)|
+|392|512|u7.6|`wes-jpr`|[at90scr100_4mhz_500000bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_lednop_vbl.hex)|
+|422|512|u7.6|`wes-hpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_lednop_fr.hex)|
+|422|512|u7.6|`wes-jpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_lednop_fr_vbl.hex)|
+|462|512|u7.6|`wes-hpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_lednop_fr_ce.hex)|
+|462|512|u7.6|`wes-jpr`|[at90scr100_4mhz_500000bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90scr100/fcpu_4mhz/500000_bps/at90scr100_4mhz_500000bps_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Useage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
