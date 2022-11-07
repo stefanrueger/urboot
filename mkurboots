@@ -2,41 +2,54 @@
 
 # published under GNU General Public License, version 3 (GPL-3.0)
 # author Stefan Rueger <stefan.rueger@urclocks.com>
-# 03.11.2022
+# 06.11.2022
+
+# Compile bootloaders for one MCU
+
+progname=$(basename $0)
+
+Usage() {
+cat <<END
+Syntax: $progname [<opt>] <mcu>
+Function: create bootloaders for the 8-bit AVR MCU <mcu> (all lower case)
+Option:
+    -b <dir> directory in which the bootloaders are created (default bootloaders)
+    -d       dry run: show which bootloaders would be created
+END
+}
+
+run=1
+bootloaders=bootloaders
+here=$(pwd)
+
+while getopts ":db:" opt; do
+  case ${opt} in
+    b) bootloaders=$OPTARG
+        ;;
+    d) run=0
+        ;;
+    --) shift;
+        break
+        ;;
+   \?) echo "Invalid option: $OPTARG" 1>&2
+       Usage 1>&2; exit 1
+       ;;
+   : ) echo "Invalid option: $OPTARG requires an argument" 1>&2
+       Usage 1>&2; exit 1
+       ;;
+  esac
+done
+shift $((OPTIND -1))
+
+if [ $# != 1 ]; then Usage 1>&2; exit 1; fi
+
+mcu="$1"
 
 
 ####
 # Set out for which targets, F_CPUs, baud rates and I/O lines (for SW I/O) to compile
 #
 
-####
-# MCUs for which to compile bootloaders
-#
-
-mcus=(at90can128 at90can32 at90can64 at90pwm1 at90pwm161 at90pwm2 at90pwm216 at90pwm2b \
-  at90pwm3 at90pwm316 at90pwm3b at90pwm81 at90scr100 at90usb1286 at90usb1287 at90usb162 \
-  at90usb646 at90usb647 at90usb82 ata5272 ata5505 ata5702m322 ata5782 ata5790 ata5790n ata5791 \
-  ata5795 ata5831 ata6285 ata6286 ata6289 ata6612c ata6613c ata6614q ata6616c ata6617c ata664251 \
-  ata8210 ata8510 atmega128 atmega1280 atmega1281 atmega1284 atmega1284p atmega1284rfr2 \
-  atmega128a atmega128rfa1 atmega128rfr2 atmega16 atmega161 atmega162 atmega163 atmega164a \
-  atmega164p atmega164pa atmega165 atmega165a atmega165p atmega165pa atmega168 atmega168a \
-  atmega168p atmega168pa atmega168pb atmega169 atmega169a atmega169p atmega169pa atmega16a \
-  atmega16hva atmega16hva2 atmega16hvb atmega16hvbrevb atmega16m1 atmega16u2 atmega16u4 \
-  atmega2560 atmega2561 atmega2564rfr2 atmega256rfr2 atmega32 atmega323 atmega324a atmega324p \
-  atmega324pa atmega325 atmega3250 atmega3250a atmega3250p atmega3250pa atmega325a atmega325p \
-  atmega325pa atmega328 atmega328p atmega328pb atmega329 atmega3290 atmega3290a atmega3290p \
-  atmega3290pa atmega329a atmega329p atmega329pa atmega32a atmega32c1 atmega32hvb atmega32hvbrevb \
-  atmega32m1 atmega32u2 atmega32u4 atmega32u6 atmega406 atmega48 atmega48a atmega48p atmega48pa \
-  atmega48pb atmega64 atmega640 atmega644 atmega644a atmega644p atmega644pa atmega644rfr2 \
-  atmega645 atmega6450 atmega6450a atmega6450p atmega645a atmega645p atmega649 atmega6490 \
-  atmega6490a atmega6490p atmega649a atmega649p atmega64a atmega64c1 atmega64hve atmega64hve2 \
-  atmega64m1 atmega64rfr2 atmega8 atmega8515 atmega8535 atmega88 atmega88a atmega88p atmega88pa \
-  atmega88pb atmega8a atmega8hva atmega8u2 attiny13 attiny13a attiny1634 attiny167 attiny2313 \
-  attiny2313a attiny24 attiny24a attiny25 attiny261 attiny261a attiny4313 attiny43u attiny44 \
-  attiny441 attiny44a attiny45 attiny461 attiny461a attiny48 attiny828 attiny84 attiny841 \
-  attiny84a attiny85 attiny861 attiny861a attiny87 attiny88)
-
- 
 ####
 # Baud rate and F_CPU combinations
 #
@@ -86,29 +99,44 @@ noswio[16000000/9600]=1
 
 
 ####
-# LED pins to compile for
+# Known boards
 #
-declare -A led
 
-# At least generate a template bootloader (placeholder nops for switching LEDs)
-for i in ${mcus[@]}; do led[$i]=TEMPLATE=1; done
+# At least generate a template bootloader (with placeholder nops)
+board=none:TEMPLATE=1
 
 # Various boards have the LED on different pins, some low active
-led[atmega328p]+=/LEDPOLARITY=-1_LED=AtmelPB1 # Urclock UrclockMini Timeduino Jeenode
-led[atmega328p]+=/LEDPOLARITY=-1_LED=AtmelPD5 # Ursense
-led[atmega328p]+=/LED=AtmelPD5  # UrclockUSB
-led[atmega328p]+=/LED=AtmelPB1  # Anarduino Moteino ProMini_LED9
-led[atmega328p]+=/LED=AtmelPB5  # Uno RBBB ProMini
-led[attiny85]+=/LED=AtmelPB1    # Digispark
-led[attiny167]+=/LED=AtmelPB1   # Digispark Pro
-led[attiny84]+=/LED=AtmelPA4    # Luminet
-led[atmega1284p]+=/LED=AtmelPB7 # Bobuino, Mighty1284, Wildfire v2
-led[atmega1284p]+=/LED=AtmelPB5 # Wildfire
-led[atmega1284p]+=/LED=AtmelPD7 # MoteinoMega
-led[atmega1284p]+=/LED=AtmelPC7 # UrclockMega
-led[atmega644p]+=/LED=AtmelPB0  # Sanguino
-led[atmega2560]+=/LED=AtmelPB7  # Mega
-led[atmega1280]+=/LED=AtmelPB7  # board?
+if [ $mcu = atmega328p ]; then
+  board+=/anarduino,moteino:LED=AtmelPB1
+  board+=/urclock,timeduino,jeenode:LEDPOLARITY=-1_LED=AtmelPB1
+  board+=/urclockusb:LED=AtmelPD5
+  board+=/ursense:LEDPOLARITY=-1_LED=AtmelPD5
+  board+=/uno,rbbb,promini:LED=AtmelPB5
+fi
+if [ $mcu = attiny85 ]; then
+board+=/digispark:LED=AtmelPB1
+fi
+if [ $mcu = attiny167 ]; then
+board+=/digispark-pro:LED=AtmelPB1
+fi
+if [ $mcu = attiny84 ]; then
+board+=/luminet:LED=AtmelPA4
+fi
+if [ $mcu = atmega1284p ]; then
+board+=/bobuino,mighty1284,wildfire-v2:LED=AtmelPB7
+board+=/wildfire:LED=AtmelPB5
+board+=/moteinomega:LED=AtmelPD7
+board+=/urclockmega:LED=AtmelPC7
+fi
+if [ $mcu = atmega644p ]; then
+board+=/sanguino:LED=AtmelPB0
+fi
+if [ $mcu = atmega2560 ]; then
+board+=/mega-r3:LED=AtmelPB7
+fi
+if [ $mcu = atmega1280 ]; then
+board+=/mega1280:LED=AtmelPB7
+fi
 
 
 ####
@@ -132,8 +160,8 @@ mcusnousart=(at90pwm1 at90pwm161 at90pwm81 ata5272 ata5505 ata5700m322 ata5702m3
   attiny261a attiny28 attiny4 attiny40 attiny43u attiny44 attiny44a attiny45 attiny461 attiny461a \
   attiny48 attiny5 attiny84 attiny84a attiny85 attiny861 attiny861a attiny87 attiny88 attiny9)
 
-for mcu in ${mcusnousart[@]}; do
-  [[ -z ${swio[$mcu]} ]] && swio[$mcu]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+for part in ${mcusnousart[@]}; do
+  [[ -z ${swio[$part]} ]] && swio[$part]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 done
 
 
@@ -173,9 +201,9 @@ blmcus=(at90can128 at90can32 at90can64 at90pwm1 at90pwm161 at90pwm2 at90pwm216 a
   atxmega64a3u atxmega64a4u atxmega64b1 atxmega64b3 atxmega64c3 atxmega64d3 atxmega64d4 \
   atxmega8e5)
 
-# Set ${hwboot[$mcu]} iff $mcu is known to have HW bootloader support
+# Set ${hwboot[$part]} iff $part is known to have HW bootloader support
 declare -A hwboot
-for mcu in ${blmcus[@]}; do hwboot[$mcu]=1; done
+for part in ${blmcus[@]}; do hwboot[$part]=1; done
 
 
 ####
@@ -389,14 +417,16 @@ mkfcpuname() {
 # Construct a global variable filename for the basename of the bootloader
 #
 mkfilename() {
-  local led=$8; [ "$led" = TEMPLATE=1 ] && led=_lednop;
-  led=${led/LEDPOLARITY=-1_LED=/_led-}; led=${led/LED=/_led+}; led=${led/AtmelP/}; led=${led,,}
+  local cfg=$8; [ "$cfg" = TEMPLATE=1 ] && cfg=_lednop;
+  cfg=${cfg/LEDPOLARITY=-1_LED=AtmelP/_led-}; cfg=${cfg/LED=AtmelP/_led+};
+  cfg=${cfg/_SFMCS=AtmelP/_cs}; cfg=${cfg,,}
+  cfg=${cfg,,}
   local swio=$9; swio=${swio/SWIO=1/};
   swio=${swio/ RX=AtmelP/_rx}; swio=${swio/ TX=AtmelP/_tx}; swio=${swio,,}
 
   filename=$1_$2_$3bps$swio
   [[ $5 -eq 1 ]] && filename+=_ee
-  [[ $f -eq 0 ]] || filename+=$led
+  [[ $7 -eq 0 ]] || filename+=$cfg
   [[ $7 -eq 6 ]] && filename+=_fr
   [[ $7 -eq 7 ]] && filename+=_fr_ce
   [[ $6 -eq 1 ]] && filename+=_ur
@@ -404,56 +434,55 @@ mkfilename() {
 }
 
 
-# Todo: parallise the top loop over mcu to speed up execution
-for mcu in ${mcus[@]}; do
-  mkdir -p bootloaders/$mcu
-  for fcpu in ${!baud[@]}; do
-    mkfcpuname $fcpu
-    mkdir -p bootloaders/$mcu/fcpu_$fcpuname
-    readarray -d / -t bauds <<<${baud[$fcpu]}
-    for b in ${bauds[@]}; do
-      io="${swio[$mcu]}"        # Empty when USART is available and used
-      # USART experiences too high baud rate error for this F_CPU/baud combo
-      if [[ -z "$io" && "${nousart[$fcpu/$b]}" -eq 1 ]]; then
-        if [[ -n "${usartio[$mcu]}" ]]; then
-          io="${usartio[$mcu]}" # Switch to SWIO instead of using the USART
-        else
-          continue              # Don't know the IO lines of the USART: bail
-        fi
+[[ $run == 1 ]] && mkdir -p "$bootloaders/$mcu"
+for fcpu in ${!baud[@]}; do
+  mkfcpuname $fcpu
+  [[ $run == 1 ]] && mkdir -p "$bootloaders/$mcu/fcpu_$fcpuname"
+  readarray -d / -t bauds <<<${baud[$fcpu]}
+  for b in ${bauds[@]}; do
+    io="${swio[$mcu]}"        # Empty when USART is available and used
+    # USART experiences too high baud rate error for this F_CPU/baud combo
+    if [[ -z "$io" && "${nousart[$fcpu/$b]}" -eq 1 ]]; then
+      if [[ -n "${usartio[$mcu]}" ]]; then
+        io="${usartio[$mcu]}" # Switch to SWIO instead of using the USART
+      else
+        continue              # Don't know the IO lines of the USART: bail
       fi
-      # SWIO cannot deal with certain F_CPU/baud rate combos
-      if [[ -n "$io" && "${noswio[$fcpu/$b]}" -eq 1 ]]; then
-        continue
-      fi
-      dir=bootloaders/$mcu/fcpu_$fcpuname/${b}_bps
-      mkdir -p $dir
-      for vbl in 0 1; do
-         # Some MCUs don't have HW boot setcions (vbl=0): don't generate these bl
-         if [[ $vbl -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
-           continue;
-         fi
-         for ur in 0 1; do
-           readarray -d / -t leds <<<${led[$mcu]}
-           for f in 0 1 6 7; do
-             for ee in 0 1; do
-               if [[ $ee -eq 0 && $f -gt 1 ]]; then
-                 continue;
-               fi
-               for l in ${leds[@]}; do
-                 mkfilename $mcu $fcpuname $b $vbl $ee $ur $f $l "$io"
-                 make MCU=$mcu F_CPU=${fcpu}L BAUD_RATE=$b $io VBL=$vbl EEPROM=$ee ${l/_/ } URPROTOCOL=$ur FRILLS=$f MOVETO=$filename >& $filename.out
-                 mv $filename.{hex,out,elf,lst} $dir/
-                 if [[ $f -eq 0 ]]; then
-                   break
-                 fi
-               done
-             done
+    fi
+    # SWIO cannot deal with certain F_CPU/baud rate combos
+    if [[ -n "$io" && "${noswio[$fcpu/$b]}" -eq 1 ]]; then
+      continue
+    fi
+    dir="$bootloaders/$mcu/fcpu_$fcpuname/${b}_bps"
+    [[ $run == 1 ]] && mkdir -p "$dir"
+    for ur in 0 1; do
+      readarray -d / -t brd <<<$board
+      for f in 0 1 6 7; do
+        for ee in 0 1; do
+          if [[ $ee -eq 0 && $f -gt 1 ]]; then
+            continue;
+          fi
+          for bb in ${brd[@]}; do
+            bcfg=${bb#*:}; bname=${bb%:*}
+            for vbl in 0 1; do
+              # Some MCUs don't have HW boot setcions (vbl=0): don't generate these bl
+              if [[ $vbl -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
+                continue;
+              fi
+              mkfilename $mcu $fcpuname $b $vbl $ee $ur $f "$bcfg" "$io"
+              [[ $run == 1 ]] && make MCU=$mcu F_CPU=${fcpu}L BAUD_RATE=$b $io VBL=$vbl EEPROM=$ee ${bcfg/_/ } URPROTOCOL=$ur FRILLS=$f MOVETO=$filename >& $filename.out
+              [[ $run == 1 ]] && mv $filename.{hex,out,elf,lst} "$dir/"
+              [[ $run == 0 ]] && echo "$dir/$filename.hex"
+            done
+            if [[ $f -eq 0 ]]; then
+              break
+            fi
           done
         done
       done
-      cd $dir
-      ../../../../hexls -sort -md "https://raw.githubusercontent.com/stefanrueger/urboot/main/$dir" *.hex >README.md
-      cd ../../../..
     done
+    [[ $run == 1 ]] && cd "$dir"
+    [[ $run == 1 ]] && "$here/hexls" -sort -md "https://raw.githubusercontent.com/stefanrueger/urboot/main/$dir" *.hex >README.md
+    [[ $run == 1 ]] && cd "$here"
   done
 done

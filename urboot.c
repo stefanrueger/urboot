@@ -661,6 +661,10 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
 #define VBL            VBL_NONE
 #endif
 
+#if defined(SFMCS) || defined(LED)
+#define TEMPLATE 0
+#endif
+
 #if (defined(BLINK) && BLINK) || (!defined(BLINK) && defined(FRILLS) && FRILLS >= 1)
 #if !defined(LED) && !defined(TEMPLATE)
 #define TEMPLATE              1

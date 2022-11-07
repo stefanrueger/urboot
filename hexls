@@ -33,7 +33,7 @@ END_USAGE
 my ($version, $check, $srt, $md, $l, $c, $t, $title, $in, $disthex, $vers, $distelf, $pgmwriteaddr, $addrlst);
 my (@rows, $siz, $use, $ver, $fea, $nam, %legend);
 
-my %feature = ( # These strings contain a figure space U+2007 just before the first backtick
+my %feature = (
   'w'      => "  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`\n",
   'e'      => "  + `e` EEPROM read/write support\n",
   'u'      => "  + `u` uses urprotocol requiring `avrdude -c urclock` for programming\n",
@@ -54,9 +54,11 @@ my %feature = ( # These strings contain a figure space U+2007 just before the fi
   'ee'     => "  + `ee` bootloader supports EEPROM read/write\n",
   'led-b1' => "  + `led-b1` toggles an active-low LED on pin `B1`, `+` designates an active-high LED\n",
   'led9'   => "  + `led9` toggles an LED on, in this example, Arduino pin 9\n",
+  'ledPB1' => "  + `ledPB1` toggles an LED on, in this example, pin B1\n",
   'lednop' => "  + `lednop` \"template\" bootloader contains `mov rx,rx` nops that can be replaced to toggle LEDs\n",
   'csb0'   => "  + `csb0` for dual boot uses, in this example, pin B0 as chip select of external SPI flash memory\n",
   'cs8'    => "  + `cs8` for dual boot uses, in this example, Arduino pin 8 as chip select of external SPI flash memory\n",
+  'csPB0'  => "  + `csPB0` for dual boot uses, in this example, pin B0 as chip select of external SPI flash memory\n",
   'csnop'  => "  + `csnop` like `lednop` generates nops that can be replaced to toggle the correct CS pin\n",
   'fr'     => "  + `fr` bootloader provides non-essential code for smoother error handing\n",
   'ce'     => "  + `ce` bootloader provides a chip erase command\n",
@@ -78,11 +80,13 @@ sub f {
     $legend{swio} = 1 if $name =~ /_swio[_.]/;
     $legend{ee} = 1 if $name =~ /_ee[_.]/;
     $legend{'led-b1'} = 1 if $name =~ /_led[+-][a-z][0-7][_.]/;
+    $legend{'ledPB1'} = 1 if $name =~ /_led[+-]P[A-Z][0-7][_.]/;
     $legend{lednop} = 1 if $name =~ /_lednop[_.]/;
     $legend{led9} = 1 if $name =~ /_led[0-9]+[_.]/;
     $legend{csb0} = 1 if $name =~ /_cs[a-z][0-7][_.]/;
     $legend{csnop} = 1 if $name =~ /_csnop[_.]/;
     $legend{cs8} = 1 if $name =~ /_cs[0-9]+[_.]/;
+    $legend{csPB0} = 1 if $name	=~ /_csP[A-Z][0-7][_.]/;
     $legend{fp9} = 1 if $name =~ /_fp[0-9]+[_.]/;
     $legend{fr} = 1 if $name =~ /_fr[_.]/;
     $legend{ce} = 1 if $name =~ /_ce[_.]/;
@@ -253,7 +257,7 @@ if(!$check) {
      "- **Features:**\n";
      print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p r ? .));
      print "- **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by\n";
-     print $feature{$_} for grep { $legend{$_} } (qw(swio swiorx ee led-b1 led9 lednop csb0 cs8 csnop fp9 fr ce ur ddd v2 v3 vbl min));
+     print $feature{$_} for grep { $legend{$_} } (qw(swio swiorx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB1 csnop fp9 fr ce ur ddd v2 v3 vbl min));
   }
 }
 
