@@ -1,18 +1,19 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|230|256|u7.6|`w-u-jpr`|[atmega48p_3mhz6864_460800bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_3mhz6864/460800_bps/atmega48p_3mhz6864_460800bps_ur_vbl.hex)|
-|236|256|u7.6|`w-u-jpr`|[atmega48p_3mhz6864_460800bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_3mhz6864/460800_bps/atmega48p_3mhz6864_460800bps_lednop_ur_vbl.hex)|
-|254|256|u7.6|`w-u-jpr`|[atmega48p_3mhz6864_460800bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_3mhz6864/460800_bps/atmega48p_3mhz6864_460800bps_lednop_fr_ur_vbl.hex)|
-|292|320|u7.6|`weu-jpr`|[atmega48p_3mhz6864_460800bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_3mhz6864/460800_bps/atmega48p_3mhz6864_460800bps_ee_ur_vbl.hex)|
-|298|320|u7.6|`weu-jpr`|[atmega48p_3mhz6864_460800bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_3mhz6864/460800_bps/atmega48p_3mhz6864_460800bps_ee_lednop_ur_vbl.hex)|
-|316|320|u7.6|`weu-jpr`|[atmega48p_3mhz6864_460800bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_3mhz6864/460800_bps/atmega48p_3mhz6864_460800bps_ee_lednop_fr_ur_vbl.hex)|
-|328|384|u7.6|`w-s-jpr`|[atmega48p_3mhz6864_460800bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_3mhz6864/460800_bps/atmega48p_3mhz6864_460800bps_vbl.hex)|
-|334|384|u7.6|`w-s-jpr`|[atmega48p_3mhz6864_460800bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_3mhz6864/460800_bps/atmega48p_3mhz6864_460800bps_lednop_vbl.hex)|
-|344|384|u7.6|`weu-jpr`|[atmega48p_3mhz6864_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_3mhz6864/460800_bps/atmega48p_3mhz6864_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|380|384|u7.6|`wes-jpr`|[atmega48p_3mhz6864_460800bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_3mhz6864/460800_bps/atmega48p_3mhz6864_460800bps_ee_vbl.hex)|
-|386|448|u7.6|`wes-jpr`|[atmega48p_3mhz6864_460800bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_3mhz6864/460800_bps/atmega48p_3mhz6864_460800bps_ee_lednop_vbl.hex)|
-|416|448|u7.6|`wes-jpr`|[atmega48p_3mhz6864_460800bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_3mhz6864/460800_bps/atmega48p_3mhz6864_460800bps_ee_lednop_fr_vbl.hex)|
-|454|512|u7.6|`wes-jpr`|[atmega48p_3mhz6864_460800bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_3mhz6864/460800_bps/atmega48p_3mhz6864_460800bps_ee_lednop_fr_ce_vbl.hex)|
+|230|256|u7.6|`w-u-jpr`|[atmega48p_3mhz6864_460800bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_ur_vbl.hex)|
+|236|256|u7.6|`w-u-jpr`|[atmega48p_3mhz6864_460800bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_lednop_ur_vbl.hex)|
+|254|256|u7.6|`w-u-jpr`|[atmega48p_3mhz6864_460800bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_lednop_fr_ur_vbl.hex)|
+|292|320|u7.6|`weu-jpr`|[atmega48p_3mhz6864_460800bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_ee_ur_vbl.hex)|
+|298|320|u7.6|`weu-jpr`|[atmega48p_3mhz6864_460800bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_ee_lednop_ur_vbl.hex)|
+|316|320|u7.6|`weu-jpr`|[atmega48p_3mhz6864_460800bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_ee_lednop_fr_ur_vbl.hex)|
+|328|384|u7.6|`w-s-jpr`|[atmega48p_3mhz6864_460800bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_vbl.hex)|
+|334|384|u7.6|`w-s-jpr`|[atmega48p_3mhz6864_460800bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_lednop_vbl.hex)|
+|344|384|u7.6|`weu-jpr`|[atmega48p_3mhz6864_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|368|384|u7.6|`w-s-jpr`|[atmega48p_3mhz6864_460800bps_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_lednop_fr_vbl.hex)|
+|380|384|u7.6|`wes-jpr`|[atmega48p_3mhz6864_460800bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_ee_vbl.hex)|
+|386|448|u7.6|`wes-jpr`|[atmega48p_3mhz6864_460800bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_ee_lednop_vbl.hex)|
+|416|448|u7.6|`wes-jpr`|[atmega48p_3mhz6864_460800bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_ee_lednop_fr_vbl.hex)|
+|454|512|u7.6|`wes-jpr`|[atmega48p_3mhz6864_460800bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega48p_3mhz6864_460800bps_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Useage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

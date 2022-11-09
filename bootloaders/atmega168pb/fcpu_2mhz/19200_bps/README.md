@@ -1,29 +1,33 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|240|256|u7.6|`w-u-hpr`|[atmega168pb_2mhz_19200bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ur.hex)|
-|240|256|u7.6|`w-u-jpr`|[atmega168pb_2mhz_19200bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ur_vbl.hex)|
-|246|256|u7.6|`w-u-hpr`|[atmega168pb_2mhz_19200bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_lednop_ur.hex)|
-|246|256|u7.6|`w-u-jpr`|[atmega168pb_2mhz_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_lednop_ur_vbl.hex)|
-|306|384|u7.6|`weu-jpr`|[atmega168pb_2mhz_19200bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_ur_vbl.hex)|
-|312|384|u7.6|`weu-jpr`|[atmega168pb_2mhz_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_lednop_ur_vbl.hex)|
-|330|384|u7.6|`weu-jpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_lednop_fr_ur_vbl.hex)|
-|338|384|u7.6|`w-s-jpr`|[atmega168pb_2mhz_19200bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_vbl.hex)|
-|344|384|u7.6|`w-s-jpr`|[atmega168pb_2mhz_19200bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_lednop_vbl.hex)|
-|358|384|u7.6|`weu-jpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|302|512|u7.6|`weu-hpr`|[atmega168pb_2mhz_19200bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_ur.hex)|
-|308|512|u7.6|`weu-hpr`|[atmega168pb_2mhz_19200bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_lednop_ur.hex)|
-|326|512|u7.6|`weu-hpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_lednop_fr_ur.hex)|
-|334|512|u7.6|`w-s-hpr`|[atmega168pb_2mhz_19200bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps.hex)|
-|340|512|u7.6|`w-s-hpr`|[atmega168pb_2mhz_19200bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_lednop.hex)|
-|354|512|u7.6|`weu-hpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_lednop_fr_ce_ur.hex)|
-|390|512|u7.6|`wes-hpr`|[atmega168pb_2mhz_19200bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee.hex)|
-|390|512|u7.6|`wes-jpr`|[atmega168pb_2mhz_19200bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_vbl.hex)|
-|396|512|u7.6|`wes-hpr`|[atmega168pb_2mhz_19200bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_lednop.hex)|
-|396|512|u7.6|`wes-jpr`|[atmega168pb_2mhz_19200bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_lednop_vbl.hex)|
-|426|512|u7.6|`wes-hpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_lednop_fr.hex)|
-|426|512|u7.6|`wes-jpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_lednop_fr_vbl.hex)|
-|468|512|u7.6|`wes-hpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_lednop_fr_ce.hex)|
-|468|512|u7.6|`wes-jpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/fcpu_2mhz/19200_bps/atmega168pb_2mhz_19200bps_ee_lednop_fr_ce_vbl.hex)|
+|240|256|u7.6|`w-u-hpr`|[atmega168pb_2mhz_19200bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ur.hex)|
+|240|256|u7.6|`w-u-jpr`|[atmega168pb_2mhz_19200bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ur_vbl.hex)|
+|246|256|u7.6|`w-u-hpr`|[atmega168pb_2mhz_19200bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_lednop_ur.hex)|
+|246|256|u7.6|`w-u-jpr`|[atmega168pb_2mhz_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_lednop_ur_vbl.hex)|
+|268|384|u7.6|`w-u-jpr`|[atmega168pb_2mhz_19200bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_lednop_fr_ur_vbl.hex)|
+|306|384|u7.6|`weu-jpr`|[atmega168pb_2mhz_19200bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_ur_vbl.hex)|
+|312|384|u7.6|`weu-jpr`|[atmega168pb_2mhz_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_lednop_ur_vbl.hex)|
+|330|384|u7.6|`weu-jpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_lednop_fr_ur_vbl.hex)|
+|338|384|u7.6|`w-s-jpr`|[atmega168pb_2mhz_19200bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_vbl.hex)|
+|344|384|u7.6|`w-s-jpr`|[atmega168pb_2mhz_19200bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_lednop_vbl.hex)|
+|358|384|u7.6|`weu-jpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|378|384|u7.6|`w-s-jpr`|[atmega168pb_2mhz_19200bps_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_lednop_fr_vbl.hex)|
+|264|512|u7.6|`w-u-hpr`|[atmega168pb_2mhz_19200bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_lednop_fr_ur.hex)|
+|302|512|u7.6|`weu-hpr`|[atmega168pb_2mhz_19200bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_ur.hex)|
+|308|512|u7.6|`weu-hpr`|[atmega168pb_2mhz_19200bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_lednop_ur.hex)|
+|326|512|u7.6|`weu-hpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_lednop_fr_ur.hex)|
+|334|512|u7.6|`w-s-hpr`|[atmega168pb_2mhz_19200bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps.hex)|
+|340|512|u7.6|`w-s-hpr`|[atmega168pb_2mhz_19200bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_lednop.hex)|
+|354|512|u7.6|`weu-hpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_lednop_fr_ce_ur.hex)|
+|374|512|u7.6|`w-s-hpr`|[atmega168pb_2mhz_19200bps_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_lednop_fr.hex)|
+|390|512|u7.6|`wes-hpr`|[atmega168pb_2mhz_19200bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee.hex)|
+|390|512|u7.6|`wes-jpr`|[atmega168pb_2mhz_19200bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_vbl.hex)|
+|396|512|u7.6|`wes-hpr`|[atmega168pb_2mhz_19200bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_lednop.hex)|
+|396|512|u7.6|`wes-jpr`|[atmega168pb_2mhz_19200bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_lednop_vbl.hex)|
+|426|512|u7.6|`wes-hpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_lednop_fr.hex)|
+|426|512|u7.6|`wes-jpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_lednop_fr_vbl.hex)|
+|468|512|u7.6|`wes-hpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_lednop_fr_ce.hex)|
+|468|512|u7.6|`wes-jpr`|[atmega168pb_2mhz_19200bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega168pb_2mhz_19200bps_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Useage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

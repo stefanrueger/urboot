@@ -19,7 +19,7 @@
        with code to operate the right LED/TX/RX/CS pins (see accompanying urloader sketch once published)
      + Saves the reset flags in R2 for inspection by the application via the .init0 section (default on)
      + Bootloader protects itself from overwriting (default on)
- - Avrdude supports urboot bootloaders with `-c urclock` from v7.2
+ - Avrdude supports urboot bootloaders with `-c urclock` from v7.1
 
 **Documentation.** In the first instance, the first 600 or so lines of `urboot.c` give a good
 insight.
@@ -29,10 +29,10 @@ of the trade, most of which only work with the avr-gcc toolchain used for compil
 that two older avr-toolchains, version 4.8.1 or 5.4.0, produce pretty tight code. Linux binaries of
 these are located in the `avr-toolchain` directory. This project uses helper programs in perl: an
 avr-gcc wrapper `urboot-gcc` and `hexls` that shows stats of the produced `.hex` files. So, all
-things considered, compiling your own, is easiest on Linux with perl installed and some required
-perl libraries, too (install them with `cpan`). All going well `make all` should produce `.hex`,
-`.elf` and `.lst` files of a number of bootloaders. The created .hex files should coincide with the
-corresponding ones in the [`all`
+things considered, compiling this project is easiest on Linux with perl installed (and some
+required perl libraries, too; install them with `cpan`). All going well `make all` should produce
+`.hex`, `.elf` and `.lst` files of a number of bootloaders. The created .hex files should coincide
+with the corresponding ones in the [`all`
 directory.](https://raw.githubusercontent.com/stefanrueger/urboot/main/all/). Once all these
 hurdles are taken, it is pretty easy to create own bootloaders with commands such as
 ```
@@ -43,8 +43,8 @@ hurdles are taken, it is pretty easy to create own bootloaders with commands suc
 **Pre-compiled bootloaders.** If compiling bootloaders is not feasible, feel free to try out one of
 the roughly 110,000 *different* pre-compiled bootloaders in the directory tree
 [`bootloaders`](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/). The tree
-contains are actually some 350,000 hex files, but they are somewhat redundant because a bootloader
-on 115200 baud for 16 MHz is *exactly* the same as a bootloader on 57600 baud for 8 MHz.
+contains actually some 350,000 hex files, but they are somewhat redundant because a bootloader on
+115200 baud for 16 MHz is *exactly* the same as a bootloader on 57600 baud for 8 MHz.
 
 **Usage.** As with all bootloaders, one needs to first program them onto
 the board/chip using a (physical) programmer and an uploader program, eg, through
@@ -77,12 +77,12 @@ host/laptop/PC (without a physical programmer), eg, through
 Voila!
 
 **Fun fact.** `avrdude -c urclock` can keep bootloaders in terminal mode `-t` without the
-bootloader resetting itself through the watchdocg timer.
+bootloader resetting itself through the watchdog timer.
 
 **Comparison.** The table below lists a sample of `urboot` bootloaders and their features alongside
 vanilla optiboot. They are all for a 16 MHz MCU and 115200 baud serial communication speed, except
 where noted differently. Note that the USART on an 8 MHz ATmega328P cannot produce 115200 baud
-within a 2.5% tolerance. The examples shown use software I/O that allows for a finer baud
+within a 2.5% tolerance; the 8 MHz examples shown use software I/O that allows for a finer baud
 granularity.
 
 |Size|Usage|Version|Features|Hex file|

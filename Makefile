@@ -45,6 +45,7 @@ EEPROM ?= 1
 VBL ?= 0
 DUAL ?= 0
 FRILLS ?= 0
+WDTO = 1S
 
 # Basic naming convention, sth, like atmega328p_16mhz_we--2.hex
 WHAT := $(MCU)_$(subst L,hz,$(subst 000L,khz,$(subst 000000L,mhz,$(F_CPU))))_
@@ -698,9 +699,9 @@ ifdef MOVETO
 	mv $@ $(MOVETO).hex
 	@mv $*.elf $(MOVETO).elf
 	@mv $*.lst $(MOVETO).lst
-#	@echo -- `hexls $(MOVETO).hex`
+	@echo -- `./hexls $(MOVETO).hex`
 else
-	@echo -- `hexls $@`
+	@echo -- `./hexls $@`
 endif
 	@echo
 
