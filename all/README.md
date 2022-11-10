@@ -48,7 +48,7 @@
 |460|512|u7.6|`wes-hpr`|[timeduino.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/all/timeduino.hex)|
 |460|512|u7.6|`wes-hpr`|[urclock.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/all/urclock.hex)|
 |470|512|u7.6|`wes-hpr`|[pro_8mhz.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/all/pro_8mhz.hex)|
-|474|512|o8.3|`??s-??r`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/all/optiboot_atmega328.hex)|
+|474|512|o8.3|`--s-h-r`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/all/optiboot_atmega328.hex)|
 |482|512|u7.6|`wes-hpr`|[atmega328p_led9_50Hz_fp9.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/all/atmega328p_led9_50Hz_fp9.hex)|
 |490|512|u7.6|`weudhpr`|[moteino_cs8_dur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/all/moteino_cs8_dur.hex)|
 |490|512|u7.6|`weudhpr`|[timeduino_cs8_dur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/all/timeduino_cs8_dur.hex)|
@@ -94,7 +94,6 @@
   + `V` vector bootloader: patches the vector table itself during upload and skips verifying the first page
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
-  + `?` unable to tell from .hex file whether this feature is present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `swio` software I/O (not USART)
   + `led9` toggles an LED on, in this example, Arduino pin 9
