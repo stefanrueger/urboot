@@ -2,16 +2,16 @@
 |:-:|:-:|:-:|:-:|:--|
 |222|256|u7.6|`w-u-jpr`|[attiny1634_8mhz_57600bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ur_vbl.hex)|
 |228|256|u7.6|`w-u-jpr`|[attiny1634_8mhz_57600bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_lednop_ur_vbl.hex)|
-|288|288|u7.6|`weu-jpr`|[attiny1634_8mhz_57600bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_ur_vbl.hex)|
-|294|320|u7.6|`weu-jpr`|[attiny1634_8mhz_57600bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_lednop_ur_vbl.hex)|
-|312|320|u7.6|`weu-jpr`|[attiny1634_8mhz_57600bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_lednop_fr_ur_vbl.hex)|
-|320|320|u7.6|`w-s-jpr`|[attiny1634_8mhz_57600bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_vbl.hex)|
-|326|352|u7.6|`w-s-jpr`|[attiny1634_8mhz_57600bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_lednop_vbl.hex)|
-|340|352|u7.6|`weu-jpr`|[attiny1634_8mhz_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|288|384|u7.6|`weu-jpr`|[attiny1634_8mhz_57600bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_ur_vbl.hex)|
+|294|384|u7.6|`weu-jpr`|[attiny1634_8mhz_57600bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_lednop_ur_vbl.hex)|
+|312|384|u7.6|`weu-jpr`|[attiny1634_8mhz_57600bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_lednop_fr_ur_vbl.hex)|
+|320|384|u7.6|`w-s-jpr`|[attiny1634_8mhz_57600bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_vbl.hex)|
+|326|384|u7.6|`w-s-jpr`|[attiny1634_8mhz_57600bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_lednop_vbl.hex)|
+|340|384|u7.6|`weu-jpr`|[attiny1634_8mhz_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |376|384|u7.6|`wes-jpr`|[attiny1634_8mhz_57600bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_vbl.hex)|
 |382|384|u7.6|`wes-jpr`|[attiny1634_8mhz_57600bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_lednop_vbl.hex)|
-|412|416|u7.6|`wes-jpr`|[attiny1634_8mhz_57600bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_lednop_fr_vbl.hex)|
-|454|480|u7.6|`wes-jpr`|[attiny1634_8mhz_57600bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_lednop_fr_ce_vbl.hex)|
+|408|512|u7.6|`wes-jpr`|[attiny1634_8mhz_57600bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_lednop_fr_vbl.hex)|
+|450|512|u7.6|`wes-jpr`|[attiny1634_8mhz_57600bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/57600_bps/attiny1634_8mhz_57600bps_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Useage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -1,17 +1,17 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|224|224|u7.6|`w-u-jpr`|[attiny1634_24mhz_1000000bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ur_vbl.hex)|
+|220|256|u7.6|`w-u-jpr`|[attiny1634_24mhz_1000000bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ur_vbl.hex)|
 |226|256|u7.6|`w-u-jpr`|[attiny1634_24mhz_1000000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_lednop_ur_vbl.hex)|
-|286|288|u7.6|`weu-jpr`|[attiny1634_24mhz_1000000bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_ur_vbl.hex)|
-|292|320|u7.6|`weu-jpr`|[attiny1634_24mhz_1000000bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_lednop_ur_vbl.hex)|
-|310|320|u7.6|`weu-jpr`|[attiny1634_24mhz_1000000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_lednop_fr_ur_vbl.hex)|
-|318|320|u7.6|`w-s-jpr`|[attiny1634_24mhz_1000000bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_vbl.hex)|
-|324|352|u7.6|`w-s-jpr`|[attiny1634_24mhz_1000000bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_lednop_vbl.hex)|
-|338|352|u7.6|`weu-jpr`|[attiny1634_24mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|286|384|u7.6|`weu-jpr`|[attiny1634_24mhz_1000000bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_ur_vbl.hex)|
+|292|384|u7.6|`weu-jpr`|[attiny1634_24mhz_1000000bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_lednop_ur_vbl.hex)|
+|310|384|u7.6|`weu-jpr`|[attiny1634_24mhz_1000000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_lednop_fr_ur_vbl.hex)|
+|318|384|u7.6|`w-s-jpr`|[attiny1634_24mhz_1000000bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_vbl.hex)|
+|324|384|u7.6|`w-s-jpr`|[attiny1634_24mhz_1000000bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_lednop_vbl.hex)|
+|338|384|u7.6|`weu-jpr`|[attiny1634_24mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |374|384|u7.6|`wes-jpr`|[attiny1634_24mhz_1000000bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_vbl.hex)|
 |380|384|u7.6|`wes-jpr`|[attiny1634_24mhz_1000000bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_lednop_vbl.hex)|
-|410|416|u7.6|`wes-jpr`|[attiny1634_24mhz_1000000bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_lednop_fr_vbl.hex)|
-|452|480|u7.6|`wes-jpr`|[attiny1634_24mhz_1000000bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_lednop_fr_ce_vbl.hex)|
+|406|512|u7.6|`wes-jpr`|[attiny1634_24mhz_1000000bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_lednop_fr_vbl.hex)|
+|448|512|u7.6|`wes-jpr`|[attiny1634_24mhz_1000000bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_24mhz/1000000_bps/attiny1634_24mhz_1000000bps_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Useage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

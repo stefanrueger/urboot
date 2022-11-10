@@ -4,14 +4,14 @@
 |246|256|u7.6|`w-u-jpr`|[attiny441_24mhz_230400bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_lednop_ur_vbl.hex)|
 |306|320|u7.6|`weu-jpr`|[attiny441_24mhz_230400bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_ur_vbl.hex)|
 |312|320|u7.6|`weu-jpr`|[attiny441_24mhz_230400bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_lednop_ur_vbl.hex)|
-|330|336|u7.6|`weu-jpr`|[attiny441_24mhz_230400bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_lednop_fr_ur_vbl.hex)|
-|338|352|u7.6|`w-s-jpr`|[attiny441_24mhz_230400bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_vbl.hex)|
-|344|352|u7.6|`w-s-jpr`|[attiny441_24mhz_230400bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_lednop_vbl.hex)|
-|358|368|u7.6|`weu-jpr`|[attiny441_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|394|400|u7.6|`wes-jpr`|[attiny441_24mhz_230400bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_vbl.hex)|
-|400|400|u7.6|`wes-jpr`|[attiny441_24mhz_230400bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_lednop_vbl.hex)|
-|430|432|u7.6|`wes-jpr`|[attiny441_24mhz_230400bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_lednop_fr_vbl.hex)|
-|472|480|u7.6|`wes-jpr`|[attiny441_24mhz_230400bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_lednop_fr_ce_vbl.hex)|
+|330|384|u7.6|`weu-jpr`|[attiny441_24mhz_230400bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_lednop_fr_ur_vbl.hex)|
+|338|384|u7.6|`w-s-jpr`|[attiny441_24mhz_230400bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_vbl.hex)|
+|344|384|u7.6|`w-s-jpr`|[attiny441_24mhz_230400bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_lednop_vbl.hex)|
+|358|384|u7.6|`weu-jpr`|[attiny441_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|394|448|u7.6|`wes-jpr`|[attiny441_24mhz_230400bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_vbl.hex)|
+|400|448|u7.6|`wes-jpr`|[attiny441_24mhz_230400bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_lednop_vbl.hex)|
+|430|448|u7.6|`wes-jpr`|[attiny441_24mhz_230400bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_lednop_fr_vbl.hex)|
+|468|512|u7.6|`wes-jpr`|[attiny441_24mhz_230400bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_24mhz/230400_bps/attiny441_24mhz_230400bps_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Useage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
