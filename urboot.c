@@ -760,6 +760,10 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
 #define BLINK     (FRILLS >= 1)
 #endif
 
+// Some parts can only erase 4 pages at a time
+#define FOUR_PAGE_ERASE (defined(__AVR_ATtiny441__) || defined(__AVR_ATtiny841__) || \
+  defined(__AVR_ATtiny1634__) || defined(__AVR_ATtiny1634R__))
+
 /*
  * Different flash memory size categories:
  *  -   8k or less: no jmp, only rjmp, small device
@@ -1503,12 +1507,34 @@ void bitDelay();
 #if CHIP_ERASE
 static void chip_erase() {
   setzaddressnull();
+
+#if !FOUR_PAGE_ERASE
+
   spm_pages_index_t numpages = (spm_pages_index_t) SPM_NUMPAGES;
   do {
     ub_page_erase();
     wdt_reset();
     inczaddresspage();
   } while(--numpages);
+
+#else // FOUR_PAGE_ERASE
+
+#if SPM_NUMPAGES/4 <= 256
+  uint8_t numpages = (uint8_t) SPM_NUMPAGES/4;
+#else
+  uint16_t numpages = SPM_NUMPAGES/4;
+#endif
+  do {
+    ub_page_erase();
+    wdt_reset();
+    zaddress += 4*SPM_PAGESIZE;
+#if FLASHabove64k
+    if(!zaddress)
+      RAMPZ++;
+#endif
+  } while(--numpages);
+
+#endif // !FOUR_PAGE_ERASE
 }
 #endif
 
@@ -2487,7 +2513,10 @@ void writebuffer(uint16_t *sram) {
 #endif
 
 #if PGMWRITEPAGE || !CHIP_ERASE // Page erase needed for pgm_write_page() or if CE not implemented
-  ub_page_erase();
+#if FOUR_PAGE_ERASE
+  if(!(zaddress & (3*SPM_PAGESIZE)))
+#endif
+    ub_page_erase();
 #endif
 
   // Copy data from SRAM buffer into the flash write buffer (RAMPZ and hi bits of zaddress ignored)
@@ -2591,8 +2620,19 @@ void writebufferX() {
     "brcc ub_ret\n"             // Return if so
 #endif
 #if PGMWRITEPAGE || !CHIP_ERASE // Page erase is needed for pgm_write_page() or CE not implemented
+#if FOUR_PAGE_ERASE && SPM_PAGESIZE > 64
+    "ldi   r24, hi8(%[spm3])\n" // if(!(zaddress & 3*SPM_PAGESIZE))
+    "and   r24, r31\n"          //   ub_page_erase();
+    "brne  no_erase\n"
+#endif
+#if FOUR_PAGE_ERASE
+    "ldi   r24, lo8(%[spm3])\n"
+    "and   r24, r30\n"
+    "brne  no_erase\n"
+#endif
     "ldi   r24, %[bpera]\n"     // boot_page_erase_r30(); boot_spm_busy_wait();
     "rcall ub_spm\n"
+"no_erase:"
 #endif
     "ldi   r24, %[bpfil]\n"     // do { boot_page_fill_r30(*sram++); zaddress+=2; } while(len-=2);
   "1: "
@@ -2646,6 +2686,9 @@ void writebufferX() {
 #endif
     [start] "n"((uint32_t) START),
     [spmsz] "n"(SPM_PAGESIZE),
+#if FOUR_PAGE_ERASE
+    [spm3] "n"(3*SPM_PAGESIZE),
+#endif
     [sramp]    "n"(RAMSTART)
   : "r0", "r27", "r26", "r25", "r24", "r22", "r19", "r18"
   );

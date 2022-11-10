@@ -1,17 +1,17 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|216|224|u7.6|`w-u-jpr`|[attiny1634_11mhz0592_19200bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//attiny1634_11mhz0592_19200bps_ur_vbl.hex)|
-|222|224|u7.6|`w-u-jpr`|[attiny1634_11mhz0592_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//attiny1634_11mhz0592_19200bps_lednop_ur_vbl.hex)|
-|278|288|u7.6|`weu-jpr`|[attiny1634_11mhz0592_19200bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//attiny1634_11mhz0592_19200bps_ee_ur_vbl.hex)|
-|284|288|u7.6|`weu-jpr`|[attiny1634_11mhz0592_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//attiny1634_11mhz0592_19200bps_ee_lednop_ur_vbl.hex)|
-|302|320|u7.6|`weu-jpr`|[attiny1634_11mhz0592_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//attiny1634_11mhz0592_19200bps_ee_lednop_fr_ur_vbl.hex)|
-|310|320|u7.6|`w-s-jpr`|[attiny1634_11mhz0592_19200bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//attiny1634_11mhz0592_19200bps_vbl.hex)|
-|316|320|u7.6|`w-s-jpr`|[attiny1634_11mhz0592_19200bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//attiny1634_11mhz0592_19200bps_lednop_vbl.hex)|
-|330|352|u7.6|`weu-jpr`|[attiny1634_11mhz0592_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//attiny1634_11mhz0592_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|366|384|u7.6|`wes-jpr`|[attiny1634_11mhz0592_19200bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//attiny1634_11mhz0592_19200bps_ee_vbl.hex)|
-|372|384|u7.6|`wes-jpr`|[attiny1634_11mhz0592_19200bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//attiny1634_11mhz0592_19200bps_ee_lednop_vbl.hex)|
-|402|416|u7.6|`wes-jpr`|[attiny1634_11mhz0592_19200bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//attiny1634_11mhz0592_19200bps_ee_lednop_fr_vbl.hex)|
-|444|448|u7.6|`wes-jpr`|[attiny1634_11mhz0592_19200bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//attiny1634_11mhz0592_19200bps_ee_lednop_fr_ce_vbl.hex)|
+|222|224|u7.6|`w-u-jpr`|[attiny1634_11mhz0592_19200bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_11mhz0592/19200_bps/attiny1634_11mhz0592_19200bps_ur_vbl.hex)|
+|224|256|u7.6|`w-u-jpr`|[attiny1634_11mhz0592_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_11mhz0592/19200_bps/attiny1634_11mhz0592_19200bps_lednop_ur_vbl.hex)|
+|284|288|u7.6|`weu-jpr`|[attiny1634_11mhz0592_19200bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_11mhz0592/19200_bps/attiny1634_11mhz0592_19200bps_ee_ur_vbl.hex)|
+|290|320|u7.6|`weu-jpr`|[attiny1634_11mhz0592_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_11mhz0592/19200_bps/attiny1634_11mhz0592_19200bps_ee_lednop_ur_vbl.hex)|
+|308|320|u7.6|`weu-jpr`|[attiny1634_11mhz0592_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_11mhz0592/19200_bps/attiny1634_11mhz0592_19200bps_ee_lednop_fr_ur_vbl.hex)|
+|316|320|u7.6|`w-s-jpr`|[attiny1634_11mhz0592_19200bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_11mhz0592/19200_bps/attiny1634_11mhz0592_19200bps_vbl.hex)|
+|322|352|u7.6|`w-s-jpr`|[attiny1634_11mhz0592_19200bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_11mhz0592/19200_bps/attiny1634_11mhz0592_19200bps_lednop_vbl.hex)|
+|336|352|u7.6|`weu-jpr`|[attiny1634_11mhz0592_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_11mhz0592/19200_bps/attiny1634_11mhz0592_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|372|384|u7.6|`wes-jpr`|[attiny1634_11mhz0592_19200bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_11mhz0592/19200_bps/attiny1634_11mhz0592_19200bps_ee_vbl.hex)|
+|378|384|u7.6|`wes-jpr`|[attiny1634_11mhz0592_19200bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_11mhz0592/19200_bps/attiny1634_11mhz0592_19200bps_ee_lednop_vbl.hex)|
+|408|416|u7.6|`wes-jpr`|[attiny1634_11mhz0592_19200bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_11mhz0592/19200_bps/attiny1634_11mhz0592_19200bps_ee_lednop_fr_vbl.hex)|
+|450|480|u7.6|`wes-jpr`|[attiny1634_11mhz0592_19200bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_11mhz0592/19200_bps/attiny1634_11mhz0592_19200bps_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Useage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
