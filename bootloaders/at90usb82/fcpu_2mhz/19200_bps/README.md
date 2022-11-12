@@ -1,32 +1,32 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|240|256|u7.6|`w-u-jpr`|[at90usb82_2mhz_19200bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ur_vbl.hex)|
-|246|256|u7.6|`w-u-jpr`|[at90usb82_2mhz_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_lednop_ur_vbl.hex)|
-|306|384|u7.6|`weu-jpr`|[at90usb82_2mhz_19200bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_ur_vbl.hex)|
-|312|384|u7.6|`weu-jpr`|[at90usb82_2mhz_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_lednop_ur_vbl.hex)|
-|330|384|u7.6|`weu-jpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_lednop_fr_ur_vbl.hex)|
-|338|384|u7.6|`w-s-jpr`|[at90usb82_2mhz_19200bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_vbl.hex)|
-|344|384|u7.6|`w-s-jpr`|[at90usb82_2mhz_19200bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_lednop_vbl.hex)|
-|358|384|u7.6|`weu-jpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|240|512|u7.6|`w-u-hpr`|[at90usb82_2mhz_19200bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ur.hex)|
-|246|512|u7.6|`w-u-hpr`|[at90usb82_2mhz_19200bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_lednop_ur.hex)|
-|302|512|u7.6|`weu-hpr`|[at90usb82_2mhz_19200bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_ur.hex)|
-|308|512|u7.6|`weu-hpr`|[at90usb82_2mhz_19200bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_lednop_ur.hex)|
-|326|512|u7.6|`weu-hpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_lednop_fr_ur.hex)|
-|334|512|u7.6|`w-s-hpr`|[at90usb82_2mhz_19200bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps.hex)|
-|340|512|u7.6|`w-s-hpr`|[at90usb82_2mhz_19200bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_lednop.hex)|
-|354|512|u7.6|`weu-hpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_lednop_fr_ce_ur.hex)|
-|390|512|u7.6|`wes-hpr`|[at90usb82_2mhz_19200bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee.hex)|
-|390|512|u7.6|`wes-jpr`|[at90usb82_2mhz_19200bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_vbl.hex)|
-|396|512|u7.6|`wes-hpr`|[at90usb82_2mhz_19200bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_lednop.hex)|
-|396|512|u7.6|`wes-jpr`|[at90usb82_2mhz_19200bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_lednop_vbl.hex)|
-|426|512|u7.6|`wes-hpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_lednop_fr.hex)|
-|426|512|u7.6|`wes-jpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_lednop_fr_vbl.hex)|
-|468|512|u7.6|`wes-hpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_lednop_fr_ce.hex)|
-|468|512|u7.6|`wes-jpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//at90usb82_2mhz_19200bps_ee_lednop_fr_ce_vbl.hex)|
+|240|256|u7.6|`w-u-jpr`|[at90usb82_2mhz_19200bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ur_vbl.hex)|
+|246|256|u7.6|`w-u-jpr`|[at90usb82_2mhz_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_lednop_ur_vbl.hex)|
+|306|384|u7.6|`weu-jpr`|[at90usb82_2mhz_19200bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_ur_vbl.hex)|
+|312|384|u7.6|`weu-jpr`|[at90usb82_2mhz_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_lednop_ur_vbl.hex)|
+|330|384|u7.6|`weu-jpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_lednop_fr_ur_vbl.hex)|
+|338|384|u7.6|`w-s-jpr`|[at90usb82_2mhz_19200bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_vbl.hex)|
+|344|384|u7.6|`w-s-jpr`|[at90usb82_2mhz_19200bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_lednop_vbl.hex)|
+|358|384|u7.6|`weu-jpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|240|512|u7.6|`w-u-hpr`|[at90usb82_2mhz_19200bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ur.hex)|
+|246|512|u7.6|`w-u-hpr`|[at90usb82_2mhz_19200bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_lednop_ur.hex)|
+|302|512|u7.6|`weu-hpr`|[at90usb82_2mhz_19200bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_ur.hex)|
+|308|512|u7.6|`weu-hpr`|[at90usb82_2mhz_19200bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_lednop_ur.hex)|
+|326|512|u7.6|`weu-hpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_lednop_fr_ur.hex)|
+|334|512|u7.6|`w-s-hpr`|[at90usb82_2mhz_19200bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps.hex)|
+|340|512|u7.6|`w-s-hpr`|[at90usb82_2mhz_19200bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_lednop.hex)|
+|354|512|u7.6|`weu-hpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_lednop_fr_ce_ur.hex)|
+|390|512|u7.6|`wes-hpr`|[at90usb82_2mhz_19200bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee.hex)|
+|390|512|u7.6|`wes-jpr`|[at90usb82_2mhz_19200bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_vbl.hex)|
+|396|512|u7.6|`wes-hpr`|[at90usb82_2mhz_19200bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_lednop.hex)|
+|396|512|u7.6|`wes-jpr`|[at90usb82_2mhz_19200bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_lednop_vbl.hex)|
+|426|512|u7.6|`wes-hpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_lednop_fr.hex)|
+|426|512|u7.6|`wes-jpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_lednop_fr_vbl.hex)|
+|468|512|u7.6|`wes-hpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_lednop_fr_ce.hex)|
+|468|512|u7.6|`wes-jpr`|[at90usb82_2mhz_19200bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb82/fcpu_2mhz/19200_bps/at90usb82_2mhz_19200bps_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
-- **Useage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
+- **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
   + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`

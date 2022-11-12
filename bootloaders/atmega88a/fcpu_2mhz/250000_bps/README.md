@@ -1,36 +1,36 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|226|256|u7.6|`w-u-hpr`|[atmega88a_2mhz_250000bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ur.hex)|
-|226|256|u7.6|`w-u-jpr`|[atmega88a_2mhz_250000bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ur_vbl.hex)|
-|232|256|u7.6|`w-u-hpr`|[atmega88a_2mhz_250000bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_lednop_ur.hex)|
-|232|256|u7.6|`w-u-jpr`|[atmega88a_2mhz_250000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_lednop_ur_vbl.hex)|
-|250|256|u7.6|`w-u-hpr`|[atmega88a_2mhz_250000bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_lednop_fr_ur.hex)|
-|250|256|u7.6|`w-u-jpr`|[atmega88a_2mhz_250000bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_lednop_fr_ur_vbl.hex)|
-|296|320|u7.6|`weu-jpr`|[atmega88a_2mhz_250000bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_ur_vbl.hex)|
-|302|320|u7.6|`weu-jpr`|[atmega88a_2mhz_250000bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_lednop_ur_vbl.hex)|
-|320|320|u7.6|`weu-jpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_lednop_fr_ur_vbl.hex)|
-|324|384|u7.6|`w-s-jpr`|[atmega88a_2mhz_250000bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_vbl.hex)|
-|330|384|u7.6|`w-s-jpr`|[atmega88a_2mhz_250000bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_lednop_vbl.hex)|
-|348|384|u7.6|`weu-jpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|364|384|u7.6|`w-s-jpr`|[atmega88a_2mhz_250000bps_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_lednop_fr_vbl.hex)|
-|384|384|u7.6|`wes-jpr`|[atmega88a_2mhz_250000bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_vbl.hex)|
-|390|448|u7.6|`wes-jpr`|[atmega88a_2mhz_250000bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_lednop_vbl.hex)|
-|420|448|u7.6|`wes-jpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_lednop_fr_vbl.hex)|
-|292|512|u7.6|`weu-hpr`|[atmega88a_2mhz_250000bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_ur.hex)|
-|298|512|u7.6|`weu-hpr`|[atmega88a_2mhz_250000bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_lednop_ur.hex)|
-|316|512|u7.6|`weu-hpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_lednop_fr_ur.hex)|
-|320|512|u7.6|`w-s-hpr`|[atmega88a_2mhz_250000bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps.hex)|
-|326|512|u7.6|`w-s-hpr`|[atmega88a_2mhz_250000bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_lednop.hex)|
-|344|512|u7.6|`weu-hpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_lednop_fr_ce_ur.hex)|
-|360|512|u7.6|`w-s-hpr`|[atmega88a_2mhz_250000bps_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_lednop_fr.hex)|
-|380|512|u7.6|`wes-hpr`|[atmega88a_2mhz_250000bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee.hex)|
-|386|512|u7.6|`wes-hpr`|[atmega88a_2mhz_250000bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_lednop.hex)|
-|416|512|u7.6|`wes-hpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_lednop_fr.hex)|
-|458|512|u7.6|`wes-hpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_lednop_fr_ce.hex)|
-|458|512|u7.6|`wes-jpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//atmega88a_2mhz_250000bps_ee_lednop_fr_ce_vbl.hex)|
+|226|256|u7.6|`w-u-hpr`|[atmega88a_2mhz_250000bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ur.hex)|
+|226|256|u7.6|`w-u-jpr`|[atmega88a_2mhz_250000bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ur_vbl.hex)|
+|232|256|u7.6|`w-u-hpr`|[atmega88a_2mhz_250000bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_lednop_ur.hex)|
+|232|256|u7.6|`w-u-jpr`|[atmega88a_2mhz_250000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_lednop_ur_vbl.hex)|
+|250|256|u7.6|`w-u-hpr`|[atmega88a_2mhz_250000bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_lednop_fr_ur.hex)|
+|250|256|u7.6|`w-u-jpr`|[atmega88a_2mhz_250000bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_lednop_fr_ur_vbl.hex)|
+|296|320|u7.6|`weu-jpr`|[atmega88a_2mhz_250000bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_ur_vbl.hex)|
+|302|320|u7.6|`weu-jpr`|[atmega88a_2mhz_250000bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_lednop_ur_vbl.hex)|
+|320|320|u7.6|`weu-jpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_lednop_fr_ur_vbl.hex)|
+|324|384|u7.6|`w-s-jpr`|[atmega88a_2mhz_250000bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_vbl.hex)|
+|330|384|u7.6|`w-s-jpr`|[atmega88a_2mhz_250000bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_lednop_vbl.hex)|
+|348|384|u7.6|`weu-jpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|364|384|u7.6|`w-s-jpr`|[atmega88a_2mhz_250000bps_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_lednop_fr_vbl.hex)|
+|384|384|u7.6|`wes-jpr`|[atmega88a_2mhz_250000bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_vbl.hex)|
+|390|448|u7.6|`wes-jpr`|[atmega88a_2mhz_250000bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_lednop_vbl.hex)|
+|420|448|u7.6|`wes-jpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_lednop_fr_vbl.hex)|
+|292|512|u7.6|`weu-hpr`|[atmega88a_2mhz_250000bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_ur.hex)|
+|298|512|u7.6|`weu-hpr`|[atmega88a_2mhz_250000bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_lednop_ur.hex)|
+|316|512|u7.6|`weu-hpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_lednop_fr_ur.hex)|
+|320|512|u7.6|`w-s-hpr`|[atmega88a_2mhz_250000bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps.hex)|
+|326|512|u7.6|`w-s-hpr`|[atmega88a_2mhz_250000bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_lednop.hex)|
+|344|512|u7.6|`weu-hpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_lednop_fr_ce_ur.hex)|
+|360|512|u7.6|`w-s-hpr`|[atmega88a_2mhz_250000bps_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_lednop_fr.hex)|
+|380|512|u7.6|`wes-hpr`|[atmega88a_2mhz_250000bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee.hex)|
+|386|512|u7.6|`wes-hpr`|[atmega88a_2mhz_250000bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_lednop.hex)|
+|416|512|u7.6|`wes-hpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_lednop_fr.hex)|
+|458|512|u7.6|`wes-hpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_lednop_fr_ce.hex)|
+|458|512|u7.6|`wes-jpr`|[atmega88a_2mhz_250000bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_2mhz/250000_bps/atmega88a_2mhz_250000bps_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
-- **Useage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
+- **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
   + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`

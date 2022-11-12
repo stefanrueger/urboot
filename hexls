@@ -115,8 +115,6 @@ $l = defined($md)? "|": "";
 $c = defined($md)? "|": " ";
 $t = defined($md)? "`": "";
 
-$md = "https://raw.githubusercontent.com/stefanrueger/urboot/main" if defined($md) and $md eq '*';
-
 use constant {
   UR_PGMWRITEPAGE   => 128, # pgm_write_page() subroutine that can be called from application at FLASHEND+1-4
   UR_EEPROM         =>  64, # EEPROM read/write support
@@ -252,7 +250,7 @@ if(!$check) {
   if(defined($md) && @rows) {
     print "\n".
      "- **Size:** Bootloader code size including small table at top end\n".
-     "- **Useage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size\n".
+     "- **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size\n".
      "- **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version\n".
      "- **Features:**\n";
      print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p r ? .));

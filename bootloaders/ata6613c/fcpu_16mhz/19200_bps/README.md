@@ -1,32 +1,32 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|234|256|u7.6|`w-u-hpr`|[ata6613c_16mhz_19200bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ur.hex)|
-|234|256|u7.6|`w-u-jpr`|[ata6613c_16mhz_19200bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ur_vbl.hex)|
-|240|256|u7.6|`w-u-hpr`|[ata6613c_16mhz_19200bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_lednop_ur.hex)|
-|240|256|u7.6|`w-u-jpr`|[ata6613c_16mhz_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_lednop_ur_vbl.hex)|
-|300|384|u7.6|`weu-jpr`|[ata6613c_16mhz_19200bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_ur_vbl.hex)|
-|306|384|u7.6|`weu-jpr`|[ata6613c_16mhz_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_lednop_ur_vbl.hex)|
-|324|384|u7.6|`weu-jpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_lednop_fr_ur_vbl.hex)|
-|332|384|u7.6|`w-s-jpr`|[ata6613c_16mhz_19200bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_vbl.hex)|
-|338|384|u7.6|`w-s-jpr`|[ata6613c_16mhz_19200bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_lednop_vbl.hex)|
-|352|384|u7.6|`weu-jpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|296|512|u7.6|`weu-hpr`|[ata6613c_16mhz_19200bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_ur.hex)|
-|302|512|u7.6|`weu-hpr`|[ata6613c_16mhz_19200bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_lednop_ur.hex)|
-|320|512|u7.6|`weu-hpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_lednop_fr_ur.hex)|
-|328|512|u7.6|`w-s-hpr`|[ata6613c_16mhz_19200bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps.hex)|
-|334|512|u7.6|`w-s-hpr`|[ata6613c_16mhz_19200bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_lednop.hex)|
-|348|512|u7.6|`weu-hpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_lednop_fr_ce_ur.hex)|
-|384|512|u7.6|`wes-hpr`|[ata6613c_16mhz_19200bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee.hex)|
-|384|512|u7.6|`wes-jpr`|[ata6613c_16mhz_19200bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_vbl.hex)|
-|390|512|u7.6|`wes-hpr`|[ata6613c_16mhz_19200bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_lednop.hex)|
-|390|512|u7.6|`wes-jpr`|[ata6613c_16mhz_19200bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_lednop_vbl.hex)|
-|416|512|u7.6|`wes-hpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_lednop_fr.hex)|
-|416|512|u7.6|`wes-jpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_lednop_fr_vbl.hex)|
-|458|512|u7.6|`wes-hpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_lednop_fr_ce.hex)|
-|458|512|u7.6|`wes-jpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main//ata6613c_16mhz_19200bps_ee_lednop_fr_ce_vbl.hex)|
+|234|256|u7.6|`w-u-hpr`|[ata6613c_16mhz_19200bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ur.hex)|
+|234|256|u7.6|`w-u-jpr`|[ata6613c_16mhz_19200bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ur_vbl.hex)|
+|240|256|u7.6|`w-u-hpr`|[ata6613c_16mhz_19200bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_lednop_ur.hex)|
+|240|256|u7.6|`w-u-jpr`|[ata6613c_16mhz_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_lednop_ur_vbl.hex)|
+|300|384|u7.6|`weu-jpr`|[ata6613c_16mhz_19200bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_ur_vbl.hex)|
+|306|384|u7.6|`weu-jpr`|[ata6613c_16mhz_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_lednop_ur_vbl.hex)|
+|324|384|u7.6|`weu-jpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_lednop_fr_ur_vbl.hex)|
+|332|384|u7.6|`w-s-jpr`|[ata6613c_16mhz_19200bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_vbl.hex)|
+|338|384|u7.6|`w-s-jpr`|[ata6613c_16mhz_19200bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_lednop_vbl.hex)|
+|352|384|u7.6|`weu-jpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|296|512|u7.6|`weu-hpr`|[ata6613c_16mhz_19200bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_ur.hex)|
+|302|512|u7.6|`weu-hpr`|[ata6613c_16mhz_19200bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_lednop_ur.hex)|
+|320|512|u7.6|`weu-hpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_lednop_fr_ur.hex)|
+|328|512|u7.6|`w-s-hpr`|[ata6613c_16mhz_19200bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps.hex)|
+|334|512|u7.6|`w-s-hpr`|[ata6613c_16mhz_19200bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_lednop.hex)|
+|348|512|u7.6|`weu-hpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_lednop_fr_ce_ur.hex)|
+|384|512|u7.6|`wes-hpr`|[ata6613c_16mhz_19200bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee.hex)|
+|384|512|u7.6|`wes-jpr`|[ata6613c_16mhz_19200bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_vbl.hex)|
+|390|512|u7.6|`wes-hpr`|[ata6613c_16mhz_19200bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_lednop.hex)|
+|390|512|u7.6|`wes-jpr`|[ata6613c_16mhz_19200bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_lednop_vbl.hex)|
+|416|512|u7.6|`wes-hpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_lednop_fr.hex)|
+|416|512|u7.6|`wes-jpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_lednop_fr_vbl.hex)|
+|458|512|u7.6|`wes-hpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_lednop_fr_ce.hex)|
+|458|512|u7.6|`wes-jpr`|[ata6613c_16mhz_19200bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6613c/fcpu_16mhz/19200_bps/ata6613c_16mhz_19200bps_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
-- **Useage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
+- **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
   + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
