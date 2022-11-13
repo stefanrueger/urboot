@@ -1520,7 +1520,7 @@ static void chip_erase() {
 #else // FOUR_PAGE_ERASE
 
 #if SPM_NUMPAGES/4 <= 256
-  uint8_t numpages = (uint8_t) SPM_NUMPAGES/4;
+  uint8_t numpages = (uint8_t) (SPM_NUMPAGES/4);
 #else
   uint16_t numpages = SPM_NUMPAGES/4;
 #endif
