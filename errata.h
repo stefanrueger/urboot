@@ -9,7 +9,7 @@
  *
  * Different avr-libc versions have had different errors in the past. My preference is still
  * avr-gcc v 4.8.1 owing to the tight code it produces, so need to tend to past (and current)
- * errors in avr-libc. 
+ * errors in avr-libc.
  *
  * See urboot.c for details.
  */

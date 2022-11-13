@@ -423,10 +423,10 @@ my %uP = (
 
 my %unsupported = (
   # ATtiny4 ATtiny5 ATtiny9 ATtiny10 ATtiny20 ATtiny40 ATtiny102 ATtiny104
-  'AVRtiny core' => [(grep { $uP{$_}->[_features] & F_TINY } keys %uP), 'attiny102', 'attiny104'], 
+  'AVRtiny core' => [(grep { $uP{$_}->[_features] & F_TINY } keys %uP), 'attiny102', 'attiny104'],
 
   # AT90S1200 ATtiny11 ATtiny12 ATtiny15 ATtiny28
-  'Minimal AVR1 core' => [grep { $uP{$_}->[_features] & F_ASM_ONLY } keys %uP], 
+  'Minimal AVR1 core' => [grep { $uP{$_}->[_features] & F_ASM_ONLY } keys %uP],
 
   # ATtiny22 ATtiny26 AT90S2313 AT90S2323 AT90S2333 AT90S2343 AT90S4414 AT90S4433 AT90S4434 AT90S8515 AT90C8534 AT90S8535
   'AVR2 core without spm instruction' => [grep { !($uP{$_}->[_features] & F_HAVE_MOVW) && $uP{$_}->[_archnum] =~ /^2/ } keys %uP],
@@ -450,7 +450,7 @@ for my $reason (keys %unsupported) {
   die "$progname: $mcu not supported ($reason)\n"
     if grep { lc $mcu eq lc $_ } @{$unsupported{$reason}};
 }
- 
+
 # # make mcu name lower case, so that user can specify mcu regardless of case
 # $uP{lc $_} = delete $uP{$_} for keys %uP;
 
@@ -484,7 +484,7 @@ do {
   $lasterr = "";
   foreach my $line (@lines) {
     $overlaps = 1 if $line =~ /overlaps section/;
-    $lasterr .= "$line\n" if 
+    $lasterr .= "$line\n" if
       $line !~ /warning: call-clobbered register used for global register variable/ &&
       $line !~ /register uint16_t zaddress asm..r30..;/ &&
       $line !~ /^ *\^[~ ]*$/ &&
@@ -525,21 +525,21 @@ sub getplacement {
   # No .elf file?  create a "fake" entry this time round, hope file will exist next time for better estimate
   if(! -r $elf) {
     # try plenty of space and have a "typical" START
-    $bootsz = 1024; # int((0x580+$pagesz-1)/$pagesz)*$pagesz; 
+    $bootsz = 1024; # int((0x580+$pagesz-1)/$pagesz)*$pagesz;
     $bootstart = $flashsz-$bootsz;
     $pgmwriteoffset = $bootsz-4;  # creates an artificial endless loop as placeholder
     $vsize = 6;
     goto fake;
   }
-  
+
   $pgmwriteoffset = getpgmwriteoffset($elf);
   ($majorv, $minorv, $caps, $rjmpcode, $extended, $vsize) = getversion16($elf);
-  
+
   # examine size of bootloader, add slack and align to mcu's page size
   my $size = int((getsize($elf)+$slack + $pagesz-1)/$pagesz)*$pagesz;
-  
+
   die "page aligned boot loader size is implausible ($size)\n" if $size < 32;
-  
+
   # vector bootloader: mcu w/o bootloader section or version capability of bootloader says so
   my $vbl = !$hasboot || (defined($caps) && ($caps & UR_VBLMASK) != 0);
 
@@ -554,13 +554,13 @@ sub getplacement {
     }
   }
   $bootstart = $flashsz - $bootsz;
- 
+
   fake:
   my $rjmpwp = ((defined($pgmwriteoffset)? $pgmwriteoffset: $bootsz-4)-$bootsz+2)/2 & 0xfff;
-  
+
   return [$bootstart, $bootstart+$bootsz-$vsize, 0xc000 + $rjmpwp, $vsize, $hasboot];
 }
-  
+
 # return the size of the executable elf file
 #
 sub getsize {
@@ -627,7 +627,7 @@ sub getversion16 {
     chomp;
     if(s/^ *0x[0-9a-f]{8,8} //i) {
       # determine how many bytes the dump of .vsection shows
-      $vsize = /^[0-9a-f]{4,4} /i? 2: 
+      $vsize = /^[0-9a-f]{4,4} /i? 2:
                /^[0-9a-f]{8,8} [0-9a-f]{4,4} /i? 6:
                4;
 
@@ -650,17 +650,17 @@ sub getversion16 {
 sub majmincap {
   my $ver16 = shift;
 
-  return (0, 0, undef) if $ver16 == 0xffff || $ver16 < 4*256+1;  
+  return (0, 0, undef) if $ver16 == 0xffff || $ver16 < 4*256+1;
   return ($ver16>>8, $ver16 & 0xff, undef) if int($ver16/256) < 7*8+2;
   return ($ver16>>11, ($ver16>>8)&7, $ver16 & 0xff);
-}  
+}
 
 # extract 16-bit unsigned integer from hexdump line at position $off
 sub extract16 {
   my ($str, $off) = @_;
 
   return 256*hex(substr($str, $off+2, 2)) + hex(substr($str, $off, 2));
-}  
+}
 
 # remove . from version numbers
 sub getnum {

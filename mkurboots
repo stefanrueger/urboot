@@ -54,7 +54,7 @@ mcu="$1"
 # Baud rate and F_CPU combinations
 #
 
-# Map F_CPU to baud rates: compile for these combinations 
+# Map F_CPU to baud rates: compile for these combinations
 # (Some are redundant as 16 MHz @ 115200 baud is the same as 8 MHz @ 57600 baud)
 declare -A baud
 

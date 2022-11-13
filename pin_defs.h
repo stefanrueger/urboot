@@ -289,7 +289,7 @@
     defined(__AVR_ATtiny804__) || defined(__AVR_ATtiny806__) || defined(__AVR_ATtiny807__) || \
     defined(__AVR_ATtiny814__) || defined(__AVR_ATtiny816__) || defined(__AVR_ATtiny817__) || \
     defined(__AVR_ATtiny824__) || defined(__AVR_ATtiny826__) || defined(__AVR_ATtiny827__)
-  
+
 #ifndef RX
 #define RX AtmelPB3
 #endif

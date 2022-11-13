@@ -74,7 +74,7 @@ my %feature = (
 sub f {
   my $name = shift;
   if(length($name) == 1) {
-    $legend{$name} = 1 
+    $legend{$name} = 1;
   } else {
     $legend{swiorx} = 1 if $name =~ /_[rt]x[a-z][0-7][_.]/;
     $legend{swio} = 1 if $name =~ /_swio[_.]/;
