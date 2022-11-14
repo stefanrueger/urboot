@@ -1,33 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|222|256|u7.6|`w-u-hpr`|[atmega168a_3mhz6864_19200bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ur.hex)|
-|222|256|u7.6|`w-u-jpr`|[atmega168a_3mhz6864_19200bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ur_vbl.hex)|
-|228|256|u7.6|`w-u-hpr`|[atmega168a_3mhz6864_19200bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_lednop_ur.hex)|
-|228|256|u7.6|`w-u-jpr`|[atmega168a_3mhz6864_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_lednop_ur_vbl.hex)|
 |246|256|u7.6|`w-u-hpr`|[atmega168a_3mhz6864_19200bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_lednop_fr_ur.hex)|
 |246|256|u7.6|`w-u-jpr`|[atmega168a_3mhz6864_19200bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_lednop_fr_ur_vbl.hex)|
-|292|384|u7.6|`weu-jpr`|[atmega168a_3mhz6864_19200bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_ur_vbl.hex)|
-|298|384|u7.6|`weu-jpr`|[atmega168a_3mhz6864_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_lednop_ur_vbl.hex)|
-|316|384|u7.6|`weu-jpr`|[atmega168a_3mhz6864_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_lednop_fr_ur_vbl.hex)|
-|320|384|u7.6|`w-s-jpr`|[atmega168a_3mhz6864_19200bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_vbl.hex)|
-|326|384|u7.6|`w-s-jpr`|[atmega168a_3mhz6864_19200bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_lednop_vbl.hex)|
 |344|384|u7.6|`weu-jpr`|[atmega168a_3mhz6864_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|356|384|u7.6|`w-s-jpr`|[atmega168a_3mhz6864_19200bps_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_lednop_fr_vbl.hex)|
-|380|384|u7.6|`wes-jpr`|[atmega168a_3mhz6864_19200bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_vbl.hex)|
-|288|512|u7.6|`weu-hpr`|[atmega168a_3mhz6864_19200bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_ur.hex)|
-|294|512|u7.6|`weu-hpr`|[atmega168a_3mhz6864_19200bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_lednop_ur.hex)|
-|312|512|u7.6|`weu-hpr`|[atmega168a_3mhz6864_19200bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_lednop_fr_ur.hex)|
-|316|512|u7.6|`w-s-hpr`|[atmega168a_3mhz6864_19200bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps.hex)|
-|322|512|u7.6|`w-s-hpr`|[atmega168a_3mhz6864_19200bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_lednop.hex)|
 |340|512|u7.6|`weu-hpr`|[atmega168a_3mhz6864_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_lednop_fr_ce_ur.hex)|
-|352|512|u7.6|`w-s-hpr`|[atmega168a_3mhz6864_19200bps_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_lednop_fr.hex)|
-|376|512|u7.6|`wes-hpr`|[atmega168a_3mhz6864_19200bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee.hex)|
-|382|512|u7.6|`wes-hpr`|[atmega168a_3mhz6864_19200bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_lednop.hex)|
-|382|512|u7.6|`wes-jpr`|[atmega168a_3mhz6864_19200bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_lednop_vbl.hex)|
-|408|512|u7.6|`wes-hpr`|[atmega168a_3mhz6864_19200bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_lednop_fr.hex)|
-|408|512|u7.6|`wes-jpr`|[atmega168a_3mhz6864_19200bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_lednop_fr_vbl.hex)|
 |450|512|u7.6|`wes-hpr`|[atmega168a_3mhz6864_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_lednop_fr_ce.hex)|
-|450|512|u7.6|`wes-jpr`|[atmega168a_3mhz6864_19200bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/fcpu_3mhz6864/19200_bps/atmega168a_3mhz6864_19200bps_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -43,7 +20,7 @@
   + `r` preserves reset flags for the application in the register R2
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `ee` bootloader supports EEPROM read/write
-  + `lednop` "template" bootloader contains `mov rx,rx` nops that can be replaced to toggle LEDs
+  + `lednop` is a template bootloader with `mov rx,rx` nops as placeholders for LEDs operations
   + `fr` bootloader provides non-essential code for smoother error handing
   + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming

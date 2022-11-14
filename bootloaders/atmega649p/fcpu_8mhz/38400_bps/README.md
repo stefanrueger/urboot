@@ -1,28 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|232|256|u7.6|`w-u-jpr`|[atmega649p_8mhz_38400bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ur_vbl.hex)|
-|238|256|u7.6|`w-u-jpr`|[atmega649p_8mhz_38400bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_lednop_ur_vbl.hex)|
-|292|512|u7.6|`weu-jpr`|[atmega649p_8mhz_38400bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_ur_vbl.hex)|
-|298|512|u7.6|`weu-jpr`|[atmega649p_8mhz_38400bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_lednop_ur_vbl.hex)|
-|316|512|u7.6|`weu-jpr`|[atmega649p_8mhz_38400bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_lednop_fr_ur_vbl.hex)|
-|326|512|u7.6|`w-s-jpr`|[atmega649p_8mhz_38400bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_vbl.hex)|
-|332|512|u7.6|`w-s-jpr`|[atmega649p_8mhz_38400bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_lednop_vbl.hex)|
+|256|256|u7.6|`w-u-jpr`|[atmega649p_8mhz_38400bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_lednop_fr_ur_vbl.hex)|
 |342|512|u7.6|`weu-jpr`|[atmega649p_8mhz_38400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|380|512|u7.6|`wes-jpr`|[atmega649p_8mhz_38400bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_vbl.hex)|
-|386|512|u7.6|`wes-jpr`|[atmega649p_8mhz_38400bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_lednop_vbl.hex)|
-|416|512|u7.6|`wes-jpr`|[atmega649p_8mhz_38400bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_lednop_fr_vbl.hex)|
-|456|512|u7.6|`wes-jpr`|[atmega649p_8mhz_38400bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_lednop_fr_ce_vbl.hex)|
-|232|1024|u7.6|`w-u-hpr`|[atmega649p_8mhz_38400bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ur.hex)|
-|238|1024|u7.6|`w-u-hpr`|[atmega649p_8mhz_38400bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_lednop_ur.hex)|
-|292|1024|u7.6|`weu-hpr`|[atmega649p_8mhz_38400bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_ur.hex)|
-|298|1024|u7.6|`weu-hpr`|[atmega649p_8mhz_38400bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_lednop_ur.hex)|
-|316|1024|u7.6|`weu-hpr`|[atmega649p_8mhz_38400bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_lednop_fr_ur.hex)|
-|326|1024|u7.6|`w-s-hpr`|[atmega649p_8mhz_38400bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps.hex)|
-|332|1024|u7.6|`w-s-hpr`|[atmega649p_8mhz_38400bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_lednop.hex)|
 |342|1024|u7.6|`weu-hpr`|[atmega649p_8mhz_38400bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_lednop_fr_ce_ur.hex)|
-|380|1024|u7.6|`wes-hpr`|[atmega649p_8mhz_38400bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee.hex)|
-|386|1024|u7.6|`wes-hpr`|[atmega649p_8mhz_38400bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_lednop.hex)|
-|416|1024|u7.6|`wes-hpr`|[atmega649p_8mhz_38400bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_lednop_fr.hex)|
 |456|1024|u7.6|`wes-hpr`|[atmega649p_8mhz_38400bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649p/fcpu_8mhz/38400_bps/atmega649p_8mhz_38400bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
@@ -39,7 +19,7 @@
   + `r` preserves reset flags for the application in the register R2
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `ee` bootloader supports EEPROM read/write
-  + `lednop` "template" bootloader contains `mov rx,rx` nops that can be replaced to toggle LEDs
+  + `lednop` is a template bootloader with `mov rx,rx` nops as placeholders for LEDs operations
   + `fr` bootloader provides non-essential code for smoother error handing
   + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming

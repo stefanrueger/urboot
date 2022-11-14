@@ -1,33 +1,12 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|238|256|u7.6|`w-u-hpr`|[atmega88pb_11mhz0592_460800bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ur.hex)|
-|238|256|u7.6|`w-u-jpr`|[atmega88pb_11mhz0592_460800bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ur_vbl.hex)|
 |244|256|u7.6|`w-u-hpr`|[atmega88pb_11mhz0592_460800bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_lednop_ur.hex)|
 |244|256|u7.6|`w-u-jpr`|[atmega88pb_11mhz0592_460800bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_lednop_ur_vbl.hex)|
-|266|320|u7.6|`w-u-jpr`|[atmega88pb_11mhz0592_460800bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_lednop_fr_ur_vbl.hex)|
-|304|320|u7.6|`weu-jpr`|[atmega88pb_11mhz0592_460800bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_ur_vbl.hex)|
+|294|320|u7.6|`w-u-jpr`|[atmega88pb_11mhz0592_460800bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_lednop_fr_ce_ur_vbl.hex)|
 |310|320|u7.6|`weu-jpr`|[atmega88pb_11mhz0592_460800bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_lednop_ur_vbl.hex)|
-|328|384|u7.6|`weu-jpr`|[atmega88pb_11mhz0592_460800bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_lednop_fr_ur_vbl.hex)|
-|336|384|u7.6|`w-s-jpr`|[atmega88pb_11mhz0592_460800bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_vbl.hex)|
-|342|384|u7.6|`w-s-jpr`|[atmega88pb_11mhz0592_460800bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_lednop_vbl.hex)|
 |356|384|u7.6|`weu-jpr`|[atmega88pb_11mhz0592_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|376|384|u7.6|`w-s-jpr`|[atmega88pb_11mhz0592_460800bps_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_lednop_fr_vbl.hex)|
-|392|448|u7.6|`wes-jpr`|[atmega88pb_11mhz0592_460800bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_vbl.hex)|
-|398|448|u7.6|`wes-jpr`|[atmega88pb_11mhz0592_460800bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_lednop_vbl.hex)|
-|428|448|u7.6|`wes-jpr`|[atmega88pb_11mhz0592_460800bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_lednop_fr_vbl.hex)|
-|262|512|u7.6|`w-u-hpr`|[atmega88pb_11mhz0592_460800bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_lednop_fr_ur.hex)|
-|300|512|u7.6|`weu-hpr`|[atmega88pb_11mhz0592_460800bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_ur.hex)|
-|306|512|u7.6|`weu-hpr`|[atmega88pb_11mhz0592_460800bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_lednop_ur.hex)|
-|324|512|u7.6|`weu-hpr`|[atmega88pb_11mhz0592_460800bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_lednop_fr_ur.hex)|
-|332|512|u7.6|`w-s-hpr`|[atmega88pb_11mhz0592_460800bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps.hex)|
-|338|512|u7.6|`w-s-hpr`|[atmega88pb_11mhz0592_460800bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_lednop.hex)|
 |352|512|u7.6|`weu-hpr`|[atmega88pb_11mhz0592_460800bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_lednop_fr_ce_ur.hex)|
-|372|512|u7.6|`w-s-hpr`|[atmega88pb_11mhz0592_460800bps_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_lednop_fr.hex)|
-|388|512|u7.6|`wes-hpr`|[atmega88pb_11mhz0592_460800bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee.hex)|
-|394|512|u7.6|`wes-hpr`|[atmega88pb_11mhz0592_460800bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_lednop.hex)|
-|424|512|u7.6|`wes-hpr`|[atmega88pb_11mhz0592_460800bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_lednop_fr.hex)|
 |466|512|u7.6|`wes-hpr`|[atmega88pb_11mhz0592_460800bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_lednop_fr_ce.hex)|
-|466|512|u7.6|`wes-jpr`|[atmega88pb_11mhz0592_460800bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/fcpu_11mhz0592/460800_bps/atmega88pb_11mhz0592_460800bps_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -43,7 +22,7 @@
   + `r` preserves reset flags for the application in the register R2
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `ee` bootloader supports EEPROM read/write
-  + `lednop` "template" bootloader contains `mov rx,rx` nops that can be replaced to toggle LEDs
+  + `lednop` is a template bootloader with `mov rx,rx` nops as placeholders for LEDs operations
   + `fr` bootloader provides non-essential code for smoother error handing
   + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming

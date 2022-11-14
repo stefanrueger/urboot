@@ -1,28 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|236|256|u7.6|`w-u-jpr`|[atmega2561_12mhz_19200bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ur_vbl.hex)|
 |242|256|u7.6|`w-u-jpr`|[atmega2561_12mhz_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_lednop_ur_vbl.hex)|
-|298|512|u7.6|`weu-jpr`|[atmega2561_12mhz_19200bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_ur_vbl.hex)|
-|304|512|u7.6|`weu-jpr`|[atmega2561_12mhz_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_lednop_ur_vbl.hex)|
-|322|512|u7.6|`weu-jpr`|[atmega2561_12mhz_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_lednop_fr_ur_vbl.hex)|
-|350|512|u7.6|`w-s-jpr`|[atmega2561_12mhz_19200bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_vbl.hex)|
-|356|512|u7.6|`w-s-jpr`|[atmega2561_12mhz_19200bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_lednop_vbl.hex)|
 |366|512|u7.6|`weu-jpr`|[atmega2561_12mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|406|512|u7.6|`wes-jpr`|[atmega2561_12mhz_19200bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_vbl.hex)|
-|412|512|u7.6|`wes-jpr`|[atmega2561_12mhz_19200bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_lednop_vbl.hex)|
-|442|512|u7.6|`wes-jpr`|[atmega2561_12mhz_19200bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_lednop_fr_vbl.hex)|
-|490|512|u7.6|`wes-jpr`|[atmega2561_12mhz_19200bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_lednop_fr_ce_vbl.hex)|
-|236|1024|u7.6|`w-u-hpr`|[atmega2561_12mhz_19200bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ur.hex)|
-|242|1024|u7.6|`w-u-hpr`|[atmega2561_12mhz_19200bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_lednop_ur.hex)|
-|298|1024|u7.6|`weu-hpr`|[atmega2561_12mhz_19200bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_ur.hex)|
-|304|1024|u7.6|`weu-hpr`|[atmega2561_12mhz_19200bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_lednop_ur.hex)|
-|322|1024|u7.6|`weu-hpr`|[atmega2561_12mhz_19200bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_lednop_fr_ur.hex)|
-|350|1024|u7.6|`w-s-hpr`|[atmega2561_12mhz_19200bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps.hex)|
-|356|1024|u7.6|`w-s-hpr`|[atmega2561_12mhz_19200bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_lednop.hex)|
 |366|1024|u7.6|`weu-hpr`|[atmega2561_12mhz_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_lednop_fr_ce_ur.hex)|
-|406|1024|u7.6|`wes-hpr`|[atmega2561_12mhz_19200bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee.hex)|
-|412|1024|u7.6|`wes-hpr`|[atmega2561_12mhz_19200bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_lednop.hex)|
-|442|1024|u7.6|`wes-hpr`|[atmega2561_12mhz_19200bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_lednop_fr.hex)|
 |490|1024|u7.6|`wes-hpr`|[atmega2561_12mhz_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2561/fcpu_12mhz/19200_bps/atmega2561_12mhz_19200bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
@@ -39,7 +19,7 @@
   + `r` preserves reset flags for the application in the register R2
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `ee` bootloader supports EEPROM read/write
-  + `lednop` "template" bootloader contains `mov rx,rx` nops that can be replaced to toggle LEDs
+  + `lednop` is a template bootloader with `mov rx,rx` nops as placeholders for LEDs operations
   + `fr` bootloader provides non-essential code for smoother error handing
   + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming

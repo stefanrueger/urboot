@@ -58,6 +58,7 @@ mcu="$1"
 # (Some are redundant as 16 MHz @ 115200 baud is the same as 8 MHz @ 57600 baud)
 declare -A baud
 
+# baud[auto]=auto
 baud[24000000]=1000000/500000/250000/230400/115200/57600/38400/19200
 baud[22118400]=460800/230400/115200/57600/38400/19200
 baud[20000000]=500000/250000/115200/19200
@@ -106,36 +107,45 @@ noswio[16000000/9600]=1
 board=none:TEMPLATE=1
 
 # Various boards have the LED on different pins, some low active
-if [ $mcu = atmega328p ]; then
-  board+=/anarduino,moteino:LED=AtmelPB1
+if [[ $mcu == atmega328p ]]; then
   board+=/urclock,timeduino,jeenode:LEDPOLARITY=-1_LED=AtmelPB1
+  board+=/anarduino,moteino:LED=AtmelPB1
   board+=/urclockusb:LED=AtmelPD5
   board+=/ursense:LEDPOLARITY=-1_LED=AtmelPD5
   board+=/uno,rbbb,promini:LED=AtmelPB5
+  board+=/dual:TEMPLATE=1_DUAL=1
+  board+=/urclock,timeduino:LEDPOLARITY=-1_LED=AtmelPB1_SFMCS=AtmelPB0_DUAL=1
+  board+=/anarduino:LED=AtmelPB1_SFMCS=AtmelPD5_DUAL=1
+  board+=/moteino:LED=AtmelPB1_SFMCS=AtmelPB0_DUAL=1
+  board+=/urclockusb:LED=AtmelPD5_SFMCS=AtmelPB0_DUAL=1
+  board+=/ursense:LEDPOLARITY=-1_LED=AtmelPD5_SFMCS=AtmelPB0_DUAL=1
 fi
-if [ $mcu = attiny85 ]; then
-board+=/digispark:LED=AtmelPB1
+if [[ $mcu == attiny85 ]]; then
+  board+=/digispark:LED=AtmelPB1
 fi
-if [ $mcu = attiny167 ]; then
-board+=/digispark-pro:LED=AtmelPB1
+if [[ $mcu == attiny167 ]]; then
+  board+=/digispark-pro:LED=AtmelPB1
 fi
-if [ $mcu = attiny84 ]; then
-board+=/luminet:LED=AtmelPA4
+if [[ $mcu == attiny84 ]]; then
+  board+=/luminet:LED=AtmelPA4
 fi
-if [ $mcu = atmega1284p ]; then
-board+=/bobuino,mighty1284,wildfire-v2:LED=AtmelPB7
-board+=/wildfire:LED=AtmelPB5
-board+=/moteinomega:LED=AtmelPD7
-board+=/urclockmega:LED=AtmelPC7
+if [[ $mcu == atmega1284p ]]; then
+  board+=/bobuino,mighty1284,wildfire-v2:LED=AtmelPB7
+  board+=/wildfire:LED=AtmelPB5
+  board+=/moteinomega:LED=AtmelPD7
+  board+=/urclockmega:LED=AtmelPC7
+  board+=/dual:TEMPLATE=1_DUAL=1
+  board+=/moteinomega:LED=AtmelPD7_SFMCS=AtmelPC7_DUAL=1
+  board+=/urclockmega:LED=AtmelPC7_SFMCS=AtmelPB3_DUAL=1
 fi
-if [ $mcu = atmega644p ]; then
-board+=/sanguino:LED=AtmelPB0
+if [[ $mcu == atmega644p ]]; then
+  board+=/sanguino:LED=AtmelPB0
 fi
-if [ $mcu = atmega2560 ]; then
-board+=/mega-r3:LED=AtmelPB7
+if [[ $mcu == atmega2560 ]]; then
+  board+=/mega-r3:LED=AtmelPB7
 fi
-if [ $mcu = atmega1280 ]; then
-board+=/mega1280:LED=AtmelPB7
+if [[ $mcu == atmega1280 ]]; then
+  board+=/mega1280:LED=AtmelPB7
 fi
 
 
@@ -399,34 +409,46 @@ usartio[avr64ea48]="SWIO=1 RX=AtmelPA1 TX=AtmelPA0"
 
 
 ####
-# Put human readable F_CPU into variable fcpuname
+# Put human readable F_CPU into variable fcpunm
 #
-mkfcpuname() {
+mkfcpunm() {
   local frq=$1;
-  if [[ ${#1} > 6 ]]; then
+  if [[ "$frq" == auto ]]; then
+    :
+  elif [[ ${#1} > 6 ]]; then
     frq=${1%??????}mhz${1:${#1}-6:6}
     frq=${frq%000}; frq=${frq%00}; frq=${frq%0}
   elif  [[ ${#1} > 3 ]]; then
     frq=${1%???}khz${1:0:${#1}-3}
     frq=${frq%00}; frq=${frq%0}
   fi
-  fcpuname=$frq
+  fcpunm=$frq
 }
 
 ####
 # Construct a global variable filename for the basename of the bootloader
 #
 mkfilename() {
-  local cfg=$8; [ "$cfg" = TEMPLATE=1 ] && cfg=_lednop;
-  cfg=${cfg/LEDPOLARITY=-1_LED=AtmelP/_led-}; cfg=${cfg/LED=AtmelP/_led+};
-  cfg=${cfg/_SFMCS=AtmelP/_cs}; cfg=${cfg,,}
+  local cfg=$8
+  [[ "$cfg" == TEMPLATE=1 ]] && cfg=_lednop
+  [[ "$cfg" == TEMPLATE=1_DUAL=1 ]] && cfg=_template_dual
+  cfg=${cfg/LEDPOLARITY=-1_LED=AtmelP/_led-}; cfg=${cfg/LED=AtmelP/_led+}
+  cfg=${cfg/_SFMCS=AtmelP/_cs}
+  cfg=${cfg/_DUAL=1/_dual}
   cfg=${cfg,,}
-  local swio=$9; swio=${swio/SWIO=1/};
+  local swio=$9; swio=${swio/SWIO=1/}
   swio=${swio/ RX=AtmelP/_rx}; swio=${swio/ TX=AtmelP/_tx}; swio=${swio,,}
 
-  filename=$1_$2_$3bps$swio
+  if [[ $2 == auto ]]; then
+    filename=$1_autobaud$swio
+  else
+    filename=$1_$2_$3bps$swio
+  fi
   [[ $5 -eq 1 ]] && filename+=_ee
+  # Do not makes LEDs part of filename for FRILLS=0
   [[ $7 -eq 0 ]] || filename+=$cfg
+#  # But use _dual when on FRILLS=0
+#  [[ $7 -eq 0 && $cfg == *_dual* ]] && filename+=$cfg
   [[ $7 -eq 6 ]] && filename+=_fr
   [[ $7 -eq 7 ]] && filename+=_fr_ce
   [[ $6 -eq 1 ]] && filename+=_ur
@@ -434,13 +456,21 @@ mkfilename() {
 }
 
 
+declare -A duplicate
+declare -A hexuse
+declare -A hexassoc
+declare -A hexdirs
+
 [[ $run == 1 ]] && mkdir -p "$bootloaders/$mcu"
 for fcpu in ${!baud[@]}; do
-  mkfcpuname $fcpu
-  [[ $run == 1 ]] && mkdir -p "$bootloaders/$mcu/fcpu_$fcpuname"
+  mkfcpunm $fcpu
+
   readarray -d / -t bauds <<<${baud[$fcpu]}
   for b in ${bauds[@]}; do
     io="${swio[$mcu]}"        # Empty when USART is available and used
+    if [[ $b == auto && -n "$io" ]]; then # autobaud only works with USART
+      continue;
+    fi
     # USART experiences too high baud rate error for this F_CPU/baud combo
     if [[ -z "$io" && "${nousart[$fcpu/$b]}" -eq 1 ]]; then
       if [[ -n "${usartio[$mcu]}" ]]; then
@@ -453,36 +483,132 @@ for fcpu in ${!baud[@]}; do
     if [[ -n "$io" && "${noswio[$fcpu/$b]}" -eq 1 ]]; then
       continue
     fi
-    dir="$bootloaders/$mcu/fcpu_$fcpuname/${b}_bps"
-    [[ $run == 1 ]] && mkdir -p "$dir"
+    if [[ $b == auto ]]; then
+      dir="$bootloaders/$mcu/autobaud"
+      fcpu=16000000
+    else
+      dir="$bootloaders/$mcu/fcpu_$fcpunm/${b}_bps"
+    fi
+    if [[ $b == auto ]]; then
+      br=AUTOBAUD=1
+    else
+      br=BAUD_RATE=$b
+    fi
+
     for ur in 0 1; do
-      readarray -d / -t brd <<<$board
-      for f in 0 1 6 7; do
-        for ee in 0 1; do
-          if [[ $ee -eq 0 && $f -gt 1 ]]; then
-            continue;
-          fi
-          for bb in ${brd[@]}; do
-            bcfg=${bb#*:}; bname=${bb%:*}
-            for vbl in 0 1; do
-              # Some MCUs don't have HW boot setcions (vbl=0): don't generate these bl
-              if [[ $vbl -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
+      # Only generate STK500 bootloaders ($ur = 0) for MCUs that have HW boot sections
+      if [[ $ur -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
+        continue;
+      fi
+
+      for ee in 0 1; do
+
+        readarray -d / -t brd <<<$board
+        for bb in ${brd[@]}; do
+          bcfg=${bb#*:}
+          bname=${bb%:*}
+
+          for vbl in 0 1; do
+            # Don't generate hardware-supported bootloaders (vbl=0) for MCUs that don't have HW boot sections
+            if [[ $vbl -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
+              continue;
+            fi
+            # Don't generate vector boot loaders for STK500 protocol
+            if [[ $vbl -eq 1 && $ur -eq 0 ]]; then
+              continue;
+            fi
+
+            hexname=()
+            for f in 0 1 6 7; do
+              if [[ $f -eq 0 && $bname != none ]]; then
+                continue
+              fi
+              if [[ $ee -eq 0 && $f -gt 7 ]]; then
                 continue;
               fi
-              mkfilename $mcu $fcpuname $b $vbl $ee $ur $f "$bcfg" "$io"
-              [[ $run == 1 ]] && make MCU=$mcu F_CPU=${fcpu}L BAUD_RATE=$b $io VBL=$vbl EEPROM=$ee ${bcfg/_/ } URPROTOCOL=$ur FRILLS=$f MOVETO=$filename >& $filename.out
-              [[ $run == 1 ]] && mv $filename.{hex,out,elf,lst} "$dir/"
-              [[ $run == 0 ]] && echo "$dir/$filename.hex"
+
+              mkfilename $mcu $fcpunm $b $vbl $ee $ur $f "$bcfg" "$io"
+              args="MCU=$mcu F_CPU=${fcpu}L $br $io VBL=$vbl EEPROM=$ee ${bcfg//_/ } URPROTOCOL=$ur FRILLS=$f MOVETO=$filename"
+              if [[ $run -eq 1 ]]; then
+                make $args >& $filename.out
+                if [[ -r $filename.hex ]]; then
+                  hexname+=("$filename")
+                  hexuse[$filename]+=$(hexls -use $filename.hex)
+                else
+                  echo warning compilation for $filename failed
+                fi
+              else
+                # echo make $args
+                echo "$dir/$filename.hex"
+                if [[ -n ${duplicate[$filename]} ]]; then
+                  echo duplicate $filename ${duplicate[$filename]}
+                  echo duplicate $filename $args
+                else
+                  duplicate[$filename]="$args"
+                fi
+              fi
             done
-            if [[ $f -eq 0 ]]; then
-              break
+            if [[ $run -eq 1 ]]; then
+              # Delete bootloaders of same size that have fewer features
+              for (( i=0; i<${#hexname[@]}-1; i++ )); do
+                if [[ ${hexuse[${hexname[$i]}]} -ge ${hexuse[${hexname[$i+1]}]} ]]; then
+                  rm "${hexname[$i]}".{lst,elf,hex,out}
+                fi
+              done
+              for hxn in ${hexname[@]}; do
+                if [[ -r $hxn.hex ]]; then
+                  hexassoc[$hxn]="$dir/$hxn"
+                  if [[ -z ${hexdirs[$dir]} ]]; then
+                    mkdir -p "$dir"
+                    hexdirs[$dir]=1
+                  fi
+                  mv $hxn.{hex,out,elf,lst} "$dir/"
+                  readarray -d , -t brdali <<<$bname
+                  for ba in ${brdali[@]}; do
+                    if [[ $ba != none && $ba != dual ]]; then
+                      # Make bootloader available under board names, too
+                      badir=${dir/$mcu/board_$ba}
+                      banam=${hxn/$mcu/$ba}
+                      if [[ -z ${hexdirs[$badir]} ]]; then
+                        mkdir -p $badir
+                        hexdirs[$badir]=1
+                      fi
+                      hexassoc[$hxn]+="|$badir/$banam"
+                      for ext in hex out elf lst; do
+                        ln -f $dir/$hxn.$ext $badir/$banam.$ext
+                      done
+                    fi
+                  done
+                fi
+              done
             fi
           done
         done
       done
     done
-    [[ $run == 1 ]] && cd "$dir"
-    [[ $run == 1 ]] && "$here/hexls" -sort -md "https://raw.githubusercontent.com/stefanrueger/urboot/main/$dir" *.hex >README.md
-    [[ $run == 1 ]] && cd "$here"
   done
 done
+
+if [[ $run -eq 1 ]]; then
+  # Remove all non _ee bootloaders that have the same usage as the _ee ones
+  for hxn in "${!hexassoc[@]}"; do
+    if [[ $hxn == *_ee_* ]]; then
+      hxnoee=${hxn//_ee/}
+      if [[ -n ${hexassoc[$hxnoee]} ]]; then
+        if [[ ${hexuse[$hxn]} -le ${hexuse[$hxnoee]} ]]; then
+          readarray -d \| -t noee <<<${hexassoc[$hxnoee]}
+          for noeefn in ${noee[@]}; do
+            rm $noeefn.{hex,lst,elf,out}
+          done
+        fi
+      fi
+    fi
+  done
+
+  # Generate the README.md files
+  for dir in "${!hexdirs[@]}"; do
+    cd "$dir"
+    "$here/hexls" -sort -md "https://raw.githubusercontent.com/stefanrueger/urboot/main/$dir" *.hex >README.md
+    cd "$here"
+  done
+fi

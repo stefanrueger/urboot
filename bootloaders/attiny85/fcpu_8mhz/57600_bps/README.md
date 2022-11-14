@@ -1,25 +1,13 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|240|256|u7.6|`w-u-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ur_vbl.hex)|
 |246|256|u7.6|`w-u-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_led+b1_ur_vbl.hex)|
 |246|256|u7.6|`w-u-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_lednop_ur_vbl.hex)|
-|312|320|u7.6|`weu-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_ur_vbl.hex)|
+|296|320|u7.6|`w-u-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_led+b1_fr_ce_ur_vbl.hex)|
+|296|320|u7.6|`w-u-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_lednop_fr_ce_ur_vbl.hex)|
 |318|320|u7.6|`weu-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_led+b1_ur_vbl.hex)|
 |318|320|u7.6|`weu-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_lednop_ur_vbl.hex)|
-|336|384|u7.6|`weu-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_led+b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_led+b1_fr_ur_vbl.hex)|
-|336|384|u7.6|`weu-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_lednop_fr_ur_vbl.hex)|
-|338|384|u7.6|`w-s-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_vbl.hex)|
-|344|384|u7.6|`w-s-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_led+b1_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_led+b1_vbl.hex)|
-|344|384|u7.6|`w-s-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_lednop_vbl.hex)|
 |364|384|u7.6|`weu-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_led+b1_fr_ce_ur_vbl.hex)|
 |364|384|u7.6|`weu-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_lednop_fr_ce_ur_vbl.hex)|
-|400|448|u7.6|`wes-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_vbl.hex)|
-|406|448|u7.6|`wes-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_led+b1_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_led+b1_vbl.hex)|
-|406|448|u7.6|`wes-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_lednop_vbl.hex)|
-|436|448|u7.6|`wes-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_led+b1_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_led+b1_fr_vbl.hex)|
-|436|448|u7.6|`wes-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_lednop_fr_vbl.hex)|
-|474|512|u7.6|`wes-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_led+b1_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_led+b1_fr_ce_vbl.hex)|
-|474|512|u7.6|`wes-jpr`|[attiny85_8mhz_57600bps_rxb4_txb3_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny85/fcpu_8mhz/57600_bps/attiny85_8mhz_57600bps_rxb4_txb3_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -28,7 +16,6 @@
   + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
-  + `s` uses skeleton of STK500v1 protocol; `-c urclock` and `-c arduino` both work
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
@@ -36,7 +23,7 @@
   + `rxd0 txd1` software I/O using, in this example, lines RX `D0` and TX `D1`
   + `ee` bootloader supports EEPROM read/write
   + `led-b1` toggles an active-low LED on pin `B1`, `+` designates an active-high LED
-  + `lednop` "template" bootloader contains `mov rx,rx` nops that can be replaced to toggle LEDs
+  + `lednop` is a template bootloader with `mov rx,rx` nops as placeholders for LEDs operations
   + `fr` bootloader provides non-essential code for smoother error handing
   + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming

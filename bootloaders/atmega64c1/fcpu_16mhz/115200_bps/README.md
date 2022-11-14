@@ -1,28 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |252|256|u7.6|`w-u-jpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ur_vbl.hex)|
-|258|512|u7.6|`w-u-jpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_lednop_ur_vbl.hex)|
-|314|512|u7.6|`weu-jpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_ur_vbl.hex)|
-|320|512|u7.6|`weu-jpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
-|338|512|u7.6|`weu-jpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
-|346|512|u7.6|`w-s-jpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_vbl.hex)|
-|352|512|u7.6|`w-s-jpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_lednop_vbl.hex)|
 |364|512|u7.6|`weu-jpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
-|402|512|u7.6|`wes-jpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_vbl.hex)|
-|408|512|u7.6|`wes-jpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_vbl.hex)|
-|438|512|u7.6|`wes-jpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_vbl.hex)|
-|478|512|u7.6|`wes-jpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_vbl.hex)|
-|252|1024|u7.6|`w-u-hpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ur.hex)|
-|258|1024|u7.6|`w-u-hpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_lednop_ur.hex)|
-|314|1024|u7.6|`weu-hpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_ur.hex)|
-|320|1024|u7.6|`weu-hpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_ur.hex)|
-|338|1024|u7.6|`weu-hpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ur.hex)|
-|346|1024|u7.6|`w-s-hpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1.hex)|
-|352|1024|u7.6|`w-s-hpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_lednop.hex)|
 |364|1024|u7.6|`weu-hpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
-|402|1024|u7.6|`wes-hpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee.hex)|
-|408|1024|u7.6|`wes-hpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop.hex)|
-|438|1024|u7.6|`wes-hpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr.hex)|
 |478|1024|u7.6|`wes-hpr`|[atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64c1/fcpu_16mhz/115200_bps/atmega64c1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
@@ -40,7 +20,7 @@
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `rxd0 txd1` software I/O using, in this example, lines RX `D0` and TX `D1`
   + `ee` bootloader supports EEPROM read/write
-  + `lednop` "template" bootloader contains `mov rx,rx` nops that can be replaced to toggle LEDs
+  + `lednop` is a template bootloader with `mov rx,rx` nops as placeholders for LEDs operations
   + `fr` bootloader provides non-essential code for smoother error handing
   + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming

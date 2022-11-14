@@ -1,43 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |254|256|u7.6|`w-u-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ur_vbl.hex)|
-|260|512|u7.6|`w-u-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_led+b7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_led+b7_ur_vbl.hex)|
-|260|512|u7.6|`w-u-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_lednop_ur_vbl.hex)|
-|316|512|u7.6|`weu-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_ur_vbl.hex)|
-|322|512|u7.6|`weu-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_ur_vbl.hex)|
-|322|512|u7.6|`weu-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_ur_vbl.hex)|
-|340|512|u7.6|`weu-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_ur_vbl.hex)|
-|340|512|u7.6|`weu-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ur_vbl.hex)|
-|368|512|u7.6|`w-s-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_vbl.hex)|
-|374|512|u7.6|`w-s-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_led+b7_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_led+b7_vbl.hex)|
-|374|512|u7.6|`w-s-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_lednop_vbl.hex)|
 |384|512|u7.6|`weu-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_ce_ur_vbl.hex)|
 |384|512|u7.6|`weu-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_ur_vbl.hex)|
-|424|512|u7.6|`wes-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_vbl.hex)|
-|430|512|u7.6|`wes-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_vbl.hex)|
-|430|512|u7.6|`wes-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_vbl.hex)|
-|460|512|u7.6|`wes-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_vbl.hex)|
-|460|512|u7.6|`wes-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_vbl.hex)|
-|508|512|u7.6|`wes-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_ce_vbl.hex)|
-|508|512|u7.6|`wes-jpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_vbl.hex)|
-|254|1024|u7.6|`w-u-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ur.hex)|
-|260|1024|u7.6|`w-u-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_led+b7_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_led+b7_ur.hex)|
-|260|1024|u7.6|`w-u-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_lednop_ur.hex)|
-|316|1024|u7.6|`weu-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_ur.hex)|
-|322|1024|u7.6|`weu-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_ur.hex)|
-|322|1024|u7.6|`weu-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_ur.hex)|
-|340|1024|u7.6|`weu-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_ur.hex)|
-|340|1024|u7.6|`weu-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ur.hex)|
-|368|1024|u7.6|`w-s-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1.hex)|
-|374|1024|u7.6|`w-s-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_led+b7.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_led+b7.hex)|
-|374|1024|u7.6|`w-s-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_lednop.hex)|
 |384|1024|u7.6|`weu-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_ce_ur.hex)|
 |384|1024|u7.6|`weu-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_ur.hex)|
-|424|1024|u7.6|`wes-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee.hex)|
-|430|1024|u7.6|`wes-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7.hex)|
-|430|1024|u7.6|`wes-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop.hex)|
-|460|1024|u7.6|`wes-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr.hex)|
-|460|1024|u7.6|`wes-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr.hex)|
 |508|1024|u7.6|`wes-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_led+b7_fr_ce.hex)|
 |508|1024|u7.6|`wes-hpr`|[atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_8mhz/115200_bps/atmega2560_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce.hex)|
 
@@ -57,7 +24,7 @@
   + `rxd0 txd1` software I/O using, in this example, lines RX `D0` and TX `D1`
   + `ee` bootloader supports EEPROM read/write
   + `led-b1` toggles an active-low LED on pin `B1`, `+` designates an active-high LED
-  + `lednop` "template" bootloader contains `mov rx,rx` nops that can be replaced to toggle LEDs
+  + `lednop` is a template bootloader with `mov rx,rx` nops as placeholders for LEDs operations
   + `fr` bootloader provides non-essential code for smoother error handing
   + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming

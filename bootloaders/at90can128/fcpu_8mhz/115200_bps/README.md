@@ -1,28 +1,7 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|264|512|u7.6|`w-u-jpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ur_vbl.hex)|
-|270|512|u7.6|`w-u-jpr`|[at90can128_8mhz_115200bps_rxd2_txd3_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_lednop_ur_vbl.hex)|
-|324|512|u7.6|`weu-jpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_ur_vbl.hex)|
-|330|512|u7.6|`weu-jpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_ur_vbl.hex)|
-|348|512|u7.6|`weu-jpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ur_vbl.hex)|
-|360|512|u7.6|`w-s-jpr`|[at90can128_8mhz_115200bps_rxd2_txd3_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_vbl.hex)|
-|366|512|u7.6|`w-s-jpr`|[at90can128_8mhz_115200bps_rxd2_txd3_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_lednop_vbl.hex)|
 |392|512|u7.6|`weu-jpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur_vbl.hex)|
-|414|512|u7.6|`wes-jpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_vbl.hex)|
-|420|512|u7.6|`wes-jpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_vbl.hex)|
-|450|512|u7.6|`wes-jpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_vbl.hex)|
-|508|512|u7.6|`wes-jpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_vbl.hex)|
-|264|1024|u7.6|`w-u-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ur.hex)|
-|270|1024|u7.6|`w-u-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_lednop_ur.hex)|
-|324|1024|u7.6|`weu-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_ur.hex)|
-|330|1024|u7.6|`weu-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_ur.hex)|
-|348|1024|u7.6|`weu-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ur.hex)|
-|360|1024|u7.6|`w-s-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3.hex)|
-|366|1024|u7.6|`w-s-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_lednop.hex)|
 |392|1024|u7.6|`weu-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur.hex)|
-|414|1024|u7.6|`wes-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee.hex)|
-|420|1024|u7.6|`wes-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop.hex)|
-|450|1024|u7.6|`wes-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr.hex)|
 |508|1024|u7.6|`wes-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
@@ -40,7 +19,7 @@
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `rxd0 txd1` software I/O using, in this example, lines RX `D0` and TX `D1`
   + `ee` bootloader supports EEPROM read/write
-  + `lednop` "template" bootloader contains `mov rx,rx` nops that can be replaced to toggle LEDs
+  + `lednop` is a template bootloader with `mov rx,rx` nops as placeholders for LEDs operations
   + `fr` bootloader provides non-essential code for smoother error handing
   + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming

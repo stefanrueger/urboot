@@ -1,33 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|220|256|u7.6|`w-u-jpr`|[atmega32a_18mhz432_460800bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ur_vbl.hex)|
-|226|256|u7.6|`w-u-jpr`|[atmega32a_18mhz432_460800bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_lednop_ur_vbl.hex)|
 |244|256|u7.6|`w-u-jpr`|[atmega32a_18mhz432_460800bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_lednop_fr_ur_vbl.hex)|
-|290|384|u7.6|`weu-jpr`|[atmega32a_18mhz432_460800bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_ur_vbl.hex)|
-|296|384|u7.6|`weu-jpr`|[atmega32a_18mhz432_460800bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_lednop_ur_vbl.hex)|
-|314|384|u7.6|`weu-jpr`|[atmega32a_18mhz432_460800bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_lednop_fr_ur_vbl.hex)|
-|318|384|u7.6|`w-s-jpr`|[atmega32a_18mhz432_460800bps_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_vbl.hex)|
-|324|384|u7.6|`w-s-jpr`|[atmega32a_18mhz432_460800bps_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_lednop_vbl.hex)|
 |342|384|u7.6|`weu-jpr`|[atmega32a_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|358|384|u7.6|`w-s-jpr`|[atmega32a_18mhz432_460800bps_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_lednop_fr_vbl.hex)|
-|378|384|u7.6|`wes-jpr`|[atmega32a_18mhz432_460800bps_ee_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_vbl.hex)|
-|384|384|u7.6|`wes-jpr`|[atmega32a_18mhz432_460800bps_ee_lednop_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_lednop_vbl.hex)|
-|220|512|u7.6|`w-u-hpr`|[atmega32a_18mhz432_460800bps_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ur.hex)|
-|226|512|u7.6|`w-u-hpr`|[atmega32a_18mhz432_460800bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_lednop_ur.hex)|
-|244|512|u7.6|`w-u-hpr`|[atmega32a_18mhz432_460800bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_lednop_fr_ur.hex)|
-|286|512|u7.6|`weu-hpr`|[atmega32a_18mhz432_460800bps_ee_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_ur.hex)|
-|292|512|u7.6|`weu-hpr`|[atmega32a_18mhz432_460800bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_lednop_ur.hex)|
-|310|512|u7.6|`weu-hpr`|[atmega32a_18mhz432_460800bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_lednop_fr_ur.hex)|
-|314|512|u7.6|`w-s-hpr`|[atmega32a_18mhz432_460800bps.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps.hex)|
-|320|512|u7.6|`w-s-hpr`|[atmega32a_18mhz432_460800bps_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_lednop.hex)|
 |338|512|u7.6|`weu-hpr`|[atmega32a_18mhz432_460800bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_lednop_fr_ce_ur.hex)|
-|354|512|u7.6|`w-s-hpr`|[atmega32a_18mhz432_460800bps_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_lednop_fr.hex)|
-|374|512|u7.6|`wes-hpr`|[atmega32a_18mhz432_460800bps_ee.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee.hex)|
-|380|512|u7.6|`wes-hpr`|[atmega32a_18mhz432_460800bps_ee_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_lednop.hex)|
-|410|512|u7.6|`wes-hpr`|[atmega32a_18mhz432_460800bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_lednop_fr.hex)|
-|410|512|u7.6|`wes-jpr`|[atmega32a_18mhz432_460800bps_ee_lednop_fr_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_lednop_fr_vbl.hex)|
 |452|512|u7.6|`wes-hpr`|[atmega32a_18mhz432_460800bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_lednop_fr_ce.hex)|
-|452|512|u7.6|`wes-jpr`|[atmega32a_18mhz432_460800bps_ee_lednop_fr_ce_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/fcpu_18mhz432/460800_bps/atmega32a_18mhz432_460800bps_ee_lednop_fr_ce_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -43,7 +19,7 @@
   + `r` preserves reset flags for the application in the register R2
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `ee` bootloader supports EEPROM read/write
-  + `lednop` "template" bootloader contains `mov rx,rx` nops that can be replaced to toggle LEDs
+  + `lednop` is a template bootloader with `mov rx,rx` nops as placeholders for LEDs operations
   + `fr` bootloader provides non-essential code for smoother error handing
   + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming
