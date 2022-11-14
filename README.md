@@ -6,12 +6,12 @@
      + 256 bytes albeit without EEPROM read/write support
      + 384 bytes with EEPROM read/write support
      + 512 bytes with dual-boot, EEPROM read/write support and Chip Erase capability
- - High default baud rate 115200 for fast programming
+ - High default baud rate 115,200 for fast programming
  - Highly modular feature set:
      + EEPROM read/write support
      + Vector bootloader for devices without a boot section or to save space on devices with one
      + Software UART: no hardware UART required, but also useful when the chip's CPU frequency and
-       the bootloader's desired baudrate are incompatible (eg, 8 MHz and 115200 baud)
+       the bootloader's desired baudrate are incompatible (eg, 8 MHz and 115,200 baud)
      + Subroutine `pgm_write_page(sram, progmem)` for applications so they can change themselves:
        on many MCUs the SPM write flash only works when called from the bootloader section (default on)
      + Dual programming from external SPI flash memory for over-the-air programming
@@ -41,10 +41,10 @@ hurdles are taken, it is pretty easy to create own bootloaders with commands suc
 ```
 
 **Pre-compiled bootloaders.** If compiling bootloaders is not feasible, feel free to try out one of
-the roughly 110,000 *different* pre-compiled bootloaders in the directory tree
+the 28,769 *different* pre-compiled bootloaders in the directory tree
 [`bootloaders`](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/). The tree
-contains actually some 350,000 hex files, but they are somewhat redundant because a bootloader on
-115200 baud for 16 MHz is *exactly* the same as a bootloader on 57600 baud for 8 MHz.
+contains actually 88,368 files, but they are somewhat redundant because a bootloader on
+115,200 baud for 16 MHz is *exactly* the same as a bootloader on 57,600 baud for 8 MHz.
 
 **Usage.** As with all bootloaders, one needs to first program them onto
 the board/chip using a (physical) programmer and an uploader program, eg, through
@@ -80,7 +80,7 @@ Voila!
 bootloader resetting itself through the watchdog timer.
 
 **Comparison.** The table below lists a sample of `urboot` bootloaders and their features alongside
-vanilla optiboot. They are all for a 16 MHz MCU and 115200 baud serial communication speed, except
+vanilla optiboot. They are all for a 16 MHz MCU and 115,200 baud serial communication speed, except
 where noted differently.
 
 Size|Usage|Version|Features|CE|Hex file|
