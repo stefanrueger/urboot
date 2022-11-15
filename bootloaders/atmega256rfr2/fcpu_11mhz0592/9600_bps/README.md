@@ -1,15 +1,15 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|248|256|u7.6|`w-u-jpr`|[atmega256rfr2_11mhz0592_9600bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega256rfr2/fcpu_11mhz0592/9600_bps/atmega256rfr2_11mhz0592_9600bps_lednop_ur_vbl.hex)|
-|372|512|u7.6|`weu-jpr`|[atmega256rfr2_11mhz0592_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega256rfr2/fcpu_11mhz0592/9600_bps/atmega256rfr2_11mhz0592_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|372|1024|u7.6|`weu-hpr`|[atmega256rfr2_11mhz0592_9600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega256rfr2/fcpu_11mhz0592/9600_bps/atmega256rfr2_11mhz0592_9600bps_ee_lednop_fr_ce_ur.hex)|
-|496|1024|u7.6|`wes-hpr`|[atmega256rfr2_11mhz0592_9600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega256rfr2/fcpu_11mhz0592/9600_bps/atmega256rfr2_11mhz0592_9600bps_ee_lednop_fr_ce.hex)|
+|248|256|u7.7|`w-u-jpr--`|[atmega256rfr2_11mhz0592_9600bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega256rfr2/fcpu_11mhz0592/9600_bps/atmega256rfr2_11mhz0592_9600bps_lednop_ur_vbl.hex)|
+|372|512|u7.7|`weu-jpr-c`|[atmega256rfr2_11mhz0592_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega256rfr2/fcpu_11mhz0592/9600_bps/atmega256rfr2_11mhz0592_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|372|1024|u7.7|`weu-hpr-c`|[atmega256rfr2_11mhz0592_9600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega256rfr2/fcpu_11mhz0592/9600_bps/atmega256rfr2_11mhz0592_9600bps_ee_lednop_fr_ce_ur.hex)|
+|486|1024|u7.7|`wes-hpr-c`|[atmega256rfr2_11mhz0592_9600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega256rfr2/fcpu_11mhz0592/9600_bps/atmega256rfr2_11mhz0592_9600bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work

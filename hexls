@@ -28,16 +28,18 @@ Options:
   -md=url      print neat markdown table with header (files use url)
   -check       check rjmp op code at end (if pgm_page_write-enabled and .lst file there)
   -sort        sort rows according to use, size, version, features, name
+  -use         print number of bytes occupied by bootloader and exit
 END_USAGE
 
-my ($version, $check, $srt, $md, $l, $c, $t, $title, $in, $disthex, $vers, $distelf, $pgmwriteaddr, $addrlst);
+my ($version, $check, $srt, $usage, $md, $l, $c, $t, $title, $in, $disthex, $rjmpop, $vers, $distelf, $pgmwriteaddr, $addrlst);
 my (@rows, $siz, $use, $ver, $fea, $nam, %legend);
 
 my %feature = (
-  'w'      => "  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`\n",
+  'a'      => "  + `a` autobaud detection (f_cpu/8n and less with discrete divisors, normally n = 2, 3, ...)\n",
+  'w'      => "  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`\n",
   'e'      => "  + `e` EEPROM read/write support\n",
   'u'      => "  + `u` uses urprotocol requiring `avrdude -c urclock` for programming\n",
-  's'      => "  + `s` uses skeleton of STK500v1 protocol; `-c urclock` and `-c arduino` both work\n",
+  's'      => "  + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work\n",
   'd'      => "  + `d` dual boot (over-the-air programming from external SPI flash)\n",
   'D'      => "  + `D` dual boot with SE and SPI restoration\n",
   'f'      => "  + `f` (not recommended) dual boot without erasing trigger sector, beware the application must do so\n",
@@ -46,16 +48,22 @@ my %feature = (
   'v'      => "  + `v` vector bootloader: patches the vector table itself during upload but verification fails\n",
   'V'      => "  + `V` vector bootloader: patches the vector table itself during upload and skips verifying the first page\n",
   'p'      => "  + `p` bootloader protects itself from being overwritten\n",
+  'c'      => "  + `c` bootloader provides chip erase functionality (only recommended for large MCUs)\n",
   'r'      => "  + `r` preserves reset flags for the application in the register R2\n",
   '?'      => "  + `?` unable to tell from .hex file whether this feature is present\n",
-  '.'      => "   `.` bootloader with unknown provenance\n",
+  '.'      => "  + `.` unable to tell from .hex file whether this feature is present\n",
+  '-'      => "  + `-` corresponding feature not present\n",
+  'auto'   => "  + `autobaud` tries to match host baud rate; can be f/16, f/24, f/32, ..., f/2048 (f=F<sub>MCU</sub>)\n",
+  'auto2'  => "  + `autobaud2` tries to match host baud rate; can be f/16, f/32, f/48, ..., f/4096 (f=F<sub>MCU</sub>)\n",
+  'dual'   => "  + `dual` boot: serial and from external SPI flash memory\n",
   'swio'   => "  + `swio` software I/O (not USART)\n",
   'swiorx' => "  + `rxd0 txd1` software I/O using, in this example, lines RX `D0` and TX `D1`\n",
   'ee'     => "  + `ee` bootloader supports EEPROM read/write\n",
   'led-b1' => "  + `led-b1` toggles an active-low LED on pin `B1`, `+` designates an active-high LED\n",
   'led9'   => "  + `led9` toggles an LED on, in this example, Arduino pin 9\n",
   'ledPB1' => "  + `ledPB1` toggles an LED on, in this example, pin B1\n",
-  'lednop' => "  + `lednop` \"template\" bootloader contains `mov rx,rx` nops that can be replaced to toggle LEDs\n",
+  'lednop' => "  + `lednop` is a template bootloader with `mov rx,rx` nops as placeholders for LEDs operations\n",
+  'template'=>"  + `template` bootloaders contains `mov rx,rx` nops as placeholders for LED and CS operations\n",
   'csb0'   => "  + `csb0` for dual boot uses, in this example, pin B0 as chip select of external SPI flash memory\n",
   'cs8'    => "  + `cs8` for dual boot uses, in this example, Arduino pin 8 as chip select of external SPI flash memory\n",
   'csPB0'  => "  + `csPB0` for dual boot uses, in this example, pin B0 as chip select of external SPI flash memory\n",
@@ -76,6 +84,10 @@ sub f {
   if(length($name) == 1) {
     $legend{$name} = 1;
   } else {
+    $legend{auto} = 1 if $name =~ /_autobaud[_.]/;
+    $legend{auto2} = 1 if $name =~ /_autobaud2[_.]/;
+    $legend{template} = 1 if $name =~ /_template[_.]/;
+    $legend{dual} = 1 if $name =~ /_dual[_.]/;
     $legend{swiorx} = 1 if $name =~ /_[rt]x[a-z][0-7][_.]/;
     $legend{swio} = 1 if $name =~ /_swio[_.]/;
     $legend{ee} = 1 if $name =~ /_ee[_.]/;
@@ -106,6 +118,7 @@ GetOptions(
   'check' => \$check,
   'md=s' => \$md,
   'sort' => \$srt,
+  'use'  => \$usage,
 ) or die $Usage;
 
 
@@ -117,6 +130,7 @@ $t = defined($md)? "`": "";
 
 use constant {
   UR_PGMWRITEPAGE   => 128, # pgm_write_page() subroutine that can be called from application at FLASHEND+1-4
+  UR_AUTOBAUD       => 128, # Bootloader has autobaud detection (v7.7+)
   UR_EEPROM         =>  64, # EEPROM read/write support
   UR_URPROTOCOL     =>  32, # bootloader uses own protocol and requires avrdude -c urclock
   UR_DUAL           =>  16, # dual boot
@@ -127,6 +141,7 @@ use constant {
   UR_NO_VBL         =>   0, # no vector bootloader support
   UR_PROTECTME      =>   2, # bootloader safeguards against overwriting itself
   UR_RESETFLAGS     =>   1, # load reset flags into register R2 before jumping to the application
+  UR_HAS_CE         =>   1, # Bootloader has Chip Erase (v7.7+)
 };
 
 # default to all *.hex files if no argument given
@@ -140,6 +155,7 @@ foreach my $fname (@ARGV) {
 
   #  my $size = `avr-size $fname | cut -f2 | tail -1`;
 
+  undef $rjmpop;
   # read intel hex file (see https://en.wikipedia.org/wiki/Intel_HEX)
   open($in, $fname) or die "$progname: cannot open $fname";
   my ($startaddr, $endaddr, $flashsize, $offset, $versionlen) = (0, 0, 0, 0, 0);
@@ -156,9 +172,10 @@ foreach my $fname (@ARGV) {
       # upper two bytes
       $vers    = hex(substr($_, 7+2*$len, 2).substr($_, 5+2*$len, 2));
       # if exists lower three nibbles of rjmp opcode 0xC.... just below version
+      $rjmpop =  $len == 2? undef: lc(substr($_, 3+2*$len, 2).substr($_, 1+2*$len, 2));
       $disthex = $len == 2? undef: hex(substr($_, 4+2*$len, 1).substr($_, 1+2*$len, 2));
-      # add $len-2 to start of version section to be just after rjmp
-      $pgmwriteaddr = $len ==2? undef: $offset + hex(substr($_,3,4)) + $len-2 + 2*($disthex-4096);
+      # add $len-2 to start of version section to be just after rjmp; 0x9805 is the ret opcode
+      $pgmwriteaddr = $len ==2 || $rjmpop eq '9805'? undef: $offset + hex(substr($_,3,4)) + $len-2 + 2*($disthex-4096);
     } elsif(/^:......00/i) { # ordinary data record
       my $len = hex(substr($_, 1, 2));
       my $addr = hex(substr($_,3,4))+$offset;
@@ -174,19 +191,22 @@ foreach my $fname (@ARGV) {
   # size of bootloader/space it occupies
   $siz = $endaddr+$versionlen-$startaddr; $siz = 9999 if $siz <= 0;
   $use = $flashsize-$startaddr; $use = 9999 if $use <= 0;
-  if(!defined($vers) || $vers == 0xffff || $vers < 4*256+1) { # Optiboot puts the version number in binary from V4.1
-    $ver = "x0.0"; $fea = ".......";
+  if(!defined($vers) || $vers == 0xffff || $vers < 4*256+1) { # Optiboot puts the version number in binary from v4.1
+    $ver = "x0.0"; $fea = ".........";
     f('.');
   } elsif(int($vers/256) >= 7*8+6) { # from version 7.6 onwards URPROTOCOL has its own bit
+    my $v77 = int($vers/256) >= 7*8+7;
     $ver = sprintf("u%d.%d", int($vers/(8*256)), ($vers/256)&7);
-    $fea = f($vers & UR_PGMWRITEPAGE? 'w': '-');
+    $fea = f((!$v77 && ($vers & UR_PGMWRITEPAGE)) || ($v77 && defined($rjmpop) && substr($rjmpop, 0, 1) eq 'c')? 'w': '-');
     $fea .= f($vers & UR_EEPROM? 'e': '-');
     $fea .= f($vers & UR_URPROTOCOL? 'u': 's');
     $fea .= f($vers & UR_DUAL? 'd': '-');
     $flags = ($vers/UR_VBL) & 3;
     $fea .= f($flags==3? 'V': $flags==2? 'v': $flags? 'j': 'h'); # V = VBL, patch & verify, v = VBL, patch only, j = VBL, jump only, h = hw boot support
     $fea .= f($vers & UR_PROTECTME? 'p': '-');
-    $fea .= f($vers & UR_RESETFLAGS? 'r': '-');
+    $fea .= f((!$v77 && ($vers & UR_RESETFLAGS)) || $v77? 'r': '-');
+    $fea .= f($v77 && ($vers & UR_AUTOBAUD)? 'a': '-');
+    $fea .= f($v77 && ($vers & UR_HAS_CE)? 'c': '.');
   } elsif(int($vers/256) >= 7*8+2) { # from version 7.2 onwards urboot versioning
     $ver = sprintf("u%d.%d", int($vers/(8*256)), ($vers/256)&7);
     $fea = f($vers & UR_PGMWRITEPAGE? 'w': '-');
@@ -198,10 +218,11 @@ foreach my $fname (@ARGV) {
     $fea .= f($flags==3? 'V': $flags==2? 'v': $flags? 'j': 'h'); # V = VBL, patch & verify, v = VBL, patch only, j = VBL, jump only, h = hw boot support
     $fea .= f($vers & UR_PROTECTME? (int($vers/256) >= 7*8+5? 'u': 'p'): (int($vers/256) >= 7*8+5? 's': '-'));
     $fea .= f($vers & UR_RESETFLAGS? 'r': '-');
+    $fea += '--';
   } else {
     $ver = sprintf("o%d.%d", int($vers/256), $vers & 0xff);
-    $fea = "??s-??r";
-    f('s'); f('r'); f('?');
+    $fea = "-.s-.-r--";
+    f('s'); f('r'); f('.'); f('-');
   }
   $nam = $fname;
   f(basename($fname));
@@ -239,6 +260,15 @@ if(!$check) {
   if($srt) {
     @rows = sort { $a->[1] <=> $b->[1] or  $a->[0] <=> $b->[0] or $b->[2] cmp $a->[2] or $a->[3] cmp $b->[3] or $a->[4] cmp $b->[4] } @rows;
   }
+  if(defined($usage) && @rows) {
+    if(@rows == 1) {
+      printf "%d\n", $rows[0]->[1];
+    } else {
+      printf "%d %s\n", $_->[1], $_->[4] for @rows;
+    }
+    exit
+  }
+
   if(defined($md) && @rows) {
     print("|Size|Usage|Version|Features|Hex file|\n");
     print("|:-:|:-:|:-:|:-:|:--|\n");
@@ -255,7 +285,7 @@ if(!$check) {
      "- **Features:**\n";
      print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p r ? .));
      print "- **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by\n";
-     print $feature{$_} for grep { $legend{$_} } (qw(swio swiorx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB1 csnop fp9 fr ce ur ddd v2 v3 vbl min));
+     print $feature{$_} for grep { $legend{$_} } (qw(auto auto2 swio swiorx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB1 csnop template dual fp9 fr ce ur ddd v2 v3 vbl min));
   }
 }
 

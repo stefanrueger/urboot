@@ -1,20 +1,20 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|240|256|u7.6|`w-u-jpr`|[moteinomega_16mhz_19200bps_led+d7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_led+d7_ur_vbl.hex)|
-|364|512|u7.6|`weu-jpr`|[moteinomega_16mhz_19200bps_ee_led+d7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_fr_ce_ur_vbl.hex)|
-|472|512|u7.6|`w-udjpr`|[moteinomega_16mhz_19200bps_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
-|490|512|u7.6|`weudjpr`|[moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ur_vbl.hex)|
-|534|768|u7.6|`weudjpr`|[moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
-|364|1024|u7.6|`weu-hpr`|[moteinomega_16mhz_19200bps_ee_led+d7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_fr_ce_ur.hex)|
-|480|1024|u7.6|`wes-hpr`|[moteinomega_16mhz_19200bps_ee_led+d7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_fr_ce.hex)|
-|534|1024|u7.6|`weudhpr`|[moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur.hex)|
-|650|1024|u7.6|`wesdhpr`|[moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ce.hex)|
+|240|256|u7.7|`w-u-jpr--`|[moteinomega_16mhz_19200bps_led+d7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_led+d7_ur_vbl.hex)|
+|364|512|u7.7|`weu-jpr-c`|[moteinomega_16mhz_19200bps_ee_led+d7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_fr_ce_ur_vbl.hex)|
+|472|512|u7.7|`w-udjpr-c`|[moteinomega_16mhz_19200bps_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
+|490|512|u7.7|`weudjpr--`|[moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ur_vbl.hex)|
+|534|768|u7.7|`weudjpr-c`|[moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
+|364|1024|u7.7|`weu-hpr-c`|[moteinomega_16mhz_19200bps_ee_led+d7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_fr_ce_ur.hex)|
+|470|1024|u7.7|`wes-hpr-c`|[moteinomega_16mhz_19200bps_ee_led+d7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_fr_ce.hex)|
+|534|1024|u7.7|`weudhpr-c`|[moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur.hex)|
+|640|1024|u7.7|`wesdhpr-c`|[moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_16mhz/19200_bps/moteinomega_16mhz_19200bps_ee_led+d7_csc7_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work

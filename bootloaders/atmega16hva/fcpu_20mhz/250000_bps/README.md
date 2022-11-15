@@ -1,13 +1,13 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.6|`w-u-jpr`|[atmega16hva_20mhz_250000bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16hva/fcpu_20mhz/250000_bps/atmega16hva_20mhz_250000bps_rxb0_txb1_ur_vbl.hex)|
-|366|384|u7.6|`weu-jpr`|[atmega16hva_20mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16hva/fcpu_20mhz/250000_bps/atmega16hva_20mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|252|256|u7.7|`w-u-jpr--`|[atmega16hva_20mhz_250000bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16hva/fcpu_20mhz/250000_bps/atmega16hva_20mhz_250000bps_rxb0_txb1_ur_vbl.hex)|
+|366|384|u7.7|`weu-jpr-c`|[atmega16hva_20mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16hva/fcpu_20mhz/250000_bps/atmega16hva_20mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`

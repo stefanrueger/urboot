@@ -41,9 +41,9 @@ hurdles are taken, it is pretty easy to create own bootloaders with commands suc
 ```
 
 **Pre-compiled bootloaders.** If compiling bootloaders is not feasible, feel free to try out one of
-the 28,769 *different* pre-compiled bootloaders in the directory tree
+the 27,311 *different* pre-compiled bootloaders in the directory tree
 [`bootloaders`](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/). The tree
-contains actually 88,368 files, but they are somewhat redundant because a bootloader on
+contains actually 83,690 files, but they are somewhat redundant because a bootloader on
 115,200 baud for 16 MHz is *exactly* the same as a bootloader on 57,600 baud for 8 MHz.
 
 **Usage.** As with all bootloaders, one needs to first program them onto

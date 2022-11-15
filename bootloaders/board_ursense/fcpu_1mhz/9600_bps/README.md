@@ -1,20 +1,19 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.6|`w-u-jpr`|[ursense_1mhz_9600bps_led-d5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_led-d5_fr_ur_vbl.hex)|
-|346|384|u7.6|`weu-jpr`|[ursense_1mhz_9600bps_ee_led-d5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_ee_led-d5_fr_ce_ur_vbl.hex)|
-|378|384|u7.6|`w-udjpr`|[ursense_1mhz_9600bps_led-d5_csb0_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_led-d5_csb0_dual_ur_vbl.hex)|
-|342|512|u7.6|`weu-hpr`|[ursense_1mhz_9600bps_ee_led-d5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_ee_led-d5_fr_ce_ur.hex)|
-|456|512|u7.6|`wes-hpr`|[ursense_1mhz_9600bps_ee_led-d5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_ee_led-d5_fr_ce.hex)|
-|486|512|u7.6|`weudhpr`|[ursense_1mhz_9600bps_ee_led-d5_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_ee_led-d5_csb0_dual_fr_ce_ur.hex)|
-|486|512|u7.6|`weudjpr`|[ursense_1mhz_9600bps_ee_led-d5_csb0_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_ee_led-d5_csb0_dual_fr_ce_ur_vbl.hex)|
-|502|512|u7.6|`w-sdhpr`|[ursense_1mhz_9600bps_led-d5_csb0_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_led-d5_csb0_dual_fr.hex)|
-|600|1024|u7.6|`wesdhpr`|[ursense_1mhz_9600bps_ee_led-d5_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_ee_led-d5_csb0_dual_fr_ce.hex)|
+|252|256|u7.7|`w-u-jpr--`|[ursense_1mhz_9600bps_led-d5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_led-d5_fr_ur_vbl.hex)|
+|346|384|u7.7|`weu-jpr-c`|[ursense_1mhz_9600bps_ee_led-d5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_ee_led-d5_fr_ce_ur_vbl.hex)|
+|378|384|u7.7|`w-udjpr--`|[ursense_1mhz_9600bps_led-d5_csb0_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_led-d5_csb0_dual_ur_vbl.hex)|
+|342|512|u7.7|`weu-hpr-c`|[ursense_1mhz_9600bps_ee_led-d5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_ee_led-d5_fr_ce_ur.hex)|
+|446|512|u7.7|`wes-hpr-c`|[ursense_1mhz_9600bps_ee_led-d5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_ee_led-d5_fr_ce.hex)|
+|486|512|u7.7|`weudhpr-c`|[ursense_1mhz_9600bps_ee_led-d5_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_ee_led-d5_csb0_dual_fr_ce_ur.hex)|
+|492|512|u7.7|`w-sdhpr--`|[ursense_1mhz_9600bps_led-d5_csb0_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_led-d5_csb0_dual_fr.hex)|
+|590|1024|u7.7|`wesdhpr-c`|[ursense_1mhz_9600bps_ee_led-d5_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_ursense/fcpu_1mhz/9600_bps/ursense_1mhz_9600bps_ee_led-d5_csb0_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work

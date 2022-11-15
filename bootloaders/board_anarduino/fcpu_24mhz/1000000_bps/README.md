@@ -1,19 +1,18 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.6|`w-u-jpr`|[anarduino_24mhz_1000000bps_led+b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_led+b1_fr_ur_vbl.hex)|
-|346|384|u7.6|`weu-jpr`|[anarduino_24mhz_1000000bps_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_ee_led+b1_fr_ce_ur_vbl.hex)|
-|342|512|u7.6|`weu-hpr`|[anarduino_24mhz_1000000bps_ee_led+b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_ee_led+b1_fr_ce_ur.hex)|
-|456|512|u7.6|`wes-hpr`|[anarduino_24mhz_1000000bps_ee_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_ee_led+b1_fr_ce.hex)|
-|494|512|u7.6|`weudhpr`|[anarduino_24mhz_1000000bps_ee_led+b1_csd5_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_ee_led+b1_csd5_dual_fr_ce_ur.hex)|
-|494|512|u7.6|`weudjpr`|[anarduino_24mhz_1000000bps_ee_led+b1_csd5_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_ee_led+b1_csd5_dual_fr_ce_ur_vbl.hex)|
-|510|512|u7.6|`w-sdhpr`|[anarduino_24mhz_1000000bps_led+b1_csd5_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_led+b1_csd5_dual_fr.hex)|
-|608|1024|u7.6|`wesdhpr`|[anarduino_24mhz_1000000bps_ee_led+b1_csd5_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_ee_led+b1_csd5_dual_fr_ce.hex)|
+|252|256|u7.7|`w-u-jpr--`|[anarduino_24mhz_1000000bps_led+b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_led+b1_fr_ur_vbl.hex)|
+|346|384|u7.7|`weu-jpr-c`|[anarduino_24mhz_1000000bps_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_ee_led+b1_fr_ce_ur_vbl.hex)|
+|342|512|u7.7|`weu-hpr-c`|[anarduino_24mhz_1000000bps_ee_led+b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_ee_led+b1_fr_ce_ur.hex)|
+|446|512|u7.7|`wes-hpr-c`|[anarduino_24mhz_1000000bps_ee_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_ee_led+b1_fr_ce.hex)|
+|494|512|u7.7|`weudhpr-c`|[anarduino_24mhz_1000000bps_ee_led+b1_csd5_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_ee_led+b1_csd5_dual_fr_ce_ur.hex)|
+|500|512|u7.7|`w-sdhpr--`|[anarduino_24mhz_1000000bps_led+b1_csd5_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_led+b1_csd5_dual_fr.hex)|
+|598|1024|u7.7|`wesdhpr-c`|[anarduino_24mhz_1000000bps_ee_led+b1_csd5_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_24mhz/1000000_bps/anarduino_24mhz_1000000bps_ee_led+b1_csd5_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work

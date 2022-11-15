@@ -1,18 +1,17 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.6|`w-u-hpr`|[attiny828_8mhz_115200bps_rxc2_txc3_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ur.hex)|
-|252|256|u7.6|`w-u-jpr`|[attiny828_8mhz_115200bps_rxc2_txc3_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ur_vbl.hex)|
-|308|320|u7.6|`w-u-jpr`|[attiny828_8mhz_115200bps_rxc2_txc3_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_lednop_fr_ce_ur_vbl.hex)|
-|320|320|u7.6|`weu-jpr`|[attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_ur_vbl.hex)|
-|366|384|u7.6|`weu-jpr`|[attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur_vbl.hex)|
-|362|512|u7.6|`weu-hpr`|[attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur.hex)|
-|476|512|u7.6|`wes-hpr`|[attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce.hex)|
+|252|256|u7.7|`w-u-hpr--`|[attiny828_8mhz_115200bps_rxc2_txc3_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ur.hex)|
+|308|320|u7.7|`w-u-jpr-c`|[attiny828_8mhz_115200bps_rxc2_txc3_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_lednop_fr_ce_ur_vbl.hex)|
+|320|320|u7.7|`weu-jpr--`|[attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_ur_vbl.hex)|
+|366|384|u7.7|`weu-jpr-c`|[attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur_vbl.hex)|
+|362|512|u7.7|`weu-hpr-c`|[attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur.hex)|
+|466|512|u7.7|`wes-hpr-c`|[attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work

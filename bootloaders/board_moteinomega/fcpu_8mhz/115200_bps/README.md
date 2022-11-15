@@ -1,19 +1,19 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|386|512|u7.6|`weu-jpr`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_fr_ce_ur_vbl.hex)|
-|494|512|u7.6|`w-udjpr`|[moteinomega_8mhz_115200bps_rxd0_txd1_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
-|512|512|u7.6|`weudjpr`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ur_vbl.hex)|
-|556|768|u7.6|`weudjpr`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
-|386|1024|u7.6|`weu-hpr`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_fr_ce_ur.hex)|
-|502|1024|u7.6|`wes-hpr`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_fr_ce.hex)|
-|556|1024|u7.6|`weudhpr`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ce_ur.hex)|
-|672|1024|u7.6|`wesdhpr`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ce.hex)|
+|386|512|u7.7|`weu-jpr-c`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_fr_ce_ur_vbl.hex)|
+|494|512|u7.7|`w-udjpr-c`|[moteinomega_8mhz_115200bps_rxd0_txd1_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
+|512|512|u7.7|`weudjpr--`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ur_vbl.hex)|
+|556|768|u7.7|`weudjpr-c`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
+|386|1024|u7.7|`weu-hpr-c`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_fr_ce_ur.hex)|
+|492|1024|u7.7|`wes-hpr-c`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_fr_ce.hex)|
+|556|1024|u7.7|`weudhpr-c`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ce_ur.hex)|
+|662|1024|u7.7|`wesdhpr-c`|[moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_8mhz/115200_bps/moteinomega_8mhz_115200bps_rxd0_txd1_ee_led+d7_csc7_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work

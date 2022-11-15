@@ -1,14 +1,14 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|256|256|u7.6|`w-u-jpr`|[attiny84a_24mhz_230400bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/attiny84a_24mhz_230400bps_rxb0_txb1_lednop_ur_vbl.hex)|
-|306|320|u7.6|`w-u-jpr`|[attiny84a_24mhz_230400bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/attiny84a_24mhz_230400bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
-|374|384|u7.6|`weu-jpr`|[attiny84a_24mhz_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/attiny84a_24mhz_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|256|256|u7.7|`w-u-jpr--`|[attiny84a_24mhz_230400bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/attiny84a_24mhz_230400bps_rxb0_txb1_lednop_ur_vbl.hex)|
+|306|320|u7.7|`w-u-jpr-c`|[attiny84a_24mhz_230400bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/attiny84a_24mhz_230400bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|374|384|u7.7|`weu-jpr-c`|[attiny84a_24mhz_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/attiny84a_24mhz_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`

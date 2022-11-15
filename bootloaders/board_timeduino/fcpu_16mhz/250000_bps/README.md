@@ -1,20 +1,19 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|248|256|u7.6|`w-u-jpr`|[timeduino_16mhz_250000bps_led-b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_led-b1_fr_ur_vbl.hex)|
-|342|384|u7.6|`weu-jpr`|[timeduino_16mhz_250000bps_ee_led-b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_ee_led-b1_fr_ce_ur_vbl.hex)|
-|374|384|u7.6|`w-udjpr`|[timeduino_16mhz_250000bps_led-b1_csb0_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_led-b1_csb0_dual_ur_vbl.hex)|
-|338|512|u7.6|`weu-hpr`|[timeduino_16mhz_250000bps_ee_led-b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_ee_led-b1_fr_ce_ur.hex)|
-|452|512|u7.6|`wes-hpr`|[timeduino_16mhz_250000bps_ee_led-b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_ee_led-b1_fr_ce.hex)|
-|482|512|u7.6|`weudhpr`|[timeduino_16mhz_250000bps_ee_led-b1_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_ee_led-b1_csb0_dual_fr_ce_ur.hex)|
-|482|512|u7.6|`weudjpr`|[timeduino_16mhz_250000bps_ee_led-b1_csb0_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_ee_led-b1_csb0_dual_fr_ce_ur_vbl.hex)|
-|498|512|u7.6|`w-sdhpr`|[timeduino_16mhz_250000bps_led-b1_csb0_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_led-b1_csb0_dual_fr.hex)|
-|596|1024|u7.6|`wesdhpr`|[timeduino_16mhz_250000bps_ee_led-b1_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_ee_led-b1_csb0_dual_fr_ce.hex)|
+|248|256|u7.7|`w-u-jpr--`|[timeduino_16mhz_250000bps_led-b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_led-b1_fr_ur_vbl.hex)|
+|342|384|u7.7|`weu-jpr-c`|[timeduino_16mhz_250000bps_ee_led-b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_ee_led-b1_fr_ce_ur_vbl.hex)|
+|374|384|u7.7|`w-udjpr--`|[timeduino_16mhz_250000bps_led-b1_csb0_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_led-b1_csb0_dual_ur_vbl.hex)|
+|338|512|u7.7|`weu-hpr-c`|[timeduino_16mhz_250000bps_ee_led-b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_ee_led-b1_fr_ce_ur.hex)|
+|442|512|u7.7|`wes-hpr-c`|[timeduino_16mhz_250000bps_ee_led-b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_ee_led-b1_fr_ce.hex)|
+|482|512|u7.7|`weudhpr-c`|[timeduino_16mhz_250000bps_ee_led-b1_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_ee_led-b1_csb0_dual_fr_ce_ur.hex)|
+|488|512|u7.7|`w-sdhpr--`|[timeduino_16mhz_250000bps_led-b1_csb0_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_led-b1_csb0_dual_fr.hex)|
+|586|1024|u7.7|`wesdhpr-c`|[timeduino_16mhz_250000bps_ee_led-b1_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_16mhz/250000_bps/timeduino_16mhz_250000bps_ee_led-b1_csb0_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work

@@ -1,15 +1,15 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|246|256|u7.6|`w-u-jpr`|[sanguino_24mhz_500000bps_led+b0_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/fcpu_24mhz/500000_bps/sanguino_24mhz_500000bps_led+b0_fr_ur_vbl.hex)|
-|334|512|u7.6|`weu-jpr`|[sanguino_24mhz_500000bps_ee_led+b0_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/fcpu_24mhz/500000_bps/sanguino_24mhz_500000bps_ee_led+b0_fr_ce_ur_vbl.hex)|
-|334|1024|u7.6|`weu-hpr`|[sanguino_24mhz_500000bps_ee_led+b0_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/fcpu_24mhz/500000_bps/sanguino_24mhz_500000bps_ee_led+b0_fr_ce_ur.hex)|
-|448|1024|u7.6|`wes-hpr`|[sanguino_24mhz_500000bps_ee_led+b0_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/fcpu_24mhz/500000_bps/sanguino_24mhz_500000bps_ee_led+b0_fr_ce.hex)|
+|246|256|u7.7|`w-u-jpr--`|[sanguino_24mhz_500000bps_led+b0_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/fcpu_24mhz/500000_bps/sanguino_24mhz_500000bps_led+b0_fr_ur_vbl.hex)|
+|334|512|u7.7|`weu-jpr-c`|[sanguino_24mhz_500000bps_ee_led+b0_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/fcpu_24mhz/500000_bps/sanguino_24mhz_500000bps_ee_led+b0_fr_ce_ur_vbl.hex)|
+|334|1024|u7.7|`weu-hpr-c`|[sanguino_24mhz_500000bps_ee_led+b0_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/fcpu_24mhz/500000_bps/sanguino_24mhz_500000bps_ee_led+b0_fr_ce_ur.hex)|
+|438|1024|u7.7|`wes-hpr-c`|[sanguino_24mhz_500000bps_ee_led+b0_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/fcpu_24mhz/500000_bps/sanguino_24mhz_500000bps_ee_led+b0_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work

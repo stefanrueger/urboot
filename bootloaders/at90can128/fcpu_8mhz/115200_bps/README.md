@@ -1,14 +1,14 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|392|512|u7.6|`weu-jpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur_vbl.hex)|
-|392|1024|u7.6|`weu-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur.hex)|
-|508|1024|u7.6|`wes-hpr`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce.hex)|
+|392|512|u7.7|`weu-jpr-c`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur_vbl.hex)|
+|392|1024|u7.7|`weu-hpr-c`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur.hex)|
+|498|1024|u7.7|`wes-hpr-c`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work

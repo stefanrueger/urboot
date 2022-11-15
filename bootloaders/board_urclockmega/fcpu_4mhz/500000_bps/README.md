@@ -1,20 +1,20 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|244|256|u7.6|`w-u-jpr`|[urclockmega_4mhz_500000bps_led+c7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_led+c7_ur_vbl.hex)|
-|368|512|u7.6|`weu-jpr`|[urclockmega_4mhz_500000bps_ee_led+c7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_fr_ce_ur_vbl.hex)|
-|470|512|u7.6|`w-udjpr`|[urclockmega_4mhz_500000bps_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
-|488|512|u7.6|`weudjpr`|[urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ur_vbl.hex)|
-|532|768|u7.6|`weudjpr`|[urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
-|368|1024|u7.6|`weu-hpr`|[urclockmega_4mhz_500000bps_ee_led+c7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_fr_ce_ur.hex)|
-|484|1024|u7.6|`wes-hpr`|[urclockmega_4mhz_500000bps_ee_led+c7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_fr_ce.hex)|
-|532|1024|u7.6|`weudhpr`|[urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ce_ur.hex)|
-|648|1024|u7.6|`wesdhpr`|[urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ce.hex)|
+|244|256|u7.7|`w-u-jpr--`|[urclockmega_4mhz_500000bps_led+c7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_led+c7_ur_vbl.hex)|
+|368|512|u7.7|`weu-jpr-c`|[urclockmega_4mhz_500000bps_ee_led+c7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_fr_ce_ur_vbl.hex)|
+|470|512|u7.7|`w-udjpr-c`|[urclockmega_4mhz_500000bps_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
+|488|512|u7.7|`weudjpr--`|[urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ur_vbl.hex)|
+|532|768|u7.7|`weudjpr-c`|[urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
+|368|1024|u7.7|`weu-hpr-c`|[urclockmega_4mhz_500000bps_ee_led+c7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_fr_ce_ur.hex)|
+|474|1024|u7.7|`wes-hpr-c`|[urclockmega_4mhz_500000bps_ee_led+c7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_fr_ce.hex)|
+|532|1024|u7.7|`weudhpr-c`|[urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ce_ur.hex)|
+|638|1024|u7.7|`wesdhpr-c`|[urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_4mhz/500000_bps/urclockmega_4mhz_500000bps_ee_led+c7_csb3_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work

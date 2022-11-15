@@ -1,15 +1,15 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|238|256|u7.6|`w-u-jpr`|[atmega161_2mhz_250000bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega161/fcpu_2mhz/250000_bps/atmega161_2mhz_250000bps_lednop_fr_ur_vbl.hex)|
-|336|384|u7.6|`weu-jpr`|[atmega161_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega161/fcpu_2mhz/250000_bps/atmega161_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|332|1024|u7.6|`weu-hpr`|[atmega161_2mhz_250000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega161/fcpu_2mhz/250000_bps/atmega161_2mhz_250000bps_ee_lednop_fr_ce_ur.hex)|
-|446|1024|u7.6|`wes-hpr`|[atmega161_2mhz_250000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega161/fcpu_2mhz/250000_bps/atmega161_2mhz_250000bps_ee_lednop_fr_ce.hex)|
+|238|256|u7.7|`w-u-jpr--`|[atmega161_2mhz_250000bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega161/fcpu_2mhz/250000_bps/atmega161_2mhz_250000bps_lednop_fr_ur_vbl.hex)|
+|336|384|u7.7|`weu-jpr-c`|[atmega161_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega161/fcpu_2mhz/250000_bps/atmega161_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|332|1024|u7.7|`weu-hpr-c`|[atmega161_2mhz_250000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega161/fcpu_2mhz/250000_bps/atmega161_2mhz_250000bps_ee_lednop_fr_ce_ur.hex)|
+|436|1024|u7.7|`wes-hpr-c`|[atmega161_2mhz_250000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega161/fcpu_2mhz/250000_bps/atmega161_2mhz_250000bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work

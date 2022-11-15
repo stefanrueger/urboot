@@ -1,15 +1,15 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|256|256|u7.6|`w-u-jpr`|[attiny48_11mhz0592_460800bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_11mhz0592/460800_bps/attiny48_11mhz0592_460800bps_rxb0_txb1_lednop_ur_vbl.hex)|
-|306|320|u7.6|`w-u-jpr`|[attiny48_11mhz0592_460800bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_11mhz0592/460800_bps/attiny48_11mhz0592_460800bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
-|318|320|u7.6|`weu-jpr`|[attiny48_11mhz0592_460800bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_11mhz0592/460800_bps/attiny48_11mhz0592_460800bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
-|364|384|u7.6|`weu-jpr`|[attiny48_11mhz0592_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_11mhz0592/460800_bps/attiny48_11mhz0592_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|256|256|u7.7|`w-u-jpr--`|[attiny48_11mhz0592_460800bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_11mhz0592/460800_bps/attiny48_11mhz0592_460800bps_rxb0_txb1_lednop_ur_vbl.hex)|
+|306|320|u7.7|`w-u-jpr-c`|[attiny48_11mhz0592_460800bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_11mhz0592/460800_bps/attiny48_11mhz0592_460800bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|318|320|u7.7|`weu-jpr--`|[attiny48_11mhz0592_460800bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_11mhz0592/460800_bps/attiny48_11mhz0592_460800bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
+|364|384|u7.7|`weu-jpr-c`|[attiny48_11mhz0592_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_11mhz0592/460800_bps/attiny48_11mhz0592_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`

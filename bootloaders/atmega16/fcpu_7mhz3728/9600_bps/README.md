@@ -1,16 +1,15 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|240|256|u7.6|`w-u-hpr`|[atmega16_7mhz3728_9600bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/fcpu_7mhz3728/9600_bps/atmega16_7mhz3728_9600bps_lednop_fr_ur.hex)|
-|240|256|u7.6|`w-u-jpr`|[atmega16_7mhz3728_9600bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/fcpu_7mhz3728/9600_bps/atmega16_7mhz3728_9600bps_lednop_fr_ur_vbl.hex)|
-|338|384|u7.6|`weu-jpr`|[atmega16_7mhz3728_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/fcpu_7mhz3728/9600_bps/atmega16_7mhz3728_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|334|512|u7.6|`weu-hpr`|[atmega16_7mhz3728_9600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/fcpu_7mhz3728/9600_bps/atmega16_7mhz3728_9600bps_ee_lednop_fr_ce_ur.hex)|
-|448|512|u7.6|`wes-hpr`|[atmega16_7mhz3728_9600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/fcpu_7mhz3728/9600_bps/atmega16_7mhz3728_9600bps_ee_lednop_fr_ce.hex)|
+|240|256|u7.7|`w-u-hpr--`|[atmega16_7mhz3728_9600bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/fcpu_7mhz3728/9600_bps/atmega16_7mhz3728_9600bps_lednop_fr_ur.hex)|
+|338|384|u7.7|`weu-jpr-c`|[atmega16_7mhz3728_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/fcpu_7mhz3728/9600_bps/atmega16_7mhz3728_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|334|512|u7.7|`weu-hpr-c`|[atmega16_7mhz3728_9600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/fcpu_7mhz3728/9600_bps/atmega16_7mhz3728_9600bps_ee_lednop_fr_ce_ur.hex)|
+|438|512|u7.7|`wes-hpr-c`|[atmega16_7mhz3728_9600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/fcpu_7mhz3728/9600_bps/atmega16_7mhz3728_9600bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work

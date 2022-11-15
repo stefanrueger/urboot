@@ -1,15 +1,15 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.6|`w-u-jpr`|[at90usb1287_24mhz_230400bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb1287/fcpu_24mhz/230400_bps/at90usb1287_24mhz_230400bps_lednop_ur_vbl.hex)|
-|376|512|u7.6|`weu-jpr`|[at90usb1287_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb1287/fcpu_24mhz/230400_bps/at90usb1287_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|376|1024|u7.6|`weu-hpr`|[at90usb1287_24mhz_230400bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb1287/fcpu_24mhz/230400_bps/at90usb1287_24mhz_230400bps_ee_lednop_fr_ce_ur.hex)|
-|492|1024|u7.6|`wes-hpr`|[at90usb1287_24mhz_230400bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb1287/fcpu_24mhz/230400_bps/at90usb1287_24mhz_230400bps_ee_lednop_fr_ce.hex)|
+|252|256|u7.7|`w-u-jpr--`|[at90usb1287_24mhz_230400bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb1287/fcpu_24mhz/230400_bps/at90usb1287_24mhz_230400bps_lednop_ur_vbl.hex)|
+|376|512|u7.7|`weu-jpr-c`|[at90usb1287_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb1287/fcpu_24mhz/230400_bps/at90usb1287_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|376|1024|u7.7|`weu-hpr-c`|[at90usb1287_24mhz_230400bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb1287/fcpu_24mhz/230400_bps/at90usb1287_24mhz_230400bps_ee_lednop_fr_ce_ur.hex)|
+|482|1024|u7.7|`wes-hpr-c`|[at90usb1287_24mhz_230400bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb1287/fcpu_24mhz/230400_bps/at90usb1287_24mhz_230400bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work

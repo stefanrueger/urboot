@@ -1,17 +1,17 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.6|`w-u-jpr`|[attiny13_14mhz7456_115200bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_14mhz7456/115200_bps/attiny13_14mhz7456_115200bps_rxb0_txb1_lednop_ur_vbl.hex)|
-|274|288|u7.6|`w-u-jpr`|[attiny13_14mhz7456_115200bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_14mhz7456/115200_bps/attiny13_14mhz7456_115200bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
-|300|320|u7.6|`w-u-jpr`|[attiny13_14mhz7456_115200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_14mhz7456/115200_bps/attiny13_14mhz7456_115200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
-|320|320|u7.6|`weu-jpr`|[attiny13_14mhz7456_115200bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_14mhz7456/115200_bps/attiny13_14mhz7456_115200bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
-|338|352|u7.6|`weu-jpr`|[attiny13_14mhz7456_115200bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_14mhz7456/115200_bps/attiny13_14mhz7456_115200bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
-|364|384|u7.6|`weu-jpr`|[attiny13_14mhz7456_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_14mhz7456/115200_bps/attiny13_14mhz7456_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|252|256|u7.7|`w-u-jpr--`|[attiny13_14mhz7456_115200bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_14mhz7456/115200_bps/attiny13_14mhz7456_115200bps_rxb0_txb1_lednop_ur_vbl.hex)|
+|274|288|u7.7|`w-u-jpr--`|[attiny13_14mhz7456_115200bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_14mhz7456/115200_bps/attiny13_14mhz7456_115200bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
+|300|320|u7.7|`w-u-jpr-c`|[attiny13_14mhz7456_115200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_14mhz7456/115200_bps/attiny13_14mhz7456_115200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|320|320|u7.7|`weu-jpr--`|[attiny13_14mhz7456_115200bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_14mhz7456/115200_bps/attiny13_14mhz7456_115200bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
+|338|352|u7.7|`weu-jpr--`|[attiny13_14mhz7456_115200bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_14mhz7456/115200_bps/attiny13_14mhz7456_115200bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
+|364|384|u7.7|`weu-jpr-c`|[attiny13_14mhz7456_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_14mhz7456/115200_bps/attiny13_14mhz7456_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
-  + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
+  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
