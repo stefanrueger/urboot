@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|250|256|u7.6|`w-u-jpr`|[atmega48pa_11mhz0592_57600bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pa/fcpu_11mhz0592/57600_bps/atmega48pa_11mhz0592_57600bps_lednop_fr_ur_vbl.hex)|
-|282|320|u7.6|`w-u-jpr`|[atmega48pa_11mhz0592_57600bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pa/fcpu_11mhz0592/57600_bps/atmega48pa_11mhz0592_57600bps_lednop_fr_ce_ur_vbl.hex)|
-|306|320|u7.6|`weu-jpr`|[atmega48pa_11mhz0592_57600bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pa/fcpu_11mhz0592/57600_bps/atmega48pa_11mhz0592_57600bps_ee_lednop_ur_vbl.hex)|
-|352|384|u7.6|`weu-jpr`|[atmega48pa_11mhz0592_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pa/fcpu_11mhz0592/57600_bps/atmega48pa_11mhz0592_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|248|256|u7.6|`w-u-jpr`|[atmega48pa_11mhz0592_57600bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pa/fcpu_11mhz0592/57600_bps/atmega48pa_11mhz0592_57600bps_lednop_fr_ur_vbl.hex)|
+|280|320|u7.6|`w-u-jpr`|[atmega48pa_11mhz0592_57600bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pa/fcpu_11mhz0592/57600_bps/atmega48pa_11mhz0592_57600bps_lednop_fr_ce_ur_vbl.hex)|
+|304|320|u7.6|`weu-jpr`|[atmega48pa_11mhz0592_57600bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pa/fcpu_11mhz0592/57600_bps/atmega48pa_11mhz0592_57600bps_ee_lednop_ur_vbl.hex)|
+|350|384|u7.6|`weu-jpr`|[atmega48pa_11mhz0592_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pa/fcpu_11mhz0592/57600_bps/atmega48pa_11mhz0592_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

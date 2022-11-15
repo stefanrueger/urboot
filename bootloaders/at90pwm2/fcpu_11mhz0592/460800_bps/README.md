@@ -1,17 +1,17 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|244|256|u7.6|`w-u-hpr`|[at90pwm2_11mhz0592_460800bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_lednop_ur.hex)|
-|244|256|u7.6|`w-u-jpr`|[at90pwm2_11mhz0592_460800bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_lednop_ur_vbl.hex)|
-|294|320|u7.6|`w-u-hpr`|[at90pwm2_11mhz0592_460800bps_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_lednop_fr_ce_ur.hex)|
-|294|320|u7.6|`w-u-jpr`|[at90pwm2_11mhz0592_460800bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_lednop_fr_ce_ur_vbl.hex)|
-|308|320|u7.6|`weu-hpr`|[at90pwm2_11mhz0592_460800bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_ee_lednop_ur.hex)|
-|308|320|u7.6|`weu-jpr`|[at90pwm2_11mhz0592_460800bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_ee_lednop_ur_vbl.hex)|
-|354|384|u7.6|`weu-hpr`|[at90pwm2_11mhz0592_460800bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_ee_lednop_fr_ce_ur.hex)|
-|354|384|u7.6|`weu-jpr`|[at90pwm2_11mhz0592_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|376|384|u7.6|`w-s-hpr`|[at90pwm2_11mhz0592_460800bps_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_lednop_fr.hex)|
-|418|448|u7.6|`w-s-hpr`|[at90pwm2_11mhz0592_460800bps_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_lednop_fr_ce.hex)|
-|426|448|u7.6|`wes-hpr`|[at90pwm2_11mhz0592_460800bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_ee_lednop_fr.hex)|
-|464|512|u7.6|`wes-hpr`|[at90pwm2_11mhz0592_460800bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_ee_lednop_fr_ce.hex)|
+|242|256|u7.6|`w-u-hpr`|[at90pwm2_11mhz0592_460800bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_lednop_ur.hex)|
+|242|256|u7.6|`w-u-jpr`|[at90pwm2_11mhz0592_460800bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_lednop_ur_vbl.hex)|
+|292|320|u7.6|`w-u-hpr`|[at90pwm2_11mhz0592_460800bps_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_lednop_fr_ce_ur.hex)|
+|292|320|u7.6|`w-u-jpr`|[at90pwm2_11mhz0592_460800bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_lednop_fr_ce_ur_vbl.hex)|
+|306|320|u7.6|`weu-hpr`|[at90pwm2_11mhz0592_460800bps_ee_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_ee_lednop_ur.hex)|
+|306|320|u7.6|`weu-jpr`|[at90pwm2_11mhz0592_460800bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_ee_lednop_ur_vbl.hex)|
+|352|384|u7.6|`weu-hpr`|[at90pwm2_11mhz0592_460800bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_ee_lednop_fr_ce_ur.hex)|
+|352|384|u7.6|`weu-jpr`|[at90pwm2_11mhz0592_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|374|384|u7.6|`w-s-hpr`|[at90pwm2_11mhz0592_460800bps_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_lednop_fr.hex)|
+|416|448|u7.6|`w-s-hpr`|[at90pwm2_11mhz0592_460800bps_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_lednop_fr_ce.hex)|
+|424|448|u7.6|`wes-hpr`|[at90pwm2_11mhz0592_460800bps_ee_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_ee_lednop_fr.hex)|
+|462|512|u7.6|`wes-hpr`|[at90pwm2_11mhz0592_460800bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_11mhz0592/460800_bps/at90pwm2_11mhz0592_460800bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -20,7 +20,7 @@
   + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
-  + `s` uses skeleton of STK500v1 protocol; `-c urclock` and `-c arduino` both work
+  + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten

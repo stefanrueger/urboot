@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|246|256|u7.6|`w-u-jpr`|[attiny441_18mhz432_460800bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_18mhz432/460800_bps/attiny441_18mhz432_460800bps_lednop_ur_vbl.hex)|
-|296|320|u7.6|`w-u-jpr`|[attiny441_18mhz432_460800bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_18mhz432/460800_bps/attiny441_18mhz432_460800bps_lednop_fr_ce_ur_vbl.hex)|
-|312|320|u7.6|`weu-jpr`|[attiny441_18mhz432_460800bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_18mhz432/460800_bps/attiny441_18mhz432_460800bps_ee_lednop_ur_vbl.hex)|
-|358|384|u7.6|`weu-jpr`|[attiny441_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_18mhz432/460800_bps/attiny441_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|242|256|u7.6|`w-u-jpr`|[attiny441_18mhz432_460800bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_18mhz432/460800_bps/attiny441_18mhz432_460800bps_lednop_ur_vbl.hex)|
+|292|320|u7.6|`w-u-jpr`|[attiny441_18mhz432_460800bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_18mhz432/460800_bps/attiny441_18mhz432_460800bps_lednop_fr_ce_ur_vbl.hex)|
+|308|320|u7.6|`weu-jpr`|[attiny441_18mhz432_460800bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_18mhz432/460800_bps/attiny441_18mhz432_460800bps_ee_lednop_ur_vbl.hex)|
+|354|384|u7.6|`weu-jpr`|[attiny441_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny441/fcpu_18mhz432/460800_bps/attiny441_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

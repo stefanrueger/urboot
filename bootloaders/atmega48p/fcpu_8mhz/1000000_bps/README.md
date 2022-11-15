@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|254|256|u7.6|`w-u-jpr`|[atmega48p_8mhz_1000000bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_8mhz/1000000_bps/atmega48p_8mhz_1000000bps_lednop_fr_ur_vbl.hex)|
-|286|320|u7.6|`w-u-jpr`|[atmega48p_8mhz_1000000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_8mhz/1000000_bps/atmega48p_8mhz_1000000bps_lednop_fr_ce_ur_vbl.hex)|
-|316|320|u7.6|`weu-jpr`|[atmega48p_8mhz_1000000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_8mhz/1000000_bps/atmega48p_8mhz_1000000bps_ee_lednop_fr_ur_vbl.hex)|
-|344|384|u7.6|`weu-jpr`|[atmega48p_8mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_8mhz/1000000_bps/atmega48p_8mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|252|256|u7.6|`w-u-jpr`|[atmega48p_8mhz_1000000bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_8mhz/1000000_bps/atmega48p_8mhz_1000000bps_lednop_fr_ur_vbl.hex)|
+|284|320|u7.6|`w-u-jpr`|[atmega48p_8mhz_1000000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_8mhz/1000000_bps/atmega48p_8mhz_1000000bps_lednop_fr_ce_ur_vbl.hex)|
+|314|320|u7.6|`weu-jpr`|[atmega48p_8mhz_1000000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_8mhz/1000000_bps/atmega48p_8mhz_1000000bps_ee_lednop_fr_ur_vbl.hex)|
+|342|384|u7.6|`weu-jpr`|[atmega48p_8mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_8mhz/1000000_bps/atmega48p_8mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|246|256|u7.6|`w-u-jpr`|[atmega48pb_2mhz_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/19200_bps/atmega48pb_2mhz_19200bps_lednop_ur_vbl.hex)|
-|296|320|u7.6|`w-u-jpr`|[atmega48pb_2mhz_19200bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/19200_bps/atmega48pb_2mhz_19200bps_lednop_fr_ce_ur_vbl.hex)|
-|308|320|u7.6|`weu-jpr`|[atmega48pb_2mhz_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/19200_bps/atmega48pb_2mhz_19200bps_ee_lednop_ur_vbl.hex)|
-|354|384|u7.6|`weu-jpr`|[atmega48pb_2mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/19200_bps/atmega48pb_2mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|242|256|u7.6|`w-u-jpr`|[atmega48pb_2mhz_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/19200_bps/atmega48pb_2mhz_19200bps_lednop_ur_vbl.hex)|
+|292|320|u7.6|`w-u-jpr`|[atmega48pb_2mhz_19200bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/19200_bps/atmega48pb_2mhz_19200bps_lednop_fr_ce_ur_vbl.hex)|
+|304|320|u7.6|`weu-jpr`|[atmega48pb_2mhz_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/19200_bps/atmega48pb_2mhz_19200bps_ee_lednop_ur_vbl.hex)|
+|350|384|u7.6|`weu-jpr`|[atmega48pb_2mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/19200_bps/atmega48pb_2mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

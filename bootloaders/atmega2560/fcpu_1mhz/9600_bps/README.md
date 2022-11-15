@@ -1,13 +1,13 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|248|256|u7.6|`w-u-jpr`|[atmega2560_1mhz_9600bps_led+b7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_led+b7_ur_vbl.hex)|
-|248|256|u7.6|`w-u-jpr`|[atmega2560_1mhz_9600bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_lednop_ur_vbl.hex)|
-|372|512|u7.6|`weu-jpr`|[atmega2560_1mhz_9600bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_ee_led+b7_fr_ce_ur_vbl.hex)|
-|372|512|u7.6|`weu-jpr`|[atmega2560_1mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|372|1024|u7.6|`weu-hpr`|[atmega2560_1mhz_9600bps_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_ee_led+b7_fr_ce_ur.hex)|
-|372|1024|u7.6|`weu-hpr`|[atmega2560_1mhz_9600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_ee_lednop_fr_ce_ur.hex)|
-|496|1024|u7.6|`wes-hpr`|[atmega2560_1mhz_9600bps_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_ee_led+b7_fr_ce.hex)|
-|496|1024|u7.6|`wes-hpr`|[atmega2560_1mhz_9600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_ee_lednop_fr_ce.hex)|
+|244|256|u7.6|`w-u-jpr`|[atmega2560_1mhz_9600bps_led+b7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_led+b7_ur_vbl.hex)|
+|244|256|u7.6|`w-u-jpr`|[atmega2560_1mhz_9600bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_lednop_ur_vbl.hex)|
+|368|512|u7.6|`weu-jpr`|[atmega2560_1mhz_9600bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_ee_led+b7_fr_ce_ur_vbl.hex)|
+|368|512|u7.6|`weu-jpr`|[atmega2560_1mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|368|1024|u7.6|`weu-hpr`|[atmega2560_1mhz_9600bps_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_ee_led+b7_fr_ce_ur.hex)|
+|368|1024|u7.6|`weu-hpr`|[atmega2560_1mhz_9600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_ee_lednop_fr_ce_ur.hex)|
+|492|1024|u7.6|`wes-hpr`|[atmega2560_1mhz_9600bps_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_ee_led+b7_fr_ce.hex)|
+|492|1024|u7.6|`wes-hpr`|[atmega2560_1mhz_9600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_1mhz/9600_bps/atmega2560_1mhz_9600bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -16,7 +16,7 @@
   + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
-  + `s` uses skeleton of STK500v1 protocol; `-c urclock` and `-c arduino` both work
+  + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten

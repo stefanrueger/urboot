@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|240|256|u7.6|`w-u-jpr`|[atmega48pb_2mhz_9600bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/9600_bps/atmega48pb_2mhz_9600bps_lednop_ur_vbl.hex)|
-|290|320|u7.6|`w-u-jpr`|[atmega48pb_2mhz_9600bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/9600_bps/atmega48pb_2mhz_9600bps_lednop_fr_ce_ur_vbl.hex)|
-|320|320|u7.6|`weu-jpr`|[atmega48pb_2mhz_9600bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/9600_bps/atmega48pb_2mhz_9600bps_ee_lednop_fr_ur_vbl.hex)|
-|348|384|u7.6|`weu-jpr`|[atmega48pb_2mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/9600_bps/atmega48pb_2mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|256|256|u7.6|`w-u-jpr`|[atmega48pb_2mhz_9600bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/9600_bps/atmega48pb_2mhz_9600bps_lednop_fr_ur_vbl.hex)|
+|288|320|u7.6|`w-u-jpr`|[atmega48pb_2mhz_9600bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/9600_bps/atmega48pb_2mhz_9600bps_lednop_fr_ce_ur_vbl.hex)|
+|318|320|u7.6|`weu-jpr`|[atmega48pb_2mhz_9600bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/9600_bps/atmega48pb_2mhz_9600bps_ee_lednop_fr_ur_vbl.hex)|
+|346|384|u7.6|`weu-jpr`|[atmega48pb_2mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48pb/fcpu_2mhz/9600_bps/atmega48pb_2mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

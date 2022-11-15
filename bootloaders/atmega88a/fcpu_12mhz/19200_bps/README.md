@@ -1,12 +1,12 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|246|256|u7.6|`w-u-hpr`|[atmega88a_12mhz_19200bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_lednop_fr_ur.hex)|
-|246|256|u7.6|`w-u-jpr`|[atmega88a_12mhz_19200bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_lednop_fr_ur_vbl.hex)|
-|278|320|u7.6|`w-u-jpr`|[atmega88a_12mhz_19200bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_lednop_fr_ce_ur_vbl.hex)|
-|316|320|u7.6|`weu-jpr`|[atmega88a_12mhz_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_ee_lednop_fr_ur_vbl.hex)|
-|344|384|u7.6|`weu-jpr`|[atmega88a_12mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|340|512|u7.6|`weu-hpr`|[atmega88a_12mhz_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_ee_lednop_fr_ce_ur.hex)|
-|454|512|u7.6|`wes-hpr`|[atmega88a_12mhz_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_ee_lednop_fr_ce.hex)|
+|244|256|u7.6|`w-u-hpr`|[atmega88a_12mhz_19200bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_lednop_fr_ur.hex)|
+|244|256|u7.6|`w-u-jpr`|[atmega88a_12mhz_19200bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_lednop_fr_ur_vbl.hex)|
+|276|320|u7.6|`w-u-jpr`|[atmega88a_12mhz_19200bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_lednop_fr_ce_ur_vbl.hex)|
+|314|320|u7.6|`weu-jpr`|[atmega88a_12mhz_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_ee_lednop_fr_ur_vbl.hex)|
+|342|384|u7.6|`weu-jpr`|[atmega88a_12mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|338|512|u7.6|`weu-hpr`|[atmega88a_12mhz_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_ee_lednop_fr_ce_ur.hex)|
+|452|512|u7.6|`wes-hpr`|[atmega88a_12mhz_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/fcpu_12mhz/19200_bps/atmega88a_12mhz_19200bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -15,7 +15,7 @@
   + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
-  + `s` uses skeleton of STK500v1 protocol; `-c urclock` and `-c arduino` both work
+  + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten

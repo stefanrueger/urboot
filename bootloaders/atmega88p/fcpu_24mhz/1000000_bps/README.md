@@ -1,12 +1,12 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|254|256|u7.6|`w-u-hpr`|[atmega88p_24mhz_1000000bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_lednop_fr_ur.hex)|
-|254|256|u7.6|`w-u-jpr`|[atmega88p_24mhz_1000000bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_lednop_fr_ur_vbl.hex)|
-|286|320|u7.6|`w-u-jpr`|[atmega88p_24mhz_1000000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_lednop_fr_ce_ur_vbl.hex)|
-|320|320|u7.6|`weu-jpr`|[atmega88p_24mhz_1000000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_ee_lednop_fr_ur_vbl.hex)|
-|348|384|u7.6|`weu-jpr`|[atmega88p_24mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|344|512|u7.6|`weu-hpr`|[atmega88p_24mhz_1000000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_ee_lednop_fr_ce_ur.hex)|
-|458|512|u7.6|`wes-hpr`|[atmega88p_24mhz_1000000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_ee_lednop_fr_ce.hex)|
+|252|256|u7.6|`w-u-hpr`|[atmega88p_24mhz_1000000bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_lednop_fr_ur.hex)|
+|252|256|u7.6|`w-u-jpr`|[atmega88p_24mhz_1000000bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_lednop_fr_ur_vbl.hex)|
+|284|320|u7.6|`w-u-jpr`|[atmega88p_24mhz_1000000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_lednop_fr_ce_ur_vbl.hex)|
+|318|320|u7.6|`weu-jpr`|[atmega88p_24mhz_1000000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_ee_lednop_fr_ur_vbl.hex)|
+|346|384|u7.6|`weu-jpr`|[atmega88p_24mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|342|512|u7.6|`weu-hpr`|[atmega88p_24mhz_1000000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_ee_lednop_fr_ce_ur.hex)|
+|456|512|u7.6|`wes-hpr`|[atmega88p_24mhz_1000000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/1000000_bps/atmega88p_24mhz_1000000bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -15,7 +15,7 @@
   + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
-  + `s` uses skeleton of STK500v1 protocol; `-c urclock` and `-c arduino` both work
+  + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten

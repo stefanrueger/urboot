@@ -2112,24 +2112,84 @@ int main(void) {
 
 // Start of bootloader
 
+  // Global label marks watchdog location, so urloader can change the 500 ms default externally
+  asm volatile(".global watchdog_setting\nwatchdog_setting:\n\t" :::);
+  watchdogConfig(WATCHDOG_TIMEOUT(WDTO));
+
 #if SWIO && !defined(TX)
 #error you need to define TX for SWIO
 #elif SWIO
+
   // Set TX pin as output
   UR_DDR(TX) |= UR_BV(TX);
-#else // !SWIO
-#if UART2X
-  UART_SRA = _BV(U2X0);         // Double speed mode
-#endif
-  UART_BRL = BAUD_SETTING;
 
-  UART_SRB = _BV(RXEN0) | _BV(TXEN0);
-  // Frame: 8N1
+#else // !SWIO
+
+// Initialise the USART
+
+//  UR_PORT(RX) |= UR_BV(RX);     // Pullup rx (should be done by HW, really)
+
+#define min2(a, b) ((a) < (b)? (a): (b))
+#define min4(a, b, c, d) min2(min2(a, b), min2(c, d))
+#define UART_BASE (*min4(&UART_BRL, &UART_SRA, &UART_SRB, &UART_SRC))
+
+#define UART_SRA_VAL  _BV(U2X0) // Double speed mode
+#define UART_SRB_VAL (_BV(RXEN0) | _BV(TXEN0))
+
+// Frame: 8N1
+#define HAVE_UART_SRC         1 // Almost every part has this
 #if defined(URSEL0)             // Needed by some MCUs for shared I/O locations of UBRRH and UCSRC
-  UART_SRC = _BV(URSEL0) | _BV(UCSZ00) | _BV(UCSZ01);
+#define  UART_SRC_VAL (_BV(URSEL0) | _BV(UCSZ00) | _BV(UCSZ01))
 #elif defined(UCSZ00) && defined(UCSZ01)
-  UART_SRC = _BV(UCSZ00) | _BV(UCSZ01);
+#define  UART_SRC_VAL (_BV(UCSZ00) | _BV(UCSZ01))
+#else                           // No UART_SRC register (ATmega161 and ATmega163)
+#undef  UART_BASE
+#define UART_BASE (*min4(&UART_BRL, &UART_SRA, &UART_SRB, &UART_SRB))
+#undef  HAVE_UART_SRC
+#define HAVE_UART_SRC         0
 #endif
+
+  if(&UART_BASE < (volatile uint8_t *) 0x40) { // Compiler uses out, good
+    UART_BRL = BAUD_SETTING;
+#if UART2X
+    UART_SRA = UART_SRA_VAL;
+#endif
+    UART_SRB = UART_SRB_VAL;
+#if HAVE_UART_SRC
+    UART_SRC = UART_SRC_VAL;
+#endif
+  } else {
+    asm volatile(
+      " ldi r30, lo8(%[base])\n"
+      " ldi r31, hi8(%[base])\n"
+      " ldi r27, lo8(%[brl_val])\n"
+      " std Z+%[brl_off], r27\n"
+#if UART2X
+      " ldi r27, lo8(%[sra_val])\n"
+      " std Z+%[sra_off], r27\n"
+#endif
+      " ldi r27, lo8(%[srb_val])\n"
+      " std Z+%[srb_off], r27\n"
+#if HAVE_UART_SRC
+      " ldi r27, lo8(%[src_val])\n"
+      " std Z+%[src_off], r27\n"
+#endif
+   :: [brl_off] "I" (&UART_BRL - &UART_BASE),
+      [brl_val] "n" (BAUD_SETTING),
+      [sra_off] "I" (&UART_SRA - &UART_BASE),
+      [sra_val] "n" (UART_SRA_VAL),
+      [srb_off] "I" (&UART_SRB - &UART_BASE),
+      [srb_val] "n" (UART_SRB_VAL),
+#if HAVE_UART_SRC
+      [src_off] "I" (&UART_SRC - &UART_BASE),
+      [src_val] "n" (UART_SRC_VAL),
+#endif
+      [base] "n" ( _SFR_MEM_ADDR(UART_BASE))
+      : "r30", "r31", "r27"
+    );
+  }
+
+
 #endif
 
 // Swing a square wave of 5 periods on pin FREQ_PIN (can be LED) to enable exact F_CPU measurement
@@ -2145,10 +2205,6 @@ int main(void) {
   } while(--rn);
   UR_DDR(FREQ_PIN) &= ~UR_BV(FREQ_PIN);
 #endif
-
-  // Global label marks watchdog location, so urloader can change the 500 ms default externally
-  asm volatile(".global watchdog_setting\nwatchdog_setting:\n\t" :::);
-  watchdogConfig(WATCHDOG_TIMEOUT(WDTO));
 
   // Exit loop by causing WDT reset - which will initialise the MCU
   for(;;) {

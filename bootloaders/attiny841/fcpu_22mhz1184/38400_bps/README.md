@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|240|256|u7.6|`w-u-jpr`|[attiny841_22mhz1184_38400bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_22mhz1184/38400_bps/attiny841_22mhz1184_38400bps_lednop_ur_vbl.hex)|
-|290|320|u7.6|`w-u-jpr`|[attiny841_22mhz1184_38400bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_22mhz1184/38400_bps/attiny841_22mhz1184_38400bps_lednop_fr_ce_ur_vbl.hex)|
-|306|320|u7.6|`weu-jpr`|[attiny841_22mhz1184_38400bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_22mhz1184/38400_bps/attiny841_22mhz1184_38400bps_ee_lednop_ur_vbl.hex)|
-|352|384|u7.6|`weu-jpr`|[attiny841_22mhz1184_38400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_22mhz1184/38400_bps/attiny841_22mhz1184_38400bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|256|256|u7.6|`w-u-jpr`|[attiny841_22mhz1184_38400bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_22mhz1184/38400_bps/attiny841_22mhz1184_38400bps_lednop_fr_ur_vbl.hex)|
+|288|320|u7.6|`w-u-jpr`|[attiny841_22mhz1184_38400bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_22mhz1184/38400_bps/attiny841_22mhz1184_38400bps_lednop_fr_ce_ur_vbl.hex)|
+|304|320|u7.6|`weu-jpr`|[attiny841_22mhz1184_38400bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_22mhz1184/38400_bps/attiny841_22mhz1184_38400bps_ee_lednop_ur_vbl.hex)|
+|350|384|u7.6|`weu-jpr`|[attiny841_22mhz1184_38400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_22mhz1184/38400_bps/attiny841_22mhz1184_38400bps_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

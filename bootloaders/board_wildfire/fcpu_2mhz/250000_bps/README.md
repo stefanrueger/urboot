@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|246|256|u7.6|`w-u-jpr`|[wildfire_2mhz_250000bps_led+b5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire/fcpu_2mhz/250000_bps/wildfire_2mhz_250000bps_led+b5_ur_vbl.hex)|
-|370|512|u7.6|`weu-jpr`|[wildfire_2mhz_250000bps_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire/fcpu_2mhz/250000_bps/wildfire_2mhz_250000bps_ee_led+b5_fr_ce_ur_vbl.hex)|
-|370|1024|u7.6|`weu-hpr`|[wildfire_2mhz_250000bps_ee_led+b5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire/fcpu_2mhz/250000_bps/wildfire_2mhz_250000bps_ee_led+b5_fr_ce_ur.hex)|
-|486|1024|u7.6|`wes-hpr`|[wildfire_2mhz_250000bps_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire/fcpu_2mhz/250000_bps/wildfire_2mhz_250000bps_ee_led+b5_fr_ce.hex)|
+|244|256|u7.6|`w-u-jpr`|[wildfire_2mhz_250000bps_led+b5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire/fcpu_2mhz/250000_bps/wildfire_2mhz_250000bps_led+b5_ur_vbl.hex)|
+|368|512|u7.6|`weu-jpr`|[wildfire_2mhz_250000bps_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire/fcpu_2mhz/250000_bps/wildfire_2mhz_250000bps_ee_led+b5_fr_ce_ur_vbl.hex)|
+|368|1024|u7.6|`weu-hpr`|[wildfire_2mhz_250000bps_ee_led+b5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire/fcpu_2mhz/250000_bps/wildfire_2mhz_250000bps_ee_led+b5_fr_ce_ur.hex)|
+|484|1024|u7.6|`wes-hpr`|[wildfire_2mhz_250000bps_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire/fcpu_2mhz/250000_bps/wildfire_2mhz_250000bps_ee_led+b5_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -12,7 +12,7 @@
   + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
-  + `s` uses skeleton of STK500v1 protocol; `-c urclock` and `-c arduino` both work
+  + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten

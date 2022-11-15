@@ -1,14 +1,14 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|246|256|u7.6|`w-u-jpr`|[urclockmega_8mhz_1000000bps_led+c7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_led+c7_ur_vbl.hex)|
-|370|512|u7.6|`weu-jpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_fr_ce_ur_vbl.hex)|
-|472|512|u7.6|`w-udjpr`|[urclockmega_8mhz_1000000bps_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
-|490|512|u7.6|`weudjpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ur_vbl.hex)|
-|534|768|u7.6|`weudjpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
-|370|1024|u7.6|`weu-hpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_fr_ce_ur.hex)|
-|486|1024|u7.6|`wes-hpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_fr_ce.hex)|
-|534|1024|u7.6|`weudhpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ce_ur.hex)|
-|650|1024|u7.6|`wesdhpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ce.hex)|
+|244|256|u7.6|`w-u-jpr`|[urclockmega_8mhz_1000000bps_led+c7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_led+c7_ur_vbl.hex)|
+|368|512|u7.6|`weu-jpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_fr_ce_ur_vbl.hex)|
+|470|512|u7.6|`w-udjpr`|[urclockmega_8mhz_1000000bps_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
+|488|512|u7.6|`weudjpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ur_vbl.hex)|
+|532|768|u7.6|`weudjpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
+|368|1024|u7.6|`weu-hpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_fr_ce_ur.hex)|
+|484|1024|u7.6|`wes-hpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_fr_ce.hex)|
+|532|1024|u7.6|`weudhpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ce_ur.hex)|
+|648|1024|u7.6|`wesdhpr`|[urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_8mhz/1000000_bps/urclockmega_8mhz_1000000bps_ee_led+c7_csb3_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -17,7 +17,7 @@
   + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
-  + `s` uses skeleton of STK500v1 protocol; `-c urclock` and `-c arduino` both work
+  + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `d` dual boot (over-the-air programming from external SPI flash)
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
@@ -27,9 +27,9 @@
   + `ee` bootloader supports EEPROM read/write
   + `led-b1` toggles an active-low LED on pin `B1`, `+` designates an active-high LED
   + `csb0` for dual boot uses, in this example, pin B0 as chip select of external SPI flash memory
+  + `dual` boot: serial and from external SPI flash memory
   + `fr` bootloader provides non-essential code for smoother error handing
   + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming
   + `d` dual boot
-  + `dual` boot from external SPI flash memory
   + `vbl` vector bootloader: set fuses to jump to reset, not the HW boot section

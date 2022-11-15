@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|250|256|u7.6|`w-u-jpr`|[atmega48p_24mhz_38400bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_24mhz/38400_bps/atmega48p_24mhz_38400bps_lednop_fr_ur_vbl.hex)|
-|282|320|u7.6|`w-u-jpr`|[atmega48p_24mhz_38400bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_24mhz/38400_bps/atmega48p_24mhz_38400bps_lednop_fr_ce_ur_vbl.hex)|
-|312|320|u7.6|`weu-jpr`|[atmega48p_24mhz_38400bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_24mhz/38400_bps/atmega48p_24mhz_38400bps_ee_lednop_fr_ur_vbl.hex)|
-|340|384|u7.6|`weu-jpr`|[atmega48p_24mhz_38400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_24mhz/38400_bps/atmega48p_24mhz_38400bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|248|256|u7.6|`w-u-jpr`|[atmega48p_24mhz_38400bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_24mhz/38400_bps/atmega48p_24mhz_38400bps_lednop_fr_ur_vbl.hex)|
+|280|320|u7.6|`w-u-jpr`|[atmega48p_24mhz_38400bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_24mhz/38400_bps/atmega48p_24mhz_38400bps_lednop_fr_ce_ur_vbl.hex)|
+|310|320|u7.6|`weu-jpr`|[atmega48p_24mhz_38400bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_24mhz/38400_bps/atmega48p_24mhz_38400bps_ee_lednop_fr_ur_vbl.hex)|
+|338|384|u7.6|`weu-jpr`|[atmega48p_24mhz_38400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/fcpu_24mhz/38400_bps/atmega48p_24mhz_38400bps_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

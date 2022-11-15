@@ -39,7 +39,7 @@
   + `w` urboot provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
-  + `s` uses skeleton of STK500v1 protocol; `-c urclock` and `-c arduino` both work
+  + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `d` dual boot (over-the-air programming from external SPI flash)
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
@@ -52,9 +52,9 @@
   + `lednop` is a template bootloader with `mov rx,rx` nops as placeholders for LEDs operations
   + `csb0` for dual boot uses, in this example, pin B0 as chip select of external SPI flash memory
   + `template` bootloaders contains `mov rx,rx` nops as placeholders for LED and CS operations
+  + `dual` boot: serial and from external SPI flash memory
   + `fr` bootloader provides non-essential code for smoother error handing
   + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming
   + `d` dual boot
-  + `dual` boot from external SPI flash memory
   + `vbl` vector bootloader: set fuses to jump to reset, not the HW boot section
