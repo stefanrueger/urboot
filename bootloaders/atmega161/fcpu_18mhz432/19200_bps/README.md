@@ -1,5 +1,6 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
+|236|256|u7.6|`w-u-jpr`|[atmega161_18mhz432_19200bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega161/fcpu_18mhz432/19200_bps/atmega161_18mhz432_19200bps_lednop_fr_ur_vbl.hex)|
 |334|384|u7.6|`weu-jpr`|[atmega161_18mhz432_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega161/fcpu_18mhz432/19200_bps/atmega161_18mhz432_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |330|1024|u7.6|`weu-hpr`|[atmega161_18mhz432_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega161/fcpu_18mhz432/19200_bps/atmega161_18mhz432_19200bps_ee_lednop_fr_ce_ur.hex)|
 |444|1024|u7.6|`wes-hpr`|[atmega161_18mhz432_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega161/fcpu_18mhz432/19200_bps/atmega161_18mhz432_19200bps_ee_lednop_fr_ce.hex)|
