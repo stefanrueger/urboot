@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|254|256|u7.7|`w-u-jpra-`|[attiny841_autobaud_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/autobaud/attiny841_autobaud_ur_vbl.hex)|
-|310|320|u7.7|`w-u-jprac`|[attiny841_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/autobaud/attiny841_autobaud_lednop_fr_ce_ur_vbl.hex)|
-|320|320|u7.7|`weu-jpra-`|[attiny841_autobaud_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/autobaud/attiny841_autobaud_ee_ur_vbl.hex)|
-|372|384|u7.7|`weu-jprac`|[attiny841_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/autobaud/attiny841_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|252|256|u7.7|`w-u-jpra-`|[attiny841_autobaud_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/autobaud/attiny841_autobaud_ur_vbl.hex)|
+|308|320|u7.7|`w-u-jprac`|[attiny841_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/autobaud/attiny841_autobaud_lednop_fr_ce_ur_vbl.hex)|
+|318|320|u7.7|`weu-jpra-`|[attiny841_autobaud_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/autobaud/attiny841_autobaud_ee_ur_vbl.hex)|
+|370|384|u7.7|`weu-jprac`|[attiny841_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/autobaud/attiny841_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -12,10 +12,10 @@
   + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
-  + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
+  + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
-  + `a` autobaud detection (f_cpu/8n and less with discrete divisors, normally n = 2, 3, ...)
+  + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by

@@ -11,7 +11,7 @@
   + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
-  + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
+  + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)

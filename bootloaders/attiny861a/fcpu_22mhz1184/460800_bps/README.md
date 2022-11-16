@@ -3,7 +3,6 @@
 |254|256|u7.7|`w-u-jpr--`|[attiny861a_22mhz1184_460800bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny861a/fcpu_22mhz1184/460800_bps/attiny861a_22mhz1184_460800bps_rxb0_txb1_lednop_ur_vbl.hex)|
 |304|320|u7.7|`w-u-jpr-c`|[attiny861a_22mhz1184_460800bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny861a/fcpu_22mhz1184/460800_bps/attiny861a_22mhz1184_460800bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
 |320|320|u7.7|`weu-jpr--`|[attiny861a_22mhz1184_460800bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny861a/fcpu_22mhz1184/460800_bps/attiny861a_22mhz1184_460800bps_rxb0_txb1_ee_ur_vbl.hex)|
-|344|384|u7.7|`weu-jpr--`|[attiny861a_22mhz1184_460800bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny861a/fcpu_22mhz1184/460800_bps/attiny861a_22mhz1184_460800bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
 |372|384|u7.7|`weu-jpr-c`|[attiny861a_22mhz1184_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny861a/fcpu_22mhz1184/460800_bps/attiny861a_22mhz1184_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
@@ -13,7 +12,7 @@
   + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
-  + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
+  + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)

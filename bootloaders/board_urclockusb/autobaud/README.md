@@ -1,12 +1,12 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.7|`w-u-jpra-`|[urclockusb_autobaud_led+d5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_led+d5_ur_vbl.hex)|
-|364|384|u7.7|`weu-jprac`|[urclockusb_autobaud_ee_led+d5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_fr_ce_ur_vbl.hex)|
-|360|512|u7.7|`weu-hprac`|[urclockusb_autobaud_ee_led+d5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_fr_ce_ur.hex)|
-|464|512|u7.7|`wes-hprac`|[urclockusb_autobaud_ee_led+d5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_fr_ce.hex)|
-|504|512|u7.7|`weudhprac`|[urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex)|
-|510|512|u7.7|`w-sdhpra-`|[urclockusb_autobaud_led+d5_csb0_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_led+d5_csb0_dual_fr.hex)|
-|608|1024|u7.7|`wesdhprac`|[urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce.hex)|
+|250|256|u7.7|`w-u-jpra-`|[urclockusb_autobaud_led+d5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_led+d5_ur_vbl.hex)|
+|362|384|u7.7|`weu-jprac`|[urclockusb_autobaud_ee_led+d5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_fr_ce_ur_vbl.hex)|
+|358|512|u7.7|`weu-hprac`|[urclockusb_autobaud_ee_led+d5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_fr_ce_ur.hex)|
+|462|512|u7.7|`wes-hprac`|[urclockusb_autobaud_ee_led+d5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_fr_ce.hex)|
+|502|512|u7.7|`weudhprac`|[urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex)|
+|508|512|u7.7|`w-sdhpra-`|[urclockusb_autobaud_led+d5_csb0_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_led+d5_csb0_dual_fr.hex)|
+|606|1024|u7.7|`wesdhprac`|[urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -18,10 +18,10 @@
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `d` dual boot (over-the-air programming from external SPI flash)
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
-  + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
+  + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
-  + `a` autobaud detection (f_cpu/8n and less with discrete divisors, normally n = 2, 3, ...)
+  + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by

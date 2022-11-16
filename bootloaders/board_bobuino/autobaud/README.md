@@ -1,8 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|386|512|u7.7|`weu-jprac`|[bobuino_autobaud_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_bobuino/autobaud/bobuino_autobaud_ee_led+b7_fr_ce_ur_vbl.hex)|
-|386|1024|u7.7|`weu-hprac`|[bobuino_autobaud_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_bobuino/autobaud/bobuino_autobaud_ee_led+b7_fr_ce_ur.hex)|
-|492|1024|u7.7|`wes-hprac`|[bobuino_autobaud_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_bobuino/autobaud/bobuino_autobaud_ee_led+b7_fr_ce.hex)|
+|384|512|u7.7|`weu-jprac`|[bobuino_autobaud_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_bobuino/autobaud/bobuino_autobaud_ee_led+b7_fr_ce_ur_vbl.hex)|
+|384|1024|u7.7|`weu-hprac`|[bobuino_autobaud_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_bobuino/autobaud/bobuino_autobaud_ee_led+b7_fr_ce_ur.hex)|
+|490|1024|u7.7|`wes-hprac`|[bobuino_autobaud_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_bobuino/autobaud/bobuino_autobaud_ee_led+b7_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -13,10 +13,10 @@
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
-  + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
+  + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
-  + `a` autobaud detection (f_cpu/8n and less with discrete divisors, normally n = 2, 3, ...)
+  + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by

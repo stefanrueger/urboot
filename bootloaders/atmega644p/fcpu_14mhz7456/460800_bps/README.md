@@ -18,7 +18,7 @@
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
-  + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
+  + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)

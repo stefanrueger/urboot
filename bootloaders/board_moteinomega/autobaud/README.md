@@ -1,13 +1,13 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|386|512|u7.7|`weu-jprac`|[moteinomega_autobaud_ee_led+d7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_fr_ce_ur_vbl.hex)|
-|494|512|u7.7|`w-udjprac`|[moteinomega_autobaud_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
-|512|512|u7.7|`weudjpra-`|[moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ur_vbl.hex)|
-|556|768|u7.7|`weudjprac`|[moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
-|386|1024|u7.7|`weu-hprac`|[moteinomega_autobaud_ee_led+d7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_fr_ce_ur.hex)|
-|492|1024|u7.7|`wes-hprac`|[moteinomega_autobaud_ee_led+d7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_fr_ce.hex)|
-|556|1024|u7.7|`weudhprac`|[moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ce_ur.hex)|
-|662|1024|u7.7|`wesdhprac`|[moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ce.hex)|
+|384|512|u7.7|`weu-jprac`|[moteinomega_autobaud_ee_led+d7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_fr_ce_ur_vbl.hex)|
+|492|512|u7.7|`w-udjprac`|[moteinomega_autobaud_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
+|510|512|u7.7|`weudjpra-`|[moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ur_vbl.hex)|
+|554|768|u7.7|`weudjprac`|[moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
+|384|1024|u7.7|`weu-hprac`|[moteinomega_autobaud_ee_led+d7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_fr_ce_ur.hex)|
+|490|1024|u7.7|`wes-hprac`|[moteinomega_autobaud_ee_led+d7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_fr_ce.hex)|
+|554|1024|u7.7|`weudhprac`|[moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ce_ur.hex)|
+|660|1024|u7.7|`wesdhprac`|[moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/autobaud/moteinomega_autobaud_ee_led+d7_csc7_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -19,10 +19,10 @@
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `d` dual boot (over-the-air programming from external SPI flash)
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
-  + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
+  + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
-  + `a` autobaud detection (f_cpu/8n and less with discrete divisors, normally n = 2, 3, ...)
+  + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by

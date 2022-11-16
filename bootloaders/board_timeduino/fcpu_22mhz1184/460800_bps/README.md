@@ -4,10 +4,9 @@
 |342|384|u7.7|`weu-jpr-c`|[timeduino_22mhz1184_460800bps_ee_led-b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_22mhz1184/460800_bps/timeduino_22mhz1184_460800bps_ee_led-b1_fr_ce_ur_vbl.hex)|
 |374|384|u7.7|`w-udjpr--`|[timeduino_22mhz1184_460800bps_led-b1_csb0_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_22mhz1184/460800_bps/timeduino_22mhz1184_460800bps_led-b1_csb0_dual_ur_vbl.hex)|
 |338|512|u7.7|`weu-hpr-c`|[timeduino_22mhz1184_460800bps_ee_led-b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_22mhz1184/460800_bps/timeduino_22mhz1184_460800bps_ee_led-b1_fr_ce_ur.hex)|
-|390|512|u7.7|`w-s-hpr-c`|[timeduino_22mhz1184_460800bps_led-b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_22mhz1184/460800_bps/timeduino_22mhz1184_460800bps_led-b1_fr_ce.hex)|
 |442|512|u7.7|`wes-hpr-c`|[timeduino_22mhz1184_460800bps_ee_led-b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_22mhz1184/460800_bps/timeduino_22mhz1184_460800bps_ee_led-b1_fr_ce.hex)|
 |482|512|u7.7|`weudhpr-c`|[timeduino_22mhz1184_460800bps_ee_led-b1_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_22mhz1184/460800_bps/timeduino_22mhz1184_460800bps_ee_led-b1_csb0_dual_fr_ce_ur.hex)|
-|530|1024|u7.7|`w-sdhpr-c`|[timeduino_22mhz1184_460800bps_led-b1_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_22mhz1184/460800_bps/timeduino_22mhz1184_460800bps_led-b1_csb0_dual_fr_ce.hex)|
+|488|512|u7.7|`w-sdhpr--`|[timeduino_22mhz1184_460800bps_led-b1_csb0_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_22mhz1184/460800_bps/timeduino_22mhz1184_460800bps_led-b1_csb0_dual_fr.hex)|
 |586|1024|u7.7|`wesdhpr-c`|[timeduino_22mhz1184_460800bps_ee_led-b1_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_22mhz1184/460800_bps/timeduino_22mhz1184_460800bps_ee_led-b1_csb0_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
@@ -20,7 +19,7 @@
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `d` dual boot (over-the-air programming from external SPI flash)
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
-  + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
+  + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
