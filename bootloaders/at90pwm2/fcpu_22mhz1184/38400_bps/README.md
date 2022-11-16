@@ -21,6 +21,8 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
+  + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
+  + `-` corresponding feature not present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `ee` bootloader supports EEPROM read/write
   + `lednop` is a template bootloader with `mov rx,rx` nops as placeholders for LEDs operations

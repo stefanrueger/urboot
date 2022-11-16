@@ -3,6 +3,7 @@
 |254|256|u7.7|`w-u-jpr--`|[attiny861a_22mhz1184_460800bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny861a/fcpu_22mhz1184/460800_bps/attiny861a_22mhz1184_460800bps_rxb0_txb1_lednop_ur_vbl.hex)|
 |304|320|u7.7|`w-u-jpr-c`|[attiny861a_22mhz1184_460800bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny861a/fcpu_22mhz1184/460800_bps/attiny861a_22mhz1184_460800bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
 |320|320|u7.7|`weu-jpr--`|[attiny861a_22mhz1184_460800bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny861a/fcpu_22mhz1184/460800_bps/attiny861a_22mhz1184_460800bps_rxb0_txb1_ee_ur_vbl.hex)|
+|344|384|u7.7|`weu-jpr--`|[attiny861a_22mhz1184_460800bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny861a/fcpu_22mhz1184/460800_bps/attiny861a_22mhz1184_460800bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
 |372|384|u7.7|`weu-jpr-c`|[attiny861a_22mhz1184_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny861a/fcpu_22mhz1184/460800_bps/attiny861a_22mhz1184_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
@@ -15,6 +16,8 @@
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
+  + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
+  + `-` corresponding feature not present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `rxd0 txd1` software I/O using, in this example, lines RX `D0` and TX `D1`
   + `ee` bootloader supports EEPROM read/write

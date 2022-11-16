@@ -21,8 +21,11 @@
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
+  + `a` autobaud detection (f_cpu/8n and less with discrete divisors, normally n = 2, 3, ...)
+  + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
+  + `-` corresponding feature not present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
-  + `autobaud` tries to match host baud rate; can be f/16, f/24, f/32, ..., f/2048 (f=F<sub>MCU</sub>)
+  + `autobaud` tries to match host baud rate; can be f/8, f/16, f/24, ..., f/2048 (f=F<sub>CPU</sub>)
   + `ee` bootloader supports EEPROM read/write
   + `led-b1` toggles an active-low LED on pin `B1`, `+` designates an active-high LED
   + `csb0` for dual boot uses, in this example, pin B0 as chip select of external SPI flash memory

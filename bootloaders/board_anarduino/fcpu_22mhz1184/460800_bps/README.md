@@ -4,9 +4,10 @@
 |342|384|u7.7|`weu-jpr-c`|[anarduino_22mhz1184_460800bps_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_22mhz1184/460800_bps/anarduino_22mhz1184_460800bps_ee_led+b1_fr_ce_ur_vbl.hex)|
 |382|384|u7.7|`w-udjpr--`|[anarduino_22mhz1184_460800bps_led+b1_csd5_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_22mhz1184/460800_bps/anarduino_22mhz1184_460800bps_led+b1_csd5_dual_ur_vbl.hex)|
 |338|512|u7.7|`weu-hpr-c`|[anarduino_22mhz1184_460800bps_ee_led+b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_22mhz1184/460800_bps/anarduino_22mhz1184_460800bps_ee_led+b1_fr_ce_ur.hex)|
+|390|512|u7.7|`w-s-hpr-c`|[anarduino_22mhz1184_460800bps_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_22mhz1184/460800_bps/anarduino_22mhz1184_460800bps_led+b1_fr_ce.hex)|
 |442|512|u7.7|`wes-hpr-c`|[anarduino_22mhz1184_460800bps_ee_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_22mhz1184/460800_bps/anarduino_22mhz1184_460800bps_ee_led+b1_fr_ce.hex)|
 |490|512|u7.7|`weudhpr-c`|[anarduino_22mhz1184_460800bps_ee_led+b1_csd5_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_22mhz1184/460800_bps/anarduino_22mhz1184_460800bps_ee_led+b1_csd5_dual_fr_ce_ur.hex)|
-|496|512|u7.7|`w-sdhpr--`|[anarduino_22mhz1184_460800bps_led+b1_csd5_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_22mhz1184/460800_bps/anarduino_22mhz1184_460800bps_led+b1_csd5_dual_fr.hex)|
+|538|1024|u7.7|`w-sdhpr-c`|[anarduino_22mhz1184_460800bps_led+b1_csd5_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_22mhz1184/460800_bps/anarduino_22mhz1184_460800bps_led+b1_csd5_dual_fr_ce.hex)|
 |594|1024|u7.7|`wesdhpr-c`|[anarduino_22mhz1184_460800bps_ee_led+b1_csd5_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_22mhz1184/460800_bps/anarduino_22mhz1184_460800bps_ee_led+b1_csd5_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
@@ -22,6 +23,8 @@
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
+  + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
+  + `-` corresponding feature not present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `ee` bootloader supports EEPROM read/write
   + `led-b1` toggles an active-low LED on pin `B1`, `+` designates an active-high LED

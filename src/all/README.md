@@ -82,8 +82,12 @@
   + `V` vector bootloader: patches the vector table itself during upload and skips verifying the first page
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
+  + `a` autobaud detection (f_cpu/8n and less with discrete divisors, normally n = 2, 3, ...)
+  + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
+  + `.` unable to tell from .hex file whether this feature is present
+  + `-` corresponding feature not present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
-  + `autobaud` tries to match host baud rate; can be f/16, f/24, f/32, ..., f/2048 (f=F<sub>MCU</sub>)
+  + `autobaud` tries to match host baud rate; can be f/8, f/16, f/24, ..., f/2048 (f=F<sub>CPU</sub>)
   + `swio` software I/O (not USART)
   + `led9` toggles an LED on, in this example, Arduino pin 9
   + `cs8` for dual boot uses, in this example, Arduino pin 8 as chip select of external SPI flash memory

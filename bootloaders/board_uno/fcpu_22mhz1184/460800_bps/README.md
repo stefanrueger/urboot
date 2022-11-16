@@ -3,6 +3,7 @@
 |248|256|u7.7|`w-u-jpr--`|[uno_22mhz1184_460800bps_led+b5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_uno/fcpu_22mhz1184/460800_bps/uno_22mhz1184_460800bps_led+b5_fr_ur_vbl.hex)|
 |342|384|u7.7|`weu-jpr-c`|[uno_22mhz1184_460800bps_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_uno/fcpu_22mhz1184/460800_bps/uno_22mhz1184_460800bps_ee_led+b5_fr_ce_ur_vbl.hex)|
 |338|512|u7.7|`weu-hpr-c`|[uno_22mhz1184_460800bps_ee_led+b5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_uno/fcpu_22mhz1184/460800_bps/uno_22mhz1184_460800bps_ee_led+b5_fr_ce_ur.hex)|
+|390|512|u7.7|`w-s-hpr-c`|[uno_22mhz1184_460800bps_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_uno/fcpu_22mhz1184/460800_bps/uno_22mhz1184_460800bps_led+b5_fr_ce.hex)|
 |442|512|u7.7|`wes-hpr-c`|[uno_22mhz1184_460800bps_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_uno/fcpu_22mhz1184/460800_bps/uno_22mhz1184_460800bps_ee_led+b5_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
@@ -17,6 +18,8 @@
   + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
+  + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
+  + `-` corresponding feature not present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `ee` bootloader supports EEPROM read/write
   + `led-b1` toggles an active-low LED on pin `B1`, `+` designates an active-high LED

@@ -35,7 +35,6 @@ my ($version, $check, $srt, $usage, $md, $l, $c, $t, $title, $in, $disthex, $rjm
 my (@rows, $siz, $use, $ver, $fea, $nam, %legend);
 
 my %feature = (
-  'a'      => "  + `a` autobaud detection (f_cpu/8n and less with discrete divisors, normally n = 2, 3, ...)\n",
   'w'      => "  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`\n",
   'e'      => "  + `e` EEPROM read/write support\n",
   'u'      => "  + `u` uses urprotocol requiring `avrdude -c urclock` for programming\n",
@@ -48,13 +47,14 @@ my %feature = (
   'v'      => "  + `v` vector bootloader: patches the vector table itself during upload but verification fails\n",
   'V'      => "  + `V` vector bootloader: patches the vector table itself during upload and skips verifying the first page\n",
   'p'      => "  + `p` bootloader protects itself from being overwritten\n",
-  'c'      => "  + `c` bootloader provides chip erase functionality (only recommended for large MCUs)\n",
   'r'      => "  + `r` preserves reset flags for the application in the register R2\n",
+  'a'      => "  + `a` autobaud detection (f_cpu/8n and less with discrete divisors, normally n = 2, 3, ...)\n",
+  'c'      => "  + `c` bootloader provides chip erase functionality (only recommended for large MCUs)\n",
   '?'      => "  + `?` unable to tell from .hex file whether this feature is present\n",
   '.'      => "  + `.` unable to tell from .hex file whether this feature is present\n",
   '-'      => "  + `-` corresponding feature not present\n",
-  'auto'   => "  + `autobaud` tries to match host baud rate; can be f/16, f/24, f/32, ..., f/2048 (f=F<sub>MCU</sub>)\n",
-  'auto2'  => "  + `autobaud2` tries to match host baud rate; can be f/16, f/32, f/48, ..., f/4096 (f=F<sub>MCU</sub>)\n",
+  'auto'   => "  + `autobaud` tries to match host baud rate; can be f/8, f/16, f/24, ..., f/2048 (f=F<sub>CPU</sub>)\n",
+  'auto2'  => "  + `autobaud2` tries to match host baud rate; can be f/16, f/32, f/48, ..., f/4096 (f=F<sub>CPU</sub>)\n",
   'dual'   => "  + `dual` boot: serial and from external SPI flash memory\n",
   'swio'   => "  + `swio` software I/O (not USART)\n",
   'swiorx' => "  + `rxd0 txd1` software I/O using, in this example, lines RX `D0` and TX `D1`\n",
@@ -283,9 +283,9 @@ if(!$check) {
      "- **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size\n".
      "- **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version\n".
      "- **Features:**\n";
-     print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p r ? .));
+     print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p r a c ? . -));
      print "- **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by\n";
-     print $feature{$_} for grep { $legend{$_} } (qw(auto auto2 swio swiorx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB1 csnop template dual fp9 fr ce ur ddd v2 v3 vbl min));
+     print $feature{$_} for grep { $legend{$_} } (qw(auto auto2 swio swiorx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB0 csnop template dual fp9 fr ce ur ddd v2 v3 vbl min));
   }
 }
 
