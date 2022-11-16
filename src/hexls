@@ -48,7 +48,7 @@ my %feature = (
   'V'      => "  + `V` vector bootloader: patches the vector table itself during upload, skips verifying the first page\n",
   'p'      => "  + `p` bootloader protects itself from being overwritten\n",
   'r'      => "  + `r` preserves reset flags for the application in the register R2\n",
-  'a'      => "  + `a` autobaud detection (f_cpu/8n and less with discrete divisors, normally n = 2, 3, ...)\n",
+  'a'      => "  + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)\n",
   'c'      => "  + `c` bootloader provides chip erase functionality (only recommended for large MCUs)\n",
   '?'      => "  + `?` unable to tell from .hex file whether this feature is present\n",
   '.'      => "  + `.` unable to tell from .hex file whether this feature is present\n",
