@@ -4,17 +4,17 @@
  * published under GNU General Public License, version 3 (GPL-3.0)
  * author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v7.6
- * 10.07.2022 (first version published in July 2016)
+ * v7.7 pre-release
+ * 15.11.2022 (first version published in July 2016)
  *
  * Feature-rich bootloader that is fast and small
- *  - Tight code: many bootloaders fit into 256 bytes
- *  - High default baud rate 115200 for fast programming
+ *  - Tight code: most bootloaders fit into 256 bytes
  *  - Highly modular feature set:
+ *     + Dedicated protocol between programmer and bootloader (urprotocol)
  *     + EEPROM read/write support
  *     + Vector bootloader for devices without a boot section or to save space on devices with one
  *     + Software UART: no hardware UART required, but also useful when the chip's CPU frequency
- *       and the bootloader's desired baudrate are incompatible (eg, 8 MHz and 115200 baud)
+ *       and the bootloader's desired baud rate are incompatible (eg, 8 MHz and 115200 baud)
  *     + Subroutine pgm_write_page(sram, progmem) for applications so they can change themselves:
  *       on many MCUs the SPM write flash only works when called from the bootloader section
  *     + Dual programming from external SPI flash memory for over-the-air programming
@@ -22,6 +22,8 @@
  *       the right LED/TX/RX/CS pins at bootloader-burning time (see accompanying urloader sketch)
  *     + Saves the reset flags in R2 for inspection by the application via the .init0 section
  *     + Bootloader protects itself from overwriting
+ *     + Automatic host baud rate detection
+ *     + Chip erase in bootloader (faster than -c urclock emulation)
  *
  * Supported and tested
  *  - ATmega328P (Urclock, UrSense, UrclockMini, Uno, Duemilanove, Anarduino, Moteino, Jeenode etc)
@@ -29,6 +31,9 @@
  *  - ATmega2560 (Mega R3)
  *  - ATtiny85 (Digispark)
  *  - ATtiny167 (Digispark Pro)
+ *  - ATtiny2313
+ *  - ATtiny1634
+ *  - ATtiny841
  *
  * Unsupported (without ever planning to support them)
  *  - AVRtiny core (ATtiny4, ATtiny5, ATtiny9, ATtiny10, ATtiny20, ATtiny40, ATtiny102, ATtiny104)
@@ -58,9 +63,9 @@
  *   atmega645a atmega645p atmega649 atmega6490 atmega6490a atmega6490p atmega649a atmega649p
  *   atmega64a atmega64c1 atmega64hve atmega64hve2 atmega64m1 atmega64rfr2 atmega8 atmega8515
  *   atmega8535 atmega88 atmega88a atmega88p atmega88pa atmega88pb atmega8a atmega8hva atmega8u2
- *   attiny13 attiny13a attiny1634 attiny167 attiny2313 attiny2313a attiny24 attiny24a attiny25
- *   attiny261 attiny261a attiny4313 attiny43u attiny44 attiny441 attiny44a attiny45 attiny461
- *   attiny461a attiny48 attiny828 attiny84 attiny841 attiny84a attiny861 attiny861a attiny88
+ *   attiny13 attiny13a attiny2313a attiny24 attiny24a attiny25 attiny261 attiny261a attiny4313
+ *   attiny43u attiny44 attiny441 attiny44a attiny45 attiny461 attiny461a attiny48 attiny828
+ *   attiny84 attiny84a attiny861 attiny861a attiny88
  *
  * How the bootloader works
  *   In common with bootloaders, it runs after every reset and tries to communicate with an
@@ -513,22 +518,81 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
  *  - EXITFE           (FRILLS >= 3? 2: FRILLS >= 2)
  *  - BLINK            (FRILLS >= 1)
  *
- * BAUD_RATE=<baud> UARTNUM=<n> SWIO=<0|1> RX=... TX=... UART2X=<0|1>
+ *
+ * UARTNUM=<n> UART2X=<0|1>    AUTOBAUD=<0|1> RX=...
+ * UARTNUM=<n> UART2X=<0|1|2>  BAUD_RATE=<baud>
+ * SWIO=<0|1> RX=... TX=...    BAUD_RATE=<baud>
  *
  * These settings determine how the serial communication is implemented. When the MCU has a
- * hardware UART using that will create shorter code, and this is the default. In case the MCU has
- * more than one UART, then UARTNUM specifies which one to use (0, 1, ...). The code automatically
- * selects reasonably good settings to match the desired baud rate. The option UART2X determines
- * whether or not the set of double frequencies will be used (UART2X=1 costs 6 bytes additional
- * code but sometimes is necessary to achieve a usable baudrate match).  If unset, the code
- * automatically selects UART2x=0 unless the error in the achieved baudrate is larger than 2.5%.
- * SWIO=1 creates code for software I/O. That's not only useful for those MCUs that don't have an
+ * hardware UART using that will normally create shorter code, and this is the default. In case the
+ * MCU has more than one UART, then UARTNUM specifies which one to use (0, 1, ...).
+ *
+ * If AUTOBAUD is set then the generated bootloader will try to initialise the USART with the host
+ * communciation speed that the bootloader augurs from the first byte that is expected from the
+ * host at runtime; the code utilises that the lower 5 bit of that byte (0x30 = STK_GET_SYNC) are
+ * 0x10. AUTOBAUD is a bit of a misnomer, as urboot only offers 256 different baud rates. Moreover,
+ * these must be compatible with F_CPU, namely F_CPU/8, F_CPU/16, F_CPU/24, ..., F_CPU/2048. The
+ * set of compatible baud rates comes with a narrow tolerance band of +/-1.5%. As a consequence, a
+ * 16 MHz MCU can only safely communicate in the following 33 baud rate intervals (the last one is
+ * the union of 224 overlapping individual baud rate intervals):
+ *
+ *   [1970000, 2030000] = [0.985*F_CPU/(8*1), 1.015*F_CPU/(8*1)], F_CPU = 16 MHz
+ *   [ 985000, 1015000] = [0.985*F_CPU/(8*2), 1.015*F_CPU/(8*2)]
+ *   [ 656667,  676667]
+ *   [ 492500,  507500]
+ *   [ 394000,  406000]
+ *   [ 328333,  338333]
+ *   [ 281429,  290000]
+ *   [ 246250,  253750]
+ *   [ 218889,  225556]
+ *   [ 197000,  203000]
+ *   [ 179091,  184545]
+ *   [ 164167,  169167]
+ *   [ 151538,  156154]
+ *   [ 140714,  145000]
+ *   [ 131333,  135333]
+ *   [ 123125,  126875]
+ *   [ 115882,  119412] <-- 115200 baud is out of specs for a 16 MHz MCU
+ *   [ 109444,  112778]
+ *   [ 103684,  106842]
+ *   [  98500,  101500]
+ *   [  93810,   96667]
+ *   [  89545,   92273]
+ *   [  85652,   88261]
+ *   [  82083,   84583]
+ *   [  78800,   81200]
+ *   [  75769,   78077]
+ *   [  72963,   75185]
+ *   [  70357,   72500]
+ *   [  67931,   70000]
+ *   [  65667,   67667]
+ *   [  63548,   65484]
+ *   [  61563,   63437]
+ *   [  7695,    61515] = [0.985*F_CPU/(8*256), 1.015*F_CPU/(8*33)]
+ *
+ * Notice that the ubiquituous 115300 baud is actually out of specs for popular 16 MHz MCU builds.
+ * In practice, tolerances of up to 2.5% may actually work, though that is not recommended. Also
+ * signal noise and cable length plays a big role in whether communication is stable. The maximum
+ * permitted baud rate of F_CPU/8 may not always work. Above set of baud rates is generated by
+ * setting UART2X to 1, the default when AUTOBAUD has been set. Setting UART2X=0 saves 4 bytes code
+ * and has a higher tolerance of 2% but will restrict available baud rates to half of above baud
+ * rates: F_CPU/16, F_CPU/32, F_CPU/48, ..., F_CPU/4096. In order for the AUTOBAUD feature to work,
+ * urboot will need to know the rx line of the UART so it can measure the host's baud rate.
+ *
+ * If AUTOBAUD is not set or if it is set to 0, the code automatically selects reasonably good
+ * settings to match the desired fixed baud rate BAUD_RATE. In the absence of AUTOBAUD if UART2X is
+ * set to 1 or unset, then the code decides about whether or not to switch to the higher baud rate
+ * set based on the respective error rates. Setting USART2X to 2 will always utilise the set of
+ * higher baud rates only, setting it to 0 will always utilise the set of lower baud rates to match
+ * the desired BAUD_RATE.
+ *
+ * SWIO=1 creates code for software I/O. That is not only useful for those MCUs that don't have an
  * UART, but also for those combinations of F_CPU and BAUD_RATE where an UART would create too
  * large deviations. It may be necessary to resort to software I/O when the board uses the MCU's rx
  * and tx lines otherwise. The options RX and TX specify which pins are used for software I/O. The
  * syntax is the same as with LED and SFMCS: Use any pin descriptor in Atmel format such as
  * AtmelPB2 or as Arduino pin number as in TX=ArduinoPin2. Can be overwritten in Makefile. The
- * default baudrate depends on the CPU frequency of the board and is 115200 for 8 MHz or above.
+ * default baud rate depends on the CPU frequency of the board and is 115200 for 8 MHz or above.
  *
  *
  * WDTO=<timeout> (watchdog timeout)
@@ -601,6 +665,8 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
  *
  * Edit History:
  *
+ * Nov 2022
+ * 7.7 smr: added autobaud
  * Jun 2022
  * 7.6 smr: refined the URPROTOCOL protocol implementation, now compiles for 183 MCUs
  * Dec 2021
@@ -644,7 +710,7 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
 #include "errata.h"
 
 #ifndef VERSION
-#define VERSION             076 // v7.6 in octal, as minor version is in 3 least significant bits
+#define VERSION             077 // v7.7 in octal, as minor version is in 3 least significant bits
 #endif
 
 #ifndef DUAL
@@ -760,6 +826,10 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
 #define BLINK     (FRILLS >= 1)
 #endif
 
+#ifndef AUTOBAUD
+#define AUTOBAUD              0
+#endif
+
 // Some parts can only erase 4 pages at a time
 #define FOUR_PAGE_ERASE (defined(__AVR_ATtiny441__) || defined(__AVR_ATtiny841__) || \
   defined(__AVR_ATtiny1634__) || defined(__AVR_ATtiny1634R__))
@@ -855,6 +925,119 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
 #endif
 
 
+
+
+// I/O settings
+
+#if !defined(UDR0) && !defined(SWIO)
+#define SWIO 1
+#warning no uart: defaulting to SWIO=1
+#endif
+
+#ifndef UARTNUM
+#define UARTNUM 0
+#endif
+
+#ifndef SWIO
+#define SWIO 0
+#endif
+
+#if SWIO
+#ifndef RX
+#warning SWIO set but not RX? Defaulting to AtmelPB0 (but this is unlikely what you want)
+#define RX AtmelPB0
+#endif
+#ifndef TX
+#warning SWIO set but not TX? Defaulting to AtmelPB1 (but this is unlikely what you want)
+#define TX AtmelPB1
+#endif
+#endif
+
+#if AUTOBAUD
+#ifndef RX
+#warning AUTOBAUD set but not RX? Defaulting to AtmelPB0 (but this is unlikely what you want)
+#define RX AtmelPB0
+#endif
+#endif
+
+#if AUTOBAUD && SWIO
+#warning unable to perform AUTOBAUD for SWIO
+#undef AUTOBAUD
+#define AUTOBAUD 0
+#endif
+
+#if !AUTOBAUD
+
+// Set the baud rate defaults
+#ifndef BAUD_RATE
+#if   F_CPU >= 7800000L
+#define BAUD_RATE       115200L // Generally works with avrdude (but needs SWIO for ca 8 MHz)
+#elif F_CPU >= 1000000L
+#define BAUD_RATE         9600L // 19200 also supported, but with significant error
+#elif F_CPU >= 128000L
+#define BAUD_RATE         4800L // Good for 128 kHz internal RC
+#else
+#define BAUD_RATE         1200L // Good even at 32768 Hz
+#endif
+#endif
+
+// Baud setting and actual baud rate in uart 2x mode and normal mode
+#define BAUD_SETTING2X (((F_CPU + 4L*BAUD_RATE)/(8L*BAUD_RATE)) - 1)
+#define BAUD_ACTUAL2X  (F_CPU/(8L*(BAUD_SETTING2X+1)))
+#define BAUD_SETTING1X (((F_CPU + 8L*BAUD_RATE)/(16L*BAUD_RATE)) - 1)
+#define BAUD_ACTUAL1X  (F_CPU/(16L*(BAUD_SETTING1X+1)))
+
+// Error per 1000, ie, in 0.1%
+#define baud_error(act) ((1000L*(BAUD_RATE>=(act)? BAUD_RATE-(act): (act)-BAUD_RATE))/BAUD_RATE)
+
+// Using double speed mode USART costs 6 byte initialisation. Is it worth it?
+#if  !defined(UART2X) || UART2X == 1
+#undef UART2X
+/*
+ * switch on 2x mode if error for normal mode is > 2.5% and error with 2x less than normal mode
+ * (note that normal mode has higher tolerances than 2X speed mode)
+ */
+#if 20*baud_error(BAUD_ACTUAL2X) < 15*baud_error(BAUD_ACTUAL1X) && baud_error(BAUD_ACTUAL1X) > 25
+#define UART2X 1
+#else
+#define UART2X 0
+#endif
+#endif
+
+#if UART2X
+#define BAUD_SETTING BAUD_SETTING2X
+#define BAUD_ACTUAL  BAUD_ACTUAL2X
+#define BAUD_ERROR   baud_error(BAUD_ACTUAL2X)
+#else
+#define BAUD_SETTING BAUD_SETTING1X
+#define BAUD_ACTUAL  BAUD_ACTUAL1X
+#define BAUD_ERROR   baud_error(BAUD_ACTUAL1X)
+#endif
+
+#if !SWIO
+#if   BAUD_ERROR > 50 && BAUD_ACTUAL < BAUD_RATE
+#warning BAUD_RATE error exceeds -5%
+#elif BAUD_ERROR > 50
+#warning BAUD_RATE error greater than 5%
+#elif  BAUD_ERROR > 25 && BAUD_ACTUAL < BAUD_RATE
+#warning BAUD_RATE error exceeds -2.5%
+#elif BAUD_ERROR > 25
+#warning BAUD_RATE error greater than 2.5%
+#endif
+
+#if BAUD_SETTING > 250
+#error Unachievable baud rate (too slow)
+#elif BAUD_SETTING < 3
+#if BAUD_ERROR != 0             // Permit high bit-rates (eg, 1 Mbps @ 16 MHz) if error is zero
+#error Unachievable baud rate (too fast)
+#endif
+#endif
+#endif // !SWIO
+
+#endif // !AUTOBAUD
+
+
+
 /*
  * Urboot layout of top six bytes
  *
@@ -867,6 +1050,7 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
 
 // Capability byte of bootloader from version 7.2 onwards
 #define UR_PGMWRITEPAGE     128 // pgm_write_page() can be called from application at FLASHEND+1-4
+#define UR_AUTOBAUD         128 // Bootloader has autobaud detection (v7.7+)
 #define UR_EEPROM            64 // EEPROM read/write support
 #define UR_URPROTOCOL        32 // Bootloader uses urprotocol that requires avrdude -c urclock
 #define UR_DUAL              16 // Dual boot
@@ -876,20 +1060,27 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
 #define UR_VBL                4 // Merely start application via interrupt vector instead of reset
 #define UR_NO_VBL             0 // Not a vector bootloader, must set fuses to HW bootloader support
 #define UR_PROTECTME          2 // Bootloader safeguards against overwriting itself
+#define UR_HAS_CE             1 // Bootloader has Chip Erase
 #define UR_RESETFLAGS         1 // Load reset flags into register R2 before starting application
 
 #define MAJORVER (VERSION >> 3) // Max 31
 #define MINORVER (VERSION & 7)  // Max 7
 
 #define UR_WFLAG  (PGMWRITEPAGE && RJMPWP != RET_OPCODE? UR_PGMWRITEPAGE: 0)
+#define UR_AFLAG  (AUTOBAUD? UR_AUTOBAUD: 0)
 #define UR_EFLAG  (EEPROM? UR_EEPROM: 0)
 #define UR_UFLAG  (URPROTOCOL? UR_URPROTOCOL: 0)
 #define UR_DFLAG  (DUAL? UR_DUAL: 0)
 #define UR_VFLAGS ((VBL  & 3) * UR_VBL)
 #define UR_PFLAG  (PROTECTME? UR_PROTECTME: 0)
+#define UR_CFLAG  (CHIP_ERASE? UR_HAS_CE: 0)
 #define UR_RFLAG  UR_RESETFLAGS // Always set
 
+#if VERSION >= 077
+#define UR_TYPE (UR_AFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_UFLAG | UR_PFLAG | UR_CFLAG)
+#else
 #define UR_TYPE (UR_WFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_UFLAG | UR_PFLAG | UR_RFLAG)
+#endif
 
 // Extended version word (from v 7.5 onwards)
 #define UR_EXT_VBLVECTNUMMASK 0x7f00 // Mask for the vector bootloader vector number
@@ -1008,97 +1199,6 @@ unsigned const int __attribute__ ((section(".version")))
 
 
 
-#if !defined(UDR0) && !defined(SWIO)
-#define SWIO 1
-#warning no uart: defaulting to SWIO=1
-#endif
-
-#ifndef SWIO
-#define SWIO 0
-#endif
-
-#if SWIO
-#ifndef RX
-#warning SWIO set but not RX? Defaulting to AtmelPB0 (but this is unlikely what you want)
-#define RX AtmelPB0
-#endif
-#ifndef TX
-#warning SWIO set but not TX? Defaulting to AtmelPB1 (but this is unlikely what you want)
-#define TX AtmelPB1
-#endif
-#endif
-
-// Set the baud rate defaults
-
-#ifndef BAUD_RATE
-#if   F_CPU >= 7800000L
-#define BAUD_RATE       115200L // Generally works with avrdude (but needs SWIO for ca 8 MHz)
-#elif F_CPU >= 1000000L
-#define BAUD_RATE         9600L // 19200 also supported, but with significant error
-#elif F_CPU >= 128000L
-#define BAUD_RATE         4800L // Good for 128 kHz internal RC
-#else
-#define BAUD_RATE         1200L // Good even at 32768 Hz
-#endif
-#endif
-
-#ifndef UARTNUM
-#define UARTNUM 0
-#endif
-
-// Baud setting and actual baud rate in uart 2x mode and normal mode
-#define BAUD_SETTING2X (((F_CPU + 4L*BAUD_RATE)/(8L*BAUD_RATE)) - 1)
-#define BAUD_ACTUAL2X  (F_CPU/(8L*(BAUD_SETTING2X+1)))
-#define BAUD_SETTING1X (((F_CPU + 8L*BAUD_RATE)/(16L*BAUD_RATE)) - 1)
-#define BAUD_ACTUAL1X  (F_CPU/(16L*(BAUD_SETTING1X+1)))
-
-// Error per 1000, ie, in 0.1%
-#define baud_error(act) ((1000L*(BAUD_RATE>=(act)? BAUD_RATE-(act): (act)-BAUD_RATE))/BAUD_RATE)
-
-// Using double speed mode USART costs 6 byte initialisation. Is it worth it?
-#if  !defined(UART2X) || UART2X == 1
-#undef UART2X
-/*
- * switch on 2x mode if error for normal mode is > 2.5% and error with 2x less than normal mode
- * (note that normal mode has higher tolerances than 2X speed mode)
- */
-#if 20*baud_error(BAUD_ACTUAL2X) < 15*baud_error(BAUD_ACTUAL1X) && baud_error(BAUD_ACTUAL1X) > 25
-#define UART2X 1
-#else
-#define UART2X 0
-#endif
-#endif
-
-#if UART2X
-#define BAUD_SETTING BAUD_SETTING2X
-#define BAUD_ACTUAL  BAUD_ACTUAL2X
-#define BAUD_ERROR   baud_error(BAUD_ACTUAL2X)
-#else
-#define BAUD_SETTING BAUD_SETTING1X
-#define BAUD_ACTUAL  BAUD_ACTUAL1X
-#define BAUD_ERROR   baud_error(BAUD_ACTUAL1X)
-#endif
-
-#if !SWIO
-#if   BAUD_ERROR > 50 && BAUD_ACTUAL < BAUD_RATE
-#warning BAUD_RATE error exceeds -5%
-#elif BAUD_ERROR > 50
-#warning BAUD_RATE error greater than 5%
-#elif  BAUD_ERROR > 25 && BAUD_ACTUAL < BAUD_RATE
-#warning BAUD_RATE error exceeds -2.5%
-#elif BAUD_ERROR > 25
-#warning BAUD_RATE error greater than 2.5%
-#endif
-
-#if BAUD_SETTING > 250
-#error Unachievable baud rate (too slow)
-#elif BAUD_SETTING < 3
-#if BAUD_ERROR != 0             // Permit high bit-rates (eg, 1 Mbps @ 16 MHz) if error is zero
-#error Unachievable baud rate (too fast)
-#endif
-#endif
-#endif // !SWIO
-
 // Watchdog settings
 #define WATCHDOG_OFF    (0)
 
@@ -1128,6 +1228,7 @@ unsigned const int __attribute__ ((section(".version")))
 #define WATCHDOG_4S     (_BV(WDP3) | _BV(WDE))
 #define WATCHDOG_8S     (_BV(WDP3) | _BV(WDP0) | _BV(WDE))
 #endif
+
 
 // STK500 command definitions
 
@@ -2100,7 +2201,7 @@ int main(void) {
 #else
 
   if(!(mcusr & _BV(EXTRF))) {
-#if DUAL                        // Check exernal SPI flash, then start the application
+#if DUAL                        // Check external SPI flash, then start the application
     if(mcusr & _BV(WDRF))       // Reset by watchdog? Check for dual boot from external flash
       dual_boot();
 #endif
@@ -2115,6 +2216,7 @@ int main(void) {
   // Global label marks watchdog location, so urloader can change the 500 ms default externally
   asm volatile(".global watchdog_setting\nwatchdog_setting:\n\t" :::);
   watchdogConfig(WATCHDOG_TIMEOUT(WDTO));
+
 
 #if SWIO && !defined(TX)
 #error you need to define TX for SWIO
@@ -2149,8 +2251,49 @@ int main(void) {
 #define HAVE_UART_SRC         0
 #endif
 
+#if AUTOBAUD
+
+#if defined(__AVR_XMEGA__)
+# error Baudrate loop takes 6 cycles not 5 (owing to XMEGAs 2-cycle sbis); todo: find a solution
+#endif
+
+// Measure cycles/rxbit = F_CPU/baudrate and set UART_BRL
+// Loop 2 below modified from https://github.com/nerdralph/picoboot/
+
+#define AUTO_BRL \
+  "   ldi   r26, 0x7f\n"      /* Rounding for implied division by 8 */ \
+  "   clr   r27\n" \
+  "1: sbic  %[RXPin],%[RXBit]\n" /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
+  "   rjmp  1b\n" \
+  "2: adiw  r26, 256/8\n"     /* UART divisor in XH, add 256/8 to avoid later division by 8 */ \
+  "   sbis  %[RXPin],%[RXBit]\n" /* Loop as long as rx bit is low */ \
+  "   rjmp  2b\n"             /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */ \
+  "   dec   r27\n"            /* UART_BRL = F_CPU/(8*baudrate)-1 */
+
+#define AUTO_DRAIN \
+  "3: sbiw  r26, 1\n"         /* Drain input: run down X for 25.6 rx bits (256/8 * 4 c/5 c) */ \
+  "   brne  3b\n"             /* 4-cycle loop */
+
+#ifndef UART2X
+#define UART2X              1
+#endif
+
+#endif // AUTOBAUD
+
+
   if(&UART_BASE < (volatile uint8_t *) 0x40) { // Compiler uses out, good
+#if AUTOBAUD
+  asm volatile(
+    AUTO_BRL                  // Measure and load the divisor for the baud rate register
+    " out %[uart_brl], r27\n"
+    AUTO_DRAIN                // Drain the two-byte input before initialising comms
+  :: [uart_brl] "I"(_SFR_IO_ADDR(UART_BRL)),
+     [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX))
+  : "r30", "r31", "r26", "r27"
+  );
+#else
     UART_BRL = BAUD_SETTING;
+#endif
 #if UART2X
     UART_SRA = UART_SRA_VAL;
 #endif
@@ -2160,10 +2303,16 @@ int main(void) {
 #endif
   } else {
     asm volatile(
-      " ldi r30, lo8(%[base])\n"
+      " ldi r30, lo8(%[base])\n" // Load Z for st Z+offset, r27
       " ldi r31, hi8(%[base])\n"
+#if AUTOBAUD
+      AUTO_BRL
+      " std Z+%[brl_off], r27\n"
+      AUTO_DRAIN
+#else
       " ldi r27, lo8(%[brl_val])\n"
       " std Z+%[brl_off], r27\n"
+#endif
 #if UART2X
       " ldi r27, lo8(%[sra_val])\n"
       " std Z+%[sra_off], r27\n"
@@ -2175,7 +2324,11 @@ int main(void) {
       " std Z+%[src_off], r27\n"
 #endif
    :: [brl_off] "I" (&UART_BRL - &UART_BASE),
+#if AUTOBAUD
+      [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX)),
+#else
       [brl_val] "n" (BAUD_SETTING),
+#endif
       [sra_off] "I" (&UART_SRA - &UART_BASE),
       [sra_val] "n" (UART_SRA_VAL),
       [srb_off] "I" (&UART_SRB - &UART_BASE),
@@ -2185,12 +2338,12 @@ int main(void) {
       [src_val] "n" (UART_SRC_VAL),
 #endif
       [base] "n" ( _SFR_MEM_ADDR(UART_BASE))
-      : "r30", "r31", "r27"
+      : "r30", "r31", "r26", "r27"
     );
   }
 
-
 #endif
+
 
 // Swing a square wave of 5 periods on pin FREQ_PIN (can be LED) to enable exact F_CPU measurement
 #if defined(DEBUG_FREQ) && DEBUG_FREQ && !defined(FREQ_PIN)

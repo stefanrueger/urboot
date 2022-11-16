@@ -316,7 +316,10 @@
     defined(__AVR_ATxmega64A1U__) || defined(__AVR_ATxmega64A3U__) || \
     defined(__AVR_ATxmega64A4U__) || defined(__AVR_ATxmega64B1__) || \
     defined(__AVR_ATxmega64B3__) || defined(__AVR_ATxmega64C3__) || \
-    defined(__AVR_ATxmega64D3__) || defined(__AVR_ATxmega64D4__) || defined(__AVR_ATxmega8E5__)
+    defined(__AVR_ATxmega64D3__) || defined(__AVR_ATxmega64D4__) || defined(__AVR_ATxmega8E5__) || \
+    /* Manually added below */ \
+    defined(__AVR_ATtiny828__)
+
 
 #ifndef RX
 #define RX AtmelPC2
@@ -340,7 +343,11 @@
     defined(__AVR_ATmega644PA__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644__) || \
     defined(__AVR_ATmega88A__) || defined(__AVR_ATmega88PA__) || defined(__AVR_ATmega88PB__) || \
     defined(__AVR_ATmega88P__) || defined(__AVR_ATmega88__) || defined(__AVR_ATmega8A__) || \
-    defined(__AVR_ATmega8__)
+    defined(__AVR_ATmega8__) || \
+    /* Manually added below */ \
+    defined(__AVR_ATmega161__) ||  defined(__AVR_ATmega162__) ||  defined(__AVR_ATmega163__) || \
+    defined(__AVR_ATmega323__) ||  defined(__AVR_ATmega8515__) ||  defined(__AVR_ATmega8535__) || \
+    defined(__AVR_ATtiny2313__) ||  defined(__AVR_ATtiny2313A__) ||  defined(__AVR_ATtiny4313__)
 
 #ifndef RX
 #define RX AtmelPD0
@@ -371,7 +378,25 @@
     defined(__AVR_ATmega169P__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega2561__) || \
     defined(__AVR_ATmega329PA__) || defined(__AVR_ATmega329P__) || defined(__AVR_ATmega329__) || \
     defined(__AVR_ATmega640__) || defined(__AVR_ATmega649A__) || defined(__AVR_ATmega649P__) || \
-    defined(__AVR_ATmega649__) || defined(__AVR_ATmega64A__) || defined(__AVR_ATmega64__)
+    defined(__AVR_ATmega649__) || defined(__AVR_ATmega64A__) || defined(__AVR_ATmega64__) || \
+    /* Manually added below */ \
+    defined(__AVR_ATmega1284RFR2__) || defined(__AVR_ATmega128RFA1__) || \
+    defined(__AVR_ATmega128RFR2__) || defined(__AVR_ATmega165__) || \
+    defined(__AVR_ATmega165A__) || defined(__AVR_ATmega165P__) || \
+    defined(__AVR_ATmega165PA__) || defined(__AVR_ATmega169__) || \
+    defined(__AVR_ATmega2564RFR2__) || defined(__AVR_ATmega256RFR2__) || \
+    defined(__AVR_ATmega325__) || defined(__AVR_ATmega3250__) || \
+    defined(__AVR_ATmega3250A__) || defined(__AVR_ATmega3250P__) || \
+    defined(__AVR_ATmega3250PA__) || defined(__AVR_ATmega325A__) || \
+    defined(__AVR_ATmega325P__) || defined(__AVR_ATmega325PA__) || \
+    defined(__AVR_ATmega3290__) || defined(__AVR_ATmega3290A__) || \
+    defined(__AVR_ATmega3290P__) || defined(__AVR_ATmega3290PA__) || \
+    defined(__AVR_ATmega329A__) || defined(__AVR_ATmega644RFR2__) || \
+    defined(__AVR_ATmega645__) || defined(__AVR_ATmega6450__) || \
+    defined(__AVR_ATmega6450A__) || defined(__AVR_ATmega6450P__) || \
+    defined(__AVR_ATmega645A__) || defined(__AVR_ATmega645P__) || \
+    defined(__AVR_ATmega6490__) || defined(__AVR_ATmega6490A__) || \
+    defined(__AVR_ATmega6490P__) || defined(__AVR_ATmega64RFR2__)
 
 #ifndef RX
 #define RX AtmelPE0
@@ -383,7 +408,22 @@
 #endif
 
 
-// macros below are to determine uP classes for SWIO rx/tx timing
+/* Manually added */
+
+#if defined(__AVR_ATtiny1634__)
+
+#ifndef RX
+#define RX AtmelPA7
+#endif
+#ifndef TX
+#define TX AtmelPB0
+#endif
+
+#endif
+
+
+
+// Macros below are to determine uP classes for SWIO rx/tx timing;
 // could maybe switch to sth like #define IS_XMEGA (defined(__AVR_XMEGA__) && __AVR_XMEGA__)
 
 #define IS_XMEGA ( \
@@ -519,4 +559,5 @@
 #define IS_TINY167 ( \
   defined(__AVR_ATtiny87__) || defined(__AVR_ATtiny167__) \
 )
+
 

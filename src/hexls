@@ -206,7 +206,7 @@ foreach my $fname (@ARGV) {
     $fea .= f($vers & UR_PROTECTME? 'p': '-');
     $fea .= f((!$v77 && ($vers & UR_RESETFLAGS)) || $v77? 'r': '-');
     $fea .= f($v77 && ($vers & UR_AUTOBAUD)? 'a': '-');
-    $fea .= f($v77 && ($vers & UR_HAS_CE)? 'c': '.');
+    $fea .= f($v77 && ($vers & UR_HAS_CE)? 'c': $v77? '-': '.');
   } elsif(int($vers/256) >= 7*8+2) { # from version 7.2 onwards urboot versioning
     $ver = sprintf("u%d.%d", int($vers/(8*256)), ($vers/256)&7);
     $fea = f($vers & UR_PGMWRITEPAGE? 'w': '-');

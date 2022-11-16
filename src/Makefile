@@ -49,11 +49,16 @@ WDTO = 1S
 
 # Basic naming convention, sth, like atmega328p_16mhz_we--2.hex
 WHAT := $(MCU)_$(subst L,hz,$(subst 000L,khz,$(subst 000000L,mhz,$(F_CPU))))_
+ifdef AUTOBAUD
+WHAT := $(WHAT)$(subst 0,,$(subst 1,auto_,$(AUTOBAUD)))
+endif
+
 ifdef BAUD_RATE
 WHAT := $(WHAT)$(BAUD_RATE)bps_
 else
 WHAT := $(WHAT)115200bps_
 endif
+
 WHAT := $(WHAT)$(subst 0,,$(subst 1,w,$(PGMWRITEPAGE)))
 WHAT := $(WHAT)$(subst 0,,$(subst 1,e,$(EEPROM)))
 WHAT := $(WHAT)$(subst 0,,$(subst 1,d,$(DUAL)))
@@ -134,7 +139,11 @@ TESTING_CMD = -DTESTING=$(TESTING)
 WHAT := $(WHAT)_tt$(TESTING)
 endif
 
-# Desired baud rate
+# Autobaud or desired baud rate
+ifdef AUTOBAUD
+AUTOBAUD_CMD = -DAUTOBAUD=$(AUTOBAUD)
+endif
+
 ifdef BAUD_RATE
 BAUD_RATE_CMD = -DBAUD_RATE=$(BAUD_RATE)
 endif
@@ -145,7 +154,7 @@ UART2X_CMD = -DUART2X=$(UART2X)
 WHAT := $(WHAT)_u2x$(UART2X)
 endif
 
-# UARTNUM is handled separately and only passed for devices with more than one.
+# UARTNUM is handled separately and only passed for devices with more than one
 ifdef UARTNUM
 UARTNUM_CMD = -DUARTNUM=$(UARTNUM)
 WHAT := $(WHAT)_uart$(UARTNUM)
@@ -263,11 +272,11 @@ OBJCOPY        = $(GCCROOT)avr-objcopy
 OBJDUMP        = $(GCCROOT)avr-objdump
 SIZE           = $(GCCROOT)avr-size
 
-COMMON_OPTIONS = $(WDTO_CMD) $(BAUD_RATE_CMD) $(UART2X_CMD) $(LED_CMD) $(LEDPOLARITY_CMD) \
-  $(TEMPLATE_CMD) $(BLINK_CMD) $(DUAL_CMD) $(SFMCS_CMD) $(EEPROM_CMD) $(EXITFE_CMD) \
-  $(QEXITERR_CMD) $(QEXITEND_CMD) $(URPROTOCOL_CMD) $(VERSION_CMD) $(FRILLS_CMD) $(RETSWVERS_CMD) \
-  $(VBL_CMD) $(VBL_VECT_NUM_CMD) $(CHIP_ERASE_CMD) $(RESETFLAGS_CMD) $(SWIO_CMD) $(UARTNUM_CMD) \
-  $(TX_CMD) $(RX_CMD) $(TESTING_CMD) $(PGMWRITEPAGE_CMD) $(DEBUG_FREQ_CMD) \
+COMMON_OPTIONS = $(WDTO_CMD) $(AUTOBAUD_CMD) $(BAUD_RATE_CMD) $(UART2X_CMD) $(LED_CMD) \
+  $(LEDPOLARITY_CMD) $(TEMPLATE_CMD) $(BLINK_CMD) $(DUAL_CMD) $(SFMCS_CMD) $(EEPROM_CMD) \
+  $(EXITFE_CMD) $(QEXITERR_CMD) $(QEXITEND_CMD) $(URPROTOCOL_CMD) $(VERSION_CMD) $(FRILLS_CMD) \
+  $(RETSWVERS_CMD) $(VBL_CMD) $(VBL_VECT_NUM_CMD) $(CHIP_ERASE_CMD) $(RESETFLAGS_CMD) $(SWIO_CMD) \
+  $(UARTNUM_CMD) $(TX_CMD) $(RX_CMD) $(TESTING_CMD) $(PGMWRITEPAGE_CMD) $(DEBUG_FREQ_CMD) \
   $(FREQ_PIN_CMD) $(FLASHWRAPS_CMD)
 
 bootloader: CFLAGS += $(COMMON_OPTIONS)
@@ -280,16 +289,18 @@ min: attiny2313_min atmega1280_min atmega1284p_min atmega168_min atmega2560_min 
 all: attiny2313_min atmega168_min atmega2560_min atmega32_min \
   atmega644p_min atmega8_min atmega88_min attiny84_min \
   atmega328p_min \
+  atmega328p_amin \
   atmega328p \
   atmega328p_ur \
+  atmega328p_autobaud_ur \
   atmega328p_ur_testing \
   atmega328p_8mhz_ur \
   atmega328p_dur \
+  atmega328p_adur \
   atmega328p_7875khz_swio_ur \
   atmega328p_8000khz_swio_ur \
   atmega328p_8125khz_swio_ur \
   atmega328p_led9_50Hz_fp9 \
-  atmega328p_dv3 \
   urclock urclock_cs8_dur \
   timeduino timeduino_cs8_dur  \
   jeenode promini_led13 promini_led9  \
@@ -300,13 +311,10 @@ all: attiny2313_min atmega168_min atmega2560_min atmega32_min \
   pro_16mhz_ur pro_20mhz_ur pro_8mhz_ur \
   \
   atmega1284p_min \
-  atmega1284p_v2 atmega1284p_dv3 \
-  mighty1284 wildfire wildfirev2 moteinomega moteinomega_cs23_d \
-  atmega644p_v3 atmega644p_dv3 sanguino \
-  bobuino timeduinomega timeduinomega_cs3_d urclockmega urclockmega_cs3_d \
+  atmega1284p_v2 \
   \
-  atmega2560_min atmega2560_ur atmega2560_dur atmega2560_v3 atmega2560_dv3 \
-  atmega1280_min atmega1280_ur atmega1280_dur atmega1280_v2 atmega1280_dv3 \
+  atmega2560_min atmega2560_ur atmega2560_dur atmega2560_v3 \
+  atmega1280_min atmega1280_ur atmega1280_dur \
   \
   atmega8_ur atmega32_ur atmega88_ur \
   atmega8 atmega32 atmega88 \
@@ -341,9 +349,15 @@ attiny2313_min:
 atmega328p_min:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=6 MOVETO=$@
 
+atmega328p_amin:
+	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=3 MOVETO=$@
+
 ####
 # 384 bytes == 3 pages (needs to be programmed with avrdude -c urclock)
 #
+atmega328p_autobaud_ur:
+	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 MOVETO=$@
+
 atmega328p_ur:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p URPROTOCOL=1 VBL=1 FRILLS=7 MOVETO=$@
 
@@ -408,6 +422,9 @@ atmega328p_led9_50Hz_fp9:
 atmega328p_dur:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p URPROTOCOL=1 DUAL=1 FRILLS=7 MOVETO=$@
 
+atmega328p_adur:
+	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 DUAL=1 FRILLS=7 MOVETO=$@
+
 # These bootloaders can be derived from the version above
 anarduino_cs5_dur:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p URPROTOCOL=1 SFMCS=ArduinoPin5 LED=AtmelPB1 DUAL=1 FRILLS=7 MOVETO=$@
@@ -426,6 +443,13 @@ atmega328p_dv2:
 #
 atmega328p_dv3:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p DUAL=1 VBL=3 FRILLS=7 MOVETO=$@
+
+
+atmega16a_min:
+	$(MAKE) $(MK_OPTS) MCU=atmega16a URPROTOCOL=1 EEPROM=0 VBL=0 FRILLS=6 MOVETO=$@
+
+atmega163_min:
+	$(MAKE) $(MK_OPTS) MCU=atmega162 URPROTOCOL=1 EEPROM=0 VBL=0 FRILLS=6 MOVETO=$@
 
 
 ##
