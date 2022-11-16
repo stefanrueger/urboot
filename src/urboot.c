@@ -2261,14 +2261,13 @@ int main(void) {
 // Loop 2 below modified from https://github.com/nerdralph/picoboot/
 
 #define AUTO_BRL \
-  "   ldi   r26, 0x7f\n"      /* Rounding for implied division by 8 */ \
-  "   clr   r27\n" \
+  "   ldi   r26, 0x7f\n"      /* Initialise X with -0.5 in 8-bit fixed point representation */ \
+  "   ldi   r27, 0xff\n"      /* Want XH = UART_BRL = F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
   "1: sbic  %[RXPin],%[RXBit]\n" /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
   "   rjmp  1b\n" \
-  "2: adiw  r26, 256/8\n"     /* UART divisor in XH, add 256/8 to avoid later division by 8 */ \
+  "2: adiw  r26, 256/8\n"     /* Add 0.125 to X, ie, 256/8 to XL, in 8-bit fixed point rep */ \
   "   sbis  %[RXPin],%[RXBit]\n" /* Loop as long as rx bit is low */ \
-  "   rjmp  2b\n"             /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */ \
-  "   dec   r27\n"            /* UART_BRL = F_CPU/(8*baudrate)-1 */
+  "   rjmp  2b\n"             /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */
 
 #define AUTO_DRAIN \
   "3: sbiw  r26, 1\n"         /* Drain input: run down X for 25.6 rx bits (256/8 * 4 c/5 c) */ \
