@@ -92,6 +92,7 @@
   + `led9` toggles an LED on, in this example, Arduino pin 9
   + `cs8` for dual boot uses, in this example, Arduino pin 8 as chip select of external SPI flash memory
   + `fp9` for debugging the bootloader uses, eg, Arduino pin 9 to swing a signal of low frequency, eg, 50 Hz
+  + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming
   + `d` dual boot
   + `v2` vector bootloader that patches application itself

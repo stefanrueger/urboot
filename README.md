@@ -112,7 +112,7 @@ Size|Usage|Version|Features|Hex file|
 |346|384|u7.7|`weu-jpr-c`|[atmega328p_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/atmega328p_16mhz_115200bps_ee_led+b5_fr_ce_ur_vbl.hex)|
 |446|512|u7.7|`wes-hpr-c`|[atmega328p_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/atmega328p_16mhz_115200bps_ee_led+b5_fr_ce.hex)|
 |474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
-|486|512|u7.7|`weudhpr-c`|[atmega328p_ee_led+b1_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/atmega328p_16mhz_115200bps_ee_led+b1_csb0_dual_fr_ce_ur.hex)|
+|504|512|u7.7|`weudhprac`|[urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex)|
 |710|1024|o8.3|`-es-h-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex)|
 
 
@@ -126,15 +126,19 @@ Size|Usage|Version|Features|Hex file|
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `d` dual boot (over-the-air programming from external SPI flash)
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
-  + `j` vector bootloader: uploaded applications *need to be patched externally*, eg, using `avrdude -c urclock`
+  + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
   + `r` preserves reset flags for the application in the register R2
+  + `a` autobaud detection (f_cpu/8n and less with discrete divisors, normally n = 2, 3, ...)
+  + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
+  + `-` corresponding feature not present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
+  + `autobaud` tries to match host baud rate; can be f/8, f/16, f/24, ..., f/2048 (f=F<sub>CPU</sub>)
   + `ee` bootloader supports EEPROM read/write
   + `led-b1` toggles an active-low LED on pin `B1`, `+` designates an active-high LED
   + `csb0` for dual boot uses, in this example, pin B0 as chip select of external SPI flash memory
   + `dual` boot: serial and from external SPI flash memory
-  + `fr` bootloader provides non-essential code for smoother error handing
+  + `fr` bootloader provides non-essential code (frills), eg, for smoother error handing
   + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming
   + `vbl` vector bootloader: set fuses to jump to reset, not the HW boot section
@@ -168,7 +172,8 @@ currently compiles.
 |364|384|u7.7|`weu-jpr-c`|[atmega328p_8mhz_115200bps_rxd0_txd1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/115200_bps/atmega328p_8mhz_115200bps_rxd0_txd1_ee_lednop_fr_ce_ur_vbl.hex)|
 |464|512|u7.7|`wes-hprac`|[atmega328p_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/autobaud/atmega328p_autobaud_ee_lednop_fr_ce.hex)|
 |474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
-|494|512|u7.7|`weudhpr-c`|[atmega328p_ee_template_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/atmega328p_16mhz_115200bps_ee_template_dual|504|512|u7.7|`weudhprac`|[urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex)|
+|494|512|u7.7|`weudhpr-c`|[atmega328p_ee_template_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/atmega328p_16mhz_115200bps_ee_template_dual|
+|504|512|u7.7|`weudhprac`|[urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex)|
 |512|512|u7.7|`weudhprac`|[atmega328p_autobaud_ee_template_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/autobaud/atmega328p_autobaud_ee_template_dual_fr_ce_ur.hex)|
 
 - **Hex file** naming convention: as above, plus
