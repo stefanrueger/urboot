@@ -49,15 +49,10 @@ contains actually 84,227 hex files, but they are somewhat redundant because a bo
 
 **How to select a bootloader.** Tips, tricks and some background [here](https://github.com/stefanrueger/urboot/blob/main/howtoselect.md).
 
-**Bugs.** The code still defaults to `URPROTOCOL=0`. The urprotocol should be chosen by default. :)
 
-
-**Usage.** As with all bootloaders, one needs to first program them onto
-the board/chip using a (physical) programmer and an uploader program, eg, through
-```
-$ avrdude -c usbasp -p m328p -U flash:w:bootloader.hex:i
-```
-***Particular attention*** is needed as to whether the bootloader
+**Usage.** As with all bootloaders, one needs to first program them onto the board/chip using a
+(physical) programmer and an uploader program, eg, through `avrdude -c usbasp -p m328p -U
+flash:w:bootloader.hex:i` ***Particular attention*** is needed as to whether the bootloader
  - Assumes hardware support **(`h`)** and sits in a dedicated HW boot section, in which case the
    fuses need to be set to ensure that on reset the MCU jumps to the correct bootloader start
  - Is a vector bootloader **(`j`, `v` or `V`),** in which case the fuses need to be programmed so
@@ -171,3 +166,6 @@ Here a slightly larger table catering demonstrating the range of 183 parts for w
 
 Note that the USART on an 8 MHz ATmega328P cannot produce 115200 baud within a 2.5% tolerance; the
 8 MHz examples shown use software I/O that allows for a finer baud granularity.
+
+
+**Bugs.** The code still defaults to `URPROTOCOL=0`. The urprotocol should be chosen by default. :)
