@@ -11,7 +11,7 @@
      + EEPROM read/write support
      + Vector bootloader for devices without a boot section or to save space on devices with one
      + Software UART: no hardware UART required, but also useful when the chip's CPU frequency and
-       the bootloader's desired baudrate are incompatible (eg, 8 MHz and 115,200 baud)
+       the bootloader's desired baud rate are incompatible (eg, 8 MHz and 115,200 baud)
      + Subroutine `pgm_write_page(sram, progmem)` for applications so they can change themselves:
        on many MCUs the SPM write flash only works when called from the bootloader section (default on)
      + Dual programming from external SPI flash memory for over-the-air programming
@@ -56,12 +56,14 @@ flash:w:bootloader.hex:i` If the part does *not* have hardware support for bootl
 `ATtiny167`), then this is all that is needed. However, if your part *has* hardware support for
 bootloaders (eg, `ATmega328p`), then ***particular attention*** is needed as to whether the
 bootloader
- - Assumes hardware support **(`h`)** and sits in a dedicated HW boot section, in which case the
-   fuses need to be set to ensure that on reset the MCU jumps to the correct bootloader start
  - Is a vector bootloader **(`j`, `v` or `V`),** in which case the fuses need to be programmed so
    that on reset the MCU jumps to the reset vector at address 0. The lock bits should not preclude
    writing to any of the boot sections (otherwise the space freed up by vector bootloaders cannot
    be used). 
+ - Assumes hardware support **(`h`)** and sits in a dedicated HW boot section, in which case the
+   fuses need to be set to ensure that on reset the MCU jumps to the correct bootloader start and
+   the boot section size fuse bits need to match the actual bootloader size (consult the data sheet
+   of the part for this purpose). The lock bits should protect the boot section from being written to.
 
 | Bootloader | `FUSE_BOOTRS` | `FUSE_BOOTSZ` | Lock bits for bootloader section |
 | --: | --: | --: | --: |
