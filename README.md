@@ -64,17 +64,19 @@ $ avrdude -c usbasp -p m328p -U flash:w:bootloader.hex:i
    that on reset the MCU jumps to the reset vector at address 0. The lock bits should not preclude
    writing to any of the boot sections (otherwise the space freed up by vector bootloaders cannot
    be used). 
-   | Bootloader | `FUSE_BOOTRS` | `FUSE_BOOTSZ` | Lock bits for bootloader section |
-   | --: | --: | --: | --: |
-   | `j`, `v`, `V` | Reset to start of memory| Don't care | Read/write to everywhere|
-   | `h` | Reset to boot section | Match with size of bootloader | Protect boot section |
-   Strictly speaking vector bootloaders also need a `jmp` or `rjmp` from the reset vector
-   at address 0 to the bootloader. However, if the chip was erased before putting the bootloader
-   on, then this is not necessary: Erased words read `0xffff`, and although this is not an official
-   opcode, it behaves as `sbrs r31,7` (skip one instruction if bit 7 in R31 is set). A reset to
-   address 0 on an otherwise erased flash will therefore eventually run into the start of the
-   bootloader. Uploading the first application with `avrdude -c urboot` will then set the reset
-   vector correctly to jump to the bootloader.
+
+| Bootloader | `FUSE_BOOTRS` | `FUSE_BOOTSZ` | Lock bits for bootloader section |
+| --: | --: | --: | --: |
+| `j`, `v`, `V` | Reset to start of memory| Don't care | Read/write to everywhere|
+| `h` | Reset to boot section | Match with size of bootloader | Protect boot section |
+
+Strictly speaking vector bootloaders also need a `jmp` or `rjmp` from the reset vector
+at address 0 to the bootloader. However, if the chip was erased before putting the bootloader
+on, then this is not necessary: Erased words read `0xffff`, and although this is not an official
+opcode, it behaves as `sbrs r31,7` (skip one instruction if bit 7 in R31 is set). A reset to
+address 0 on an otherwise erased flash will therefore eventually run into the start of the
+bootloader. Uploading the first application with `avrdude -c urclock` will then set the reset
+vector correctly to jump to the bootloader.
 
 
 Once the board has its bootloader the board can be directly connected to and programmed from the
