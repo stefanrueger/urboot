@@ -61,9 +61,9 @@ bootloader
    writing to any of the boot sections (otherwise the space freed up by vector bootloaders cannot
    be used). 
  - Assumes hardware support **(`h`)** and sits in a dedicated HW boot section, in which case the
-   fuses need to be set to ensure that on reset the MCU jumps to the correct bootloader start and
+   fuses need to be set to ensure that on reset the MCU jumps to the correct bootloader start;
    the boot section size fuse bits need to match the actual bootloader size (consult the data sheet
-   of the part for this purpose). The lock bits should protect the boot section from being written to.
+   of the part); the lock bits should protect the boot section from being written to.
 
 | Bootloader | `FUSE_BOOTRS` | `FUSE_BOOTSZ` | Lock bits for bootloader section |
 | --: | --: | --: | --: |
