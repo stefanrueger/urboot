@@ -47,12 +47,15 @@ the 27,736 *different* pre-compiled bootloaders in the directory tree
 contains actually 84,227 hex files, but they are somewhat redundant because a bootloader on
 115,200 baud for 16 MHz is *exactly* the same as a bootloader on 57,600 baud for 8 MHz.
 
-**How to select a bootloader.** Tips, tricks and some background [here](https://github.com/stefanrueger/urboot/blob/main/howtoselect.md).
-
+**How to select a bootloader.** Tips, tricks and some background
+[here](https://github.com/stefanrueger/urboot/blob/main/howtoselect.md).
 
 **Usage.** As with all bootloaders, one needs to first program them onto the board/chip using a
 (physical) programmer and an uploader program, eg, through `avrdude -c usbasp -p m328p -U
-flash:w:bootloader.hex:i` ***Particular attention*** is needed as to whether the bootloader
+flash:w:bootloader.hex:i` If the part does *not* have hardware support for bootloaders (eg,
+`ATtiny167`), then this is all that is needed. However, if your part *has* hardware support for
+bootloaders (eg, `ATmega328p`), then ***particular attention*** is needed as to whether the
+bootloader
  - Assumes hardware support **(`h`)** and sits in a dedicated HW boot section, in which case the
    fuses need to be set to ensure that on reset the MCU jumps to the correct bootloader start
  - Is a vector bootloader **(`j`, `v` or `V`),** in which case the fuses need to be programmed so
