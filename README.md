@@ -56,13 +56,13 @@ there is. However, consider carefully what you need:
  - **EPROM** access is generally thought of as useful. Applications can read initialisation
    parameters from EEPROM and store results there in the safe knowledge that the bootloader gives
    the user independent access to EEPROM.
- - **Protocol `u` or `s`.** Bootloader with `s` implements a skeleton STK500 protocol and that can
-   also be programmed with `avrdude -c arduino`; this does *not* increase functionality but costs
-   *a lot* of bootloader code space; they are only recommended when no recent version of avrdude
-   with `-c urclock` programmer is available. The general recommendation is to always use
-   bootloaders with the 'u' urprotocol bit set. They are the *native* bootloaders for `-c urclock`.
-   Once newer avrdude versions with `-c urclock` are widely available the `s` protocol will be
-   deprecated.
+ - **Protocol `u` or `s`.** Bootloaders with the `s` bit implement a skeleton STK500 protocol; they
+   can normally also be programmed using `avrdude -c arduino`; the `s` protocol does *not* increase
+   functionality but costs *a lot* of bootloader code space; they are only recommended when no
+   recent version of avrdude with `-c urclock` programmer is available. The general recommendation
+   is to always use bootloaders with the `u` urprotocol bit set. They are the *native* bootloaders
+   for `-c urclock`. Once newer avrdude versions with `-c urclock` are widely available the `s`
+   protocol is likely to be deprecated improving the clarity of the urboot.c source.
  - **Dual boot.** If there is no plan for over-the-air programming, and no external SPI flash on
    your board either, there is little benefit of using a dual-boot bootloader. Whilst they deal
    gracefully with a board that has no external SPI flash memory, they will add a little delay at
@@ -73,16 +73,16 @@ there is. However, consider carefully what you need:
    of the device's flash memory page size. In contrast to this hardware-supported bootloader often
    have very large sizes, eg, the ATmega328p can have hw-supported bootloaders with 512, 1024, 2048
    and 4096 bytes size. Its flash page size is 128 bytes, so vector bootloaders can occupy any
-   multiple of that. There are three types of vector bootloaders that the urboot project offers:
+   multiple of that. Normally, the best use of MCU flash space is to select `j`-type vector
+   bootloaders (see below), and only select `h`-type hardware supported bootloaders if they happen
+   to occupy the same space. When installing bootloaders take care to program the right fuses (see
+   *Usage* below). There are three types of vector bootloaders that the urboot project offers:
     + `j` versions cost minimal to no extra space in the bootloader and need applications to be
       patched during upload. `avrdude -c urclock` does that auto-magically.
     + In `v` and `V` versions the bootloader patched the applications itself to various degrees of
       rigour. They generally consume a lot of extra space on the MCU at no run-time benefit; these
-      types are not recommended, and urboot support for these may be withdrawn in the future.
-   The best use of MCU flash space is to select `j`-type vector bootloaders, and only select
-   `h`-type hardware supported bootloaders if they happen to occupy the same space.
-   When installing bootloaders take care to program the right fuses (see *Usage* below).
- - **Protection** from overwriting itself. All urboot bootloaders offer protection from overwriting
+      types are not recommended, and urboot support for these are likely to be withdrawn in future.
+ - **Protection** from overwriting itself. All urboot bootloaders are protected from overwriting
    themselves. Although this can in theory be switched off at compile time, the recommendation is
    to never do that even when using hardware-supported bootloaders that can be protected by lock
    bits (as the user may have chosen not to program the lock bits). As an aside, vector bootloaders
@@ -123,18 +123,17 @@ the board/chip using a (physical) programmer and an uploader program, eg, throug
 $ avrdude -c usbasp -p m328p -U flash:w:bootloader.hex:i
 ```
 ***Particular attention*** is needed as to whether the bootloader
- - Assumes hardware support (**`h`**, see features below) and sits in a dedicated HW boot
-   section, in which case the fuses need to be set to ensure that on reset the MCU jumps to the
-   correct bootloader start
- - Is a vector bootloader (**`j`, `v` or `V`,** see features below), in which case the fuses need
-   to be programmed so that on reset the MCU jumps to the reset vector 0. The lock bits should not
-   preclude writing to any of the boot sections (otherwise the space freed up by vector bootloaders
-   cannot be used). Strictly speaking vector bootloaders also need a `jmp` or `rjmp` from the reset
-   vector at address 0 to the bootloader. However, if the chip was erased before putting the
-   bootloader on, then this is not necessary: Erased words read `0xffff`, and although this is not
-   an official opcode, it behaves as `sbrs r31,7` (skip one instruction if bit 7 in R31 is set). A
-   reset to address 0 on an otherwise erased flash will therefore eventually run into the start of
-   the bootloader. Uploading the first application with `avrdude -c urboot` will then set the reset
+ - Assumes hardware support **(`h`)** and sits in a dedicated HW boot section, in which case the
+   fuses need to be set to ensure that on reset the MCU jumps to the correct bootloader start
+ - Is a vector bootloader **(`j`, `v` or `V`),** in which case the fuses need to be programmed so
+   that on reset the MCU jumps to the reset vector at address 0. The lock bits should not preclude
+   writing to any of the boot sections (otherwise the space freed up by vector bootloaders cannot
+   be used). Strictly speaking vector bootloaders also need a `jmp` or `rjmp` from the reset vector
+   at address 0 to the bootloader. However, if the chip was erased before putting the bootloader
+   on, then this is not necessary: Erased words read `0xffff`, and although this is not an official
+   opcode, it behaves as `sbrs r31,7` (skip one instruction if bit 7 in R31 is set). A reset to
+   address 0 on an otherwise erased flash will therefore eventually run into the start of the
+   bootloader. Uploading the first application with `avrdude -c urboot` will then set the reset
    vector correctly to jump to the bootloader.
 
 Once the board has its bootloader the board can be directly connected to and programmed from the
