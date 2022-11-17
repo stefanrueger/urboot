@@ -4,10 +4,10 @@ The urprotocol is a variation of the [STK500v1
 protocol](https://ww1.microchip.com/downloads/en/AppNotes/doc2525.pdf) that was once (until ca
 2005) used by Atmel for their STK500 programmers and still today retains popularity for programming
 bootloaders. For example, `avrdude -c arduino` communicates with STK500v1 bootloaders, and `avrdude
--c urclock` with urprotocol bootloaders. The main purpose of urprotcol is to simplify it by
+-c urclock` with urprotocol bootloaders. The main purpose of urprotocol is to simplify it by
 removing unnecessary get and set parameter calls, streamlining address and parameter handling, and
 to provide a side-channel information for the MCU id and up to 5 parameter bits. It has a
-backward-compatibility mode, so that urprotcol can cope with traditional STK500v1 bootloaders. As
+backward-compatibility mode, so that urprotocol can cope with traditional STK500v1 bootloaders. As
 such `avrdude -c urclock` can handle bootloaders that would normally be programmed with `avrdude -c
 arduino`.
 
@@ -38,7 +38,7 @@ MCU ids.
 parameters. In this case the parameters are the address, followed by the length of the block to
 read or write and, if needed, followed by the bytes to be written. As in STK500v1, addresses are
 given as little endian (low byte first) and length as big endian (high byte first). The address
-always is a byte address (unless in compability mode). It is a 16-bit address for MCUs that have
+always is a byte address (unless in compatibility mode). It is a 16-bit address for MCUs that have
 65536 bytes flash or less, and a 24-bit address for MCUs with larger flash. Zero-length reads or
 writes are not supported by the protocol. If the *flash* page size is 256 or less, then the length
 parameter is sent as one byte (where 0 means 256 bytes). Otherwise the length parameter is sent as
@@ -124,14 +124,17 @@ communication should also lead to a WDT reset or termination of programming, res
 bootloader should protect itself from being overwritten through own page writes and page erases.
 
 
-**Implicit communication** of further bootloader properties happens through a small table
-located at the top of flash. Normally, the programmer can read this table after establishing the
-MCU id, and therefore the location of top flash of the part for which the bootloader was
-compiled. The 6-byte table contains (top to bottom):
+**Implicit communication** of further bootloader properties happens through a small table located
+at the top of the bootloader section. Normally, the programmer can read this table after
+establishing the MCU id, and therefore either the location of top flash of the part for which the
+bootloader was compiled or the location of the bootloader end otherwise. The 6-byte table contains
+(top to bottom):
   - Version number: one byte, minor version 0..7 in three lsb, major version 0..31 in the 5 msb
   - Capabilities byte detailing the following properties
-     + Bit 7, if set, indicates `pgm_write_page(sram, flash)` can be called from application at
-       `FLASHEND+1-4`
+     + Bit 7, if set in versions up to v7.6 indicates `pgm_write_page(sram, flash)` can be called
+       from application at `FLASHEND+1-4`; from v7.7 Bit 7 indicates that the bootloader selects
+       the baud rate automatically depending on the host baud rate; whether or not
+       `pgm_write_page(sram, flash)` is available can still be seen from the `rjmp` entry below
      + Bit 6, if set, indicates EEPROM read/write support
      + Bit 5, if set, indicates urprotocol use that requires `avrdude -c urclock`
      + Bit 4, if set, indicates the bootloader supports dual boot from external SPI flash
@@ -143,9 +146,10 @@ compiled. The 6-byte table contains (top to bottom):
        | 1 | 0 | ... is a vbl that patches reset/interrupt vectors itself (expect an error on verify) |
        | 1 | 1 | ... is a vbl that patches reset/interrupt vectors *and* shows original ones on verify |
      + Bit 1, if set, indicates bootloader safeguards against overwriting itself
-     + Bit 0, if set, indicates bootloader will load reset flags into register R2 before starting
-       the application
-  - Two-byte `rjmp` to a `writepage(ram, flash)` function or a `ret` opcode if not implemented
+     + Bit 0, if set in versions up to v7.6, indicates bootloader will load reset flags into
+       register R2 before starting the application; from v7.7 onwards this is always the case, and
+       Bit 0 indicates whether or not the bootloader offers a chip erase function
+  - Two-byte `rjmp` to a `pgm_write_page(ram, flash)` function or a `ret` opcode if not implemented
   - Number 1..127 of pages that the bootloader occupies
   - Vector number 1..127 for the `r/jmp` to the application if it is a vector bootloader, 0 otherwise
 
