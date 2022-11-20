@@ -1,7 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |256|256|u7.7|`w-u-hpr--`|[ata6285_16mhz_500000bps_rxb0_txb1_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_16mhz/500000_bps/ata6285_16mhz_500000bps_rxb0_txb1_ur.hex)|
+|298|320|u7.7|`w-u-jPr--`|[ata6285_16mhz_500000bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_16mhz/500000_bps/ata6285_16mhz_500000bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
 |312|320|u7.7|`w-u-jpr-c`|[ata6285_16mhz_500000bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_16mhz/500000_bps/ata6285_16mhz_500000bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|322|384|u7.7|`weu-jpr--`|[ata6285_16mhz_500000bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_16mhz/500000_bps/ata6285_16mhz_500000bps_rxb0_txb1_ee_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr--`|[ata6285_16mhz_500000bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_16mhz/500000_bps/ata6285_16mhz_500000bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
 |374|384|u7.7|`weu-jpr-c`|[ata6285_16mhz_500000bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_16mhz/500000_bps/ata6285_16mhz_500000bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 |370|512|u7.7|`weu-hpr-c`|[ata6285_16mhz_500000bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_16mhz/500000_bps/ata6285_16mhz_500000bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
 |474|512|u7.7|`wes-hpr-c`|[ata6285_16mhz_500000bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_16mhz/500000_bps/ata6285_16mhz_500000bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
@@ -17,6 +20,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

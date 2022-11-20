@@ -1,7 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
+|250|256|u7.7|`w-u-jPr--`|[atmega6490p_14mhz7456_115200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega6490p/fcpu_14mhz7456/115200_bps/atmega6490p_14mhz7456_115200bps_lednop_ur_vbl.hex)|
 |254|256|u7.7|`w-u-jpr--`|[atmega6490p_14mhz7456_115200bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega6490p/fcpu_14mhz7456/115200_bps/atmega6490p_14mhz7456_115200bps_lednop_fr_ur_vbl.hex)|
-|340|512|u7.7|`weu-jpr-c`|[atmega6490p_14mhz7456_115200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega6490p/fcpu_14mhz7456/115200_bps/atmega6490p_14mhz7456_115200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|354|512|u7.7|`weu-jPr-c`|[atmega6490p_14mhz7456_115200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega6490p/fcpu_14mhz7456/115200_bps/atmega6490p_14mhz7456_115200bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |340|1024|u7.7|`weu-hpr-c`|[atmega6490p_14mhz7456_115200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega6490p/fcpu_14mhz7456/115200_bps/atmega6490p_14mhz7456_115200bps_ee_lednop_fr_ce_ur.hex)|
 |444|1024|u7.7|`wes-hpr-c`|[atmega6490p_14mhz7456_115200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega6490p/fcpu_14mhz7456/115200_bps/atmega6490p_14mhz7456_115200bps_ee_lednop_fr_ce.hex)|
 
@@ -16,6 +17,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

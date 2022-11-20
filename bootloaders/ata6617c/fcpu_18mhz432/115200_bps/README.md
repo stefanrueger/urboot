@@ -1,7 +1,7 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |252|256|u7.7|`w-u-jpr--`|[ata6617c_18mhz432_115200bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6617c/fcpu_18mhz432/115200_bps/ata6617c_18mhz432_115200bps_rxb0_txb1_ur_vbl.hex)|
-|370|384|u7.7|`weu-jpr-c`|[ata6617c_18mhz432_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6617c/fcpu_18mhz432/115200_bps/ata6617c_18mhz432_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|384|384|u7.7|`weu-jPr-c`|[ata6617c_18mhz432_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6617c/fcpu_18mhz432/115200_bps/ata6617c_18mhz432_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -12,6 +12,7 @@
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

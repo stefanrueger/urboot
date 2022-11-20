@@ -1,20 +1,23 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |254|256|u7.7|`w-u-jpra-`|[atmega1284p_autobaud_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ur_vbl.hex)|
-|384|512|u7.7|`weu-jprac`|[atmega1284p_autobaud_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+b5_fr_ce_ur_vbl.hex)|
-|384|512|u7.7|`weu-jprac`|[atmega1284p_autobaud_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+b7_fr_ce_ur_vbl.hex)|
-|384|512|u7.7|`weu-jprac`|[atmega1284p_autobaud_ee_led+c7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+c7_fr_ce_ur_vbl.hex)|
-|384|512|u7.7|`weu-jprac`|[atmega1284p_autobaud_ee_led+d7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+d7_fr_ce_ur_vbl.hex)|
-|384|512|u7.7|`weu-jprac`|[atmega1284p_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
-|486|512|u7.7|`w-udjprac`|[atmega1284p_autobaud_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
-|492|512|u7.7|`w-udjprac`|[atmega1284p_autobaud_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
-|494|512|u7.7|`w-udjprac`|[atmega1284p_autobaud_template_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_template_dual_fr_ce_ur_vbl.hex)|
+|402|512|u7.7|`weu-jPrac`|[atmega1284p_autobaud_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+b5_fr_ce_ur_vbl.hex)|
+|402|512|u7.7|`weu-jPrac`|[atmega1284p_autobaud_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+b7_fr_ce_ur_vbl.hex)|
+|402|512|u7.7|`weu-jPrac`|[atmega1284p_autobaud_ee_led+c7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+c7_fr_ce_ur_vbl.hex)|
+|402|512|u7.7|`weu-jPrac`|[atmega1284p_autobaud_ee_led+d7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+d7_fr_ce_ur_vbl.hex)|
+|402|512|u7.7|`weu-jPrac`|[atmega1284p_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|504|512|u7.7|`w-udjPrac`|[atmega1284p_autobaud_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
+|504|512|u7.7|`weudjPra-`|[atmega1284p_autobaud_ee_led+c7_csb3_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+c7_csb3_dual_ur_vbl.hex)|
 |504|512|u7.7|`weudjpra-`|[atmega1284p_autobaud_ee_led+c7_csb3_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+c7_csb3_dual_fr_ur_vbl.hex)|
+|510|512|u7.7|`w-udjPrac`|[atmega1284p_autobaud_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
+|510|512|u7.7|`weudjPra-`|[atmega1284p_autobaud_ee_led+d7_csc7_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+d7_csc7_dual_ur_vbl.hex)|
+|510|512|u7.7|`weudjPra-`|[atmega1284p_autobaud_ee_template_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_template_dual_ur_vbl.hex)|
 |510|512|u7.7|`weudjpra-`|[atmega1284p_autobaud_ee_led+d7_csc7_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+d7_csc7_dual_fr_ur_vbl.hex)|
 |510|512|u7.7|`weudjpra-`|[atmega1284p_autobaud_ee_template_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_template_dual_fr_ur_vbl.hex)|
-|548|768|u7.7|`weudjprac`|[atmega1284p_autobaud_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
-|554|768|u7.7|`weudjprac`|[atmega1284p_autobaud_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
-|554|768|u7.7|`weudjprac`|[atmega1284p_autobaud_ee_template_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_template_dual_fr_ce_ur_vbl.hex)|
+|512|512|u7.7|`w-udjPrac`|[atmega1284p_autobaud_template_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_template_dual_fr_ce_ur_vbl.hex)|
+|566|768|u7.7|`weudjPrac`|[atmega1284p_autobaud_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
+|572|768|u7.7|`weudjPrac`|[atmega1284p_autobaud_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
+|572|768|u7.7|`weudjPrac`|[atmega1284p_autobaud_ee_template_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_template_dual_fr_ce_ur_vbl.hex)|
 |384|1024|u7.7|`weu-hprac`|[atmega1284p_autobaud_ee_led+b5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+b5_fr_ce_ur.hex)|
 |384|1024|u7.7|`weu-hprac`|[atmega1284p_autobaud_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+b7_fr_ce_ur.hex)|
 |384|1024|u7.7|`weu-hprac`|[atmega1284p_autobaud_ee_led+c7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284p/autobaud/atmega1284p_autobaud_ee_led+c7_fr_ce_ur.hex)|
@@ -44,6 +47,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)

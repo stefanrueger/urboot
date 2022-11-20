@@ -1,6 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |256|256|u7.7|`w-u-jpr--`|[atmega32c1_14mhz7456_57600bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32c1/fcpu_14mhz7456/57600_bps/atmega32c1_14mhz7456_57600bps_rxb0_txb1_ur_vbl.hex)|
+|326|384|u7.7|`w-u-jPr-c`|[atmega32c1_14mhz7456_57600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32c1/fcpu_14mhz7456/57600_bps/atmega32c1_14mhz7456_57600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr--`|[atmega32c1_14mhz7456_57600bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32c1/fcpu_14mhz7456/57600_bps/atmega32c1_14mhz7456_57600bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
 |374|384|u7.7|`weu-jpr-c`|[atmega32c1_14mhz7456_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32c1/fcpu_14mhz7456/57600_bps/atmega32c1_14mhz7456_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 |370|512|u7.7|`weu-hpr-c`|[atmega32c1_14mhz7456_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32c1/fcpu_14mhz7456/57600_bps/atmega32c1_14mhz7456_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
 |474|512|u7.7|`wes-hpr-c`|[atmega32c1_14mhz7456_57600bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32c1/fcpu_14mhz7456/57600_bps/atmega32c1_14mhz7456_57600bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
@@ -16,6 +18,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

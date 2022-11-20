@@ -1,9 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |252|256|u7.7|`w-u-hpr--`|[attiny828_8mhz_115200bps_rxc2_txc3_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ur.hex)|
+|294|320|u7.7|`w-u-jPr--`|[attiny828_8mhz_115200bps_rxc2_txc3_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_lednop_fr_ur_vbl.hex)|
 |308|320|u7.7|`w-u-jpr-c`|[attiny828_8mhz_115200bps_rxc2_txc3_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_lednop_fr_ce_ur_vbl.hex)|
 |320|320|u7.7|`weu-jpr--`|[attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_ur_vbl.hex)|
-|366|384|u7.7|`weu-jpr-c`|[attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur_vbl.hex)|
+|380|384|u7.7|`weu-jPr-c`|[attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur_vbl.hex)|
 |362|512|u7.7|`weu-hpr-c`|[attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce_ur.hex)|
 |466|512|u7.7|`wes-hpr-c`|[attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/115200_bps/attiny828_8mhz_115200bps_rxc2_txc3_ee_lednop_fr_ce.hex)|
 
@@ -18,6 +19,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

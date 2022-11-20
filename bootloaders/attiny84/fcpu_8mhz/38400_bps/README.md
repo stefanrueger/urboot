@@ -2,8 +2,11 @@
 |:-:|:-:|:-:|:-:|:--|
 |256|256|u7.7|`w-u-jpr--`|[attiny84_8mhz_38400bps_rxa3_txa2_led+a4_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84/fcpu_8mhz/38400_bps/attiny84_8mhz_38400bps_rxa3_txa2_led+a4_ur_vbl.hex)|
 |256|256|u7.7|`w-u-jpr--`|[attiny84_8mhz_38400bps_rxa3_txa2_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84/fcpu_8mhz/38400_bps/attiny84_8mhz_38400bps_rxa3_txa2_lednop_ur_vbl.hex)|
-|306|320|u7.7|`w-u-jpr-c`|[attiny84_8mhz_38400bps_rxa3_txa2_led+a4_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84/fcpu_8mhz/38400_bps/attiny84_8mhz_38400bps_rxa3_txa2_led+a4_fr_ce_ur_vbl.hex)|
-|306|320|u7.7|`w-u-jpr-c`|[attiny84_8mhz_38400bps_rxa3_txa2_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84/fcpu_8mhz/38400_bps/attiny84_8mhz_38400bps_rxa3_txa2_lednop_fr_ce_ur_vbl.hex)|
+|320|320|u7.7|`w-u-jPr-c`|[attiny84_8mhz_38400bps_rxa3_txa2_led+a4_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84/fcpu_8mhz/38400_bps/attiny84_8mhz_38400bps_rxa3_txa2_led+a4_fr_ce_ur_vbl.hex)|
+|320|320|u7.7|`w-u-jPr-c`|[attiny84_8mhz_38400bps_rxa3_txa2_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84/fcpu_8mhz/38400_bps/attiny84_8mhz_38400bps_rxa3_txa2_lednop_fr_ce_ur_vbl.hex)|
+|322|384|u7.7|`weu-jpr--`|[attiny84_8mhz_38400bps_rxa3_txa2_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84/fcpu_8mhz/38400_bps/attiny84_8mhz_38400bps_rxa3_txa2_ee_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr--`|[attiny84_8mhz_38400bps_rxa3_txa2_ee_led+a4_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84/fcpu_8mhz/38400_bps/attiny84_8mhz_38400bps_rxa3_txa2_ee_led+a4_fr_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr--`|[attiny84_8mhz_38400bps_rxa3_txa2_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84/fcpu_8mhz/38400_bps/attiny84_8mhz_38400bps_rxa3_txa2_ee_lednop_fr_ur_vbl.hex)|
 |374|384|u7.7|`weu-jpr-c`|[attiny84_8mhz_38400bps_rxa3_txa2_ee_led+a4_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84/fcpu_8mhz/38400_bps/attiny84_8mhz_38400bps_rxa3_txa2_ee_led+a4_fr_ce_ur_vbl.hex)|
 |374|384|u7.7|`weu-jpr-c`|[attiny84_8mhz_38400bps_rxa3_txa2_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84/fcpu_8mhz/38400_bps/attiny84_8mhz_38400bps_rxa3_txa2_ee_lednop_fr_ce_ur_vbl.hex)|
 
@@ -16,6 +19,7 @@
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

@@ -1,9 +1,11 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
+|242|256|u7.7|`w-u-jPr--`|[atmega644p_1mhz8432_57600bps_led+b0_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644p/fcpu_1mhz8432/57600_bps/atmega644p_1mhz8432_57600bps_led+b0_ur_vbl.hex)|
+|242|256|u7.7|`w-u-jPr--`|[atmega644p_1mhz8432_57600bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644p/fcpu_1mhz8432/57600_bps/atmega644p_1mhz8432_57600bps_lednop_ur_vbl.hex)|
 |246|256|u7.7|`w-u-jpr--`|[atmega644p_1mhz8432_57600bps_led+b0_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644p/fcpu_1mhz8432/57600_bps/atmega644p_1mhz8432_57600bps_led+b0_fr_ur_vbl.hex)|
 |246|256|u7.7|`w-u-jpr--`|[atmega644p_1mhz8432_57600bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644p/fcpu_1mhz8432/57600_bps/atmega644p_1mhz8432_57600bps_lednop_fr_ur_vbl.hex)|
-|334|512|u7.7|`weu-jpr-c`|[atmega644p_1mhz8432_57600bps_ee_led+b0_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644p/fcpu_1mhz8432/57600_bps/atmega644p_1mhz8432_57600bps_ee_led+b0_fr_ce_ur_vbl.hex)|
-|334|512|u7.7|`weu-jpr-c`|[atmega644p_1mhz8432_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644p/fcpu_1mhz8432/57600_bps/atmega644p_1mhz8432_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|348|512|u7.7|`weu-jPr-c`|[atmega644p_1mhz8432_57600bps_ee_led+b0_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644p/fcpu_1mhz8432/57600_bps/atmega644p_1mhz8432_57600bps_ee_led+b0_fr_ce_ur_vbl.hex)|
+|348|512|u7.7|`weu-jPr-c`|[atmega644p_1mhz8432_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644p/fcpu_1mhz8432/57600_bps/atmega644p_1mhz8432_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |334|1024|u7.7|`weu-hpr-c`|[atmega644p_1mhz8432_57600bps_ee_led+b0_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644p/fcpu_1mhz8432/57600_bps/atmega644p_1mhz8432_57600bps_ee_led+b0_fr_ce_ur.hex)|
 |334|1024|u7.7|`weu-hpr-c`|[atmega644p_1mhz8432_57600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644p/fcpu_1mhz8432/57600_bps/atmega644p_1mhz8432_57600bps_ee_lednop_fr_ce_ur.hex)|
 |438|1024|u7.7|`wes-hpr-c`|[atmega644p_1mhz8432_57600bps_ee_led+b0_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644p/fcpu_1mhz8432/57600_bps/atmega644p_1mhz8432_57600bps_ee_led+b0_fr_ce.hex)|
@@ -20,6 +22,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

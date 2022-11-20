@@ -2,8 +2,9 @@
 |:-:|:-:|:-:|:-:|:--|
 |244|256|u7.7|`w-u-jpr--`|[atmega1280_20mhz_500000bps_led+b7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1280/fcpu_20mhz/500000_bps/atmega1280_20mhz_500000bps_led+b7_ur_vbl.hex)|
 |244|256|u7.7|`w-u-jpr--`|[atmega1280_20mhz_500000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1280/fcpu_20mhz/500000_bps/atmega1280_20mhz_500000bps_lednop_ur_vbl.hex)|
-|368|512|u7.7|`weu-jpr-c`|[atmega1280_20mhz_500000bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1280/fcpu_20mhz/500000_bps/atmega1280_20mhz_500000bps_ee_led+b7_fr_ce_ur_vbl.hex)|
-|368|512|u7.7|`weu-jpr-c`|[atmega1280_20mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1280/fcpu_20mhz/500000_bps/atmega1280_20mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|256|256|u7.7|`w-u-jPr--`|[atmega1280_20mhz_500000bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1280/fcpu_20mhz/500000_bps/atmega1280_20mhz_500000bps_ur_vbl.hex)|
+|386|512|u7.7|`weu-jPr-c`|[atmega1280_20mhz_500000bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1280/fcpu_20mhz/500000_bps/atmega1280_20mhz_500000bps_ee_led+b7_fr_ce_ur_vbl.hex)|
+|386|512|u7.7|`weu-jPr-c`|[atmega1280_20mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1280/fcpu_20mhz/500000_bps/atmega1280_20mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |368|1024|u7.7|`weu-hpr-c`|[atmega1280_20mhz_500000bps_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1280/fcpu_20mhz/500000_bps/atmega1280_20mhz_500000bps_ee_led+b7_fr_ce_ur.hex)|
 |368|1024|u7.7|`weu-hpr-c`|[atmega1280_20mhz_500000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1280/fcpu_20mhz/500000_bps/atmega1280_20mhz_500000bps_ee_lednop_fr_ce_ur.hex)|
 |474|1024|u7.7|`wes-hpr-c`|[atmega1280_20mhz_500000bps_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1280/fcpu_20mhz/500000_bps/atmega1280_20mhz_500000bps_ee_led+b7_fr_ce.hex)|
@@ -20,6 +21,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

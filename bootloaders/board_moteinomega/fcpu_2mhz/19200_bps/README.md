@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |244|256|u7.7|`w-u-jpr--`|[moteinomega_2mhz_19200bps_led+d7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_2mhz/19200_bps/moteinomega_2mhz_19200bps_led+d7_ur_vbl.hex)|
-|368|512|u7.7|`weu-jpr-c`|[moteinomega_2mhz_19200bps_ee_led+d7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_2mhz/19200_bps/moteinomega_2mhz_19200bps_ee_led+d7_fr_ce_ur_vbl.hex)|
-|476|512|u7.7|`w-udjpr-c`|[moteinomega_2mhz_19200bps_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_2mhz/19200_bps/moteinomega_2mhz_19200bps_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
-|494|512|u7.7|`weudjpr--`|[moteinomega_2mhz_19200bps_ee_led+d7_csc7_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_2mhz/19200_bps/moteinomega_2mhz_19200bps_ee_led+d7_csc7_dual_fr_ur_vbl.hex)|
-|538|768|u7.7|`weudjpr-c`|[moteinomega_2mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_2mhz/19200_bps/moteinomega_2mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
+|386|512|u7.7|`weu-jPr-c`|[moteinomega_2mhz_19200bps_ee_led+d7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_2mhz/19200_bps/moteinomega_2mhz_19200bps_ee_led+d7_fr_ce_ur_vbl.hex)|
+|494|512|u7.7|`w-udjPr-c`|[moteinomega_2mhz_19200bps_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_2mhz/19200_bps/moteinomega_2mhz_19200bps_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
+|512|512|u7.7|`weudjPr--`|[moteinomega_2mhz_19200bps_ee_led+d7_csc7_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_2mhz/19200_bps/moteinomega_2mhz_19200bps_ee_led+d7_csc7_dual_fr_ur_vbl.hex)|
+|556|768|u7.7|`weudjPr-c`|[moteinomega_2mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_2mhz/19200_bps/moteinomega_2mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur_vbl.hex)|
 |368|1024|u7.7|`weu-hpr-c`|[moteinomega_2mhz_19200bps_ee_led+d7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_2mhz/19200_bps/moteinomega_2mhz_19200bps_ee_led+d7_fr_ce_ur.hex)|
 |474|1024|u7.7|`wes-hpr-c`|[moteinomega_2mhz_19200bps_ee_led+d7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_2mhz/19200_bps/moteinomega_2mhz_19200bps_ee_led+d7_fr_ce.hex)|
 |538|1024|u7.7|`weudhpr-c`|[moteinomega_2mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteinomega/fcpu_2mhz/19200_bps/moteinomega_2mhz_19200bps_ee_led+d7_csc7_dual_fr_ce_ur.hex)|
@@ -22,6 +22,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

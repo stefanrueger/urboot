@@ -1,7 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
+|250|256|u7.7|`w-u-jPr--`|[at90usb647_12mhz_9600bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb647/fcpu_12mhz/9600_bps/at90usb647_12mhz_9600bps_lednop_ur_vbl.hex)|
 |254|256|u7.7|`w-u-jpr--`|[at90usb647_12mhz_9600bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb647/fcpu_12mhz/9600_bps/at90usb647_12mhz_9600bps_lednop_fr_ur_vbl.hex)|
-|342|512|u7.7|`weu-jpr-c`|[at90usb647_12mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb647/fcpu_12mhz/9600_bps/at90usb647_12mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|356|512|u7.7|`weu-jPr-c`|[at90usb647_12mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb647/fcpu_12mhz/9600_bps/at90usb647_12mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |342|1024|u7.7|`weu-hpr-c`|[at90usb647_12mhz_9600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb647/fcpu_12mhz/9600_bps/at90usb647_12mhz_9600bps_ee_lednop_fr_ce_ur.hex)|
 |446|1024|u7.7|`wes-hpr-c`|[at90usb647_12mhz_9600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90usb647/fcpu_12mhz/9600_bps/at90usb647_12mhz_9600bps_ee_lednop_fr_ce.hex)|
 
@@ -16,6 +17,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

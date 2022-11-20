@@ -2,8 +2,8 @@
 |:-:|:-:|:-:|:-:|:--|
 |250|256|u7.7|`w-u-jpr--`|[attiny167_3mhz6864_57600bps_rxb6_txb3_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny167/fcpu_3mhz6864/57600_bps/attiny167_3mhz6864_57600bps_rxb6_txb3_led+b1_ur_vbl.hex)|
 |250|256|u7.7|`w-u-jpr--`|[attiny167_3mhz6864_57600bps_rxb6_txb3_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny167/fcpu_3mhz6864/57600_bps/attiny167_3mhz6864_57600bps_rxb6_txb3_lednop_ur_vbl.hex)|
-|362|384|u7.7|`weu-jpr-c`|[attiny167_3mhz6864_57600bps_rxb6_txb3_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny167/fcpu_3mhz6864/57600_bps/attiny167_3mhz6864_57600bps_rxb6_txb3_ee_led+b1_fr_ce_ur_vbl.hex)|
-|362|384|u7.7|`weu-jpr-c`|[attiny167_3mhz6864_57600bps_rxb6_txb3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny167/fcpu_3mhz6864/57600_bps/attiny167_3mhz6864_57600bps_rxb6_txb3_ee_lednop_fr_ce_ur_vbl.hex)|
+|376|384|u7.7|`weu-jPr-c`|[attiny167_3mhz6864_57600bps_rxb6_txb3_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny167/fcpu_3mhz6864/57600_bps/attiny167_3mhz6864_57600bps_rxb6_txb3_ee_led+b1_fr_ce_ur_vbl.hex)|
+|376|384|u7.7|`weu-jPr-c`|[attiny167_3mhz6864_57600bps_rxb6_txb3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny167/fcpu_3mhz6864/57600_bps/attiny167_3mhz6864_57600bps_rxb6_txb3_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -14,6 +14,7 @@
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

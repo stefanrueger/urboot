@@ -1,7 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
+|252|256|u7.7|`w-u-jPra-`|[atmega163_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega163/autobaud/atmega163_autobaud_lednop_ur_vbl.hex)|
 |256|256|u7.7|`w-u-hpra-`|[atmega163_autobaud_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega163/autobaud/atmega163_autobaud_lednop_fr_ur.hex)|
-|354|384|u7.7|`weu-jprac`|[atmega163_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega163/autobaud/atmega163_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|368|384|u7.7|`weu-jPrac`|[atmega163_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega163/autobaud/atmega163_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
 |350|512|u7.7|`weu-hprac`|[atmega163_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega163/autobaud/atmega163_autobaud_ee_lednop_fr_ce_ur.hex)|
 |454|512|u7.7|`wes-hprac`|[atmega163_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega163/autobaud/atmega163_autobaud_ee_lednop_fr_ce.hex)|
 
@@ -16,6 +17,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)

@@ -1,9 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |238|256|u7.7|`w-u-hpr--`|[atmega8515_3mhz6864_230400bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8515/fcpu_3mhz6864/230400_bps/atmega8515_3mhz6864_230400bps_lednop_fr_ur.hex)|
-|270|320|u7.7|`w-u-jpr-c`|[atmega8515_3mhz6864_230400bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8515/fcpu_3mhz6864/230400_bps/atmega8515_3mhz6864_230400bps_lednop_fr_ce_ur_vbl.hex)|
+|284|320|u7.7|`w-u-jPr-c`|[atmega8515_3mhz6864_230400bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8515/fcpu_3mhz6864/230400_bps/atmega8515_3mhz6864_230400bps_lednop_fr_ce_ur_vbl.hex)|
+|304|320|u7.7|`weu-jPr--`|[atmega8515_3mhz6864_230400bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8515/fcpu_3mhz6864/230400_bps/atmega8515_3mhz6864_230400bps_ee_lednop_ur_vbl.hex)|
 |308|320|u7.7|`weu-jpr--`|[atmega8515_3mhz6864_230400bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8515/fcpu_3mhz6864/230400_bps/atmega8515_3mhz6864_230400bps_ee_lednop_fr_ur_vbl.hex)|
-|336|384|u7.7|`weu-jpr-c`|[atmega8515_3mhz6864_230400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8515/fcpu_3mhz6864/230400_bps/atmega8515_3mhz6864_230400bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|350|384|u7.7|`weu-jPr-c`|[atmega8515_3mhz6864_230400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8515/fcpu_3mhz6864/230400_bps/atmega8515_3mhz6864_230400bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |332|512|u7.7|`weu-hpr-c`|[atmega8515_3mhz6864_230400bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8515/fcpu_3mhz6864/230400_bps/atmega8515_3mhz6864_230400bps_ee_lednop_fr_ce_ur.hex)|
 |436|512|u7.7|`wes-hpr-c`|[atmega8515_3mhz6864_230400bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8515/fcpu_3mhz6864/230400_bps/atmega8515_3mhz6864_230400bps_ee_lednop_fr_ce.hex)|
 
@@ -18,6 +19,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

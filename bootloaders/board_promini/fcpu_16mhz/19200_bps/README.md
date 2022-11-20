@@ -1,7 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
+|244|256|u7.7|`w-u-jPr--`|[promini_16mhz_19200bps_led+b5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_16mhz/19200_bps/promini_16mhz_19200bps_led+b5_ur_vbl.hex)|
 |248|256|u7.7|`w-u-jpr--`|[promini_16mhz_19200bps_led+b5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_16mhz/19200_bps/promini_16mhz_19200bps_led+b5_fr_ur_vbl.hex)|
-|342|384|u7.7|`weu-jpr-c`|[promini_16mhz_19200bps_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_16mhz/19200_bps/promini_16mhz_19200bps_ee_led+b5_fr_ce_ur_vbl.hex)|
+|356|384|u7.7|`weu-jPr-c`|[promini_16mhz_19200bps_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_16mhz/19200_bps/promini_16mhz_19200bps_ee_led+b5_fr_ce_ur_vbl.hex)|
 |338|512|u7.7|`weu-hpr-c`|[promini_16mhz_19200bps_ee_led+b5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_16mhz/19200_bps/promini_16mhz_19200bps_ee_led+b5_fr_ce_ur.hex)|
 |442|512|u7.7|`wes-hpr-c`|[promini_16mhz_19200bps_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_16mhz/19200_bps/promini_16mhz_19200bps_ee_led+b5_fr_ce.hex)|
 
@@ -16,6 +17,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

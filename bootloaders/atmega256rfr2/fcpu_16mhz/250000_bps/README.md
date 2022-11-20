@@ -1,7 +1,7 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |248|256|u7.7|`w-u-jpr--`|[atmega256rfr2_16mhz_250000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega256rfr2/fcpu_16mhz/250000_bps/atmega256rfr2_16mhz_250000bps_lednop_ur_vbl.hex)|
-|372|512|u7.7|`weu-jpr-c`|[atmega256rfr2_16mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega256rfr2/fcpu_16mhz/250000_bps/atmega256rfr2_16mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|390|512|u7.7|`weu-jPr-c`|[atmega256rfr2_16mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega256rfr2/fcpu_16mhz/250000_bps/atmega256rfr2_16mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |372|1024|u7.7|`weu-hpr-c`|[atmega256rfr2_16mhz_250000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega256rfr2/fcpu_16mhz/250000_bps/atmega256rfr2_16mhz_250000bps_ee_lednop_fr_ce_ur.hex)|
 |486|1024|u7.7|`wes-hpr-c`|[atmega256rfr2_16mhz_250000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega256rfr2/fcpu_16mhz/250000_bps/atmega256rfr2_16mhz_250000bps_ee_lednop_fr_ce.hex)|
 
@@ -16,6 +16,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

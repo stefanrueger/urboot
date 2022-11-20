@@ -1,6 +1,6 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|390|512|u7.7|`weu-jprac`|[at90can128_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/autobaud/at90can128_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|408|512|u7.7|`weu-jPrac`|[at90can128_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/autobaud/at90can128_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
 |390|1024|u7.7|`weu-hprac`|[at90can128_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/autobaud/at90can128_autobaud_ee_lednop_fr_ce_ur.hex)|
 |496|1024|u7.7|`wes-hprac`|[at90can128_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/autobaud/at90can128_autobaud_ee_lednop_fr_ce.hex)|
 
@@ -15,6 +15,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)

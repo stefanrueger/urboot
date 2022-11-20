@@ -1,7 +1,7 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |242|256|u7.7|`w-u-hpr--`|[atmega165p_1mhz_9600bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega165p/fcpu_1mhz/9600_bps/atmega165p_1mhz_9600bps_lednop_ur.hex)|
-|352|384|u7.7|`weu-jpr-c`|[atmega165p_1mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega165p/fcpu_1mhz/9600_bps/atmega165p_1mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|366|384|u7.7|`weu-jPr-c`|[atmega165p_1mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega165p/fcpu_1mhz/9600_bps/atmega165p_1mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |348|512|u7.7|`weu-hpr-c`|[atmega165p_1mhz_9600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega165p/fcpu_1mhz/9600_bps/atmega165p_1mhz_9600bps_ee_lednop_fr_ce_ur.hex)|
 |450|512|u7.7|`wes-hpr-c`|[atmega165p_1mhz_9600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega165p/fcpu_1mhz/9600_bps/atmega165p_1mhz_9600bps_ee_lednop_fr_ce.hex)|
 
@@ -16,6 +16,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

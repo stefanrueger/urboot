@@ -1,7 +1,7 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|242|256|u7.7|`w-u-jpra-`|[atmega32_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32/autobaud/atmega32_autobaud_lednop_ur_vbl.hex)|
-|358|384|u7.7|`weu-jprac`|[atmega32_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32/autobaud/atmega32_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|256|256|u7.7|`w-u-jPra-`|[atmega32_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32/autobaud/atmega32_autobaud_lednop_ur_vbl.hex)|
+|372|384|u7.7|`weu-jPrac`|[atmega32_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32/autobaud/atmega32_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
 |354|512|u7.7|`weu-hprac`|[atmega32_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32/autobaud/atmega32_autobaud_ee_lednop_fr_ce_ur.hex)|
 |458|512|u7.7|`wes-hprac`|[atmega32_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32/autobaud/atmega32_autobaud_ee_lednop_fr_ce.hex)|
 
@@ -16,6 +16,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)

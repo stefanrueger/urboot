@@ -1,9 +1,11 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
+|252|256|u7.7|`w-u-jPr--`|[at90pwm3b_22mhz1184_57600bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_22mhz1184/57600_bps/at90pwm3b_22mhz1184_57600bps_lednop_ur_vbl.hex)|
 |256|256|u7.7|`w-u-hpr--`|[at90pwm3b_22mhz1184_57600bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_22mhz1184/57600_bps/at90pwm3b_22mhz1184_57600bps_lednop_fr_ur.hex)|
-|288|320|u7.7|`w-u-jpr-c`|[at90pwm3b_22mhz1184_57600bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_22mhz1184/57600_bps/at90pwm3b_22mhz1184_57600bps_lednop_fr_ce_ur_vbl.hex)|
-|304|320|u7.7|`weu-jpr--`|[at90pwm3b_22mhz1184_57600bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_22mhz1184/57600_bps/at90pwm3b_22mhz1184_57600bps_ee_lednop_ur_vbl.hex)|
-|350|384|u7.7|`weu-jpr-c`|[at90pwm3b_22mhz1184_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_22mhz1184/57600_bps/at90pwm3b_22mhz1184_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|302|320|u7.7|`w-u-jPr-c`|[at90pwm3b_22mhz1184_57600bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_22mhz1184/57600_bps/at90pwm3b_22mhz1184_57600bps_lednop_fr_ce_ur_vbl.hex)|
+|318|320|u7.7|`weu-jPr--`|[at90pwm3b_22mhz1184_57600bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_22mhz1184/57600_bps/at90pwm3b_22mhz1184_57600bps_ee_lednop_ur_vbl.hex)|
+|322|384|u7.7|`weu-jpr--`|[at90pwm3b_22mhz1184_57600bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_22mhz1184/57600_bps/at90pwm3b_22mhz1184_57600bps_ee_lednop_fr_ur_vbl.hex)|
+|364|384|u7.7|`weu-jPr-c`|[at90pwm3b_22mhz1184_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_22mhz1184/57600_bps/at90pwm3b_22mhz1184_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |346|512|u7.7|`weu-hpr-c`|[at90pwm3b_22mhz1184_57600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_22mhz1184/57600_bps/at90pwm3b_22mhz1184_57600bps_ee_lednop_fr_ce_ur.hex)|
 |450|512|u7.7|`wes-hpr-c`|[at90pwm3b_22mhz1184_57600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_22mhz1184/57600_bps/at90pwm3b_22mhz1184_57600bps_ee_lednop_fr_ce.hex)|
 
@@ -18,6 +20,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

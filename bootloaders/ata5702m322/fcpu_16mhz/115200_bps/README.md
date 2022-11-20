@@ -1,9 +1,11 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |256|256|u7.7|`w-u-jpr--`|[ata5702m322_16mhz_115200bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_16mhz/115200_bps/ata5702m322_16mhz_115200bps_rxb0_txb1_lednop_ur_vbl.hex)|
+|292|320|u7.7|`w-u-jPr--`|[ata5702m322_16mhz_115200bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_16mhz/115200_bps/ata5702m322_16mhz_115200bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
 |308|320|u7.7|`w-u-jpr-c`|[ata5702m322_16mhz_115200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_16mhz/115200_bps/ata5702m322_16mhz_115200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
 |316|320|u7.7|`weu-jpr--`|[ata5702m322_16mhz_115200bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_16mhz/115200_bps/ata5702m322_16mhz_115200bps_rxb0_txb1_ee_ur_vbl.hex)|
-|370|384|u7.7|`weu-jpr-c`|[ata5702m322_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_16mhz/115200_bps/ata5702m322_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|322|384|u7.7|`weu-jpr--`|[ata5702m322_16mhz_115200bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_16mhz/115200_bps/ata5702m322_16mhz_115200bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
+|384|384|u7.7|`weu-jPr-c`|[ata5702m322_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_16mhz/115200_bps/ata5702m322_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -14,6 +16,7 @@
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

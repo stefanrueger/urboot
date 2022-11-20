@@ -1,8 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |252|256|u7.7|`w-u-jpr--`|[ata5702m322_1mhz_9600bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_1mhz/9600_bps/ata5702m322_1mhz_9600bps_rxb0_txb1_ur_vbl.hex)|
+|294|320|u7.7|`w-u-jPr--`|[ata5702m322_1mhz_9600bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_1mhz/9600_bps/ata5702m322_1mhz_9600bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
 |310|320|u7.7|`w-u-jpr-c`|[ata5702m322_1mhz_9600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_1mhz/9600_bps/ata5702m322_1mhz_9600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
 |318|320|u7.7|`weu-jpr--`|[ata5702m322_1mhz_9600bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_1mhz/9600_bps/ata5702m322_1mhz_9600bps_rxb0_txb1_ee_ur_vbl.hex)|
+|356|384|u7.7|`weu-jPr--`|[ata5702m322_1mhz_9600bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_1mhz/9600_bps/ata5702m322_1mhz_9600bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
 |372|384|u7.7|`weu-jpr-c`|[ata5702m322_1mhz_9600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_1mhz/9600_bps/ata5702m322_1mhz_9600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
@@ -14,6 +16,7 @@
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

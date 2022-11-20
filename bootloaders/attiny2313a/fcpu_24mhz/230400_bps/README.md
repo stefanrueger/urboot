@@ -1,11 +1,11 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |222|224|u7.7|`w-u-jpr--`|[attiny2313a_24mhz_230400bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_24mhz/230400_bps/attiny2313a_24mhz_230400bps_lednop_ur_vbl.hex)|
-|236|256|u7.7|`w-u-jpr--`|[attiny2313a_24mhz_230400bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_24mhz/230400_bps/attiny2313a_24mhz_230400bps_lednop_fr_ur_vbl.hex)|
-|266|288|u7.7|`w-u-jpr-c`|[attiny2313a_24mhz_230400bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_24mhz/230400_bps/attiny2313a_24mhz_230400bps_lednop_fr_ce_ur_vbl.hex)|
+|250|256|u7.7|`w-u-jPr--`|[attiny2313a_24mhz_230400bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_24mhz/230400_bps/attiny2313a_24mhz_230400bps_lednop_fr_ur_vbl.hex)|
+|280|288|u7.7|`w-u-jPr-c`|[attiny2313a_24mhz_230400bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_24mhz/230400_bps/attiny2313a_24mhz_230400bps_lednop_fr_ce_ur_vbl.hex)|
 |286|288|u7.7|`weu-jpr--`|[attiny2313a_24mhz_230400bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_24mhz/230400_bps/attiny2313a_24mhz_230400bps_ee_lednop_ur_vbl.hex)|
-|304|320|u7.7|`weu-jpr--`|[attiny2313a_24mhz_230400bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_24mhz/230400_bps/attiny2313a_24mhz_230400bps_ee_lednop_fr_ur_vbl.hex)|
-|330|352|u7.7|`weu-jpr-c`|[attiny2313a_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_24mhz/230400_bps/attiny2313a_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|318|320|u7.7|`weu-jPr--`|[attiny2313a_24mhz_230400bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_24mhz/230400_bps/attiny2313a_24mhz_230400bps_ee_lednop_fr_ur_vbl.hex)|
+|344|352|u7.7|`weu-jPr-c`|[attiny2313a_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_24mhz/230400_bps/attiny2313a_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -16,6 +16,7 @@
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

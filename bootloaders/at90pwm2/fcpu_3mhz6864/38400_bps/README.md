@@ -1,7 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
+|252|256|u7.7|`w-u-jPr--`|[at90pwm2_3mhz6864_38400bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_3mhz6864/38400_bps/at90pwm2_3mhz6864_38400bps_lednop_ur_vbl.hex)|
 |256|256|u7.7|`w-u-hpr--`|[at90pwm2_3mhz6864_38400bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_3mhz6864/38400_bps/at90pwm2_3mhz6864_38400bps_lednop_fr_ur.hex)|
 |288|320|u7.7|`w-u-hpr-c`|[at90pwm2_3mhz6864_38400bps_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_3mhz6864/38400_bps/at90pwm2_3mhz6864_38400bps_lednop_fr_ce_ur.hex)|
+|316|320|u7.7|`weu-jPr--`|[at90pwm2_3mhz6864_38400bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_3mhz6864/38400_bps/at90pwm2_3mhz6864_38400bps_ee_lednop_ur_vbl.hex)|
 |320|320|u7.7|`weu-hpr--`|[at90pwm2_3mhz6864_38400bps_ee_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_3mhz6864/38400_bps/at90pwm2_3mhz6864_38400bps_ee_lednop_fr_ur.hex)|
 |348|384|u7.7|`weu-hpr-c`|[at90pwm2_3mhz6864_38400bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_3mhz6864/38400_bps/at90pwm2_3mhz6864_38400bps_ee_lednop_fr_ce_ur.hex)|
 |360|384|u7.7|`w-s-hpr--`|[at90pwm2_3mhz6864_38400bps_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2/fcpu_3mhz6864/38400_bps/at90pwm2_3mhz6864_38400bps_lednop_fr.hex)|
@@ -19,7 +21,9 @@
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
+  + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present
@@ -29,3 +33,4 @@
   + `fr` bootloader provides non-essential code for smoother error handing
   + `ce` bootloader provides a chip erase command
   + `ur` uses urprotocol and requires `avrdude -c urclock` for programming
+  + `vbl` vector bootloader: set fuses to jump to reset, not the HW boot section

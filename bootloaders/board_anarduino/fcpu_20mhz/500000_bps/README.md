@@ -1,8 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
+|248|256|u7.7|`w-u-jPr--`|[anarduino_20mhz_500000bps_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_20mhz/500000_bps/anarduino_20mhz_500000bps_led+b1_ur_vbl.hex)|
 |252|256|u7.7|`w-u-jpr--`|[anarduino_20mhz_500000bps_led+b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_20mhz/500000_bps/anarduino_20mhz_500000bps_led+b1_fr_ur_vbl.hex)|
-|346|384|u7.7|`weu-jpr-c`|[anarduino_20mhz_500000bps_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_20mhz/500000_bps/anarduino_20mhz_500000bps_ee_led+b1_fr_ce_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr-c`|[anarduino_20mhz_500000bps_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_20mhz/500000_bps/anarduino_20mhz_500000bps_ee_led+b1_fr_ce_ur_vbl.hex)|
 |342|512|u7.7|`weu-hpr-c`|[anarduino_20mhz_500000bps_ee_led+b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_20mhz/500000_bps/anarduino_20mhz_500000bps_ee_led+b1_fr_ce_ur.hex)|
+|382|512|u7.7|`w-udjpr--`|[anarduino_20mhz_500000bps_led+b1_csd5_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_20mhz/500000_bps/anarduino_20mhz_500000bps_led+b1_csd5_dual_ur_vbl.hex)|
 |446|512|u7.7|`wes-hpr-c`|[anarduino_20mhz_500000bps_ee_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_20mhz/500000_bps/anarduino_20mhz_500000bps_ee_led+b1_fr_ce.hex)|
 |494|512|u7.7|`weudhpr-c`|[anarduino_20mhz_500000bps_ee_led+b1_csd5_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_20mhz/500000_bps/anarduino_20mhz_500000bps_ee_led+b1_csd5_dual_fr_ce_ur.hex)|
 |500|512|u7.7|`w-sdhpr--`|[anarduino_20mhz_500000bps_led+b1_csd5_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_20mhz/500000_bps/anarduino_20mhz_500000bps_led+b1_csd5_dual_fr.hex)|
@@ -20,6 +22,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

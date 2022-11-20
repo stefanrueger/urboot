@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |244|256|u7.7|`w-u-jpr--`|[urclockmega_3mhz6864_460800bps_led+c7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_3mhz6864/460800_bps/urclockmega_3mhz6864_460800bps_led+c7_ur_vbl.hex)|
-|368|512|u7.7|`weu-jpr-c`|[urclockmega_3mhz6864_460800bps_ee_led+c7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_3mhz6864/460800_bps/urclockmega_3mhz6864_460800bps_ee_led+c7_fr_ce_ur_vbl.hex)|
-|470|512|u7.7|`w-udjpr-c`|[urclockmega_3mhz6864_460800bps_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_3mhz6864/460800_bps/urclockmega_3mhz6864_460800bps_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
-|488|512|u7.7|`weudjpr--`|[urclockmega_3mhz6864_460800bps_ee_led+c7_csb3_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_3mhz6864/460800_bps/urclockmega_3mhz6864_460800bps_ee_led+c7_csb3_dual_fr_ur_vbl.hex)|
-|532|768|u7.7|`weudjpr-c`|[urclockmega_3mhz6864_460800bps_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_3mhz6864/460800_bps/urclockmega_3mhz6864_460800bps_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
+|386|512|u7.7|`weu-jPr-c`|[urclockmega_3mhz6864_460800bps_ee_led+c7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_3mhz6864/460800_bps/urclockmega_3mhz6864_460800bps_ee_led+c7_fr_ce_ur_vbl.hex)|
+|488|512|u7.7|`w-udjPr-c`|[urclockmega_3mhz6864_460800bps_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_3mhz6864/460800_bps/urclockmega_3mhz6864_460800bps_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
+|506|512|u7.7|`weudjPr--`|[urclockmega_3mhz6864_460800bps_ee_led+c7_csb3_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_3mhz6864/460800_bps/urclockmega_3mhz6864_460800bps_ee_led+c7_csb3_dual_fr_ur_vbl.hex)|
+|550|768|u7.7|`weudjPr-c`|[urclockmega_3mhz6864_460800bps_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_3mhz6864/460800_bps/urclockmega_3mhz6864_460800bps_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
 |368|1024|u7.7|`weu-hpr-c`|[urclockmega_3mhz6864_460800bps_ee_led+c7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_3mhz6864/460800_bps/urclockmega_3mhz6864_460800bps_ee_led+c7_fr_ce_ur.hex)|
 |474|1024|u7.7|`wes-hpr-c`|[urclockmega_3mhz6864_460800bps_ee_led+c7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_3mhz6864/460800_bps/urclockmega_3mhz6864_460800bps_ee_led+c7_fr_ce.hex)|
 |532|1024|u7.7|`weudhpr-c`|[urclockmega_3mhz6864_460800bps_ee_led+c7_csb3_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/fcpu_3mhz6864/460800_bps/urclockmega_3mhz6864_460800bps_ee_led+c7_csb3_dual_fr_ce_ur.hex)|
@@ -22,6 +22,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

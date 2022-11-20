@@ -1,9 +1,11 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
+|248|256|u7.7|`w-u-jPr--`|[atmega88p_24mhz_230400bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/230400_bps/atmega88p_24mhz_230400bps_lednop_ur_vbl.hex)|
 |252|256|u7.7|`w-u-hpr--`|[atmega88p_24mhz_230400bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/230400_bps/atmega88p_24mhz_230400bps_lednop_fr_ur.hex)|
-|284|320|u7.7|`w-u-jpr-c`|[atmega88p_24mhz_230400bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/230400_bps/atmega88p_24mhz_230400bps_lednop_fr_ce_ur_vbl.hex)|
+|298|320|u7.7|`w-u-jPr-c`|[atmega88p_24mhz_230400bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/230400_bps/atmega88p_24mhz_230400bps_lednop_fr_ce_ur_vbl.hex)|
+|314|320|u7.7|`weu-jPr--`|[atmega88p_24mhz_230400bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/230400_bps/atmega88p_24mhz_230400bps_ee_lednop_ur_vbl.hex)|
 |318|320|u7.7|`weu-jpr--`|[atmega88p_24mhz_230400bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/230400_bps/atmega88p_24mhz_230400bps_ee_lednop_fr_ur_vbl.hex)|
-|346|384|u7.7|`weu-jpr-c`|[atmega88p_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/230400_bps/atmega88p_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr-c`|[atmega88p_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/230400_bps/atmega88p_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |342|512|u7.7|`weu-hpr-c`|[atmega88p_24mhz_230400bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/230400_bps/atmega88p_24mhz_230400bps_ee_lednop_fr_ce_ur.hex)|
 |446|512|u7.7|`wes-hpr-c`|[atmega88p_24mhz_230400bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88p/fcpu_24mhz/230400_bps/atmega88p_24mhz_230400bps_ee_lednop_fr_ce.hex)|
 
@@ -18,6 +20,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

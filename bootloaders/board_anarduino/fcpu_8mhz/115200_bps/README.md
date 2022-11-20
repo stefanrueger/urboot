@@ -1,10 +1,12 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |252|256|u7.7|`w-u-jpr--`|[anarduino_8mhz_115200bps_rxd0_txd1_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_8mhz/115200_bps/anarduino_8mhz_115200bps_rxd0_txd1_led+b1_ur_vbl.hex)|
-|364|384|u7.7|`weu-jpr-c`|[anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_8mhz/115200_bps/anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_fr_ce_ur_vbl.hex)|
+|378|384|u7.7|`weu-jPr-c`|[anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_8mhz/115200_bps/anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_fr_ce_ur_vbl.hex)|
 |360|512|u7.7|`weu-hpr-c`|[anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_8mhz/115200_bps/anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_fr_ce_ur.hex)|
+|460|512|u7.7|`w-udjPr-c`|[anarduino_8mhz_115200bps_rxd0_txd1_led+b1_csd5_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_8mhz/115200_bps/anarduino_8mhz_115200bps_rxd0_txd1_led+b1_csd5_dual_fr_ce_ur_vbl.hex)|
 |464|512|u7.7|`wes-hpr-c`|[anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_8mhz/115200_bps/anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_fr_ce.hex)|
 |494|512|u7.7|`w-sdhpr--`|[anarduino_8mhz_115200bps_rxd0_txd1_led+b1_csd5_dual.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_8mhz/115200_bps/anarduino_8mhz_115200bps_rxd0_txd1_led+b1_csd5_dual.hex)|
+|498|512|u7.7|`weudjPr--`|[anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_csd5_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_8mhz/115200_bps/anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_csd5_dual_fr_ur_vbl.hex)|
 |512|512|u7.7|`weudhpr-c`|[anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_csd5_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_8mhz/115200_bps/anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_csd5_dual_fr_ce_ur.hex)|
 |616|1024|u7.7|`wesdhpr-c`|[anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_csd5_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_8mhz/115200_bps/anarduino_8mhz_115200bps_rxd0_txd1_ee_led+b1_csd5_dual_fr_ce.hex)|
 
@@ -20,6 +22,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

@@ -1,9 +1,11 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |246|256|u7.7|`w-u-jpra-`|[atmega48_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48/autobaud/atmega48_autobaud_lednop_ur_vbl.hex)|
-|296|320|u7.7|`w-u-jprac`|[atmega48_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48/autobaud/atmega48_autobaud_lednop_fr_ce_ur_vbl.hex)|
+|254|256|u7.7|`w-u-jPra-`|[atmega48_autobaud_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48/autobaud/atmega48_autobaud_ur_vbl.hex)|
+|310|320|u7.7|`w-u-jPrac`|[atmega48_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48/autobaud/atmega48_autobaud_lednop_fr_ce_ur_vbl.hex)|
 |312|320|u7.7|`weu-jpra-`|[atmega48_autobaud_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48/autobaud/atmega48_autobaud_ee_lednop_ur_vbl.hex)|
-|358|384|u7.7|`weu-jprac`|[atmega48_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48/autobaud/atmega48_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|320|320|u7.7|`weu-jPra-`|[atmega48_autobaud_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48/autobaud/atmega48_autobaud_ee_ur_vbl.hex)|
+|372|384|u7.7|`weu-jPrac`|[atmega48_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48/autobaud/atmega48_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -14,6 +16,7 @@
   + `u` uses urprotocol requiring `avrdude -c urclock` for programming
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)

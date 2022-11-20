@@ -1,9 +1,11 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |252|256|u7.7|`w-u-jpr--`|[timeduino_8mhz_115200bps_rxd0_txd1_led-b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_8mhz/115200_bps/timeduino_8mhz_115200bps_rxd0_txd1_led-b1_ur_vbl.hex)|
-|364|384|u7.7|`weu-jpr-c`|[timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_8mhz/115200_bps/timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_fr_ce_ur_vbl.hex)|
+|378|384|u7.7|`weu-jPr-c`|[timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_8mhz/115200_bps/timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_fr_ce_ur_vbl.hex)|
 |360|512|u7.7|`weu-hpr-c`|[timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_8mhz/115200_bps/timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_fr_ce_ur.hex)|
+|452|512|u7.7|`w-udjPr-c`|[timeduino_8mhz_115200bps_rxd0_txd1_led-b1_csb0_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_8mhz/115200_bps/timeduino_8mhz_115200bps_rxd0_txd1_led-b1_csb0_dual_fr_ce_ur_vbl.hex)|
 |464|512|u7.7|`wes-hpr-c`|[timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_8mhz/115200_bps/timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_fr_ce.hex)|
+|490|512|u7.7|`weudjPr--`|[timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_csb0_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_8mhz/115200_bps/timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_csb0_dual_fr_ur_vbl.hex)|
 |504|512|u7.7|`weudhpr-c`|[timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_8mhz/115200_bps/timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_csb0_dual_fr_ce_ur.hex)|
 |510|512|u7.7|`w-sdhpr--`|[timeduino_8mhz_115200bps_rxd0_txd1_led-b1_csb0_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_8mhz/115200_bps/timeduino_8mhz_115200bps_rxd0_txd1_led-b1_csb0_dual_fr.hex)|
 |608|1024|u7.7|`wesdhpr-c`|[timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_timeduino/fcpu_8mhz/115200_bps/timeduino_8mhz_115200bps_rxd0_txd1_ee_led-b1_csb0_dual_fr_ce.hex)|
@@ -20,6 +22,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

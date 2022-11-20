@@ -1,17 +1,23 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
+|248|256|u7.7|`w-u-jPr--`|[atmega328p_8mhz_1000000bps_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led+b1_ur_vbl.hex)|
+|248|256|u7.7|`w-u-jPr--`|[atmega328p_8mhz_1000000bps_led+b5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led+b5_ur_vbl.hex)|
+|248|256|u7.7|`w-u-jPr--`|[atmega328p_8mhz_1000000bps_led+d5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led+d5_ur_vbl.hex)|
+|248|256|u7.7|`w-u-jPr--`|[atmega328p_8mhz_1000000bps_led-b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led-b1_ur_vbl.hex)|
+|248|256|u7.7|`w-u-jPr--`|[atmega328p_8mhz_1000000bps_led-d5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led-d5_ur_vbl.hex)|
+|248|256|u7.7|`w-u-jPr--`|[atmega328p_8mhz_1000000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_lednop_ur_vbl.hex)|
 |252|256|u7.7|`w-u-jpr--`|[atmega328p_8mhz_1000000bps_led+b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led+b1_fr_ur_vbl.hex)|
 |252|256|u7.7|`w-u-jpr--`|[atmega328p_8mhz_1000000bps_led+b5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led+b5_fr_ur_vbl.hex)|
 |252|256|u7.7|`w-u-jpr--`|[atmega328p_8mhz_1000000bps_led+d5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led+d5_fr_ur_vbl.hex)|
 |252|256|u7.7|`w-u-jpr--`|[atmega328p_8mhz_1000000bps_led-b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led-b1_fr_ur_vbl.hex)|
 |252|256|u7.7|`w-u-jpr--`|[atmega328p_8mhz_1000000bps_led-d5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led-d5_fr_ur_vbl.hex)|
 |252|256|u7.7|`w-u-jpr--`|[atmega328p_8mhz_1000000bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_lednop_fr_ur_vbl.hex)|
-|346|384|u7.7|`weu-jpr-c`|[atmega328p_8mhz_1000000bps_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led+b1_fr_ce_ur_vbl.hex)|
-|346|384|u7.7|`weu-jpr-c`|[atmega328p_8mhz_1000000bps_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led+b5_fr_ce_ur_vbl.hex)|
-|346|384|u7.7|`weu-jpr-c`|[atmega328p_8mhz_1000000bps_ee_led+d5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led+d5_fr_ce_ur_vbl.hex)|
-|346|384|u7.7|`weu-jpr-c`|[atmega328p_8mhz_1000000bps_ee_led-b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led-b1_fr_ce_ur_vbl.hex)|
-|346|384|u7.7|`weu-jpr-c`|[atmega328p_8mhz_1000000bps_ee_led-d5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led-d5_fr_ce_ur_vbl.hex)|
-|346|384|u7.7|`weu-jpr-c`|[atmega328p_8mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr-c`|[atmega328p_8mhz_1000000bps_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led+b1_fr_ce_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr-c`|[atmega328p_8mhz_1000000bps_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led+b5_fr_ce_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr-c`|[atmega328p_8mhz_1000000bps_ee_led+d5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led+d5_fr_ce_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr-c`|[atmega328p_8mhz_1000000bps_ee_led-b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led-b1_fr_ce_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr-c`|[atmega328p_8mhz_1000000bps_ee_led-d5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led-d5_fr_ce_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr-c`|[atmega328p_8mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |378|384|u7.7|`w-udjpr--`|[atmega328p_8mhz_1000000bps_led+b1_csb0_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led+b1_csb0_dual_ur_vbl.hex)|
 |378|384|u7.7|`w-udjpr--`|[atmega328p_8mhz_1000000bps_led+d5_csb0_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led+d5_csb0_dual_ur_vbl.hex)|
 |378|384|u7.7|`w-udjpr--`|[atmega328p_8mhz_1000000bps_led-b1_csb0_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led-b1_csb0_dual_ur_vbl.hex)|
@@ -22,6 +28,8 @@
 |342|512|u7.7|`weu-hpr-c`|[atmega328p_8mhz_1000000bps_ee_led-b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led-b1_fr_ce_ur.hex)|
 |342|512|u7.7|`weu-hpr-c`|[atmega328p_8mhz_1000000bps_ee_led-d5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led-d5_fr_ce_ur.hex)|
 |342|512|u7.7|`weu-hpr-c`|[atmega328p_8mhz_1000000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_lednop_fr_ce_ur.hex)|
+|382|512|u7.7|`w-udjpr--`|[atmega328p_8mhz_1000000bps_led+b1_csd5_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_led+b1_csd5_dual_ur_vbl.hex)|
+|382|512|u7.7|`w-udjpr--`|[atmega328p_8mhz_1000000bps_template_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_template_dual_ur_vbl.hex)|
 |446|512|u7.7|`wes-hpr-c`|[atmega328p_8mhz_1000000bps_ee_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led+b1_fr_ce.hex)|
 |446|512|u7.7|`wes-hpr-c`|[atmega328p_8mhz_1000000bps_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led+b5_fr_ce.hex)|
 |446|512|u7.7|`wes-hpr-c`|[atmega328p_8mhz_1000000bps_ee_led+d5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/1000000_bps/atmega328p_8mhz_1000000bps_ee_led+d5_fr_ce.hex)|
@@ -59,6 +67,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

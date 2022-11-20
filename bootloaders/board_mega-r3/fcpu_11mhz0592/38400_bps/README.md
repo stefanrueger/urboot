@@ -1,7 +1,7 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |240|256|u7.7|`w-u-jpr--`|[mega-r3_11mhz0592_38400bps_led+b7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mega-r3/fcpu_11mhz0592/38400_bps/mega-r3_11mhz0592_38400bps_led+b7_ur_vbl.hex)|
-|364|512|u7.7|`weu-jpr-c`|[mega-r3_11mhz0592_38400bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mega-r3/fcpu_11mhz0592/38400_bps/mega-r3_11mhz0592_38400bps_ee_led+b7_fr_ce_ur_vbl.hex)|
+|382|512|u7.7|`weu-jPr-c`|[mega-r3_11mhz0592_38400bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mega-r3/fcpu_11mhz0592/38400_bps/mega-r3_11mhz0592_38400bps_ee_led+b7_fr_ce_ur_vbl.hex)|
 |364|1024|u7.7|`weu-hpr-c`|[mega-r3_11mhz0592_38400bps_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mega-r3/fcpu_11mhz0592/38400_bps/mega-r3_11mhz0592_38400bps_ee_led+b7_fr_ce_ur.hex)|
 |478|1024|u7.7|`wes-hpr-c`|[mega-r3_11mhz0592_38400bps_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mega-r3/fcpu_11mhz0592/38400_bps/mega-r3_11mhz0592_38400bps_ee_led+b7_fr_ce.hex)|
 
@@ -16,6 +16,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

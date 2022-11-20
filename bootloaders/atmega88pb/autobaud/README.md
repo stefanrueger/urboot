@@ -1,9 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |252|256|u7.7|`w-u-hpra-`|[atmega88pb_autobaud_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/autobaud/atmega88pb_autobaud_ur.hex)|
+|294|320|u7.7|`w-u-jPra-`|[atmega88pb_autobaud_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/autobaud/atmega88pb_autobaud_lednop_fr_ur_vbl.hex)|
 |308|320|u7.7|`w-u-jprac`|[atmega88pb_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/autobaud/atmega88pb_autobaud_lednop_fr_ce_ur_vbl.hex)|
 |318|320|u7.7|`weu-jpra-`|[atmega88pb_autobaud_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/autobaud/atmega88pb_autobaud_ee_ur_vbl.hex)|
-|370|384|u7.7|`weu-jprac`|[atmega88pb_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/autobaud/atmega88pb_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|384|384|u7.7|`weu-jPrac`|[atmega88pb_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/autobaud/atmega88pb_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
 |366|512|u7.7|`weu-hprac`|[atmega88pb_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/autobaud/atmega88pb_autobaud_ee_lednop_fr_ce_ur.hex)|
 |470|512|u7.7|`wes-hprac`|[atmega88pb_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pb/autobaud/atmega88pb_autobaud_ee_lednop_fr_ce.hex)|
 
@@ -18,6 +19,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)

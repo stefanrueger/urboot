@@ -1,7 +1,7 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|240|256|u7.7|`w-u-jpr--`|[atmega649a_2mhz_250000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649a/fcpu_2mhz/250000_bps/atmega649a_2mhz_250000bps_lednop_ur_vbl.hex)|
-|344|512|u7.7|`weu-jpr-c`|[atmega649a_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649a/fcpu_2mhz/250000_bps/atmega649a_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|254|256|u7.7|`w-u-jPr--`|[atmega649a_2mhz_250000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649a/fcpu_2mhz/250000_bps/atmega649a_2mhz_250000bps_lednop_ur_vbl.hex)|
+|358|512|u7.7|`weu-jPr-c`|[atmega649a_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649a/fcpu_2mhz/250000_bps/atmega649a_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |344|1024|u7.7|`weu-hpr-c`|[atmega649a_2mhz_250000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649a/fcpu_2mhz/250000_bps/atmega649a_2mhz_250000bps_ee_lednop_fr_ce_ur.hex)|
 |448|1024|u7.7|`wes-hpr-c`|[atmega649a_2mhz_250000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649a/fcpu_2mhz/250000_bps/atmega649a_2mhz_250000bps_ee_lednop_fr_ce.hex)|
 
@@ -16,6 +16,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

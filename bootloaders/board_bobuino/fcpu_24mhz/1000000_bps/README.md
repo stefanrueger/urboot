@@ -1,7 +1,7 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |244|256|u7.7|`w-u-jpr--`|[bobuino_24mhz_1000000bps_led+b7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_bobuino/fcpu_24mhz/1000000_bps/bobuino_24mhz_1000000bps_led+b7_ur_vbl.hex)|
-|368|512|u7.7|`weu-jpr-c`|[bobuino_24mhz_1000000bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_bobuino/fcpu_24mhz/1000000_bps/bobuino_24mhz_1000000bps_ee_led+b7_fr_ce_ur_vbl.hex)|
+|386|512|u7.7|`weu-jPr-c`|[bobuino_24mhz_1000000bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_bobuino/fcpu_24mhz/1000000_bps/bobuino_24mhz_1000000bps_ee_led+b7_fr_ce_ur_vbl.hex)|
 |368|1024|u7.7|`weu-hpr-c`|[bobuino_24mhz_1000000bps_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_bobuino/fcpu_24mhz/1000000_bps/bobuino_24mhz_1000000bps_ee_led+b7_fr_ce_ur.hex)|
 |474|1024|u7.7|`wes-hpr-c`|[bobuino_24mhz_1000000bps_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_bobuino/fcpu_24mhz/1000000_bps/bobuino_24mhz_1000000bps_ee_led+b7_fr_ce.hex)|
 
@@ -16,6 +16,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

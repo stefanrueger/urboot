@@ -1,7 +1,7 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |252|256|u7.7|`w-u-jpr--`|[atmega32c1_18mhz432_57600bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32c1/fcpu_18mhz432/57600_bps/atmega32c1_18mhz432_57600bps_rxb0_txb1_ur_vbl.hex)|
-|370|384|u7.7|`weu-jpr-c`|[atmega32c1_18mhz432_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32c1/fcpu_18mhz432/57600_bps/atmega32c1_18mhz432_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|384|384|u7.7|`weu-jPr-c`|[atmega32c1_18mhz432_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32c1/fcpu_18mhz432/57600_bps/atmega32c1_18mhz432_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 |366|512|u7.7|`weu-hpr-c`|[atmega32c1_18mhz432_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32c1/fcpu_18mhz432/57600_bps/atmega32c1_18mhz432_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
 |470|512|u7.7|`wes-hpr-c`|[atmega32c1_18mhz432_57600bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32c1/fcpu_18mhz432/57600_bps/atmega32c1_18mhz432_57600bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
 
@@ -16,6 +16,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
   + `-` corresponding feature not present

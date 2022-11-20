@@ -1,6 +1,6 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|384|512|u7.7|`weu-jprac`|[mega-r3_autobaud_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mega-r3/autobaud/mega-r3_autobaud_ee_led+b7_fr_ce_ur_vbl.hex)|
+|402|512|u7.7|`weu-jPrac`|[mega-r3_autobaud_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mega-r3/autobaud/mega-r3_autobaud_ee_led+b7_fr_ce_ur_vbl.hex)|
 |384|1024|u7.7|`weu-hprac`|[mega-r3_autobaud_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mega-r3/autobaud/mega-r3_autobaud_ee_led+b7_fr_ce_ur.hex)|
 |498|1024|u7.7|`wes-hprac`|[mega-r3_autobaud_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mega-r3/autobaud/mega-r3_autobaud_ee_led+b7_fr_ce.hex)|
 
@@ -15,6 +15,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)

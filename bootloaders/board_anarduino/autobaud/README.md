@@ -1,10 +1,12 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |250|256|u7.7|`w-u-jpra-`|[anarduino_autobaud_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/autobaud/anarduino_autobaud_led+b1_ur_vbl.hex)|
-|362|384|u7.7|`weu-jprac`|[anarduino_autobaud_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/autobaud/anarduino_autobaud_ee_led+b1_fr_ce_ur_vbl.hex)|
+|376|384|u7.7|`weu-jPrac`|[anarduino_autobaud_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/autobaud/anarduino_autobaud_ee_led+b1_fr_ce_ur_vbl.hex)|
 |358|512|u7.7|`weu-hprac`|[anarduino_autobaud_ee_led+b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/autobaud/anarduino_autobaud_ee_led+b1_fr_ce_ur.hex)|
+|458|512|u7.7|`w-udjPrac`|[anarduino_autobaud_led+b1_csd5_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/autobaud/anarduino_autobaud_led+b1_csd5_dual_fr_ce_ur_vbl.hex)|
 |462|512|u7.7|`wes-hprac`|[anarduino_autobaud_ee_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/autobaud/anarduino_autobaud_ee_led+b1_fr_ce.hex)|
 |492|512|u7.7|`w-sdhpra-`|[anarduino_autobaud_led+b1_csd5_dual.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/autobaud/anarduino_autobaud_led+b1_csd5_dual.hex)|
+|496|512|u7.7|`weudjPra-`|[anarduino_autobaud_ee_led+b1_csd5_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/autobaud/anarduino_autobaud_ee_led+b1_csd5_dual_fr_ur_vbl.hex)|
 |510|512|u7.7|`weudhprac`|[anarduino_autobaud_ee_led+b1_csd5_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/autobaud/anarduino_autobaud_ee_led+b1_csd5_dual_fr_ce_ur.hex)|
 |614|1024|u7.7|`wesdhprac`|[anarduino_autobaud_ee_led+b1_csd5_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/autobaud/anarduino_autobaud_ee_led+b1_csd5_dual_fr_ce.hex)|
 
@@ -20,6 +22,7 @@
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
   + `p` bootloader protects itself from being overwritten
+  + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
