@@ -367,8 +367,23 @@
  *
  * Prevents the bootloader from overwriting itself. This can only in rare circumstances be safely
  * switched off, eg, when no pgm_write_page() function is exported, the bootloader uses hardware
- * boot section support and the fuses are set to protect the bootloader. The protection code is
- * between 4 and 10 bytes, so it is generally recommended to keep PROTECTME=1 by default.
+ * boot section support and the fuses are set to protect the bootloader. As the protection code is
+ * between 4 and 10 bytes, PROTECTME can no longer be switched off from v7.7 onwards.
+ *
+ *
+ * PROTECTRESET=<1|0> (protect a vector bootloader from overwriting the reset vector)
+ *
+ * For vector bootloaders, overwriting the reset vector usually spells disaster as it can no longer
+ * be reached. Programming with avrdude -c urclock looks after the reset vector, so incidents where
+ * it is overwritten are rare: the principal cause of this happening is when the user calls the
+ * pgm_write_page(sram, flash) function in the bootloader and overwrites the reset vector at flash
+ * address zero. Another cause can be user error overwriting the bootloader size when uploading a
+ * file. Setting PROTECTRESET=1 will ensure that a backward rjmp from address 0 to the  bootloader
+ * will be written to flash whenever the user writes the first flash memory page. As an aside,
+ * whenever the function pgm_write_page(sram, flash) is called by the user for flash=0 then the
+ * first two bytes of the memory that the pointer sram points to are also altered with the rjmp to
+ * the bootloader. If this PROTECTRESET is unset, ie, neither 0 or 1, then this option will be set
+ * if there is still space in the bootloader to accommodate the protection code.
  *
  *
  * PGMWRITEPAGE=<1|0> -DRJMPWP=0xC<offset>
@@ -418,6 +433,7 @@ typedef const void *progmem_t;
 // Copy a single page from SRAM to page-aligned PROGMEM utilising smr's urboot
 //  - Takes ca 8.7 ms on an 16 MHz ATmega328p
 //  - Remember to flush serial buffers before calling
+//  - The bootloader may alter sram if it has reset protection and the user writes to Page 0
 //
 void urbootPageWrite(void *sram, progmem_t pgm) {
   cli();
@@ -666,7 +682,7 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
  * Edit History:
  *
  * Nov 2022
- * 7.7 smr: added autobaud
+ * 7.7 smr: added autobaud and, for vector bootloaders, reset vector protection
  * Jun 2022
  * 7.6 smr: refined the URPROTOCOL protocol implementation, now compiles for 183 MCUs
  * Dec 2021
@@ -712,6 +728,34 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
 #ifndef VERSION
 #define VERSION             077 // v7.7 in octal, as minor version is in 3 least significant bits
 #endif
+
+#define MAJORVER (VERSION >> 3) // Max 31
+#define MINORVER (VERSION & 7)  // Max 7
+
+
+/*
+ * Different flash memory size categories:
+ *  -   8k or less: no jmp, only rjmp, small device
+ *  -  64k or less: no need for RAMPZ, plain sailing, use lmp/smp
+ *  - 128k or less: needs RAMPZ for elpm/spm, jmp targets; STK500 word addresses fit in 16-bit
+ *  - more than 128k: needs RAMPZ for elpm/spm, EIND for indirect jumps, jmp targets exceed 16-bit
+ *                    also needs extention for STK500 v1 protocol
+ *  - more than 4M: low 16 bit of jmp opcode no longer 0x940c (currently only a theoretical issue)
+ */
+
+#define FLASHin8k      (FLASHEND <=     8191ul)
+#define FLASHabove8k   (FLASHEND  >     8191ul)
+#define FLASHin64k     (FLASHEND <=    65535ul)
+#define FLASHabove64k  (FLASHEND  >    65535ul)
+#define FLASHin128k    (FLASHEND <=  0x1fffful)
+#define FLASHabove128k (FLASHEND  >  0x1fffful)
+#define FLASHabove4M   (FLASHEND  > 0x3ffffful)
+
+// Defaults to 1 iff flash size is power of 2
+#ifndef FLASHWRAPS
+#define FLASHWRAPS (!(FLASHEND & (FLASHEND+1UL)))
+#endif
+
 
 #ifndef DUAL
 #define DUAL                  0
@@ -783,9 +827,27 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
 #define RJMPWP       RET_OPCODE
 #endif
 
-#ifndef PROTECTME
+#undef  PROTECTME               // From v7.7 enforce bootloader self-protection
 #define PROTECTME             1
+
+
+#ifndef PROTECTRESET
+#if defined(_urboot_AVAILABLE) && VBL == 1
+#if FLASHabove64k && _urboot_AVAILABLE >= 18
+#define PROTECTRESET          1
+#define _urboot_AVAILABLE_r1 (_urboot_AVAILABLE - 18)
+#elif !FLASHabove64k && _urboot_AVAILABLE >= 14
+#define PROTECTRESET          1
+#define _urboot_AVAILABLE_r1 (_urboot_AVAILABLE - 14)
+#else
+#define PROTECTRESET          0
+#define _urboot_AVAILABLE_r1 _urboot_AVAILABLE
 #endif
+#else  // !(defined(_urboot_AVAILABLE) && VBL == 1)
+#define PROTECTRESET          0
+#endif
+#endif // PROTECTRESET
+
 
 // 500 ms default watchdog timeout
 #ifndef WDTO
@@ -834,32 +896,6 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
 #define FOUR_PAGE_ERASE (defined(__AVR_ATtiny441__) || defined(__AVR_ATtiny841__) || \
   defined(__AVR_ATtiny1634__) || defined(__AVR_ATtiny1634R__))
 
-/*
- * Different flash memory size categories:
- *  -   8k or less: no jmp, only rjmp, small device
- *  -  64k or less: no need for RAMPZ, plain sailing, use lmp/smp
- *  - 128k or less: needs RAMPZ for elpm/spm, jmp targets; STK500 word addresses fit in 16-bit
- *  - more than 128k: needs RAMPZ for elpm/spm, EIND for indirect jumps, jmp targets exceed 16-bit
- *                    also needs extention for STK500 v1 protocol
- *  - more than 4M: low 16 bit of jmp opcode no longer 0x940c (currently only a theoretical issue)
- */
-
-#define FLASHin8k      (FLASHEND <=     8191ul)
-#define FLASHabove8k   (FLASHEND  >     8191ul)
-#define FLASHin64k     (FLASHEND <=    65535ul)
-#define FLASHabove64k  (FLASHEND  >    65535ul)
-#define FLASHin128k    (FLASHEND <=  0x1fffful)
-#define FLASHabove128k (FLASHEND  >  0x1fffful)
-#define FLASHabove4M   (FLASHEND  > 0x3ffffful)
-
-// Defaults to 1 iff flash size is power of 2
-#ifndef FLASHWRAPS
-#define FLASHWRAPS (!(FLASHEND & (FLASHEND+1UL)))
-#endif
-
-#if !PROTECTME
-#warning Consider switching on PROTECTME
-#endif
 
 
 #if TEMPLATE
@@ -1038,50 +1074,6 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
 
 
 
-/*
- * Urboot layout of top six bytes
- *
- * FLASHEND-5: numblpags, only from v7.5: 1 byte number 1..127 of bootloader flash pages
- * FLASHEND-4: vblvecnum, only from v7.5: 1 byte vector number 1..127 for vector bootloader
- * FLASHEND-3: 2 byte rjmp opcode to bootloader pgm_write_page(sram, flash) or ret opcode
- * FLASHEND-1: capability byte of bootloader
- * FLASHEND-0: version number of bootloader: 5 msb = major version, 3 lsb = minor version
- */
-
-// Capability byte of bootloader from version 7.2 onwards
-#define UR_PGMWRITEPAGE     128 // pgm_write_page() can be called from application at FLASHEND+1-4
-#define UR_AUTOBAUD         128 // Bootloader has autobaud detection (v7.7+)
-#define UR_EEPROM            64 // EEPROM read/write support
-#define UR_URPROTOCOL        32 // Bootloader uses urprotocol that requires avrdude -c urclock
-#define UR_DUAL              16 // Dual boot
-#define UR_VBLMASK           12 // Vector bootloader bits
-#define UR_VBLPATCHVERIFY    12 // Patch reset/interrupt vectors and show original ones on verify
-#define UR_VBLPATCH           8 // Patch reset/interrupt vectors only (expect an error on verify)
-#define UR_VBL                4 // Merely start application via interrupt vector instead of reset
-#define UR_NO_VBL             0 // Not a vector bootloader, must set fuses to HW bootloader support
-#define UR_PROTECTME          2 // Bootloader safeguards against overwriting itself
-#define UR_HAS_CE             1 // Bootloader has Chip Erase
-#define UR_RESETFLAGS         1 // Load reset flags into register R2 before starting application
-
-#define MAJORVER (VERSION >> 3) // Max 31
-#define MINORVER (VERSION & 7)  // Max 7
-
-#define UR_WFLAG  (PGMWRITEPAGE && RJMPWP != RET_OPCODE? UR_PGMWRITEPAGE: 0)
-#define UR_AFLAG  (AUTOBAUD? UR_AUTOBAUD: 0)
-#define UR_EFLAG  (EEPROM? UR_EEPROM: 0)
-#define UR_UFLAG  (URPROTOCOL? UR_URPROTOCOL: 0)
-#define UR_DFLAG  (DUAL? UR_DUAL: 0)
-#define UR_VFLAGS ((VBL  & 3) * UR_VBL)
-#define UR_PFLAG  (PROTECTME? UR_PROTECTME: 0)
-#define UR_CFLAG  (CHIP_ERASE? UR_HAS_CE: 0)
-#define UR_RFLAG  UR_RESETFLAGS // Always set
-
-#if VERSION >= 077
-#define UR_TYPE (UR_AFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_UFLAG | UR_PFLAG | UR_CFLAG)
-#else
-#define UR_TYPE (UR_WFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_UFLAG | UR_PFLAG | UR_RFLAG)
-#endif
-
 // Extended version word (from v 7.5 onwards)
 #define UR_EXT_VBLVECTNUMMASK 0x7f00 // Mask for the vector bootloader vector number
 #define UR_EXT_BLPAGESMASK 0x00ff // Mask for the number of bootloader pages
@@ -1163,27 +1155,6 @@ void urbootPageWrite(void *sram, progmem_t pgm) {
 #endif
 #endif // VBL_VECT_NUM
 
-
-/*
- * Version section just under FLASHEND has 6 bytes (4 bytes in versions 7.2 to 7.4)
- *  - extended version word (the VBL vector number and number of bootloader pages from version 7.5)
- *  - rjmp pgm_write_page code at 4 bytes below FLASHEND+1UL
- *  - one byte bitfield that encodes features of this urboot compilation
- *  - one byte for major (5 most sig bits) and minor (3 least sig bits) version numbers
- *
- * This resides at the *end* rather than the start of the bootloader because it's clear that all
- * boot sections should end at FLASHEND, but an application wouldn't necessarily know where the
- * start of the boot section is. This is a bit awkward, as RJMPWP is computed by the urboot-gcc
- * perl script. I simply couldn't figure out how to let the linker do this (relative jumps between
- * sections are above my pay grade - smr).
- */
-
-unsigned const int __attribute__ ((section(".version")))
-  urboot_version[] = {
-    UR_EXT_WORD(UR_EXT_VBLVECTNUM, UR_EXT_BLPAGES),
-    RJMPWP,                     // Opcode for rjmp to pgm_write_page() or ret if not there
-    (VERSION<<8) + UR_TYPE,
-  };
 
 #if EEPROM
 
@@ -1640,6 +1611,17 @@ static void chip_erase() {
 #endif
 
 
+// Opcode for jmp START (jmp uses a word address, hence shift one extra bit on byte address START)
+#define  JMP_START (((((uint32_t) START >> 1) & 0xffff)<<16) | \
+  (0x940c | ((((uint32_t) START >> 18) & 31)<<4) | ((((uint32_t) START >> 17) &  1)<<0)))
+
+// Opcode for jmp from address 0 *forward* to START (for up to 8k parts, wraps around at 4k of 8k)
+#define RJMP_FWD_START (((((uint16_t) START >> 1) - 1) & 0xFFF) | 0xC000)
+
+// Opcode for rjmp from address 0 *backwards* to START (for *all* parts where memory wraps around)
+#define RJMP_BWD_START (0xC000 | (((uint16_t)((START-FLASHEND-3UL)/2))&0xFFF))
+
+
 // Vector bootloader support
 #if VBL
 
@@ -1725,16 +1707,14 @@ typedef uint32_t VBLvect_t;     // Larger AVRs have 4-byte vectors (jmp)
 #define setmodverify()
 #endif
 
-// Opcode for jmp START (jmp uses a word address, hence shift one extra bit on byte address START)
-#define  JMPSTART (((((uint32_t) START >> 1) & 0xffff)<<16) | (0x940c | ((((uint32_t) START >> 18) & 31)<<4) | ((((uint32_t) START >> 17) &  1)<<0)))
-#define RJMPSTART (((((uint16_t) START >> 1) - 1) & 0xFFF) | 0xC000)
 
 #if FLASHin8k                   // AVR with 2-byte interrupt vectors uses rjmp
 
 void vbl_patch() {
-  if(rstVectOrig != RJMPSTART) { // Don't patch if already patched
+  // Normally, RJMP_FWD is the same as RJMP_BWD and compiler optimises redundant chech away
+  if(rstVectOrig != RJMP_FWD_START && rstVectOrig != RJMP_BWD_START) { // Don't patch again
     appVectOrig = rstVectOrig - VBL_VECT_NUM;
-    rstVectOrig = RJMPSTART;
+    rstVectOrig = RJMP_FWD_START;
     setmodverify();
   }
 }
@@ -1743,15 +1723,15 @@ void vbl_patch() {
 
 void vbl_patch() {
 #if FLASHabove128k
-  if(rstVectOrig != JMPSTART) { // } don't patch if already patched
+  if(rstVectOrig != JMP_START && rstVectOrigLo != RJMP_BWD_START) { //} Don't patch if already done
     // Copy full 4-byte reset jmp instruction to the vbl interrupt vector slot on large MCUs
     appVectOrig = rstVectOrig;
 #else
   /*
    * If rjmp to app was used, then rstVectorHi will be 0x0000 and comparison triggers as
-   * JMPSTART>>16 is START, which cannot be 0
+   * JMP_START>>16 is START, which cannot be 0
    */
-  if(rstVectOrigHi != (JMPSTART>>16)) {
+  if(rstVectOrigHi != (JMP_START>>16)) {
     // Assume jmp: first two bytes of jmp opcode should still be 0x940C, no need to copy these
     appVectOrigHi = rstVectOrigHi;
 #endif
@@ -1759,7 +1739,7 @@ void vbl_patch() {
     if(isRjmp(resethi8))
       appVectOrigLo = rstVectOrigLo - 2*VBL_VECT_NUM;
 
-    rstVectOrig = JMPSTART;
+    rstVectOrig = JMP_START;
     setmodverify();
   }
 }
@@ -2162,6 +2142,83 @@ static void leave_progmode() {
 #endif
 
 
+
+
+/*
+ * Urboot layout of top six bytes
+ *
+ * FLASHEND-5: numblpags, only from v7.5: 1 byte number 1..127 of bootloader flash pages
+ * FLASHEND-4: vblvecnum, only from v7.5: 1 byte vector number 1..127 for vector bootloader
+ * FLASHEND-3: 2 byte rjmp opcode to bootloader pgm_write_page(sram, flash) or ret opcode
+ * FLASHEND-1: capability byte of bootloader
+ * FLASHEND-0: version number of bootloader: 5 msb = major version, 3 lsb = minor version
+ */
+
+/*
+ * Capability byte of bootloader from version 7.2 onwards
+ *
+ * The PGMWRITEPAGE bit has been redundant from v7.5 as one can tell presence of the page write
+ * routine by checking the rjmp opcode against the ret opcode. From v7.7 this bit has been
+ * allocated for autobaud detection. Similarly, from v7.7 the PROTECTME option has been forced to
+ * 1, and the RESETFLAGS presevation has been on from at least v7.6. These two bits have also been
+ * reallocated in v7.7 to represent even stronger protection (bootloader and reset vector) and chip
+ * erase capability, respectively.
+ */
+
+#define UR_PGMWRITEPAGE     128 // pgm_write_page() can be called from application at FLASHEND+1-4
+#define UR_AUTOBAUD         128 // Bootloader has autobaud detection (v7.7+)
+#define UR_EEPROM            64 // EEPROM read/write support
+#define UR_URPROTOCOL        32 // Bootloader uses urprotocol that requires avrdude -c urclock
+#define UR_DUAL              16 // Dual boot
+#define UR_VBLMASK           12 // Vector bootloader bits
+#define UR_VBLPATCHVERIFY    12 // Patch reset/interrupt vectors and show original ones on verify
+#define UR_VBLPATCH           8 // Patch reset/interrupt vectors only (expect an error on verify)
+#define UR_VBL                4 // Merely start application via interrupt vector instead of reset
+#define UR_NO_VBL             0 // Not a vector bootloader, must set fuses to HW bootloader support
+#define UR_PROTECTME          2 // Bootloader safeguards against overwriting itself
+#define UR_PROTECTRESET       2 // Bootloader enforces reset vector points to bootloader (v7.7+)
+#define UR_RESETFLAGS         1 // Load reset flags into register R2 before starting application
+#define UR_HAS_CE             1 // Bootloader has Chip Erase (v7.7+)
+
+#define UR_WFLAG  (PGMWRITEPAGE && RJMPWP != RET_OPCODE? UR_PGMWRITEPAGE: 0)
+#define UR_AFLAG  (AUTOBAUD? UR_AUTOBAUD: 0)
+#define UR_EFLAG  (EEPROM? UR_EEPROM: 0)
+#define UR_UFLAG  (URPROTOCOL? UR_URPROTOCOL: 0)
+#define UR_DFLAG  (DUAL? UR_DUAL: 0)
+#define UR_VFLAGS ((VBL  & 3) * UR_VBL)
+#define UR_PFLAG  (PROTECTME? UR_PROTECTME: 0)
+#define UR_QFLAG  (PROTECTRESET && VBL==1? UR_PROTECTRESET: 0)
+#define UR_CFLAG  (CHIP_ERASE? UR_HAS_CE: 0)
+#define UR_RFLAG  UR_RESETFLAGS // Always set
+
+#if VERSION >= 077
+#define UR_TYPE (UR_AFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_UFLAG | UR_QFLAG | UR_CFLAG)
+#else
+#define UR_TYPE (UR_WFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_UFLAG | UR_PFLAG | UR_RFLAG)
+#endif
+
+/*
+ * Version section just under FLASHEND has 6 bytes (4 bytes in versions 7.2 to 7.4)
+ *  - extended version word (the VBL vector number and number of bootloader pages from version 7.5)
+ *  - rjmp pgm_write_page code at 4 bytes below FLASHEND+1UL
+ *  - one byte bitfield that encodes features of this urboot compilation
+ *  - one byte for major (5 most sig bits) and minor (3 least sig bits) version numbers
+ *
+ * This resides at the *end* rather than the start of the bootloader because it's clear that all
+ * boot sections should end at FLASHEND, but an application wouldn't necessarily know where the
+ * start of the boot section is. This is a bit awkward, as RJMPWP is computed by the urboot-gcc
+ * perl script. I simply couldn't figure out how to let the linker do this (relative jumps between
+ * sections are above my pay grade - smr).
+ */
+
+unsigned const int __attribute__ ((section(".version"))) urboot_version[] = {
+  UR_EXT_WORD(UR_EXT_VBLVECTNUM, UR_EXT_BLPAGES),
+  RJMPWP,                       // Opcode for rjmp to pgm_write_page() or ret if not there
+  (VERSION<<8) + UR_TYPE,
+};
+
+
+
 // Normal app start: jump to reset vector or dedicated VBL vector
 #if FLASHin8k || FLASHWRAPS
 #define jmpToAppOpcode() asm("rjmp urboot_version+%0\n" :: \
@@ -2229,8 +2286,6 @@ int main(void) {
 
 // Initialise the USART
 
-//  UR_PORT(RX) |= UR_BV(RX);     // Pullup rx (should be done by HW, really)
-
 #define min2(a, b) ((a) < (b)? (a): (b))
 #define min4(a, b, c, d) min2(min2(a, b), min2(c, d))
 #define UART_BASE (*min4(&UART_BRL, &UART_SRA, &UART_SRB, &UART_SRC))
@@ -2261,21 +2316,23 @@ int main(void) {
 // Loop 2 below modified from https://github.com/nerdralph/picoboot/
 
 #define AUTO_BRL \
-  "   ldi   r26, 0x7f\n"      /* Initialise X with -0.5 in 8-bit fixed point representation */ \
-  "   ldi   r27, 0xff\n"      /* Want XH = UART_BRL = F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
+  "   ldi   r26, 0x7f\n"        /* Initialise X with -0.5 in 8-bit fixed point representation */ \
+  "   ldi   r27, 0xff\n"        /* Want XH = UART_BRL=F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
   "1: sbic  %[RXPin],%[RXBit]\n" /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
   "   rjmp  1b\n" \
-  "2: adiw  r26, 256/8\n"     /* Add 0.125 to X, ie, 256/8 to XL, in 8-bit fixed point rep */ \
+  "2: adiw  r26, 256/8\n"       /* Add 0.125 to X, ie, 256/8 to XL, in 8-bit fixed point rep */ \
   "   sbis  %[RXPin],%[RXBit]\n" /* Loop as long as rx bit is low */ \
-  "   rjmp  2b\n"             /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */
+  "   rjmp  2b\n"               /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */
 
 #define AUTO_DRAIN \
-  "3: sbiw  r26, 1\n"         /* Drain input: run down X for 25.6 rx bits (256/8 * 4 c/5 c) */ \
-  "   brne  3b\n"             /* 4-cycle loop */
+  "3: sbiw  r26, 1\n"           /* Drain input: run down X for 25.6 rx bits (256/8 * 4 c/5 c) */ \
+  "   brne  3b\n"               /* 4-cycle loop */
 
 #ifndef UART2X
 #define UART2X              1
 #endif
+
+  // UR_PORT(RX) |= UR_BV(RX);  // Pullup rx (should be done by HW, really)
 
 #endif // AUTOBAUD
 
@@ -2283,9 +2340,9 @@ int main(void) {
   if(&UART_BASE < (volatile uint8_t *) 0x40) { // Compiler uses out, good
 #if AUTOBAUD
   asm volatile(
-    AUTO_BRL                  // Measure and load the divisor for the baud rate register
+    AUTO_BRL                    // Measure and load the divisor for the baud rate register
     " out %[uart_brl], r27\n"
-    AUTO_DRAIN                // Drain the two-byte input before initialising comms
+    AUTO_DRAIN                  // Drain the two-byte input before initialising comms
   :: [uart_brl] "I"(_SFR_IO_ADDR(UART_BRL)),
      [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX))
   : "r30", "r31", "r26", "r27"
@@ -2714,9 +2771,17 @@ void writebuffer(uint16_t *sram) {
   uint8_t rampz = RAMPZ;
   if(rampz > (uint8_t)(START>>16) || (rampz == (uint8_t)(START>>16) && zaddress >= (START&0xffff)))
     return;
+#if VBL && FLASHWRAPS
+  if(rampz == 0 && zaddress == 0)
+    *sram = RJMP_BWD_START;
+#endif
 #else
   if(zaddress >= START)
     return;
+#if VBL && FLASHWRAPS
+  if(zaddress == 0)
+    *sram = RJMP_BWD_START;
+#endif
 #endif
 #endif
 
@@ -2842,6 +2907,20 @@ void writebufferX() {
     "rcall ub_spm\n"
 "no_erase:"
 #endif
+#if VBL && PROTECTRESET && FLASHWRAPS // Store "rjmp START" opcode at addr 0 to protect bootloader
+#if FLASHabove64k
+    "cpi   r25, 0\n"            // RAMZ != 0?
+    "brne   do_fill\n"
+#endif
+    "adiw  r30, 0\n"            // zaddress != 0?
+    "brne  do_fill\n"
+    "ldi   r24, lo8(%[rjmp_bwd_start])\n" // Store rjmp to bootloader at address 0
+    "st    X+, r24\n"
+    "ldi   r24, hi8(%[rjmp_bwd_start])\n"
+    "st    X, r24\n"
+    "sbiw  r26, 1\n"
+"do_fill:"
+#endif
     "ldi   r24, %[bpfil]\n"     // do { boot_page_fill_r30(*sram++); zaddress+=2; } while(len-=2);
   "1: "
     "ld    r0,  X+\n"
@@ -2897,7 +2976,8 @@ void writebufferX() {
 #if FOUR_PAGE_ERASE
     [spm3] "n"(3*SPM_PAGESIZE),
 #endif
-    [sramp]    "n"(RAMSTART)
+    [sramp]    "n"(RAMSTART),
+    [rjmp_bwd_start] "n"(RJMP_BWD_START)
   : "r0", "r27", "r26", "r25", "r24", "r22", "r19", "r18"
   );
 }

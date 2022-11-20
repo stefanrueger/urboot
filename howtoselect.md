@@ -29,7 +29,8 @@ there is. However, consider carefully what you need:
    multiple of that. Normally, the best use of MCU flash space is to select `j`-type vector
    bootloaders (see below), and only select `h`-type hardware supported bootloaders if they happen
    to occupy the same space. When installing bootloaders take care to program the right fuses (see
-   *Usage* below). There are three types of vector bootloaders that the urboot project offers:
+   *Usage* in [readme](https://github.com/stefanrueger/urboot/blob/main/README.md)). There are
+   three types of vector bootloaders that the urboot project offers:
     + `j` versions cost minimal to no extra space in the bootloader and need applications to be
       patched during upload. `avrdude -c urclock` does that auto-magically.
     + In `v` and `V` versions the bootloader patched the applications itself to various degrees of

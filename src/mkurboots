@@ -13,18 +13,26 @@ cat <<END
 Syntax: $progname [<opt>] <mcu>
 Function: create bootloaders for the 8-bit AVR MCU <mcu> (all lower case)
 Option:
-    -b <dir> directory in which the bootloaders are created (default bootloaders)
-    -d       dry run: show which bootloaders would be created
+    -b <dir>  directory in which the bootloaders are created (default bootloaders)
+    -f <fcpu> only create bootloaders for certain F_CPU values, eg, -f auto,16000000,8000000
+    -B <baud> only create bootloaders for certain baud rates, eg, -B auto,115200,38400
+    -d        dry run: show which bootloaders would be created
 END
 }
 
 run=1
 bootloaders=bootloaders
+fcpulist=""
+baudlist=""
 here=$(pwd)
 
-while getopts ":db:" opt; do
+while getopts ":db:f:B:" opt; do
   case ${opt} in
     b) bootloaders=$OPTARG
+        ;;
+    f) fcpulist=$OPTARG
+        ;;
+    B) baudlist=$OPTARG
         ;;
     d) run=0
         ;;
@@ -74,6 +82,40 @@ baud[3686400]=460800/230400/115200/57600/38400/19200/9600
 baud[2000000]=250000/19200/9600
 baud[1843200]=230400/115200/57600/38400/19200/9600
 baud[1000000]=9600
+
+# Remove computation for F_CPU values not mentioned in -f
+if [[ -n $fcpulist ]]; then
+  readarray -d , -t flist <<<$fcpulist
+  declare -A fcpuok
+  for ff in ${flist[@]}; do
+     fcpuok[$ff]=1;
+  done
+  for fcpu in ${!baud[@]}; do
+     if [[ -z ${fcpuok[$fcpu]} ]]; then
+       unset baud[$fcpu]
+     fi
+  done
+fi
+
+# Create list of -B baud rates
+declare -A baudok
+if [[ -n $baudlist ]]; then
+  readarray -d , -t blist <<<$baudlist
+  for bb in ${blist[@]}; do
+     baudok[$bb]=1
+  done
+fi
+
+# for fcpu in ${!baud[@]}; do
+#   readarray -d / -t bauds <<<${baud[$fcpu]}
+#   for b in ${bauds[@]}; do
+#     if [[ -n $baudlist && -z ${baudok[$b]} ]]; then
+#       continue
+#     fi
+#     echo $fcpu/$b
+#   done
+# done
+# exit
 
 # Problematic combinations for USART (high baud rate error)
 declare -A nousart
@@ -506,6 +548,7 @@ mkfilename() {
 
 declare -A duplicate
 declare -A hexuse
+declare -A hexprotect
 declare -A hexassoc
 declare -A hexdirs
 
@@ -515,6 +558,10 @@ for fcpu in ${!baud[@]}; do
 
   readarray -d / -t bauds <<<${baud[$fcpu]}
   for b in ${bauds[@]}; do
+    if [[ -n $baudlist && -z ${baudok[$b]} ]]; then
+      continue
+    fi
+
     io="${swio[$mcu]}"        # Empty when USART is available and used
     if [[ $b == auto && -z ${usartio[$mcu]} ]]; then # autobaud only works with USART where RX is known
       continue;
@@ -581,13 +628,15 @@ for fcpu in ${!baud[@]}; do
                 make $args >& $filename.out
                 if [[ -r $filename.hex ]]; then
                   hexname+=("$filename")
-                  hexuse[$filename]+=$(hexls -use $filename.hex)
+                  hexlsout=($(hexls $filename.hex))
+                  hexuse[$filename]=${hexlsout[1]}
+                  hexprotect[$filename]=${hexlsout[3]:5:1} # p or P
                 else
                   echo warning compilation for $filename failed
                 fi
               else
-                # echo make $args
-                echo "$dir/$filename.hex"
+                echo make $args
+                # echo "$dir/$filename.hex"
                 if [[ -n ${duplicate[$filename]} ]]; then
                   echo duplicate $filename ${duplicate[$filename]}
                   echo duplicate $filename $args
@@ -597,10 +646,12 @@ for fcpu in ${!baud[@]}; do
               fi
             done
             if [[ $run -eq 1 ]]; then
-              # Delete bootloaders of same size that have fewer features
+              # Delete bootloaders of same size that have fewer features and same protection
               for (( i=0; i<${#hexname[@]}-1; i++ )); do
                 if [[ ${hexuse[${hexname[$i]}]} -ge ${hexuse[${hexname[$i+1]}]} ]]; then
-                  rm "${hexname[$i]}".{lst,elf,hex,out}
+                  if [[ ${hexprotect[${hexname[$i]}]} == ${hexprotect[${hexname[$i+1]}]} ]]; then
+                    rm "${hexname[$i]}".{lst,elf,hex,out}
+                  fi
                 fi
               done
               for hxn in ${hexname[@]}; do
@@ -638,18 +689,20 @@ for fcpu in ${!baud[@]}; do
 done
 
 if [[ $run -eq 1 ]]; then
-  # Remove all non _ee bootloaders that have the same usage as the _ee ones
+  # Remove all non _ee bootloaders that have the same usage as the _ee ones and the same protection
   todel=()
   for hxn in "${!hexassoc[@]}"; do
     if [[ $hxn == *_ee_* ]]; then
       hxnoee=${hxn//_ee/}
       if [[ -n ${hexassoc[$hxnoee]} ]]; then
         if [[ ${hexuse[$hxn]} -le ${hexuse[$hxnoee]} ]]; then
-          readarray -d \| -t torm <<<${hexassoc[$hxnoee]}
-          for tormfn in ${torm[@]}; do
-            rm $tormfn.{hex,lst,elf,out}
-          done
-          todel+=($hxnoee)
+          if [[ ${hexprotect[$hxn]} == ${hexprotect[$hxnoee]} ]]; then
+            readarray -d \| -t torm <<<${hexassoc[$hxnoee]}
+            for tormfn in ${torm[@]}; do
+              rm $tormfn.{hex,lst,elf,out}
+            done
+            todel+=($hxnoee)
+          fi
         fi
       fi
     fi
@@ -658,7 +711,7 @@ if [[ $run -eq 1 ]]; then
     unset hexassoc[$torm]
   done
 
-  # Remove all _vbl bootloaders that have the same usage as non _vbl ones
+  # Remove all _vbl bootloaders that have the same usage as non _vbl ones (protection might differ)
   todel=()
   for hxvbl in "${!hexassoc[@]}"; do
     if [[ $hxvbl == *_vbl* ]]; then
@@ -684,4 +737,5 @@ if [[ $run -eq 1 ]]; then
     "$here/hexls" -sort -md "https://raw.githubusercontent.com/stefanrueger/urboot/main/$dir" *.hex >README.md
     cd "$here"
   done
+  hash cmpls 2>/dev/null && cmpls -p $bootloaders/$mcu | grep \\.hex >>/tmp/equivalent-hex-files.txt
 fi

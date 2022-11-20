@@ -8,8 +8,8 @@
 # published under GNU General Public License, version 3 (GPL-3.0)
 # author Stefan Rueger
 #
-# v 1.1
-# 16.05.2022 (first version 09.07.2016)
+# v 1.2
+# 17.11.2022 (first version 09.07.2016)
 
 use strict;
 use warnings;
@@ -457,12 +457,14 @@ for my $reason (keys %unsupported) {
 die "$progname: mcu architecture $mcu unknown; use one of ". join(", ", keys %uP)."\n" if !exists $uP{lc $mcu};
 
 # placement parameters are [start addr of bootloader, start addr of version section, rjmp opcode,  whether mcu has boot section]
-my (@placement, $nowparams, @injectparams, $runs, $lastcmd, $lasterr);
+my (@placement, $nowparams, @injectparams, $runs, $lastcmd, $lasterr, $addavailable, $converged);
 
 $runs = 10; # max number of runs
 $lastcmd = "";
 $lasterr = "";
 $nowparams = getplacement($mcu, $elf);
+$addavailable = 0;
+$converged = 0;
 do {
   @injectparams = (
     sprintf("-DSTART=0x%xUL", $nowparams->[0]),
@@ -471,8 +473,11 @@ do {
     sprintf("-Wl,--section-start=.version=0x%x", $nowparams->[1])
   );
 
-  # add vbl compile option if uP does not support boot section
-  push @injectparams, "-DVBL=3" if !$nowparams->[4] && $novbl;
+  # Add vbl compile option if uP does not support boot section
+  push @injectparams, "-DVBL=1" if !$nowparams->[4] && $novbl;
+
+  # Add number of available bytes once compilation has converged
+  push @injectparams, "-D_urboot_AVAILABLE=$nowparams->[5]" if defined($nowparams->[5]) && $nowparams->[5] > 0 && $addavailable > 0;
 
   $lastcmd = join(' ', "${avrbins}avr-gcc", @injectparams, @ARGV);
   my ($stdout, $exit) = capture_merged {
@@ -501,7 +506,13 @@ do {
 
   @placement = @$nowparams;
   $nowparams = getplacement($mcu, $elf);
-} while(--$runs && ($nowparams->[0] != $placement[0] || $nowparams->[1] != $placement[1] || $nowparams->[2] != $placement[2] || $nowparams->[3] != $placement[3]));
+  $converged = $nowparams->[0] == $placement[0] && $nowparams->[1] == $placement[1] && $nowparams->[2] == $placement[2] && $nowparams->[3] == $placement[3];
+  if($addavailable > 0) {
+    $addavailable = -1;         # Beyond last avr-gcc call with -DUB_AVAILABLE=...; stop now
+  } elsif(!$addavailable && $converged) {
+    $addavailable = 1;
+  }
+} while(--$runs && (!$converged || $addavailable >= 0));
 
 print "$lastcmd\n$lasterr";
 
@@ -513,7 +524,7 @@ exit(0);
 sub getplacement {
   my ($mcu, $elf) = @_;
 
-  my ($bootstart, $pgmwriteoffset, $majorv, $minorv, $caps, $rjmpcode, $extended, $vsize);
+  my ($bootstart, $pgmwriteoffset, $unused, $majorv, $minorv, $caps, $rjmpcode, $extended, $vsize);
 
   # copy needed properties from table above
   my ($pagesz, $flashsz, $mcubootsz) = @{$uP{lc $mcu}}[(_pagesz, _flashsz, _bootsz)];
@@ -532,7 +543,7 @@ sub getplacement {
     goto fake;
   }
 
-  $pgmwriteoffset = getpgmwriteoffset($elf);
+  ($pgmwriteoffset, $unused) = getpgmwriteoffset($elf);
   ($majorv, $minorv, $caps, $rjmpcode, $extended, $vsize) = getversion16($elf);
 
   # examine size of bootloader, add slack and align to mcu's page size
@@ -558,7 +569,7 @@ sub getplacement {
   fake:
   my $rjmpwp = ((defined($pgmwriteoffset)? $pgmwriteoffset: $bootsz-4)-$bootsz+2)/2 & 0xfff;
 
-  return [$bootstart, $bootstart+$bootsz-$vsize, 0xc000 + $rjmpwp, $vsize, $hasboot];
+  return [$bootstart, $bootstart+$bootsz-$vsize, 0xc000 + $rjmpwp, $vsize, $hasboot, $unused];
 }
 
 # return the size of the executable elf file
@@ -586,25 +597,27 @@ sub getsize {
 
 
 
-# return the distance between pgm_write_page() and main() in byte
+# return (distance between pgm_write_page() and main() in byte, number of unused bytes)
 #
 sub getpgmwriteoffset {
   my $elf = shift;
-  my ($main, $pgmwrite);
+  my (%addr, $distmainpgm, $unused);
 
   open(my $in, "${avrbins}avr-nm -g $elf |") or die "$progname: cannot pipe size from ${avrbins}avr-nm -g $elf (stopped)\n";
 
   while(<$in>) {
     chomp;
     my @col = split;
-    if(@col > 2) {
-      $pgmwrite = hex($col[0]) if $col[2] eq "pgm_write_page";
-      $main = hex($col[0]) if $col[2] eq "main";
+    for my $sym (qw(main pgm_write_page urboot_version __data_load_end)) {
+      $addr{$sym} = hex($col[0]) if @col > 2 && $col[2] eq "$sym";
     }
   }
   close $in;
 
-  return defined($main) && defined($pgmwrite)? $pgmwrite-$main: undef;
+  $distmainpgm = defined($addr{main}) && defined($addr{pgm_write_page})? $addr{pgm_write_page} - $addr{main}: undef;
+  $unused = defined($addr{__data_load_end}) && defined($addr{urboot_version})? $addr{urboot_version}-$addr{__data_load_end}: undef;
+
+  return ($distmainpgm, $unused);
 }
 
 

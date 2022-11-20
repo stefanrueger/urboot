@@ -65,7 +65,7 @@ bootloader
    the boot section size fuse bits need to match the actual bootloader size (consult the data sheet
    of the part); the lock bits should protect the boot section from being written to.
 
-| Bootloader | `FUSE_BOOTRS` | `FUSE_BOOTSZ` | Lock bits for bootloader section |
+| Bootloader | `FUSE_BOOTRST` | `FUSE_BOOTSZ` | Lock bits for bootloader section |
 | --: | --: | --: | --: |
 | `j`, `v`, `V` | Reset to start of memory| Don't care | Read/write to everywhere|
 | `h` | Reset to boot section | Match with size of bootloader | Protect boot section |

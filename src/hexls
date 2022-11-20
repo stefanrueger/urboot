@@ -47,6 +47,7 @@ my %feature = (
   'v'      => "  + `v` vector bootloader: patches the vector table itself during upload but verification fails\n",
   'V'      => "  + `V` vector bootloader: patches the vector table itself during upload, skips verifying the first page\n",
   'p'      => "  + `p` bootloader protects itself from being overwritten\n",
+  'P'      => "  + `P` vector bootloader only: protects itself and reset vector from being overwritten\n",
   'r'      => "  + `r` preserves reset flags for the application in the register R2\n",
   'a'      => "  + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)\n",
   'c'      => "  + `c` bootloader provides chip erase functionality (only recommended for large MCUs)\n",
@@ -203,7 +204,7 @@ foreach my $fname (@ARGV) {
     $fea .= f($vers & UR_DUAL? 'd': '-');
     $flags = ($vers/UR_VBL) & 3;
     $fea .= f($flags==3? 'V': $flags==2? 'v': $flags? 'j': 'h'); # V = VBL, patch & verify, v = VBL, patch only, j = VBL, jump only, h = hw boot support
-    $fea .= f($vers & UR_PROTECTME? 'p': '-');
+    $fea .= f(!$v77? ($vers & UR_PROTECTME? 'p': '-'): ($vers & UR_PROTECTME? 'P': 'p'));
     $fea .= f((!$v77 && ($vers & UR_RESETFLAGS)) || $v77? 'r': '-');
     $fea .= f($v77 && ($vers & UR_AUTOBAUD)? 'a': '-');
     $fea .= f($v77 && ($vers & UR_HAS_CE)? 'c': $v77? '-': '.');
@@ -283,7 +284,7 @@ if(!$check) {
      "- **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size\n".
      "- **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version\n".
      "- **Features:**\n";
-     print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p r a c ? . -));
+     print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p P r a c ? . -));
      print "- **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by\n";
      print $feature{$_} for grep { $legend{$_} } (qw(auto auto2 swio swiorx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB0 csnop template dual fp9 fr ce ur ddd v2 v3 vbl min));
   }
