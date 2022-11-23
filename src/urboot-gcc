@@ -15,7 +15,6 @@ use strict;
 use warnings;
 use Cwd qw(abs_path);
 use File::Basename;
-use File::HomeDir;
 use Capture::Tiny ':all';
 
 my $progname = basename($0);
@@ -30,29 +29,40 @@ Function: compiles urboot with the right addresses until compilation converges
 Option:
   -toolchain=<v> uses $thisdir/<v>/bin
                  or avr-gcc version in \$PATH on -toolchain=system or -toolchain=
-                 or GCCROOT evironment variable
+                 or GCCROOT environment variable
                  or $thisdir/4.8.1/bin
                  (show available list with -toolchain=?)
 
+$progname is an avr-gcc wrapper for urboot bootloader compilation; it computes the correct start
+address for the bootloader and the correct rjmp opcode to the pgm_write_page(sram, flash) function
+in the bootloader and injects both as -DSTART=<addr> and -DRJMPWP=<opcode>, respectively, when
+calling avr-gcc.
+
 Finding the right address for the bootloader is a two-step, sometimes three-step process: On first
 compilation a START address is used that works with the target mcu, but will be too low. Once the
-bootloader is complied and linked, $progname compiles again using size info and urboot version
-bits from the newly created .elf file. The bootloader placement depends on the type of bootloader
+bootloader is complied and linked, $progname compiles again using size info and urboot version bits
+from the newly created .elf file. The bootloader placement depends on the type of bootloader
 support that the mcu offers, and on whether the bootloader is a vector bootloader (VBL - as encoded
 in the version bits), which requires no bootloader support by the mcu. For example, you might have
 compiled a bootloader for the ATmega1284P with VBL support that fits into 512 bytes. This will be
 placed in the topmost 512 bytes of the flash space. However, if compiled as normal bootloader
 without VBL support, it must be placed in the top 1024 bytes, because that's the smallest boot
-section that this mcu offers. $progname aligns the bootloader with the correct SPM page size
-and/or boot section size. In a slight complication of things, it may happen that the size of the
+section that this mcu offers. $progname aligns the bootloader with the correct SPM page size and/or
+boot section size. In a slight complication of things, it may happen that the size of the
 bootloader changes after the second step. This is because the bootloader address is used as
 compile-time constant, which when changed, can be used in a different way by the code or optimiser.
-This is normally not a problem, but when the new size ticks over the bootsection or page size
+This is normally not a problem, but when the new size ticks over the boot section or page size
 limit, this will trigger a linker error after the second step. To resolve this, $progname must
 compile and link a third time, this time adding a few bytes of slack to the size. In case you
 requested the export of pgm_write_page() in the bootloader source, $progname computes the
 appropriate 2-byte rjmp call and places it 4 bytes under the end of the bootloader, ie, at the end
 of flash just before the two version bytes.
+
+In addition to figuring out the correct start address of the bootloader and the correct rjmp to the
+pgm_write_page(sram, flash) bootloader routine, $progname also runs avr-gcc one more final time
+with -D_urboot_AVAILABLE=<num_bytes> to indicate how many free bytes are available for desirable,
+but not essential features. Currently, urboot.c uses this feature for the generation of reset
+vector protection code for vector bootloaders.
 END_USAGE
 
 # 4.8.1 produces tight code

@@ -13,7 +13,6 @@
 use strict;
 use warnings;
 use File::Basename;
-use File::HomeDir;
 use POSIX;
 use Scalar::Util qw(looks_like_number);
 use Getopt::Long qw(GetOptions);
