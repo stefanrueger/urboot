@@ -530,9 +530,9 @@ mkfilename() {
   swio=${swio/ RX=AtmelP/_rx}; swio=${swio/ TX=AtmelP/_tx}; swio=${swio,,}
 
   if [[ $2 == auto ]]; then
-    filename=$1_autobaud$swio
+    filename=urboot_$1_autobaud$swio
   else
-    filename=$1_$2_$3bps$swio
+    filename=urboot_$1_$2_$3bps$swio
   fi
   [[ $5 -eq 1 ]] && filename+=_ee
   # Do not makes LEDs part of filename for FRILLS=0
