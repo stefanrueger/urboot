@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|254|256|u7.7|`w-u-jPr--`|[atmega64_4mhz_250000bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64/fcpu_4mhz/250000_bps/atmega64_4mhz_250000bps_lednop_fr_ur_vbl.hex)|
-|340|512|u7.7|`weu-jPr-c`|[atmega64_4mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64/fcpu_4mhz/250000_bps/atmega64_4mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|326|1024|u7.7|`weu-hpr-c`|[atmega64_4mhz_250000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64/fcpu_4mhz/250000_bps/atmega64_4mhz_250000bps_ee_lednop_fr_ce_ur.hex)|
-|430|1024|u7.7|`wes-hpr-c`|[atmega64_4mhz_250000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64/fcpu_4mhz/250000_bps/atmega64_4mhz_250000bps_ee_lednop_fr_ce.hex)|
+|254|256|u7.7|`w-u-jPr--`|[urboot_atmega64_4mhz_250000bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64/fcpu_4mhz/250000_bps/urboot_atmega64_4mhz_250000bps_lednop_fr_ur_vbl.hex)|
+|340|512|u7.7|`weu-jPr-c`|[urboot_atmega64_4mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64/fcpu_4mhz/250000_bps/urboot_atmega64_4mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|326|1024|u7.7|`weu-hpr-c`|[urboot_atmega64_4mhz_250000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64/fcpu_4mhz/250000_bps/urboot_atmega64_4mhz_250000bps_ee_lednop_fr_ce_ur.hex)|
+|430|1024|u7.7|`wes-hpr-c`|[urboot_atmega64_4mhz_250000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64/fcpu_4mhz/250000_bps/urboot_atmega64_4mhz_250000bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

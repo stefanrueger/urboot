@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|256|256|u7.7|`w-u-jpr--`|[attiny84a_24mhz_230400bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/attiny84a_24mhz_230400bps_rxb0_txb1_lednop_ur_vbl.hex)|
-|320|320|u7.7|`w-u-jPr-c`|[attiny84a_24mhz_230400bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/attiny84a_24mhz_230400bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
-|322|384|u7.7|`weu-jpr--`|[attiny84a_24mhz_230400bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/attiny84a_24mhz_230400bps_rxb0_txb1_ee_ur_vbl.hex)|
-|360|384|u7.7|`weu-jPr--`|[attiny84a_24mhz_230400bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/attiny84a_24mhz_230400bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
-|374|384|u7.7|`weu-jpr-c`|[attiny84a_24mhz_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/attiny84a_24mhz_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|256|256|u7.7|`w-u-jpr--`|[urboot_attiny84a_24mhz_230400bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/urboot_attiny84a_24mhz_230400bps_rxb0_txb1_lednop_ur_vbl.hex)|
+|320|320|u7.7|`w-u-jPr-c`|[urboot_attiny84a_24mhz_230400bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/urboot_attiny84a_24mhz_230400bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|322|384|u7.7|`weu-jpr--`|[urboot_attiny84a_24mhz_230400bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/urboot_attiny84a_24mhz_230400bps_rxb0_txb1_ee_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr--`|[urboot_attiny84a_24mhz_230400bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/urboot_attiny84a_24mhz_230400bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
+|374|384|u7.7|`weu-jpr-c`|[urboot_attiny84a_24mhz_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny84a/fcpu_24mhz/230400_bps/urboot_attiny84a_24mhz_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

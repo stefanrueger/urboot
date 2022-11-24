@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|256|256|u7.7|`w-u-jpra-`|[atmega649_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/autobaud/atmega649_autobaud_lednop_ur_vbl.hex)|
-|374|512|u7.7|`weu-jPrac`|[atmega649_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/autobaud/atmega649_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
-|360|1024|u7.7|`weu-hprac`|[atmega649_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/autobaud/atmega649_autobaud_ee_lednop_fr_ce_ur.hex)|
-|464|1024|u7.7|`wes-hprac`|[atmega649_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/autobaud/atmega649_autobaud_ee_lednop_fr_ce.hex)|
+|256|256|u7.7|`w-u-jpra-`|[urboot_atmega649_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/autobaud/urboot_atmega649_autobaud_lednop_ur_vbl.hex)|
+|374|512|u7.7|`weu-jPrac`|[urboot_atmega649_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/autobaud/urboot_atmega649_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|360|1024|u7.7|`weu-hprac`|[urboot_atmega649_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/autobaud/urboot_atmega649_autobaud_ee_lednop_fr_ce_ur.hex)|
+|464|1024|u7.7|`wes-hprac`|[urboot_atmega649_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/autobaud/urboot_atmega649_autobaud_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

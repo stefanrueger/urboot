@@ -1,14 +1,14 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|402|512|u7.7|`weu-jPrac`|[urclockmega_autobaud_ee_led+c7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urclockmega_autobaud_ee_led+c7_fr_ce_ur_vbl.hex)|
-|504|512|u7.7|`w-udjPrac`|[urclockmega_autobaud_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urclockmega_autobaud_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
-|504|512|u7.7|`weudjPra-`|[urclockmega_autobaud_ee_led+c7_csb3_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urclockmega_autobaud_ee_led+c7_csb3_dual_ur_vbl.hex)|
-|504|512|u7.7|`weudjpra-`|[urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ur_vbl.hex)|
-|566|768|u7.7|`weudjPrac`|[urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
-|384|1024|u7.7|`weu-hprac`|[urclockmega_autobaud_ee_led+c7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urclockmega_autobaud_ee_led+c7_fr_ce_ur.hex)|
-|490|1024|u7.7|`wes-hprac`|[urclockmega_autobaud_ee_led+c7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urclockmega_autobaud_ee_led+c7_fr_ce.hex)|
-|548|1024|u7.7|`weudhprac`|[urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ce_ur.hex)|
-|654|1024|u7.7|`wesdhprac`|[urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ce.hex)|
+|402|512|u7.7|`weu-jPrac`|[urboot_urclockmega_autobaud_ee_led+c7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urboot_urclockmega_autobaud_ee_led+c7_fr_ce_ur_vbl.hex)|
+|504|512|u7.7|`w-udjPrac`|[urboot_urclockmega_autobaud_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urboot_urclockmega_autobaud_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
+|504|512|u7.7|`weudjPra-`|[urboot_urclockmega_autobaud_ee_led+c7_csb3_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urboot_urclockmega_autobaud_ee_led+c7_csb3_dual_ur_vbl.hex)|
+|504|512|u7.7|`weudjpra-`|[urboot_urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urboot_urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ur_vbl.hex)|
+|566|768|u7.7|`weudjPrac`|[urboot_urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urboot_urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ce_ur_vbl.hex)|
+|384|1024|u7.7|`weu-hprac`|[urboot_urclockmega_autobaud_ee_led+c7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urboot_urclockmega_autobaud_ee_led+c7_fr_ce_ur.hex)|
+|490|1024|u7.7|`wes-hprac`|[urboot_urclockmega_autobaud_ee_led+c7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urboot_urclockmega_autobaud_ee_led+c7_fr_ce.hex)|
+|548|1024|u7.7|`weudhprac`|[urboot_urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urboot_urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ce_ur.hex)|
+|654|1024|u7.7|`wesdhprac`|[urboot_urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockmega/autobaud/urboot_urclockmega_autobaud_ee_led+c7_csb3_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

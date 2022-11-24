@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|248|256|u7.7|`w-u-jpra-`|[atmega640_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega640/autobaud/atmega640_autobaud_lednop_ur_vbl.hex)|
-|256|256|u7.7|`w-u-jPra-`|[atmega640_autobaud_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega640/autobaud/atmega640_autobaud_ur_vbl.hex)|
-|368|512|u7.7|`weu-jPrac`|[atmega640_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega640/autobaud/atmega640_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
-|354|1024|u7.7|`weu-hprac`|[atmega640_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega640/autobaud/atmega640_autobaud_ee_lednop_fr_ce_ur.hex)|
-|458|1024|u7.7|`wes-hprac`|[atmega640_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega640/autobaud/atmega640_autobaud_ee_lednop_fr_ce.hex)|
+|248|256|u7.7|`w-u-jpra-`|[urboot_atmega640_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega640/autobaud/urboot_atmega640_autobaud_lednop_ur_vbl.hex)|
+|256|256|u7.7|`w-u-jPra-`|[urboot_atmega640_autobaud_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega640/autobaud/urboot_atmega640_autobaud_ur_vbl.hex)|
+|368|512|u7.7|`weu-jPrac`|[urboot_atmega640_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega640/autobaud/urboot_atmega640_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|354|1024|u7.7|`weu-hprac`|[urboot_atmega640_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega640/autobaud/urboot_atmega640_autobaud_ee_lednop_fr_ce_ur.hex)|
+|458|1024|u7.7|`wes-hprac`|[urboot_atmega640_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega640/autobaud/urboot_atmega640_autobaud_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

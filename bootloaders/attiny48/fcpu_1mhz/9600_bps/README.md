@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.7|`w-u-jpr--`|[attiny48_1mhz_9600bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_1mhz/9600_bps/attiny48_1mhz_9600bps_rxb0_txb1_ur_vbl.hex)|
-|294|320|u7.7|`w-u-jPr--`|[attiny48_1mhz_9600bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_1mhz/9600_bps/attiny48_1mhz_9600bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
-|308|320|u7.7|`w-u-jpr-c`|[attiny48_1mhz_9600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_1mhz/9600_bps/attiny48_1mhz_9600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
-|320|320|u7.7|`weu-jpr--`|[attiny48_1mhz_9600bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_1mhz/9600_bps/attiny48_1mhz_9600bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
-|380|384|u7.7|`weu-jPr-c`|[attiny48_1mhz_9600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_1mhz/9600_bps/attiny48_1mhz_9600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|252|256|u7.7|`w-u-jpr--`|[urboot_attiny48_1mhz_9600bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_1mhz/9600_bps/urboot_attiny48_1mhz_9600bps_rxb0_txb1_ur_vbl.hex)|
+|294|320|u7.7|`w-u-jPr--`|[urboot_attiny48_1mhz_9600bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_1mhz/9600_bps/urboot_attiny48_1mhz_9600bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
+|308|320|u7.7|`w-u-jpr-c`|[urboot_attiny48_1mhz_9600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_1mhz/9600_bps/urboot_attiny48_1mhz_9600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|320|320|u7.7|`weu-jpr--`|[urboot_attiny48_1mhz_9600bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_1mhz/9600_bps/urboot_attiny48_1mhz_9600bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
+|380|384|u7.7|`weu-jPr-c`|[urboot_attiny48_1mhz_9600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny48/fcpu_1mhz/9600_bps/urboot_attiny48_1mhz_9600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

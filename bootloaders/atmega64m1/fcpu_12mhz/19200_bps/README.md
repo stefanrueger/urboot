@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|256|256|u7.7|`w-u-jpr--`|[atmega64m1_12mhz_19200bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64m1/fcpu_12mhz/19200_bps/atmega64m1_12mhz_19200bps_rxb0_txb1_lednop_ur_vbl.hex)|
-|376|512|u7.7|`weu-jPr-c`|[atmega64m1_12mhz_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64m1/fcpu_12mhz/19200_bps/atmega64m1_12mhz_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
-|362|1024|u7.7|`weu-hpr-c`|[atmega64m1_12mhz_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64m1/fcpu_12mhz/19200_bps/atmega64m1_12mhz_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
-|466|1024|u7.7|`wes-hpr-c`|[atmega64m1_12mhz_19200bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64m1/fcpu_12mhz/19200_bps/atmega64m1_12mhz_19200bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
+|256|256|u7.7|`w-u-jpr--`|[urboot_atmega64m1_12mhz_19200bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64m1/fcpu_12mhz/19200_bps/urboot_atmega64m1_12mhz_19200bps_rxb0_txb1_lednop_ur_vbl.hex)|
+|376|512|u7.7|`weu-jPr-c`|[urboot_atmega64m1_12mhz_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64m1/fcpu_12mhz/19200_bps/urboot_atmega64m1_12mhz_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|362|1024|u7.7|`weu-hpr-c`|[urboot_atmega64m1_12mhz_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64m1/fcpu_12mhz/19200_bps/urboot_atmega64m1_12mhz_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
+|466|1024|u7.7|`wes-hpr-c`|[urboot_atmega64m1_12mhz_19200bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64m1/fcpu_12mhz/19200_bps/urboot_atmega64m1_12mhz_19200bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|248|256|u7.7|`w-u-jPr--`|[atmega328_18mhz432_460800bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328/fcpu_18mhz432/460800_bps/atmega328_18mhz432_460800bps_lednop_ur_vbl.hex)|
-|252|256|u7.7|`w-u-jpr--`|[atmega328_18mhz432_460800bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328/fcpu_18mhz432/460800_bps/atmega328_18mhz432_460800bps_lednop_fr_ur_vbl.hex)|
-|360|384|u7.7|`weu-jPr-c`|[atmega328_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328/fcpu_18mhz432/460800_bps/atmega328_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|342|512|u7.7|`weu-hpr-c`|[atmega328_18mhz432_460800bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328/fcpu_18mhz432/460800_bps/atmega328_18mhz432_460800bps_ee_lednop_fr_ce_ur.hex)|
-|446|512|u7.7|`wes-hpr-c`|[atmega328_18mhz432_460800bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328/fcpu_18mhz432/460800_bps/atmega328_18mhz432_460800bps_ee_lednop_fr_ce.hex)|
+|248|256|u7.7|`w-u-jPr--`|[urboot_atmega328_18mhz432_460800bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328/fcpu_18mhz432/460800_bps/urboot_atmega328_18mhz432_460800bps_lednop_ur_vbl.hex)|
+|252|256|u7.7|`w-u-jpr--`|[urboot_atmega328_18mhz432_460800bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328/fcpu_18mhz432/460800_bps/urboot_atmega328_18mhz432_460800bps_lednop_fr_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr-c`|[urboot_atmega328_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328/fcpu_18mhz432/460800_bps/urboot_atmega328_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|342|512|u7.7|`weu-hpr-c`|[urboot_atmega328_18mhz432_460800bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328/fcpu_18mhz432/460800_bps/urboot_atmega328_18mhz432_460800bps_ee_lednop_fr_ce_ur.hex)|
+|446|512|u7.7|`wes-hpr-c`|[urboot_atmega328_18mhz432_460800bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328/fcpu_18mhz432/460800_bps/urboot_atmega328_18mhz432_460800bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

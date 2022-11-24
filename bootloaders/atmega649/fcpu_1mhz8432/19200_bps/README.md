@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|250|256|u7.7|`w-u-jPr--`|[atmega649_1mhz8432_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_1mhz8432/19200_bps/atmega649_1mhz8432_19200bps_lednop_ur_vbl.hex)|
-|254|256|u7.7|`w-u-jpr--`|[atmega649_1mhz8432_19200bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_1mhz8432/19200_bps/atmega649_1mhz8432_19200bps_lednop_fr_ur_vbl.hex)|
-|354|512|u7.7|`weu-jPr-c`|[atmega649_1mhz8432_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_1mhz8432/19200_bps/atmega649_1mhz8432_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|340|1024|u7.7|`weu-hpr-c`|[atmega649_1mhz8432_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_1mhz8432/19200_bps/atmega649_1mhz8432_19200bps_ee_lednop_fr_ce_ur.hex)|
-|444|1024|u7.7|`wes-hpr-c`|[atmega649_1mhz8432_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_1mhz8432/19200_bps/atmega649_1mhz8432_19200bps_ee_lednop_fr_ce.hex)|
+|250|256|u7.7|`w-u-jPr--`|[urboot_atmega649_1mhz8432_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_1mhz8432/19200_bps/urboot_atmega649_1mhz8432_19200bps_lednop_ur_vbl.hex)|
+|254|256|u7.7|`w-u-jpr--`|[urboot_atmega649_1mhz8432_19200bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_1mhz8432/19200_bps/urboot_atmega649_1mhz8432_19200bps_lednop_fr_ur_vbl.hex)|
+|354|512|u7.7|`weu-jPr-c`|[urboot_atmega649_1mhz8432_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_1mhz8432/19200_bps/urboot_atmega649_1mhz8432_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|340|1024|u7.7|`weu-hpr-c`|[urboot_atmega649_1mhz8432_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_1mhz8432/19200_bps/urboot_atmega649_1mhz8432_19200bps_ee_lednop_fr_ce_ur.hex)|
+|444|1024|u7.7|`wes-hpr-c`|[urboot_atmega649_1mhz8432_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_1mhz8432/19200_bps/urboot_atmega649_1mhz8432_19200bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|244|256|u7.7|`w-u-jPr--`|[rbbb_7mhz3728_38400bps_led+b5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_rbbb/fcpu_7mhz3728/38400_bps/rbbb_7mhz3728_38400bps_led+b5_ur_vbl.hex)|
-|248|256|u7.7|`w-u-jpr--`|[rbbb_7mhz3728_38400bps_led+b5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_rbbb/fcpu_7mhz3728/38400_bps/rbbb_7mhz3728_38400bps_led+b5_fr_ur_vbl.hex)|
-|356|384|u7.7|`weu-jPr-c`|[rbbb_7mhz3728_38400bps_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_rbbb/fcpu_7mhz3728/38400_bps/rbbb_7mhz3728_38400bps_ee_led+b5_fr_ce_ur_vbl.hex)|
-|338|512|u7.7|`weu-hpr-c`|[rbbb_7mhz3728_38400bps_ee_led+b5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_rbbb/fcpu_7mhz3728/38400_bps/rbbb_7mhz3728_38400bps_ee_led+b5_fr_ce_ur.hex)|
-|442|512|u7.7|`wes-hpr-c`|[rbbb_7mhz3728_38400bps_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_rbbb/fcpu_7mhz3728/38400_bps/rbbb_7mhz3728_38400bps_ee_led+b5_fr_ce.hex)|
+|244|256|u7.7|`w-u-jPr--`|[urboot_rbbb_7mhz3728_38400bps_led+b5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_rbbb/fcpu_7mhz3728/38400_bps/urboot_rbbb_7mhz3728_38400bps_led+b5_ur_vbl.hex)|
+|248|256|u7.7|`w-u-jpr--`|[urboot_rbbb_7mhz3728_38400bps_led+b5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_rbbb/fcpu_7mhz3728/38400_bps/urboot_rbbb_7mhz3728_38400bps_led+b5_fr_ur_vbl.hex)|
+|356|384|u7.7|`weu-jPr-c`|[urboot_rbbb_7mhz3728_38400bps_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_rbbb/fcpu_7mhz3728/38400_bps/urboot_rbbb_7mhz3728_38400bps_ee_led+b5_fr_ce_ur_vbl.hex)|
+|338|512|u7.7|`weu-hpr-c`|[urboot_rbbb_7mhz3728_38400bps_ee_led+b5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_rbbb/fcpu_7mhz3728/38400_bps/urboot_rbbb_7mhz3728_38400bps_ee_led+b5_fr_ce_ur.hex)|
+|442|512|u7.7|`wes-hpr-c`|[urboot_rbbb_7mhz3728_38400bps_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_rbbb/fcpu_7mhz3728/38400_bps/urboot_rbbb_7mhz3728_38400bps_ee_led+b5_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

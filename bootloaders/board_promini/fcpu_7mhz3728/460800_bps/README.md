@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|244|256|u7.7|`w-u-jPr--`|[promini_7mhz3728_460800bps_led+b5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_7mhz3728/460800_bps/promini_7mhz3728_460800bps_led+b5_ur_vbl.hex)|
-|248|256|u7.7|`w-u-jpr--`|[promini_7mhz3728_460800bps_led+b5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_7mhz3728/460800_bps/promini_7mhz3728_460800bps_led+b5_fr_ur_vbl.hex)|
-|356|384|u7.7|`weu-jPr-c`|[promini_7mhz3728_460800bps_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_7mhz3728/460800_bps/promini_7mhz3728_460800bps_ee_led+b5_fr_ce_ur_vbl.hex)|
-|338|512|u7.7|`weu-hpr-c`|[promini_7mhz3728_460800bps_ee_led+b5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_7mhz3728/460800_bps/promini_7mhz3728_460800bps_ee_led+b5_fr_ce_ur.hex)|
-|442|512|u7.7|`wes-hpr-c`|[promini_7mhz3728_460800bps_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_7mhz3728/460800_bps/promini_7mhz3728_460800bps_ee_led+b5_fr_ce.hex)|
+|244|256|u7.7|`w-u-jPr--`|[urboot_promini_7mhz3728_460800bps_led+b5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_7mhz3728/460800_bps/urboot_promini_7mhz3728_460800bps_led+b5_ur_vbl.hex)|
+|248|256|u7.7|`w-u-jpr--`|[urboot_promini_7mhz3728_460800bps_led+b5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_7mhz3728/460800_bps/urboot_promini_7mhz3728_460800bps_led+b5_fr_ur_vbl.hex)|
+|356|384|u7.7|`weu-jPr-c`|[urboot_promini_7mhz3728_460800bps_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_7mhz3728/460800_bps/urboot_promini_7mhz3728_460800bps_ee_led+b5_fr_ce_ur_vbl.hex)|
+|338|512|u7.7|`weu-hpr-c`|[urboot_promini_7mhz3728_460800bps_ee_led+b5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_7mhz3728/460800_bps/urboot_promini_7mhz3728_460800bps_ee_led+b5_fr_ce_ur.hex)|
+|442|512|u7.7|`wes-hpr-c`|[urboot_promini_7mhz3728_460800bps_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_promini/fcpu_7mhz3728/460800_bps/urboot_promini_7mhz3728_460800bps_ee_led+b5_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

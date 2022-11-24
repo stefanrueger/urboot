@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|254|256|u7.7|`w-u-jpr--`|[attiny88_22mhz1184_57600bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny88/fcpu_22mhz1184/57600_bps/attiny88_22mhz1184_57600bps_rxb0_txb1_lednop_ur_vbl.hex)|
-|316|320|u7.7|`weu-jpr--`|[attiny88_22mhz1184_57600bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny88/fcpu_22mhz1184/57600_bps/attiny88_22mhz1184_57600bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
-|318|320|u7.7|`w-u-jPr-c`|[attiny88_22mhz1184_57600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny88/fcpu_22mhz1184/57600_bps/attiny88_22mhz1184_57600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
-|376|384|u7.7|`weu-jPr-c`|[attiny88_22mhz1184_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny88/fcpu_22mhz1184/57600_bps/attiny88_22mhz1184_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|254|256|u7.7|`w-u-jpr--`|[urboot_attiny88_22mhz1184_57600bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny88/fcpu_22mhz1184/57600_bps/urboot_attiny88_22mhz1184_57600bps_rxb0_txb1_lednop_ur_vbl.hex)|
+|316|320|u7.7|`weu-jpr--`|[urboot_attiny88_22mhz1184_57600bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny88/fcpu_22mhz1184/57600_bps/urboot_attiny88_22mhz1184_57600bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
+|318|320|u7.7|`w-u-jPr-c`|[urboot_attiny88_22mhz1184_57600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny88/fcpu_22mhz1184/57600_bps/urboot_attiny88_22mhz1184_57600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|376|384|u7.7|`weu-jPr-c`|[urboot_attiny88_22mhz1184_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny88/fcpu_22mhz1184/57600_bps/urboot_attiny88_22mhz1184_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

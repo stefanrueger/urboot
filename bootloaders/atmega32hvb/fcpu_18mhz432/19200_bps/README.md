@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.7|`w-u-jpr--`|[atmega32hvb_18mhz432_19200bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32hvb/fcpu_18mhz432/19200_bps/atmega32hvb_18mhz432_19200bps_rxb0_txb1_ur_vbl.hex)|
-|384|384|u7.7|`weu-jPr-c`|[atmega32hvb_18mhz432_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32hvb/fcpu_18mhz432/19200_bps/atmega32hvb_18mhz432_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
-|366|512|u7.7|`weu-hpr-c`|[atmega32hvb_18mhz432_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32hvb/fcpu_18mhz432/19200_bps/atmega32hvb_18mhz432_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
-|470|512|u7.7|`wes-hpr-c`|[atmega32hvb_18mhz432_19200bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32hvb/fcpu_18mhz432/19200_bps/atmega32hvb_18mhz432_19200bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
+|252|256|u7.7|`w-u-jpr--`|[urboot_atmega32hvb_18mhz432_19200bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32hvb/fcpu_18mhz432/19200_bps/urboot_atmega32hvb_18mhz432_19200bps_rxb0_txb1_ur_vbl.hex)|
+|384|384|u7.7|`weu-jPr-c`|[urboot_atmega32hvb_18mhz432_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32hvb/fcpu_18mhz432/19200_bps/urboot_atmega32hvb_18mhz432_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|366|512|u7.7|`weu-hpr-c`|[urboot_atmega32hvb_18mhz432_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32hvb/fcpu_18mhz432/19200_bps/urboot_atmega32hvb_18mhz432_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
+|470|512|u7.7|`wes-hpr-c`|[urboot_atmega32hvb_18mhz432_19200bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32hvb/fcpu_18mhz432/19200_bps/urboot_atmega32hvb_18mhz432_19200bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

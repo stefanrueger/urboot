@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|256|256|u7.7|`w-u-jpr--`|[luminet_18mhz432_230400bps_rxa3_txa2_led+a4_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_luminet/fcpu_18mhz432/230400_bps/luminet_18mhz432_230400bps_rxa3_txa2_led+a4_ur_vbl.hex)|
-|320|320|u7.7|`w-u-jPr-c`|[luminet_18mhz432_230400bps_rxa3_txa2_led+a4_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_luminet/fcpu_18mhz432/230400_bps/luminet_18mhz432_230400bps_rxa3_txa2_led+a4_fr_ce_ur_vbl.hex)|
-|360|384|u7.7|`weu-jPr--`|[luminet_18mhz432_230400bps_rxa3_txa2_ee_led+a4_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_luminet/fcpu_18mhz432/230400_bps/luminet_18mhz432_230400bps_rxa3_txa2_ee_led+a4_fr_ur_vbl.hex)|
-|374|384|u7.7|`weu-jpr-c`|[luminet_18mhz432_230400bps_rxa3_txa2_ee_led+a4_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_luminet/fcpu_18mhz432/230400_bps/luminet_18mhz432_230400bps_rxa3_txa2_ee_led+a4_fr_ce_ur_vbl.hex)|
+|256|256|u7.7|`w-u-jpr--`|[urboot_luminet_18mhz432_230400bps_rxa3_txa2_led+a4_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_luminet/fcpu_18mhz432/230400_bps/urboot_luminet_18mhz432_230400bps_rxa3_txa2_led+a4_ur_vbl.hex)|
+|320|320|u7.7|`w-u-jPr-c`|[urboot_luminet_18mhz432_230400bps_rxa3_txa2_led+a4_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_luminet/fcpu_18mhz432/230400_bps/urboot_luminet_18mhz432_230400bps_rxa3_txa2_led+a4_fr_ce_ur_vbl.hex)|
+|360|384|u7.7|`weu-jPr--`|[urboot_luminet_18mhz432_230400bps_rxa3_txa2_ee_led+a4_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_luminet/fcpu_18mhz432/230400_bps/urboot_luminet_18mhz432_230400bps_rxa3_txa2_ee_led+a4_fr_ur_vbl.hex)|
+|374|384|u7.7|`weu-jpr-c`|[urboot_luminet_18mhz432_230400bps_rxa3_txa2_ee_led+a4_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_luminet/fcpu_18mhz432/230400_bps/urboot_luminet_18mhz432_230400bps_rxa3_txa2_ee_led+a4_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.7|`w-u-hpra-`|[atmega168pb_autobaud_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/autobaud/atmega168pb_autobaud_ur.hex)|
-|384|384|u7.7|`weu-jPrac`|[atmega168pb_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/autobaud/atmega168pb_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
-|366|512|u7.7|`weu-hprac`|[atmega168pb_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/autobaud/atmega168pb_autobaud_ee_lednop_fr_ce_ur.hex)|
-|470|512|u7.7|`wes-hprac`|[atmega168pb_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/autobaud/atmega168pb_autobaud_ee_lednop_fr_ce.hex)|
+|252|256|u7.7|`w-u-hpra-`|[urboot_atmega168pb_autobaud_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/autobaud/urboot_atmega168pb_autobaud_ur.hex)|
+|384|384|u7.7|`weu-jPrac`|[urboot_atmega168pb_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/autobaud/urboot_atmega168pb_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|366|512|u7.7|`weu-hprac`|[urboot_atmega168pb_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/autobaud/urboot_atmega168pb_autobaud_ee_lednop_fr_ce_ur.hex)|
+|470|512|u7.7|`wes-hprac`|[urboot_atmega168pb_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168pb/autobaud/urboot_atmega168pb_autobaud_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

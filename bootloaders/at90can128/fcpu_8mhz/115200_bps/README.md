@@ -1,8 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|410|512|u7.7|`weu-jPr-c`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur_vbl.hex)|
-|392|1024|u7.7|`weu-hpr-c`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur.hex)|
-|498|1024|u7.7|`wes-hpr-c`|[at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce.hex)|
+|410|512|u7.7|`weu-jPr-c`|[urboot_at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/urboot_at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur_vbl.hex)|
+|392|1024|u7.7|`weu-hpr-c`|[urboot_at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/urboot_at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce_ur.hex)|
+|498|1024|u7.7|`wes-hpr-c`|[urboot_at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_8mhz/115200_bps/urboot_at90can128_8mhz_115200bps_rxd2_txd3_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

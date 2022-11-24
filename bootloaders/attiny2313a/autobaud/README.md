@@ -1,11 +1,11 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|248|256|u7.7|`w-u-jPra-`|[attiny2313a_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/autobaud/attiny2313a_autobaud_lednop_ur_vbl.hex)|
-|252|256|u7.7|`w-u-jpra-`|[attiny2313a_autobaud_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/autobaud/attiny2313a_autobaud_lednop_fr_ur_vbl.hex)|
-|282|288|u7.7|`w-u-jprac`|[attiny2313a_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/autobaud/attiny2313a_autobaud_lednop_fr_ce_ur_vbl.hex)|
-|316|320|u7.7|`weu-jPra-`|[attiny2313a_autobaud_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/autobaud/attiny2313a_autobaud_ee_lednop_ur_vbl.hex)|
-|320|320|u7.7|`weu-jpra-`|[attiny2313a_autobaud_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/autobaud/attiny2313a_autobaud_ee_lednop_fr_ur_vbl.hex)|
-|346|352|u7.7|`weu-jprac`|[attiny2313a_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/autobaud/attiny2313a_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|248|256|u7.7|`w-u-jPra-`|[urboot_attiny2313a_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/autobaud/urboot_attiny2313a_autobaud_lednop_ur_vbl.hex)|
+|252|256|u7.7|`w-u-jpra-`|[urboot_attiny2313a_autobaud_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/autobaud/urboot_attiny2313a_autobaud_lednop_fr_ur_vbl.hex)|
+|282|288|u7.7|`w-u-jprac`|[urboot_attiny2313a_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/autobaud/urboot_attiny2313a_autobaud_lednop_fr_ce_ur_vbl.hex)|
+|316|320|u7.7|`weu-jPra-`|[urboot_attiny2313a_autobaud_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/autobaud/urboot_attiny2313a_autobaud_ee_lednop_ur_vbl.hex)|
+|320|320|u7.7|`weu-jpra-`|[urboot_attiny2313a_autobaud_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/autobaud/urboot_attiny2313a_autobaud_ee_lednop_fr_ur_vbl.hex)|
+|346|352|u7.7|`weu-jprac`|[urboot_attiny2313a_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/autobaud/urboot_attiny2313a_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

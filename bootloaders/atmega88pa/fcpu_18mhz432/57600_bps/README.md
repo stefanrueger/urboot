@@ -1,13 +1,13 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|244|256|u7.7|`w-u-jPr--`|[atmega88pa_18mhz432_57600bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/atmega88pa_18mhz432_57600bps_lednop_ur_vbl.hex)|
-|248|256|u7.7|`w-u-hpr--`|[atmega88pa_18mhz432_57600bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/atmega88pa_18mhz432_57600bps_lednop_fr_ur.hex)|
-|294|320|u7.7|`w-u-jPr-c`|[atmega88pa_18mhz432_57600bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/atmega88pa_18mhz432_57600bps_lednop_fr_ce_ur_vbl.hex)|
-|310|320|u7.7|`weu-jPr--`|[atmega88pa_18mhz432_57600bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/atmega88pa_18mhz432_57600bps_ee_lednop_ur_vbl.hex)|
-|314|320|u7.7|`weu-jpr--`|[atmega88pa_18mhz432_57600bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/atmega88pa_18mhz432_57600bps_ee_lednop_fr_ur_vbl.hex)|
-|356|384|u7.7|`weu-jPr-c`|[atmega88pa_18mhz432_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/atmega88pa_18mhz432_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|338|512|u7.7|`weu-hpr-c`|[atmega88pa_18mhz432_57600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/atmega88pa_18mhz432_57600bps_ee_lednop_fr_ce_ur.hex)|
-|442|512|u7.7|`wes-hpr-c`|[atmega88pa_18mhz432_57600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/atmega88pa_18mhz432_57600bps_ee_lednop_fr_ce.hex)|
+|244|256|u7.7|`w-u-jPr--`|[urboot_atmega88pa_18mhz432_57600bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/urboot_atmega88pa_18mhz432_57600bps_lednop_ur_vbl.hex)|
+|248|256|u7.7|`w-u-hpr--`|[urboot_atmega88pa_18mhz432_57600bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/urboot_atmega88pa_18mhz432_57600bps_lednop_fr_ur.hex)|
+|294|320|u7.7|`w-u-jPr-c`|[urboot_atmega88pa_18mhz432_57600bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/urboot_atmega88pa_18mhz432_57600bps_lednop_fr_ce_ur_vbl.hex)|
+|310|320|u7.7|`weu-jPr--`|[urboot_atmega88pa_18mhz432_57600bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/urboot_atmega88pa_18mhz432_57600bps_ee_lednop_ur_vbl.hex)|
+|314|320|u7.7|`weu-jpr--`|[urboot_atmega88pa_18mhz432_57600bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/urboot_atmega88pa_18mhz432_57600bps_ee_lednop_fr_ur_vbl.hex)|
+|356|384|u7.7|`weu-jPr-c`|[urboot_atmega88pa_18mhz432_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/urboot_atmega88pa_18mhz432_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|338|512|u7.7|`weu-hpr-c`|[urboot_atmega88pa_18mhz432_57600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/urboot_atmega88pa_18mhz432_57600bps_ee_lednop_fr_ce_ur.hex)|
+|442|512|u7.7|`wes-hpr-c`|[urboot_atmega88pa_18mhz432_57600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88pa/fcpu_18mhz432/57600_bps/urboot_atmega88pa_18mhz432_57600bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

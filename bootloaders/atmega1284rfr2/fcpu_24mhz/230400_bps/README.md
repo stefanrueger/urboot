@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.7|`w-u-jpr--`|[atmega1284rfr2_24mhz_230400bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_24mhz/230400_bps/atmega1284rfr2_24mhz_230400bps_lednop_ur_vbl.hex)|
-|394|512|u7.7|`weu-jPr-c`|[atmega1284rfr2_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_24mhz/230400_bps/atmega1284rfr2_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|376|1024|u7.7|`weu-hpr-c`|[atmega1284rfr2_24mhz_230400bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_24mhz/230400_bps/atmega1284rfr2_24mhz_230400bps_ee_lednop_fr_ce_ur.hex)|
-|482|1024|u7.7|`wes-hpr-c`|[atmega1284rfr2_24mhz_230400bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_24mhz/230400_bps/atmega1284rfr2_24mhz_230400bps_ee_lednop_fr_ce.hex)|
+|252|256|u7.7|`w-u-jpr--`|[urboot_atmega1284rfr2_24mhz_230400bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_24mhz/230400_bps/urboot_atmega1284rfr2_24mhz_230400bps_lednop_ur_vbl.hex)|
+|394|512|u7.7|`weu-jPr-c`|[urboot_atmega1284rfr2_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_24mhz/230400_bps/urboot_atmega1284rfr2_24mhz_230400bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|376|1024|u7.7|`weu-hpr-c`|[urboot_atmega1284rfr2_24mhz_230400bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_24mhz/230400_bps/urboot_atmega1284rfr2_24mhz_230400bps_ee_lednop_fr_ce_ur.hex)|
+|482|1024|u7.7|`wes-hpr-c`|[urboot_atmega1284rfr2_24mhz_230400bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_24mhz/230400_bps/urboot_atmega1284rfr2_24mhz_230400bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

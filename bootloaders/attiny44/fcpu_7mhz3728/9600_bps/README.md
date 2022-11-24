@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.7|`w-u-jpr--`|[attiny44_7mhz3728_9600bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny44/fcpu_7mhz3728/9600_bps/attiny44_7mhz3728_9600bps_rxb0_txb1_lednop_ur_vbl.hex)|
-|316|320|u7.7|`w-u-jPr-c`|[attiny44_7mhz3728_9600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny44/fcpu_7mhz3728/9600_bps/attiny44_7mhz3728_9600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
-|318|320|u7.7|`weu-jpr--`|[attiny44_7mhz3728_9600bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny44/fcpu_7mhz3728/9600_bps/attiny44_7mhz3728_9600bps_rxb0_txb1_ee_ur_vbl.hex)|
-|384|384|u7.7|`weu-jPr-c`|[attiny44_7mhz3728_9600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny44/fcpu_7mhz3728/9600_bps/attiny44_7mhz3728_9600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|252|256|u7.7|`w-u-jpr--`|[urboot_attiny44_7mhz3728_9600bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny44/fcpu_7mhz3728/9600_bps/urboot_attiny44_7mhz3728_9600bps_rxb0_txb1_lednop_ur_vbl.hex)|
+|316|320|u7.7|`w-u-jPr-c`|[urboot_attiny44_7mhz3728_9600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny44/fcpu_7mhz3728/9600_bps/urboot_attiny44_7mhz3728_9600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|318|320|u7.7|`weu-jpr--`|[urboot_attiny44_7mhz3728_9600bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny44/fcpu_7mhz3728/9600_bps/urboot_attiny44_7mhz3728_9600bps_rxb0_txb1_ee_ur_vbl.hex)|
+|384|384|u7.7|`weu-jPr-c`|[urboot_attiny44_7mhz3728_9600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny44/fcpu_7mhz3728/9600_bps/urboot_attiny44_7mhz3728_9600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -1,11 +1,11 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|218|224|u7.7|`w-u-jpr--`|[attiny2313a_3mhz6864_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_3mhz6864/19200_bps/attiny2313a_3mhz6864_19200bps_lednop_ur_vbl.hex)|
-|246|256|u7.7|`w-u-jPr--`|[attiny2313a_3mhz6864_19200bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_3mhz6864/19200_bps/attiny2313a_3mhz6864_19200bps_lednop_fr_ur_vbl.hex)|
-|276|288|u7.7|`w-u-jPr-c`|[attiny2313a_3mhz6864_19200bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_3mhz6864/19200_bps/attiny2313a_3mhz6864_19200bps_lednop_fr_ce_ur_vbl.hex)|
-|282|288|u7.7|`weu-jpr--`|[attiny2313a_3mhz6864_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_3mhz6864/19200_bps/attiny2313a_3mhz6864_19200bps_ee_lednop_ur_vbl.hex)|
-|314|320|u7.7|`weu-jPr--`|[attiny2313a_3mhz6864_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_3mhz6864/19200_bps/attiny2313a_3mhz6864_19200bps_ee_lednop_fr_ur_vbl.hex)|
-|340|352|u7.7|`weu-jPr-c`|[attiny2313a_3mhz6864_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_3mhz6864/19200_bps/attiny2313a_3mhz6864_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|218|224|u7.7|`w-u-jpr--`|[urboot_attiny2313a_3mhz6864_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_3mhz6864/19200_bps/urboot_attiny2313a_3mhz6864_19200bps_lednop_ur_vbl.hex)|
+|246|256|u7.7|`w-u-jPr--`|[urboot_attiny2313a_3mhz6864_19200bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_3mhz6864/19200_bps/urboot_attiny2313a_3mhz6864_19200bps_lednop_fr_ur_vbl.hex)|
+|276|288|u7.7|`w-u-jPr-c`|[urboot_attiny2313a_3mhz6864_19200bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_3mhz6864/19200_bps/urboot_attiny2313a_3mhz6864_19200bps_lednop_fr_ce_ur_vbl.hex)|
+|282|288|u7.7|`weu-jpr--`|[urboot_attiny2313a_3mhz6864_19200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_3mhz6864/19200_bps/urboot_attiny2313a_3mhz6864_19200bps_ee_lednop_ur_vbl.hex)|
+|314|320|u7.7|`weu-jPr--`|[urboot_attiny2313a_3mhz6864_19200bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_3mhz6864/19200_bps/urboot_attiny2313a_3mhz6864_19200bps_ee_lednop_fr_ur_vbl.hex)|
+|340|352|u7.7|`weu-jPr-c`|[urboot_attiny2313a_3mhz6864_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313a/fcpu_3mhz6864/19200_bps/urboot_attiny2313a_3mhz6864_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

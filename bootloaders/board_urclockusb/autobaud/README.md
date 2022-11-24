@@ -1,14 +1,14 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|250|256|u7.7|`w-u-jpra-`|[urclockusb_autobaud_led+d5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_led+d5_ur_vbl.hex)|
-|376|384|u7.7|`weu-jPrac`|[urclockusb_autobaud_ee_led+d5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_fr_ce_ur_vbl.hex)|
-|358|512|u7.7|`weu-hprac`|[urclockusb_autobaud_ee_led+d5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_fr_ce_ur.hex)|
-|450|512|u7.7|`w-udjPrac`|[urclockusb_autobaud_led+d5_csb0_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_led+d5_csb0_dual_fr_ce_ur_vbl.hex)|
-|462|512|u7.7|`wes-hprac`|[urclockusb_autobaud_ee_led+d5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_fr_ce.hex)|
-|488|512|u7.7|`weudjPra-`|[urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ur_vbl.hex)|
-|502|512|u7.7|`weudhprac`|[urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex)|
-|508|512|u7.7|`w-sdhpra-`|[urclockusb_autobaud_led+d5_csb0_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_led+d5_csb0_dual_fr.hex)|
-|606|1024|u7.7|`wesdhprac`|[urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce.hex)|
+|250|256|u7.7|`w-u-jpra-`|[urboot_urclockusb_autobaud_led+d5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urboot_urclockusb_autobaud_led+d5_ur_vbl.hex)|
+|376|384|u7.7|`weu-jPrac`|[urboot_urclockusb_autobaud_ee_led+d5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urboot_urclockusb_autobaud_ee_led+d5_fr_ce_ur_vbl.hex)|
+|358|512|u7.7|`weu-hprac`|[urboot_urclockusb_autobaud_ee_led+d5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urboot_urclockusb_autobaud_ee_led+d5_fr_ce_ur.hex)|
+|450|512|u7.7|`w-udjPrac`|[urboot_urclockusb_autobaud_led+d5_csb0_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urboot_urclockusb_autobaud_led+d5_csb0_dual_fr_ce_ur_vbl.hex)|
+|462|512|u7.7|`wes-hprac`|[urboot_urclockusb_autobaud_ee_led+d5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urboot_urclockusb_autobaud_ee_led+d5_fr_ce.hex)|
+|488|512|u7.7|`weudjPra-`|[urboot_urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urboot_urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ur_vbl.hex)|
+|502|512|u7.7|`weudhprac`|[urboot_urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urboot_urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex)|
+|508|512|u7.7|`w-sdhpra-`|[urboot_urclockusb_autobaud_led+d5_csb0_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urboot_urclockusb_autobaud_led+d5_csb0_dual_fr.hex)|
+|606|1024|u7.7|`wesdhprac`|[urboot_urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urboot_urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -1,12 +1,12 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|254|256|u7.7|`w-u-hpr--`|[at90pwm1_16mhz_115200bps_rxb0_txb1_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/at90pwm1_16mhz_115200bps_rxb0_txb1_ur.hex)|
-|296|320|u7.7|`w-u-jPr--`|[at90pwm1_16mhz_115200bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/at90pwm1_16mhz_115200bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
-|310|320|u7.7|`w-u-jpr-c`|[at90pwm1_16mhz_115200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/at90pwm1_16mhz_115200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
-|318|320|u7.7|`weu-jpr--`|[at90pwm1_16mhz_115200bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/at90pwm1_16mhz_115200bps_rxb0_txb1_ee_ur_vbl.hex)|
-|384|384|u7.7|`weu-jPr-c`|[at90pwm1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/at90pwm1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
-|366|512|u7.7|`weu-hpr-c`|[at90pwm1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/at90pwm1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
-|470|512|u7.7|`wes-hpr-c`|[at90pwm1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/at90pwm1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
+|254|256|u7.7|`w-u-hpr--`|[urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_ur.hex)|
+|296|320|u7.7|`w-u-jPr--`|[urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
+|310|320|u7.7|`w-u-jpr-c`|[urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|318|320|u7.7|`weu-jpr--`|[urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_ee_ur_vbl.hex)|
+|384|384|u7.7|`weu-jPr-c`|[urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|366|512|u7.7|`weu-hpr-c`|[urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
+|470|512|u7.7|`wes-hpr-c`|[urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm1/fcpu_16mhz/115200_bps/urboot_at90pwm1_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

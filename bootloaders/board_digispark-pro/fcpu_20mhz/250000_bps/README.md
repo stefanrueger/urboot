@@ -1,7 +1,7 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|250|256|u7.7|`w-u-jpr--`|[digispark-pro_20mhz_250000bps_rxb6_txb3_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_digispark-pro/fcpu_20mhz/250000_bps/digispark-pro_20mhz_250000bps_rxb6_txb3_led+b1_ur_vbl.hex)|
-|376|384|u7.7|`weu-jPr-c`|[digispark-pro_20mhz_250000bps_rxb6_txb3_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_digispark-pro/fcpu_20mhz/250000_bps/digispark-pro_20mhz_250000bps_rxb6_txb3_ee_led+b1_fr_ce_ur_vbl.hex)|
+|250|256|u7.7|`w-u-jpr--`|[urboot_digispark-pro_20mhz_250000bps_rxb6_txb3_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_digispark-pro/fcpu_20mhz/250000_bps/urboot_digispark-pro_20mhz_250000bps_rxb6_txb3_led+b1_ur_vbl.hex)|
+|376|384|u7.7|`weu-jPr-c`|[urboot_digispark-pro_20mhz_250000bps_rxb6_txb3_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_digispark-pro/fcpu_20mhz/250000_bps/urboot_digispark-pro_20mhz_250000bps_rxb6_txb3_ee_led+b1_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -1,12 +1,12 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|242|256|u7.7|`w-u-hpra-`|[atmega8_autobaud_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/atmega8_autobaud_lednop_ur.hex)|
-|306|320|u7.7|`w-u-jPrac`|[atmega8_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/atmega8_autobaud_lednop_fr_ce_ur_vbl.hex)|
-|312|320|u7.7|`weu-jpra-`|[atmega8_autobaud_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/atmega8_autobaud_ee_lednop_ur_vbl.hex)|
-|320|320|u7.7|`weu-jPra-`|[atmega8_autobaud_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/atmega8_autobaud_ee_ur_vbl.hex)|
-|372|384|u7.7|`weu-jPrac`|[atmega8_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/atmega8_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
-|354|512|u7.7|`weu-hprac`|[atmega8_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/atmega8_autobaud_ee_lednop_fr_ce_ur.hex)|
-|456|512|u7.7|`wes-hprac`|[atmega8_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/atmega8_autobaud_ee_lednop_fr_ce.hex)|
+|242|256|u7.7|`w-u-hpra-`|[urboot_atmega8_autobaud_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/urboot_atmega8_autobaud_lednop_ur.hex)|
+|306|320|u7.7|`w-u-jPrac`|[urboot_atmega8_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/urboot_atmega8_autobaud_lednop_fr_ce_ur_vbl.hex)|
+|312|320|u7.7|`weu-jpra-`|[urboot_atmega8_autobaud_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/urboot_atmega8_autobaud_ee_lednop_ur_vbl.hex)|
+|320|320|u7.7|`weu-jPra-`|[urboot_atmega8_autobaud_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/urboot_atmega8_autobaud_ee_ur_vbl.hex)|
+|372|384|u7.7|`weu-jPrac`|[urboot_atmega8_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/urboot_atmega8_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|354|512|u7.7|`weu-hprac`|[urboot_atmega8_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/urboot_atmega8_autobaud_ee_lednop_fr_ce_ur.hex)|
+|456|512|u7.7|`wes-hprac`|[urboot_atmega8_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8/autobaud/urboot_atmega8_autobaud_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

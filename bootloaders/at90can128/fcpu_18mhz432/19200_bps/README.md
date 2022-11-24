@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|248|256|u7.7|`w-u-jpr--`|[at90can128_18mhz432_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_18mhz432/19200_bps/at90can128_18mhz432_19200bps_lednop_ur_vbl.hex)|
-|388|512|u7.7|`weu-jPr-c`|[at90can128_18mhz432_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_18mhz432/19200_bps/at90can128_18mhz432_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|370|1024|u7.7|`weu-hpr-c`|[at90can128_18mhz432_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_18mhz432/19200_bps/at90can128_18mhz432_19200bps_ee_lednop_fr_ce_ur.hex)|
-|476|1024|u7.7|`wes-hpr-c`|[at90can128_18mhz432_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_18mhz432/19200_bps/at90can128_18mhz432_19200bps_ee_lednop_fr_ce.hex)|
+|248|256|u7.7|`w-u-jpr--`|[urboot_at90can128_18mhz432_19200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_18mhz432/19200_bps/urboot_at90can128_18mhz432_19200bps_lednop_ur_vbl.hex)|
+|388|512|u7.7|`weu-jPr-c`|[urboot_at90can128_18mhz432_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_18mhz432/19200_bps/urboot_at90can128_18mhz432_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|370|1024|u7.7|`weu-hpr-c`|[urboot_at90can128_18mhz432_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_18mhz432/19200_bps/urboot_at90can128_18mhz432_19200bps_ee_lednop_fr_ce_ur.hex)|
+|476|1024|u7.7|`wes-hpr-c`|[urboot_at90can128_18mhz432_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/fcpu_18mhz432/19200_bps/urboot_at90can128_18mhz432_19200bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -1,12 +1,12 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|242|256|u7.7|`w-u-hpr--`|[at90pwm2b_8mhz_57600bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/at90pwm2b_8mhz_57600bps_lednop_ur.hex)|
-|306|320|u7.7|`w-u-jPr-c`|[at90pwm2b_8mhz_57600bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/at90pwm2b_8mhz_57600bps_lednop_fr_ce_ur_vbl.hex)|
-|308|320|u7.7|`weu-jpr--`|[at90pwm2b_8mhz_57600bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/at90pwm2b_8mhz_57600bps_ee_lednop_ur_vbl.hex)|
-|316|320|u7.7|`weu-jPr--`|[at90pwm2b_8mhz_57600bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/at90pwm2b_8mhz_57600bps_ee_ur_vbl.hex)|
-|368|384|u7.7|`weu-jPr-c`|[at90pwm2b_8mhz_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/at90pwm2b_8mhz_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|350|512|u7.7|`weu-hpr-c`|[at90pwm2b_8mhz_57600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/at90pwm2b_8mhz_57600bps_ee_lednop_fr_ce_ur.hex)|
-|454|512|u7.7|`wes-hpr-c`|[at90pwm2b_8mhz_57600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/at90pwm2b_8mhz_57600bps_ee_lednop_fr_ce.hex)|
+|242|256|u7.7|`w-u-hpr--`|[urboot_at90pwm2b_8mhz_57600bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/urboot_at90pwm2b_8mhz_57600bps_lednop_ur.hex)|
+|306|320|u7.7|`w-u-jPr-c`|[urboot_at90pwm2b_8mhz_57600bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/urboot_at90pwm2b_8mhz_57600bps_lednop_fr_ce_ur_vbl.hex)|
+|308|320|u7.7|`weu-jpr--`|[urboot_at90pwm2b_8mhz_57600bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/urboot_at90pwm2b_8mhz_57600bps_ee_lednop_ur_vbl.hex)|
+|316|320|u7.7|`weu-jPr--`|[urboot_at90pwm2b_8mhz_57600bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/urboot_at90pwm2b_8mhz_57600bps_ee_ur_vbl.hex)|
+|368|384|u7.7|`weu-jPr-c`|[urboot_at90pwm2b_8mhz_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/urboot_at90pwm2b_8mhz_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|350|512|u7.7|`weu-hpr-c`|[urboot_at90pwm2b_8mhz_57600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/urboot_at90pwm2b_8mhz_57600bps_ee_lednop_fr_ce_ur.hex)|
+|454|512|u7.7|`wes-hpr-c`|[urboot_at90pwm2b_8mhz_57600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm2b/fcpu_8mhz/57600_bps/urboot_at90pwm2b_8mhz_57600bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

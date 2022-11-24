@@ -1,8 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|410|512|u7.7|`weu-jPrac`|[atmega128rfa1_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega128rfa1/autobaud/atmega128rfa1_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
-|392|1024|u7.7|`weu-hprac`|[atmega128rfa1_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega128rfa1/autobaud/atmega128rfa1_autobaud_ee_lednop_fr_ce_ur.hex)|
-|498|1024|u7.7|`wes-hprac`|[atmega128rfa1_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega128rfa1/autobaud/atmega128rfa1_autobaud_ee_lednop_fr_ce.hex)|
+|410|512|u7.7|`weu-jPrac`|[urboot_atmega128rfa1_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega128rfa1/autobaud/urboot_atmega128rfa1_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|392|1024|u7.7|`weu-hprac`|[urboot_atmega128rfa1_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega128rfa1/autobaud/urboot_atmega128rfa1_autobaud_ee_lednop_fr_ce_ur.hex)|
+|498|1024|u7.7|`wes-hprac`|[urboot_atmega128rfa1_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega128rfa1/autobaud/urboot_atmega128rfa1_autobaud_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -1,8 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|412|512|u7.7|`weu-jPr-c`|[atmega1284rfr2_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_8mhz/115200_bps/atmega1284rfr2_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_ur_vbl.hex)|
-|394|1024|u7.7|`weu-hpr-c`|[atmega1284rfr2_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_8mhz/115200_bps/atmega1284rfr2_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_ur.hex)|
-|500|1024|u7.7|`wes-hpr-c`|[atmega1284rfr2_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_8mhz/115200_bps/atmega1284rfr2_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce.hex)|
+|412|512|u7.7|`weu-jPr-c`|[urboot_atmega1284rfr2_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_8mhz/115200_bps/urboot_atmega1284rfr2_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_ur_vbl.hex)|
+|394|1024|u7.7|`weu-hpr-c`|[urboot_atmega1284rfr2_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_8mhz/115200_bps/urboot_atmega1284rfr2_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce_ur.hex)|
+|500|1024|u7.7|`wes-hpr-c`|[urboot_atmega1284rfr2_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega1284rfr2/fcpu_8mhz/115200_bps/urboot_atmega1284rfr2_8mhz_115200bps_rxe0_txe1_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|250|256|u7.7|`w-u-jpra-`|[uno_autobaud_led+b5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_uno/autobaud/uno_autobaud_led+b5_ur_vbl.hex)|
-|376|384|u7.7|`weu-jPrac`|[uno_autobaud_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_uno/autobaud/uno_autobaud_ee_led+b5_fr_ce_ur_vbl.hex)|
-|358|512|u7.7|`weu-hprac`|[uno_autobaud_ee_led+b5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_uno/autobaud/uno_autobaud_ee_led+b5_fr_ce_ur.hex)|
-|462|512|u7.7|`wes-hprac`|[uno_autobaud_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_uno/autobaud/uno_autobaud_ee_led+b5_fr_ce.hex)|
+|250|256|u7.7|`w-u-jpra-`|[urboot_uno_autobaud_led+b5_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_uno/autobaud/urboot_uno_autobaud_led+b5_ur_vbl.hex)|
+|376|384|u7.7|`weu-jPrac`|[urboot_uno_autobaud_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_uno/autobaud/urboot_uno_autobaud_ee_led+b5_fr_ce_ur_vbl.hex)|
+|358|512|u7.7|`weu-hprac`|[urboot_uno_autobaud_ee_led+b5_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_uno/autobaud/urboot_uno_autobaud_ee_led+b5_fr_ce_ur.hex)|
+|462|512|u7.7|`wes-hprac`|[urboot_uno_autobaud_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_uno/autobaud/urboot_uno_autobaud_ee_led+b5_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

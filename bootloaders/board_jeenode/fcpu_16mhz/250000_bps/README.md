@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|244|256|u7.7|`w-u-jPr--`|[jeenode_16mhz_250000bps_led-b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_16mhz/250000_bps/jeenode_16mhz_250000bps_led-b1_ur_vbl.hex)|
-|248|256|u7.7|`w-u-jpr--`|[jeenode_16mhz_250000bps_led-b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_16mhz/250000_bps/jeenode_16mhz_250000bps_led-b1_fr_ur_vbl.hex)|
-|356|384|u7.7|`weu-jPr-c`|[jeenode_16mhz_250000bps_ee_led-b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_16mhz/250000_bps/jeenode_16mhz_250000bps_ee_led-b1_fr_ce_ur_vbl.hex)|
-|338|512|u7.7|`weu-hpr-c`|[jeenode_16mhz_250000bps_ee_led-b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_16mhz/250000_bps/jeenode_16mhz_250000bps_ee_led-b1_fr_ce_ur.hex)|
-|442|512|u7.7|`wes-hpr-c`|[jeenode_16mhz_250000bps_ee_led-b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_16mhz/250000_bps/jeenode_16mhz_250000bps_ee_led-b1_fr_ce.hex)|
+|244|256|u7.7|`w-u-jPr--`|[urboot_jeenode_16mhz_250000bps_led-b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_16mhz/250000_bps/urboot_jeenode_16mhz_250000bps_led-b1_ur_vbl.hex)|
+|248|256|u7.7|`w-u-jpr--`|[urboot_jeenode_16mhz_250000bps_led-b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_16mhz/250000_bps/urboot_jeenode_16mhz_250000bps_led-b1_fr_ur_vbl.hex)|
+|356|384|u7.7|`weu-jPr-c`|[urboot_jeenode_16mhz_250000bps_ee_led-b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_16mhz/250000_bps/urboot_jeenode_16mhz_250000bps_ee_led-b1_fr_ce_ur_vbl.hex)|
+|338|512|u7.7|`weu-hpr-c`|[urboot_jeenode_16mhz_250000bps_ee_led-b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_16mhz/250000_bps/urboot_jeenode_16mhz_250000bps_ee_led-b1_fr_ce_ur.hex)|
+|442|512|u7.7|`wes-hpr-c`|[urboot_jeenode_16mhz_250000bps_ee_led-b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_16mhz/250000_bps/urboot_jeenode_16mhz_250000bps_ee_led-b1_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

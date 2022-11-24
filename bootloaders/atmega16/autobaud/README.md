@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|242|256|u7.7|`w-u-hpra-`|[atmega16_autobaud_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/autobaud/atmega16_autobaud_lednop_ur.hex)|
-|372|384|u7.7|`weu-jPrac`|[atmega16_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/autobaud/atmega16_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
-|354|512|u7.7|`weu-hprac`|[atmega16_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/autobaud/atmega16_autobaud_ee_lednop_fr_ce_ur.hex)|
-|458|512|u7.7|`wes-hprac`|[atmega16_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/autobaud/atmega16_autobaud_ee_lednop_fr_ce.hex)|
+|242|256|u7.7|`w-u-hpra-`|[urboot_atmega16_autobaud_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/autobaud/urboot_atmega16_autobaud_lednop_ur.hex)|
+|372|384|u7.7|`weu-jPrac`|[urboot_atmega16_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/autobaud/urboot_atmega16_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|354|512|u7.7|`weu-hprac`|[urboot_atmega16_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/autobaud/urboot_atmega16_autobaud_ee_lednop_fr_ce_ur.hex)|
+|458|512|u7.7|`wes-hprac`|[urboot_atmega16_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16/autobaud/urboot_atmega16_autobaud_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

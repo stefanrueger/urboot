@@ -1,7 +1,7 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|254|256|u7.7|`w-u-jpr--`|[ata664251_11mhz0592_460800bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata664251/fcpu_11mhz0592/460800_bps/ata664251_11mhz0592_460800bps_rxb0_txb1_lednop_ur_vbl.hex)|
-|382|384|u7.7|`weu-jPr-c`|[ata664251_11mhz0592_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata664251/fcpu_11mhz0592/460800_bps/ata664251_11mhz0592_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|254|256|u7.7|`w-u-jpr--`|[urboot_ata664251_11mhz0592_460800bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata664251/fcpu_11mhz0592/460800_bps/urboot_ata664251_11mhz0592_460800bps_rxb0_txb1_lednop_ur_vbl.hex)|
+|382|384|u7.7|`weu-jPr-c`|[urboot_ata664251_11mhz0592_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata664251/fcpu_11mhz0592/460800_bps/urboot_ata664251_11mhz0592_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

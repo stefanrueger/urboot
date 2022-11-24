@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|246|256|u7.7|`w-u-jPr--`|[atmega644_12mhz_115200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644/fcpu_12mhz/115200_bps/atmega644_12mhz_115200bps_lednop_ur_vbl.hex)|
-|250|256|u7.7|`w-u-jpr--`|[atmega644_12mhz_115200bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644/fcpu_12mhz/115200_bps/atmega644_12mhz_115200bps_lednop_fr_ur_vbl.hex)|
-|352|512|u7.7|`weu-jPr-c`|[atmega644_12mhz_115200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644/fcpu_12mhz/115200_bps/atmega644_12mhz_115200bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|338|1024|u7.7|`weu-hpr-c`|[atmega644_12mhz_115200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644/fcpu_12mhz/115200_bps/atmega644_12mhz_115200bps_ee_lednop_fr_ce_ur.hex)|
-|442|1024|u7.7|`wes-hpr-c`|[atmega644_12mhz_115200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644/fcpu_12mhz/115200_bps/atmega644_12mhz_115200bps_ee_lednop_fr_ce.hex)|
+|246|256|u7.7|`w-u-jPr--`|[urboot_atmega644_12mhz_115200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644/fcpu_12mhz/115200_bps/urboot_atmega644_12mhz_115200bps_lednop_ur_vbl.hex)|
+|250|256|u7.7|`w-u-jpr--`|[urboot_atmega644_12mhz_115200bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644/fcpu_12mhz/115200_bps/urboot_atmega644_12mhz_115200bps_lednop_fr_ur_vbl.hex)|
+|352|512|u7.7|`weu-jPr-c`|[urboot_atmega644_12mhz_115200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644/fcpu_12mhz/115200_bps/urboot_atmega644_12mhz_115200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|338|1024|u7.7|`weu-hpr-c`|[urboot_atmega644_12mhz_115200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644/fcpu_12mhz/115200_bps/urboot_atmega644_12mhz_115200bps_ee_lednop_fr_ce_ur.hex)|
+|442|1024|u7.7|`wes-hpr-c`|[urboot_atmega644_12mhz_115200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644/fcpu_12mhz/115200_bps/urboot_atmega644_12mhz_115200bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

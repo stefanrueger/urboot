@@ -1,14 +1,14 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|244|256|u7.7|`w-u-jPr--`|[moteino_7mhz3728_57600bps_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/moteino_7mhz3728_57600bps_led+b1_ur_vbl.hex)|
-|248|256|u7.7|`w-u-jpr--`|[moteino_7mhz3728_57600bps_led+b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/moteino_7mhz3728_57600bps_led+b1_fr_ur_vbl.hex)|
-|356|384|u7.7|`weu-jPr-c`|[moteino_7mhz3728_57600bps_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/moteino_7mhz3728_57600bps_ee_led+b1_fr_ce_ur_vbl.hex)|
-|374|384|u7.7|`w-udjpr--`|[moteino_7mhz3728_57600bps_led+b1_csb0_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/moteino_7mhz3728_57600bps_led+b1_csb0_dual_ur_vbl.hex)|
-|338|512|u7.7|`weu-hpr-c`|[moteino_7mhz3728_57600bps_ee_led+b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/moteino_7mhz3728_57600bps_ee_led+b1_fr_ce_ur.hex)|
-|442|512|u7.7|`wes-hpr-c`|[moteino_7mhz3728_57600bps_ee_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/moteino_7mhz3728_57600bps_ee_led+b1_fr_ce.hex)|
-|482|512|u7.7|`weudhpr-c`|[moteino_7mhz3728_57600bps_ee_led+b1_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/moteino_7mhz3728_57600bps_ee_led+b1_csb0_dual_fr_ce_ur.hex)|
-|488|512|u7.7|`w-sdhpr--`|[moteino_7mhz3728_57600bps_led+b1_csb0_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/moteino_7mhz3728_57600bps_led+b1_csb0_dual_fr.hex)|
-|586|1024|u7.7|`wesdhpr-c`|[moteino_7mhz3728_57600bps_ee_led+b1_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/moteino_7mhz3728_57600bps_ee_led+b1_csb0_dual_fr_ce.hex)|
+|244|256|u7.7|`w-u-jPr--`|[urboot_moteino_7mhz3728_57600bps_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/urboot_moteino_7mhz3728_57600bps_led+b1_ur_vbl.hex)|
+|248|256|u7.7|`w-u-jpr--`|[urboot_moteino_7mhz3728_57600bps_led+b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/urboot_moteino_7mhz3728_57600bps_led+b1_fr_ur_vbl.hex)|
+|356|384|u7.7|`weu-jPr-c`|[urboot_moteino_7mhz3728_57600bps_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/urboot_moteino_7mhz3728_57600bps_ee_led+b1_fr_ce_ur_vbl.hex)|
+|374|384|u7.7|`w-udjpr--`|[urboot_moteino_7mhz3728_57600bps_led+b1_csb0_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/urboot_moteino_7mhz3728_57600bps_led+b1_csb0_dual_ur_vbl.hex)|
+|338|512|u7.7|`weu-hpr-c`|[urboot_moteino_7mhz3728_57600bps_ee_led+b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/urboot_moteino_7mhz3728_57600bps_ee_led+b1_fr_ce_ur.hex)|
+|442|512|u7.7|`wes-hpr-c`|[urboot_moteino_7mhz3728_57600bps_ee_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/urboot_moteino_7mhz3728_57600bps_ee_led+b1_fr_ce.hex)|
+|482|512|u7.7|`weudhpr-c`|[urboot_moteino_7mhz3728_57600bps_ee_led+b1_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/urboot_moteino_7mhz3728_57600bps_ee_led+b1_csb0_dual_fr_ce_ur.hex)|
+|488|512|u7.7|`w-sdhpr--`|[urboot_moteino_7mhz3728_57600bps_led+b1_csb0_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/urboot_moteino_7mhz3728_57600bps_led+b1_csb0_dual_fr.hex)|
+|586|1024|u7.7|`wesdhpr-c`|[urboot_moteino_7mhz3728_57600bps_ee_led+b1_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/fcpu_7mhz3728/57600_bps/urboot_moteino_7mhz3728_57600bps_ee_led+b1_csb0_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

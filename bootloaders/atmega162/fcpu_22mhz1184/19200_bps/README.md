@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|238|256|u7.7|`w-u-hpr--`|[atmega162_22mhz1184_19200bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega162/fcpu_22mhz1184/19200_bps/atmega162_22mhz1184_19200bps_lednop_fr_ur.hex)|
-|344|384|u7.7|`weu-jPr-c`|[atmega162_22mhz1184_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega162/fcpu_22mhz1184/19200_bps/atmega162_22mhz1184_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|326|512|u7.7|`weu-hpr-c`|[atmega162_22mhz1184_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega162/fcpu_22mhz1184/19200_bps/atmega162_22mhz1184_19200bps_ee_lednop_fr_ce_ur.hex)|
-|430|512|u7.7|`wes-hpr-c`|[atmega162_22mhz1184_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega162/fcpu_22mhz1184/19200_bps/atmega162_22mhz1184_19200bps_ee_lednop_fr_ce.hex)|
+|238|256|u7.7|`w-u-hpr--`|[urboot_atmega162_22mhz1184_19200bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega162/fcpu_22mhz1184/19200_bps/urboot_atmega162_22mhz1184_19200bps_lednop_fr_ur.hex)|
+|344|384|u7.7|`weu-jPr-c`|[urboot_atmega162_22mhz1184_19200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega162/fcpu_22mhz1184/19200_bps/urboot_atmega162_22mhz1184_19200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|326|512|u7.7|`weu-hpr-c`|[urboot_atmega162_22mhz1184_19200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega162/fcpu_22mhz1184/19200_bps/urboot_atmega162_22mhz1184_19200bps_ee_lednop_fr_ce_ur.hex)|
+|430|512|u7.7|`wes-hpr-c`|[urboot_atmega162_22mhz1184_19200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega162/fcpu_22mhz1184/19200_bps/urboot_atmega162_22mhz1184_19200bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

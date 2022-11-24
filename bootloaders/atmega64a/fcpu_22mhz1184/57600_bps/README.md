@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|256|256|u7.7|`w-u-jPr--`|[atmega64a_22mhz1184_57600bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64a/fcpu_22mhz1184/57600_bps/atmega64a_22mhz1184_57600bps_lednop_fr_ur_vbl.hex)|
-|342|512|u7.7|`weu-jPr-c`|[atmega64a_22mhz1184_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64a/fcpu_22mhz1184/57600_bps/atmega64a_22mhz1184_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|328|1024|u7.7|`weu-hpr-c`|[atmega64a_22mhz1184_57600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64a/fcpu_22mhz1184/57600_bps/atmega64a_22mhz1184_57600bps_ee_lednop_fr_ce_ur.hex)|
-|432|1024|u7.7|`wes-hpr-c`|[atmega64a_22mhz1184_57600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64a/fcpu_22mhz1184/57600_bps/atmega64a_22mhz1184_57600bps_ee_lednop_fr_ce.hex)|
+|256|256|u7.7|`w-u-jPr--`|[urboot_atmega64a_22mhz1184_57600bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64a/fcpu_22mhz1184/57600_bps/urboot_atmega64a_22mhz1184_57600bps_lednop_fr_ur_vbl.hex)|
+|342|512|u7.7|`weu-jPr-c`|[urboot_atmega64a_22mhz1184_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64a/fcpu_22mhz1184/57600_bps/urboot_atmega64a_22mhz1184_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|328|1024|u7.7|`weu-hpr-c`|[urboot_atmega64a_22mhz1184_57600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64a/fcpu_22mhz1184/57600_bps/urboot_atmega64a_22mhz1184_57600bps_ee_lednop_fr_ce_ur.hex)|
+|432|1024|u7.7|`wes-hpr-c`|[urboot_atmega64a_22mhz1184_57600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega64a/fcpu_22mhz1184/57600_bps/urboot_atmega64a_22mhz1184_57600bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

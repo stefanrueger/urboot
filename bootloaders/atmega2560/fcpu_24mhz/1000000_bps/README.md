@@ -1,14 +1,14 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|244|256|u7.7|`w-u-jpr--`|[atmega2560_24mhz_1000000bps_led+b7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/atmega2560_24mhz_1000000bps_led+b7_ur_vbl.hex)|
-|244|256|u7.7|`w-u-jpr--`|[atmega2560_24mhz_1000000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/atmega2560_24mhz_1000000bps_lednop_ur_vbl.hex)|
-|256|256|u7.7|`w-u-jPr--`|[atmega2560_24mhz_1000000bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/atmega2560_24mhz_1000000bps_ur_vbl.hex)|
-|386|512|u7.7|`weu-jPr-c`|[atmega2560_24mhz_1000000bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/atmega2560_24mhz_1000000bps_ee_led+b7_fr_ce_ur_vbl.hex)|
-|386|512|u7.7|`weu-jPr-c`|[atmega2560_24mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/atmega2560_24mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|368|1024|u7.7|`weu-hpr-c`|[atmega2560_24mhz_1000000bps_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/atmega2560_24mhz_1000000bps_ee_led+b7_fr_ce_ur.hex)|
-|368|1024|u7.7|`weu-hpr-c`|[atmega2560_24mhz_1000000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/atmega2560_24mhz_1000000bps_ee_lednop_fr_ce_ur.hex)|
-|482|1024|u7.7|`wes-hpr-c`|[atmega2560_24mhz_1000000bps_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/atmega2560_24mhz_1000000bps_ee_led+b7_fr_ce.hex)|
-|482|1024|u7.7|`wes-hpr-c`|[atmega2560_24mhz_1000000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/atmega2560_24mhz_1000000bps_ee_lednop_fr_ce.hex)|
+|244|256|u7.7|`w-u-jpr--`|[urboot_atmega2560_24mhz_1000000bps_led+b7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/urboot_atmega2560_24mhz_1000000bps_led+b7_ur_vbl.hex)|
+|244|256|u7.7|`w-u-jpr--`|[urboot_atmega2560_24mhz_1000000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/urboot_atmega2560_24mhz_1000000bps_lednop_ur_vbl.hex)|
+|256|256|u7.7|`w-u-jPr--`|[urboot_atmega2560_24mhz_1000000bps_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/urboot_atmega2560_24mhz_1000000bps_ur_vbl.hex)|
+|386|512|u7.7|`weu-jPr-c`|[urboot_atmega2560_24mhz_1000000bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/urboot_atmega2560_24mhz_1000000bps_ee_led+b7_fr_ce_ur_vbl.hex)|
+|386|512|u7.7|`weu-jPr-c`|[urboot_atmega2560_24mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/urboot_atmega2560_24mhz_1000000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|368|1024|u7.7|`weu-hpr-c`|[urboot_atmega2560_24mhz_1000000bps_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/urboot_atmega2560_24mhz_1000000bps_ee_led+b7_fr_ce_ur.hex)|
+|368|1024|u7.7|`weu-hpr-c`|[urboot_atmega2560_24mhz_1000000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/urboot_atmega2560_24mhz_1000000bps_ee_lednop_fr_ce_ur.hex)|
+|482|1024|u7.7|`wes-hpr-c`|[urboot_atmega2560_24mhz_1000000bps_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/urboot_atmega2560_24mhz_1000000bps_ee_led+b7_fr_ce.hex)|
+|482|1024|u7.7|`wes-hpr-c`|[urboot_atmega2560_24mhz_1000000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_24mhz/1000000_bps/urboot_atmega2560_24mhz_1000000bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

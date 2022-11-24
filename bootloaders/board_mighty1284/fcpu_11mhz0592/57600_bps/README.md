@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|240|256|u7.7|`w-u-jpr--`|[mighty1284_11mhz0592_57600bps_led+b7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mighty1284/fcpu_11mhz0592/57600_bps/mighty1284_11mhz0592_57600bps_led+b7_ur_vbl.hex)|
-|382|512|u7.7|`weu-jPr-c`|[mighty1284_11mhz0592_57600bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mighty1284/fcpu_11mhz0592/57600_bps/mighty1284_11mhz0592_57600bps_ee_led+b7_fr_ce_ur_vbl.hex)|
-|364|1024|u7.7|`weu-hpr-c`|[mighty1284_11mhz0592_57600bps_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mighty1284/fcpu_11mhz0592/57600_bps/mighty1284_11mhz0592_57600bps_ee_led+b7_fr_ce_ur.hex)|
-|470|1024|u7.7|`wes-hpr-c`|[mighty1284_11mhz0592_57600bps_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mighty1284/fcpu_11mhz0592/57600_bps/mighty1284_11mhz0592_57600bps_ee_led+b7_fr_ce.hex)|
+|240|256|u7.7|`w-u-jpr--`|[urboot_mighty1284_11mhz0592_57600bps_led+b7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mighty1284/fcpu_11mhz0592/57600_bps/urboot_mighty1284_11mhz0592_57600bps_led+b7_ur_vbl.hex)|
+|382|512|u7.7|`weu-jPr-c`|[urboot_mighty1284_11mhz0592_57600bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mighty1284/fcpu_11mhz0592/57600_bps/urboot_mighty1284_11mhz0592_57600bps_ee_led+b7_fr_ce_ur_vbl.hex)|
+|364|1024|u7.7|`weu-hpr-c`|[urboot_mighty1284_11mhz0592_57600bps_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mighty1284/fcpu_11mhz0592/57600_bps/urboot_mighty1284_11mhz0592_57600bps_ee_led+b7_fr_ce_ur.hex)|
+|470|1024|u7.7|`wes-hpr-c`|[urboot_mighty1284_11mhz0592_57600bps_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_mighty1284/fcpu_11mhz0592/57600_bps/urboot_mighty1284_11mhz0592_57600bps_ee_led+b7_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

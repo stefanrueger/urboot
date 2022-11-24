@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|246|256|u7.7|`w-u-hpra-`|[atmega168a_autobaud_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/autobaud/atmega168a_autobaud_lednop_ur.hex)|
-|254|256|u7.7|`w-u-jPra-`|[atmega168a_autobaud_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/autobaud/atmega168a_autobaud_ur_vbl.hex)|
-|376|384|u7.7|`weu-jPrac`|[atmega168a_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/autobaud/atmega168a_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
-|358|512|u7.7|`weu-hprac`|[atmega168a_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/autobaud/atmega168a_autobaud_ee_lednop_fr_ce_ur.hex)|
-|462|512|u7.7|`wes-hprac`|[atmega168a_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/autobaud/atmega168a_autobaud_ee_lednop_fr_ce.hex)|
+|246|256|u7.7|`w-u-hpra-`|[urboot_atmega168a_autobaud_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/autobaud/urboot_atmega168a_autobaud_lednop_ur.hex)|
+|254|256|u7.7|`w-u-jPra-`|[urboot_atmega168a_autobaud_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/autobaud/urboot_atmega168a_autobaud_ur_vbl.hex)|
+|376|384|u7.7|`weu-jPrac`|[urboot_atmega168a_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/autobaud/urboot_atmega168a_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|358|512|u7.7|`weu-hprac`|[urboot_atmega168a_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/autobaud/urboot_atmega168a_autobaud_ee_lednop_fr_ce_ur.hex)|
+|462|512|u7.7|`wes-hprac`|[urboot_atmega168a_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168a/autobaud/urboot_atmega168a_autobaud_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

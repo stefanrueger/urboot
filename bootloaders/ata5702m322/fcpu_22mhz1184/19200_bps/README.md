@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|254|256|u7.7|`w-u-jpr--`|[ata5702m322_22mhz1184_19200bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_22mhz1184/19200_bps/ata5702m322_22mhz1184_19200bps_rxb0_txb1_lednop_ur_vbl.hex)|
-|320|320|u7.7|`w-u-jPr-c`|[ata5702m322_22mhz1184_19200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_22mhz1184/19200_bps/ata5702m322_22mhz1184_19200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
-|320|320|u7.7|`weu-jpr--`|[ata5702m322_22mhz1184_19200bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_22mhz1184/19200_bps/ata5702m322_22mhz1184_19200bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
-|382|384|u7.7|`weu-jPr-c`|[ata5702m322_22mhz1184_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_22mhz1184/19200_bps/ata5702m322_22mhz1184_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|254|256|u7.7|`w-u-jpr--`|[urboot_ata5702m322_22mhz1184_19200bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_22mhz1184/19200_bps/urboot_ata5702m322_22mhz1184_19200bps_rxb0_txb1_lednop_ur_vbl.hex)|
+|320|320|u7.7|`w-u-jPr-c`|[urboot_ata5702m322_22mhz1184_19200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_22mhz1184/19200_bps/urboot_ata5702m322_22mhz1184_19200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|320|320|u7.7|`weu-jpr--`|[urboot_ata5702m322_22mhz1184_19200bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_22mhz1184/19200_bps/urboot_ata5702m322_22mhz1184_19200bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
+|382|384|u7.7|`weu-jPr-c`|[urboot_ata5702m322_22mhz1184_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_22mhz1184/19200_bps/urboot_ata5702m322_22mhz1184_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.7|`w-u-jpr--`|[ata5791_11mhz0592_19200bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5791/fcpu_11mhz0592/19200_bps/ata5791_11mhz0592_19200bps_rxb0_txb1_ur_vbl.hex)|
-|384|384|u7.7|`weu-jPr-c`|[ata5791_11mhz0592_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5791/fcpu_11mhz0592/19200_bps/ata5791_11mhz0592_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
-|366|2048|u7.7|`weu-hpr-c`|[ata5791_11mhz0592_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5791/fcpu_11mhz0592/19200_bps/ata5791_11mhz0592_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
-|470|2048|u7.7|`wes-hpr-c`|[ata5791_11mhz0592_19200bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5791/fcpu_11mhz0592/19200_bps/ata5791_11mhz0592_19200bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
+|252|256|u7.7|`w-u-jpr--`|[urboot_ata5791_11mhz0592_19200bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5791/fcpu_11mhz0592/19200_bps/urboot_ata5791_11mhz0592_19200bps_rxb0_txb1_ur_vbl.hex)|
+|384|384|u7.7|`weu-jPr-c`|[urboot_ata5791_11mhz0592_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5791/fcpu_11mhz0592/19200_bps/urboot_ata5791_11mhz0592_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|366|2048|u7.7|`weu-hpr-c`|[urboot_ata5791_11mhz0592_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5791/fcpu_11mhz0592/19200_bps/urboot_ata5791_11mhz0592_19200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
+|470|2048|u7.7|`wes-hpr-c`|[urboot_ata5791_11mhz0592_19200bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5791/fcpu_11mhz0592/19200_bps/urboot_ata5791_11mhz0592_19200bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

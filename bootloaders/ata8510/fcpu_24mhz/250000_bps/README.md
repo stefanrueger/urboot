@@ -1,13 +1,13 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.7|`w-u-jpr--`|[ata8510_24mhz_250000bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/ata8510_24mhz_250000bps_rxb0_txb1_ur_vbl.hex)|
-|280|320|u7.7|`w-u-jPr--`|[ata8510_24mhz_250000bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/ata8510_24mhz_250000bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
-|310|320|u7.7|`w-u-jpr-c`|[ata8510_24mhz_250000bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/ata8510_24mhz_250000bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
-|318|320|u7.7|`weu-jpr--`|[ata8510_24mhz_250000bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/ata8510_24mhz_250000bps_rxb0_txb1_ee_ur_vbl.hex)|
-|342|384|u7.7|`weu-jPr--`|[ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
-|372|384|u7.7|`weu-jpr-c`|[ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
-|350|20464|u7.7|`weu-hpr-c`|[ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
-|454|20464|u7.7|`wes-hpr-c`|[ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
+|252|256|u7.7|`w-u-jpr--`|[urboot_ata8510_24mhz_250000bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/urboot_ata8510_24mhz_250000bps_rxb0_txb1_ur_vbl.hex)|
+|280|320|u7.7|`w-u-jPr--`|[urboot_ata8510_24mhz_250000bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/urboot_ata8510_24mhz_250000bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
+|310|320|u7.7|`w-u-jpr-c`|[urboot_ata8510_24mhz_250000bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/urboot_ata8510_24mhz_250000bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|318|320|u7.7|`weu-jpr--`|[urboot_ata8510_24mhz_250000bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/urboot_ata8510_24mhz_250000bps_rxb0_txb1_ee_ur_vbl.hex)|
+|342|384|u7.7|`weu-jPr--`|[urboot_ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/urboot_ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
+|372|384|u7.7|`weu-jpr-c`|[urboot_ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/urboot_ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|350|20464|u7.7|`weu-hpr-c`|[urboot_ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/urboot_ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
+|454|20464|u7.7|`wes-hpr-c`|[urboot_ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata8510/fcpu_24mhz/250000_bps/urboot_ata8510_24mhz_250000bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

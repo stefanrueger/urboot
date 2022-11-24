@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|240|256|u7.7|`w-u-jpr--`|[wildfire-v2_18mhz432_19200bps_led+b7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire-v2/fcpu_18mhz432/19200_bps/wildfire-v2_18mhz432_19200bps_led+b7_ur_vbl.hex)|
-|382|512|u7.7|`weu-jPr-c`|[wildfire-v2_18mhz432_19200bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire-v2/fcpu_18mhz432/19200_bps/wildfire-v2_18mhz432_19200bps_ee_led+b7_fr_ce_ur_vbl.hex)|
-|364|1024|u7.7|`weu-hpr-c`|[wildfire-v2_18mhz432_19200bps_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire-v2/fcpu_18mhz432/19200_bps/wildfire-v2_18mhz432_19200bps_ee_led+b7_fr_ce_ur.hex)|
-|470|1024|u7.7|`wes-hpr-c`|[wildfire-v2_18mhz432_19200bps_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire-v2/fcpu_18mhz432/19200_bps/wildfire-v2_18mhz432_19200bps_ee_led+b7_fr_ce.hex)|
+|240|256|u7.7|`w-u-jpr--`|[urboot_wildfire-v2_18mhz432_19200bps_led+b7_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire-v2/fcpu_18mhz432/19200_bps/urboot_wildfire-v2_18mhz432_19200bps_led+b7_ur_vbl.hex)|
+|382|512|u7.7|`weu-jPr-c`|[urboot_wildfire-v2_18mhz432_19200bps_ee_led+b7_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire-v2/fcpu_18mhz432/19200_bps/urboot_wildfire-v2_18mhz432_19200bps_ee_led+b7_fr_ce_ur_vbl.hex)|
+|364|1024|u7.7|`weu-hpr-c`|[urboot_wildfire-v2_18mhz432_19200bps_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire-v2/fcpu_18mhz432/19200_bps/urboot_wildfire-v2_18mhz432_19200bps_ee_led+b7_fr_ce_ur.hex)|
+|470|1024|u7.7|`wes-hpr-c`|[urboot_wildfire-v2_18mhz432_19200bps_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_wildfire-v2/fcpu_18mhz432/19200_bps/urboot_wildfire-v2_18mhz432_19200bps_ee_led+b7_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

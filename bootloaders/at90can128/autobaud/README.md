@@ -1,8 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|408|512|u7.7|`weu-jPrac`|[at90can128_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/autobaud/at90can128_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
-|390|1024|u7.7|`weu-hprac`|[at90can128_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/autobaud/at90can128_autobaud_ee_lednop_fr_ce_ur.hex)|
-|496|1024|u7.7|`wes-hprac`|[at90can128_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/autobaud/at90can128_autobaud_ee_lednop_fr_ce.hex)|
+|408|512|u7.7|`weu-jPrac`|[urboot_at90can128_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/autobaud/urboot_at90can128_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|390|1024|u7.7|`weu-hprac`|[urboot_at90can128_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/autobaud/urboot_at90can128_autobaud_ee_lednop_fr_ce_ur.hex)|
+|496|1024|u7.7|`wes-hprac`|[urboot_at90can128_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90can128/autobaud/urboot_at90can128_autobaud_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

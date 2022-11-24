@@ -1,7 +1,7 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.7|`w-u-jpr--`|[attiny1634_8mhz_115200bps_rxa7_txb0_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/115200_bps/attiny1634_8mhz_115200bps_rxa7_txb0_ur_vbl.hex)|
-|384|384|u7.7|`weu-jPr-c`|[attiny1634_8mhz_115200bps_rxa7_txb0_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/115200_bps/attiny1634_8mhz_115200bps_rxa7_txb0_ee_lednop_fr_ce_ur_vbl.hex)|
+|252|256|u7.7|`w-u-jpr--`|[urboot_attiny1634_8mhz_115200bps_rxa7_txb0_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/115200_bps/urboot_attiny1634_8mhz_115200bps_rxa7_txb0_ur_vbl.hex)|
+|384|384|u7.7|`weu-jPr-c`|[urboot_attiny1634_8mhz_115200bps_rxa7_txb0_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny1634/fcpu_8mhz/115200_bps/urboot_attiny1634_8mhz_115200bps_rxa7_txb0_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

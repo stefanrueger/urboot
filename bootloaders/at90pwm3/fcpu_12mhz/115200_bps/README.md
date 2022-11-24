@@ -1,11 +1,11 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|242|256|u7.7|`w-u-hpr--`|[at90pwm3_12mhz_115200bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3/fcpu_12mhz/115200_bps/at90pwm3_12mhz_115200bps_lednop_ur.hex)|
-|306|320|u7.7|`w-u-jPr-c`|[at90pwm3_12mhz_115200bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3/fcpu_12mhz/115200_bps/at90pwm3_12mhz_115200bps_lednop_fr_ce_ur_vbl.hex)|
-|320|320|u7.7|`weu-jPr--`|[at90pwm3_12mhz_115200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3/fcpu_12mhz/115200_bps/at90pwm3_12mhz_115200bps_ee_lednop_ur_vbl.hex)|
-|366|384|u7.7|`weu-jPr-c`|[at90pwm3_12mhz_115200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3/fcpu_12mhz/115200_bps/at90pwm3_12mhz_115200bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|348|512|u7.7|`weu-hpr-c`|[at90pwm3_12mhz_115200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3/fcpu_12mhz/115200_bps/at90pwm3_12mhz_115200bps_ee_lednop_fr_ce_ur.hex)|
-|452|512|u7.7|`wes-hpr-c`|[at90pwm3_12mhz_115200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3/fcpu_12mhz/115200_bps/at90pwm3_12mhz_115200bps_ee_lednop_fr_ce.hex)|
+|242|256|u7.7|`w-u-hpr--`|[urboot_at90pwm3_12mhz_115200bps_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3/fcpu_12mhz/115200_bps/urboot_at90pwm3_12mhz_115200bps_lednop_ur.hex)|
+|306|320|u7.7|`w-u-jPr-c`|[urboot_at90pwm3_12mhz_115200bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3/fcpu_12mhz/115200_bps/urboot_at90pwm3_12mhz_115200bps_lednop_fr_ce_ur_vbl.hex)|
+|320|320|u7.7|`weu-jPr--`|[urboot_at90pwm3_12mhz_115200bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3/fcpu_12mhz/115200_bps/urboot_at90pwm3_12mhz_115200bps_ee_lednop_ur_vbl.hex)|
+|366|384|u7.7|`weu-jPr-c`|[urboot_at90pwm3_12mhz_115200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3/fcpu_12mhz/115200_bps/urboot_at90pwm3_12mhz_115200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|348|512|u7.7|`weu-hpr-c`|[urboot_at90pwm3_12mhz_115200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3/fcpu_12mhz/115200_bps/urboot_at90pwm3_12mhz_115200bps_ee_lednop_fr_ce_ur.hex)|
+|452|512|u7.7|`wes-hpr-c`|[urboot_at90pwm3_12mhz_115200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3/fcpu_12mhz/115200_bps/urboot_at90pwm3_12mhz_115200bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

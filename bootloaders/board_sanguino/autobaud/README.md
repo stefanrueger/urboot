@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|248|256|u7.7|`w-u-jpra-`|[sanguino_autobaud_led+b0_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/autobaud/sanguino_autobaud_led+b0_ur_vbl.hex)|
-|368|512|u7.7|`weu-jPrac`|[sanguino_autobaud_ee_led+b0_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/autobaud/sanguino_autobaud_ee_led+b0_fr_ce_ur_vbl.hex)|
-|354|1024|u7.7|`weu-hprac`|[sanguino_autobaud_ee_led+b0_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/autobaud/sanguino_autobaud_ee_led+b0_fr_ce_ur.hex)|
-|458|1024|u7.7|`wes-hprac`|[sanguino_autobaud_ee_led+b0_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/autobaud/sanguino_autobaud_ee_led+b0_fr_ce.hex)|
+|248|256|u7.7|`w-u-jpra-`|[urboot_sanguino_autobaud_led+b0_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/autobaud/urboot_sanguino_autobaud_led+b0_ur_vbl.hex)|
+|368|512|u7.7|`weu-jPrac`|[urboot_sanguino_autobaud_ee_led+b0_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/autobaud/urboot_sanguino_autobaud_ee_led+b0_fr_ce_ur_vbl.hex)|
+|354|1024|u7.7|`weu-hprac`|[urboot_sanguino_autobaud_ee_led+b0_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/autobaud/urboot_sanguino_autobaud_ee_led+b0_fr_ce_ur.hex)|
+|458|1024|u7.7|`wes-hprac`|[urboot_sanguino_autobaud_ee_led+b0_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_sanguino/autobaud/urboot_sanguino_autobaud_ee_led+b0_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

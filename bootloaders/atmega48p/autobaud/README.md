@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|250|256|u7.7|`w-u-jpra-`|[atmega48p_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/autobaud/atmega48p_autobaud_lednop_ur_vbl.hex)|
-|312|320|u7.7|`weu-jpra-`|[atmega48p_autobaud_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/autobaud/atmega48p_autobaud_ee_lednop_ur_vbl.hex)|
-|314|320|u7.7|`w-u-jPrac`|[atmega48p_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/autobaud/atmega48p_autobaud_lednop_fr_ce_ur_vbl.hex)|
-|320|320|u7.7|`weu-jPra-`|[atmega48p_autobaud_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/autobaud/atmega48p_autobaud_ee_ur_vbl.hex)|
-|372|384|u7.7|`weu-jPrac`|[atmega48p_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/autobaud/atmega48p_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|250|256|u7.7|`w-u-jpra-`|[urboot_atmega48p_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/autobaud/urboot_atmega48p_autobaud_lednop_ur_vbl.hex)|
+|312|320|u7.7|`weu-jpra-`|[urboot_atmega48p_autobaud_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/autobaud/urboot_atmega48p_autobaud_ee_lednop_ur_vbl.hex)|
+|314|320|u7.7|`w-u-jPrac`|[urboot_atmega48p_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/autobaud/urboot_atmega48p_autobaud_lednop_fr_ce_ur_vbl.hex)|
+|320|320|u7.7|`weu-jPra-`|[urboot_atmega48p_autobaud_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/autobaud/urboot_atmega48p_autobaud_ee_ur_vbl.hex)|
+|372|384|u7.7|`weu-jPrac`|[urboot_atmega48p_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega48p/autobaud/urboot_atmega48p_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

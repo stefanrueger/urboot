@@ -1,13 +1,13 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|240|256|u7.7|`w-u-jPr--`|[atmega8a_20mhz_500000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/atmega8a_20mhz_500000bps_lednop_ur_vbl.hex)|
-|244|256|u7.7|`w-u-hpr--`|[atmega8a_20mhz_500000bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/atmega8a_20mhz_500000bps_lednop_fr_ur.hex)|
-|290|320|u7.7|`w-u-jPr-c`|[atmega8a_20mhz_500000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/atmega8a_20mhz_500000bps_lednop_fr_ce_ur_vbl.hex)|
-|310|320|u7.7|`weu-jPr--`|[atmega8a_20mhz_500000bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/atmega8a_20mhz_500000bps_ee_lednop_ur_vbl.hex)|
-|314|320|u7.7|`weu-jpr--`|[atmega8a_20mhz_500000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/atmega8a_20mhz_500000bps_ee_lednop_fr_ur_vbl.hex)|
-|356|384|u7.7|`weu-jPr-c`|[atmega8a_20mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/atmega8a_20mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|338|512|u7.7|`weu-hpr-c`|[atmega8a_20mhz_500000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/atmega8a_20mhz_500000bps_ee_lednop_fr_ce_ur.hex)|
-|440|512|u7.7|`wes-hpr-c`|[atmega8a_20mhz_500000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/atmega8a_20mhz_500000bps_ee_lednop_fr_ce.hex)|
+|240|256|u7.7|`w-u-jPr--`|[urboot_atmega8a_20mhz_500000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/urboot_atmega8a_20mhz_500000bps_lednop_ur_vbl.hex)|
+|244|256|u7.7|`w-u-hpr--`|[urboot_atmega8a_20mhz_500000bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/urboot_atmega8a_20mhz_500000bps_lednop_fr_ur.hex)|
+|290|320|u7.7|`w-u-jPr-c`|[urboot_atmega8a_20mhz_500000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/urboot_atmega8a_20mhz_500000bps_lednop_fr_ce_ur_vbl.hex)|
+|310|320|u7.7|`weu-jPr--`|[urboot_atmega8a_20mhz_500000bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/urboot_atmega8a_20mhz_500000bps_ee_lednop_ur_vbl.hex)|
+|314|320|u7.7|`weu-jpr--`|[urboot_atmega8a_20mhz_500000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/urboot_atmega8a_20mhz_500000bps_ee_lednop_fr_ur_vbl.hex)|
+|356|384|u7.7|`weu-jPr-c`|[urboot_atmega8a_20mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/urboot_atmega8a_20mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|338|512|u7.7|`weu-hpr-c`|[urboot_atmega8a_20mhz_500000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/urboot_atmega8a_20mhz_500000bps_ee_lednop_fr_ce_ur.hex)|
+|440|512|u7.7|`wes-hpr-c`|[urboot_atmega8a_20mhz_500000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega8a/fcpu_20mhz/500000_bps/urboot_atmega8a_20mhz_500000bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

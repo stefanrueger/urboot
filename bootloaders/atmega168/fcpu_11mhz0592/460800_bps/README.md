@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|248|256|u7.7|`w-u-jPr--`|[atmega168_11mhz0592_460800bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168/fcpu_11mhz0592/460800_bps/atmega168_11mhz0592_460800bps_lednop_ur_vbl.hex)|
-|252|256|u7.7|`w-u-hpr--`|[atmega168_11mhz0592_460800bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168/fcpu_11mhz0592/460800_bps/atmega168_11mhz0592_460800bps_lednop_fr_ur.hex)|
-|360|384|u7.7|`weu-jPr-c`|[atmega168_11mhz0592_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168/fcpu_11mhz0592/460800_bps/atmega168_11mhz0592_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|342|512|u7.7|`weu-hpr-c`|[atmega168_11mhz0592_460800bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168/fcpu_11mhz0592/460800_bps/atmega168_11mhz0592_460800bps_ee_lednop_fr_ce_ur.hex)|
-|446|512|u7.7|`wes-hpr-c`|[atmega168_11mhz0592_460800bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168/fcpu_11mhz0592/460800_bps/atmega168_11mhz0592_460800bps_ee_lednop_fr_ce.hex)|
+|248|256|u7.7|`w-u-jPr--`|[urboot_atmega168_11mhz0592_460800bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168/fcpu_11mhz0592/460800_bps/urboot_atmega168_11mhz0592_460800bps_lednop_ur_vbl.hex)|
+|252|256|u7.7|`w-u-hpr--`|[urboot_atmega168_11mhz0592_460800bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168/fcpu_11mhz0592/460800_bps/urboot_atmega168_11mhz0592_460800bps_lednop_fr_ur.hex)|
+|360|384|u7.7|`weu-jPr-c`|[urboot_atmega168_11mhz0592_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168/fcpu_11mhz0592/460800_bps/urboot_atmega168_11mhz0592_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|342|512|u7.7|`weu-hpr-c`|[urboot_atmega168_11mhz0592_460800bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168/fcpu_11mhz0592/460800_bps/urboot_atmega168_11mhz0592_460800bps_ee_lednop_fr_ce_ur.hex)|
+|446|512|u7.7|`wes-hpr-c`|[urboot_atmega168_11mhz0592_460800bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega168/fcpu_11mhz0592/460800_bps/urboot_atmega168_11mhz0592_460800bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
