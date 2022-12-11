@@ -218,7 +218,7 @@ foreach my $fname (@ARGV) {
     $fea .= f($flags==3? 'V': $flags==2? 'v': $flags? 'j': 'h'); # V = VBL, patch & verify, v = VBL, patch only, j = VBL, jump only, h = hw boot support
     $fea .= f($vers & UR_PROTECTME? (int($vers/256) >= 7*8+5? 'u': 'p'): (int($vers/256) >= 7*8+5? 's': '-'));
     $fea .= f($vers & UR_RESETFLAGS? 'r': '-');
-    $fea += '--';
+    $fea .= '--';
   } else {
     $ver = sprintf("o%d.%d", int($vers/256), $vers & 0xff);
     $fea = "-.s-.-r--";
