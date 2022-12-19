@@ -43,9 +43,15 @@ taken, it is pretty easy to create own bootloaders with commands such as
 
 **Pre-compiled bootloaders.** If compiling bootloaders is not feasible, feel free to try out one of
 the 34,808 *different* pre-compiled bootloaders in the directory tree
-[`bootloaders`](https://github.com/stefanrueger/urboot/tree/main/bootloaders/). The tree
-contains actually 88,693 hex files, but they are somewhat redundant because a bootloader on
-115,200 baud for 16 MHz is *exactly* the same as a bootloader on 57,600 baud for 8 MHz.
+[`bootloaders`](https://github.com/stefanrueger/urboot/tree/main/bootloaders/). The tree contains
+actually 88,693 hex files, but they are somewhat redundant because a bootloader on 115,200 baud for
+16 MHz is *exactly* the same as a bootloader on 57,600 baud for 8 MHz. You can find bootloaders for
+popular boards in that directory, too, for example autobaud bootloaders for the
+[Uno](https://github.com/stefanrueger/urboot/blob/main/bootloaders/board_uno/autobaud/README.md),
+[Arduino Pro Mini board](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_promini/autobaud/README.md),
+[ATtiny167 based Digispark Pro](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_digispark-pro/autobaud/README.md),
+[ATtiny85 based Disgispark](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_digispark/autobaud/README.md), and
+[Mega2560 R3 boards](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_mega-r3/autobaud/README.md).
 
 **How to select a bootloader.** Tips, tricks and some background
 [here](https://github.com/stefanrueger/urboot/blob/main/howtoselect.md).
