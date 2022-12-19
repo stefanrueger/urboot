@@ -47,11 +47,16 @@ the 34,808 *different* pre-compiled bootloaders in the directory tree
 actually 88,693 hex files, but they are somewhat redundant because a bootloader on 115,200 baud for
 16 MHz is *exactly* the same as a bootloader on 57,600 baud for 8 MHz. You can find bootloaders for
 popular boards in that directory, too, for example autobaud bootloaders for the
-[Uno](https://github.com/stefanrueger/urboot/blob/main/bootloaders/board_uno/autobaud/README.md),
-[Arduino Pro Mini board](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_promini/autobaud/README.md),
-[ATtiny167 based Digispark Pro](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_digispark-pro/autobaud/README.md),
-[ATtiny85 based Disgispark](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_digispark/autobaud/README.md), and
-[Mega2560 R3 boards](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_mega-r3/autobaud/README.md).
+[Uno](https://github.com/stefanrueger/urboot/blob/main/bootloaders/board_uno/autobaud/README.md), the
+[Arduino Pro Mini board](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_promini/autobaud/README.md), the
+[Jeenode](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_jeenode/autobaud/README.md), the
+[Moteino Mega](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_moteinomega/autobaud/README.md), the
+[Mega2560 R3 boards](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_mega-r3/autobaud/README.md); or some
+16 MHz and 115,200 baud boorloaders for the
+[ATtiny167 based Digispark Pro](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_digispark-pro/fcpu_16mhz/115200_bps/README.md), the
+[ATtiny85 based Disgispark](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_digispark/fcpu_16mhz/115200_bps/README.md) and the
+[ATtiny84 based Luminet](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_luminet/fcpu_16mhz/115200_bps/README.md).
+
 
 **How to select a bootloader.** Tips, tricks and some background
 [here](https://github.com/stefanrueger/urboot/blob/main/howtoselect.md).
