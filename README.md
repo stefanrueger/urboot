@@ -46,12 +46,12 @@ the 34,808 *different* pre-compiled bootloaders in the directory tree
 [`bootloaders`](https://github.com/stefanrueger/urboot/tree/main/bootloaders/). The tree contains
 actually 88,693 hex files, but they are somewhat redundant because a bootloader on 115,200 baud for
 16 MHz is *exactly* the same as a bootloader on 57,600 baud for 8 MHz. You can find bootloaders for
-popular boards in that directory, too, for example autobaud bootloaders for the
-[Uno](https://github.com/stefanrueger/urboot/blob/main/bootloaders/board_uno/autobaud/README.md), the
-[Arduino Pro Mini board](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_promini/autobaud/README.md), the
-[Jeenode](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_jeenode/autobaud/README.md), the
-[Moteino Mega](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_moteinomega/autobaud/README.md), the
-[Mega2560 R3 boards](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_mega-r3/autobaud/README.md); or some
+popular boards in that directory, too, for example autobaud bootloaders for the venerable ATmega328P based
+[Uno](https://github.com/stefanrueger/urboot/blob/main/bootloaders/board_uno/autobaud/README.md) with a LED on PB5, the
+[Arduino Pro Mini](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_promini/autobaud/README.md) (same bootloaders), the
+[Jeenode](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_jeenode/autobaud/README.md) with a low-active LED on PB1, the
+ATmega1284P based [Moteino Mega](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_moteinomega/autobaud/README.md) and the
+ATmega2560 [Mega R3 board](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_mega-r3/autobaud/README.md); or, eg, some
 16 MHz and 115,200 baud boorloaders for the
 [ATtiny167 based Digispark Pro](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_digispark-pro/fcpu_16mhz/115200_bps/README.md), the
 [ATtiny85 based Disgispark](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_digispark/fcpu_16mhz/115200_bps/README.md) and the
