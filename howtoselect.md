@@ -27,13 +27,15 @@ there is. However, consider carefully what you need:
    vector bootloaders normally occupy a multiple of the device's flash memory page size. In
    contrast to this, hardware-supported bootloaders often have very large sizes, eg, the ATmega328p
    can have hw-supported bootloaders with 512, 1024, 2048 and 4096 bytes size. Its flash page size
-   is 128 bytes, so vector bootloaders can occupy any multiple of that.<br>Normally, the best use of
+   is 128 bytes, so vector bootloaders can occupy any multiple of that.<p>Normally, the best use of
    MCU flash space is to select `j`-type vector bootloaders (see below), and only select `h`-type
    hardware supported bootloaders if they happen to occupy the same space. If, however, the
    bootloader is used for firmware updates on products where the MCU is not accessible otherwise,
-   vector bootloaders can brick in rare cases if interrupted during upload, eg, by Vcc dipping just
-   below the brownout detection whilst the MCU uses slightly more power during flash write.<br>Either
-   way, when installing bootloaders take care to program the right fuses (see *Usage* in
+   vector bootloaders have the disadvantage that they can brick in very rare cases, eg, if
+   interrupted during upload at a sensitive spot, eg, by Vcc dipping just below the brownout
+   detection whilst the MCU uses slightly more power during flash write of the first page that
+   contains the reset vector.<p> Either way, when installing bootloaders take care to program the
+   right fuses (see *Usage* in
    [readme](https://github.com/stefanrueger/urboot/blob/main/README.md)). There are three types of
    vector bootloaders that the urboot project offers:
     + `j` versions cost minimal to no extra space in the bootloader and need applications to be
@@ -49,12 +51,12 @@ there is. However, consider carefully what you need:
    to the bootloader. It is recommended the bootloader be compiled with `-DPROTECTRESET=1` or, if
    using `make` to supply `PROTECTRESET=1` on the make command line. If there is code space left
    then `urboot.c` automatically switches on this protection. Vector bootloaders with reset vector
-   protection show a captial `P` in their features (hardware bootloaders don't need that). If the
-   reset vector is unprotected in the bootloader not all is lost: the `-c urclock` bootloader does
+   protection show a captial `P` in their features (hardware bootloaders don't need that). Not all
+   is lost if the reset vector is unprotected in the bootloader: the `-c urclock` bootloader does
    not normally allow the reset vector to be overwritten during upload, and the `-c urclock -t`
-   terminal also protects the reset vector of vector bootloaders. Self-modifying programs using
-   `pgm_write_page(sram, 0)` can overwrite the reset vector, though, with a bootloader without
-   reset protection. If that happened, the bootloader needs to be re-flashed.
+   terminal also protects the reset vector of vector bootloaders. Self-modifying applications
+   calling `pgm_write_page(sram, 0)` can overwrite the reset vector, though, unless the bootloader
+   has reset vector protection. If that happens, the bootloader needs to be re-flashed.
  - **Autobaud.** If you have a fixed workflow where you can control the host baud rate, then the
    extra 16 bytes for autobaud detection may not be worth your while: vector bootloaders have to
    have a size of a multiple of the memory page size. If, by reducing the features of the
