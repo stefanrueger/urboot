@@ -51,7 +51,7 @@
 |444|512|u7.7|`wes-hpr-c`|[urclock.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/urclock.hex)|
 |462|512|u7.7|`wes-hpr-c`|[pro_8mhz.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/pro_8mhz.hex)|
 |466|512|u7.7|`wes-hpr-c`|[atmega328p_led9_50Hz_fp9.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_led9_50Hz_fp9.hex)|
-|474|512|o8.3|`-.s-.-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
+|474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
 |484|512|u7.7|`weudhpr-c`|[moteino_cs8_dur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/moteino_cs8_dur.hex)|
 |484|512|u7.7|`weudhpr-c`|[timeduino_cs8_dur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/timeduino_cs8_dur.hex)|
 |484|512|u7.7|`weudhpr-c`|[urclock_cs8_dur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/urclock_cs8_dur.hex)|
@@ -63,7 +63,7 @@
 |504|512|u7.7|`wes-vpr--`|[atmega1284p_v2.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_v2.hex)|
 |508|512|u7.7|`weudhprac`|[atmega328p_adur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_adur.hex)|
 |646|768|u7.7|`wes-Vpr-c`|[atmega2560_v3.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_v3.hex)|
-|710|1024|o8.3|`-.s-.-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex)|
+|710|1024|o8.3|`-es-h-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -83,7 +83,6 @@
   + `r` preserves reset flags for the application in the register R2
   + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
-  + `.` unable to tell from .hex file whether this feature is present
   + `-` corresponding feature not present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `autobaud` tries to match host baud rate; can be f/8, f/16, f/24, ..., f/2048 (f=F<sub>CPU</sub>)

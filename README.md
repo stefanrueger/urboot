@@ -23,7 +23,7 @@
      + Chip erase in bootloader (faster than -c urclock emulation)
  - Avrdude (from v7.1 onwards) supports urboot bootloaders with `-c urclock`
 
-**Documentation.** In the first instance, the first 666 or so lines of `urboot.c`
+**Documentation.** In the first instance, the [first 700 or so lines of `urboot.c`](https://github.com/stefanrueger/urboot/blob/2f81ee5e026b62b426ce6135a09d13f7a310afa8/src/urboot.c#L1-L680)
 
 **Compiling an urboot bootloader.** The small sizes of `urboot` bootloaders depend on many a trick
 of the trade, most of which only work with the avr-gcc toolchain used for compilation. It turns out
@@ -52,7 +52,7 @@ popular boards in that directory, too, for example autobaud bootloaders for the 
 [Jeenode](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_jeenode/autobaud/README.md) with a low-active LED on PB1, the
 ATmega1284P based [Moteino Mega](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_moteinomega/autobaud/README.md) and the
 ATmega2560 [Mega R3 board](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_mega-r3/autobaud/README.md); or, eg, some
-16 MHz and 115,200 baud boorloaders for the
+16 MHz and 115,200 baud bootloaders for the
 [ATtiny167 based Digispark Pro](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_digispark-pro/fcpu_16mhz/115200_bps/README.md), the
 [ATtiny85 based Disgispark](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_digispark/fcpu_16mhz/115200_bps/README.md) and the
 [ATtiny84 based Luminet](https://github.com/stefanrueger/urboot/tree/main/bootloaders/board_luminet/fcpu_16mhz/115200_bps/README.md).
@@ -78,8 +78,8 @@ bootloader
 
 | Bootloader | `FUSE_BOOTRST` | `FUSE_BOOTSZ` | Lock bits for bootloader section |
 | --: | --: | --: | --: |
-| `j`, `v`, `V` | Reset to start of memory| Don't care | Read/write to everywhere|
-| `h` | Reset to boot section | Match with size of bootloader | Protect boot section |
+| `j`, `v`, `V` | Reset to memory start | Don't care | Read/write to everywhere|
+| `h` | Reset to boot section | Match with bootloader size | Protect boot section |
 
 Strictly speaking vector bootloaders also need a `jmp` or `rjmp` from the reset vector
 at address 0 to the bootloader. However, if the chip was erased before putting the bootloader
@@ -112,9 +112,9 @@ and 115,200 baud serial communication speed, except where noted differently.
 |252|256|u7.7|`w-u-jpr--`|[urboot_atmega328p_led+b5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/urboot_atmega328p_16mhz_115200bps_led+b5_fr_ur_vbl.hex)|
 |358|384|u7.7|`weu-jPr-c`|[urboot_atmega328p_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/urboot_atmega328p_16mhz_115200bps_ee_led+b5_fr_ce_ur_vbl.hex)|
 |444|512|u7.7|`wes-hpr-c`|[urboot_atmega328p_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/urboot_atmega328p_16mhz_115200bps_ee_led+b5_fr_ce.hex)|
-|474|512|o8.3|`-.s-.-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
+|474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
 |500|512|u7.7|`weudhprac`|[urboot_urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urboot_urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex)|
-|710|1024|o8.3|`-.s-.-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex)|
+|710|1024|o8.3|`-es-h-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -132,7 +132,6 @@ and 115,200 baud serial communication speed, except where noted differently.
   + `r` preserves reset flags for the application in the register R2
   + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (only recommended for large MCUs)
-  + `.` unable to tell from .hex file whether this feature is present
   + `-` corresponding feature not present
 - **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by
   + `autobaud` tries to match host baud rate; can be f/8, f/16, f/24, ..., f/2048 (f=F<sub>CPU</sub>)
@@ -173,7 +172,7 @@ Here a slightly larger table catering demonstrating the range of 183 parts for w
 |358|384|u7.7|`weu-jPr-c`|[urboot_atmega328p_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_16mhz/115200_bps/urboot_atmega328p_16mhz_115200bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |376|384|u7.7|`weu-jPr-c`|[urboot_atmega328p_8mhz_115200bps_rxd0_txd1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/fcpu_8mhz/115200_bps/urboot_atmega328p_8mhz_115200bps_rxd0_txd1_ee_lednop_fr_ce_ur_vbl.hex)|
 |460|512|u7.7|`wes-hprac`|[urboot_atmega328p_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/autobaud/urboot_atmega328p_autobaud_ee_lednop_fr_ce.hex)|
-|474|512|o8.3|`-.s-.-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
+|474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
 |500|512|u7.7|`weudhprac`|[urboot_urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_urclockusb/autobaud/urboot_urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex)|
 |508|512|u7.7|`weudhprac`|[urboot_atmega328p_autobaud_ee_template_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega328p/autobaud/urboot_atmega328p_autobaud_ee_template_dual_fr_ce_ur.hex)|
 
