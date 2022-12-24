@@ -1,14 +1,14 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |250|256|u7.7|`w-u-jpra-`|[urboot_moteino_autobaud_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_led+b1_ur_vbl.hex)|
-|376|384|u7.7|`weu-jPrac`|[urboot_moteino_autobaud_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_ee_led+b1_fr_ce_ur_vbl.hex)|
-|358|512|u7.7|`weu-hprac`|[urboot_moteino_autobaud_ee_led+b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_ee_led+b1_fr_ce_ur.hex)|
-|450|512|u7.7|`w-udjPrac`|[urboot_moteino_autobaud_led+b1_csb0_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_led+b1_csb0_dual_fr_ce_ur_vbl.hex)|
-|462|512|u7.7|`wes-hprac`|[urboot_moteino_autobaud_ee_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_ee_led+b1_fr_ce.hex)|
+|374|384|u7.7|`weu-jPrac`|[urboot_moteino_autobaud_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_ee_led+b1_fr_ce_ur_vbl.hex)|
+|356|512|u7.7|`weu-hprac`|[urboot_moteino_autobaud_ee_led+b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_ee_led+b1_fr_ce_ur.hex)|
+|448|512|u7.7|`w-udjPrac`|[urboot_moteino_autobaud_led+b1_csb0_dual_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_led+b1_csb0_dual_fr_ce_ur_vbl.hex)|
+|460|512|u7.7|`wes-hprac`|[urboot_moteino_autobaud_ee_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_ee_led+b1_fr_ce.hex)|
 |488|512|u7.7|`weudjPra-`|[urboot_moteino_autobaud_ee_led+b1_csb0_dual_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_ee_led+b1_csb0_dual_fr_ur_vbl.hex)|
-|502|512|u7.7|`weudhprac`|[urboot_moteino_autobaud_ee_led+b1_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_ee_led+b1_csb0_dual_fr_ce_ur.hex)|
+|500|512|u7.7|`weudhprac`|[urboot_moteino_autobaud_ee_led+b1_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_ee_led+b1_csb0_dual_fr_ce_ur.hex)|
 |508|512|u7.7|`w-sdhpra-`|[urboot_moteino_autobaud_led+b1_csb0_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_led+b1_csb0_dual_fr.hex)|
-|606|1024|u7.7|`wesdhprac`|[urboot_moteino_autobaud_ee_led+b1_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_ee_led+b1_csb0_dual_fr_ce.hex)|
+|604|1024|u7.7|`wesdhprac`|[urboot_moteino_autobaud_ee_led+b1_csb0_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_moteino/autobaud/urboot_moteino_autobaud_ee_led+b1_csb0_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

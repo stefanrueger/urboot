@@ -2,12 +2,12 @@
 |:-:|:-:|:-:|:-:|:--|
 |252|256|u7.7|`w-u-jPr--`|[urboot_at90pwm3b_20mhz_250000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_20mhz/250000_bps/urboot_at90pwm3b_20mhz_250000bps_lednop_ur_vbl.hex)|
 |256|256|u7.7|`w-u-hpr--`|[urboot_at90pwm3b_20mhz_250000bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_20mhz/250000_bps/urboot_at90pwm3b_20mhz_250000bps_lednop_fr_ur.hex)|
-|302|320|u7.7|`w-u-jPr-c`|[urboot_at90pwm3b_20mhz_250000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_20mhz/250000_bps/urboot_at90pwm3b_20mhz_250000bps_lednop_fr_ce_ur_vbl.hex)|
+|300|320|u7.7|`w-u-jPr-c`|[urboot_at90pwm3b_20mhz_250000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_20mhz/250000_bps/urboot_at90pwm3b_20mhz_250000bps_lednop_fr_ce_ur_vbl.hex)|
 |318|320|u7.7|`weu-jPr--`|[urboot_at90pwm3b_20mhz_250000bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_20mhz/250000_bps/urboot_at90pwm3b_20mhz_250000bps_ee_lednop_ur_vbl.hex)|
 |322|384|u7.7|`weu-jpr--`|[urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_20mhz/250000_bps/urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ur_vbl.hex)|
-|364|384|u7.7|`weu-jPr-c`|[urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_20mhz/250000_bps/urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|346|512|u7.7|`weu-hpr-c`|[urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_20mhz/250000_bps/urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ce_ur.hex)|
-|450|512|u7.7|`wes-hpr-c`|[urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_20mhz/250000_bps/urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ce.hex)|
+|362|384|u7.7|`weu-jPr-c`|[urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_20mhz/250000_bps/urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|344|512|u7.7|`weu-hpr-c`|[urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_20mhz/250000_bps/urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ce_ur.hex)|
+|448|512|u7.7|`wes-hpr-c`|[urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm3b/fcpu_20mhz/250000_bps/urboot_at90pwm3b_20mhz_250000bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

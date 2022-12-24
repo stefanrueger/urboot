@@ -2,9 +2,9 @@
 |:-:|:-:|:-:|:-:|:--|
 |244|256|u7.7|`w-u-jPr--`|[urboot_atmega324pa_3mhz6864_115200bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega324pa/fcpu_3mhz6864/115200_bps/urboot_atmega324pa_3mhz6864_115200bps_lednop_ur_vbl.hex)|
 |248|256|u7.7|`w-u-jpr--`|[urboot_atmega324pa_3mhz6864_115200bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega324pa/fcpu_3mhz6864/115200_bps/urboot_atmega324pa_3mhz6864_115200bps_lednop_fr_ur_vbl.hex)|
-|356|384|u7.7|`weu-jPr-c`|[urboot_atmega324pa_3mhz6864_115200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega324pa/fcpu_3mhz6864/115200_bps/urboot_atmega324pa_3mhz6864_115200bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|338|512|u7.7|`weu-hpr-c`|[urboot_atmega324pa_3mhz6864_115200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega324pa/fcpu_3mhz6864/115200_bps/urboot_atmega324pa_3mhz6864_115200bps_ee_lednop_fr_ce_ur.hex)|
-|442|512|u7.7|`wes-hpr-c`|[urboot_atmega324pa_3mhz6864_115200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega324pa/fcpu_3mhz6864/115200_bps/urboot_atmega324pa_3mhz6864_115200bps_ee_lednop_fr_ce.hex)|
+|354|384|u7.7|`weu-jPr-c`|[urboot_atmega324pa_3mhz6864_115200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega324pa/fcpu_3mhz6864/115200_bps/urboot_atmega324pa_3mhz6864_115200bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|336|512|u7.7|`weu-hpr-c`|[urboot_atmega324pa_3mhz6864_115200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega324pa/fcpu_3mhz6864/115200_bps/urboot_atmega324pa_3mhz6864_115200bps_ee_lednop_fr_ce_ur.hex)|
+|440|512|u7.7|`wes-hpr-c`|[urboot_atmega324pa_3mhz6864_115200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega324pa/fcpu_3mhz6864/115200_bps/urboot_atmega324pa_3mhz6864_115200bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

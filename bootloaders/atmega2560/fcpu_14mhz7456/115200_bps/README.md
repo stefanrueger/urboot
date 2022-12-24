@@ -7,8 +7,8 @@
 |382|512|u7.7|`weu-jPr-c`|[urboot_atmega2560_14mhz7456_115200bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_14mhz7456/115200_bps/urboot_atmega2560_14mhz7456_115200bps_ee_lednop_fr_ce_ur_vbl.hex)|
 |364|1024|u7.7|`weu-hpr-c`|[urboot_atmega2560_14mhz7456_115200bps_ee_led+b7_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_14mhz7456/115200_bps/urboot_atmega2560_14mhz7456_115200bps_ee_led+b7_fr_ce_ur.hex)|
 |364|1024|u7.7|`weu-hpr-c`|[urboot_atmega2560_14mhz7456_115200bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_14mhz7456/115200_bps/urboot_atmega2560_14mhz7456_115200bps_ee_lednop_fr_ce_ur.hex)|
-|478|1024|u7.7|`wes-hpr-c`|[urboot_atmega2560_14mhz7456_115200bps_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_14mhz7456/115200_bps/urboot_atmega2560_14mhz7456_115200bps_ee_led+b7_fr_ce.hex)|
-|478|1024|u7.7|`wes-hpr-c`|[urboot_atmega2560_14mhz7456_115200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_14mhz7456/115200_bps/urboot_atmega2560_14mhz7456_115200bps_ee_lednop_fr_ce.hex)|
+|480|1024|u7.7|`wes-hpr-c`|[urboot_atmega2560_14mhz7456_115200bps_ee_led+b7_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_14mhz7456/115200_bps/urboot_atmega2560_14mhz7456_115200bps_ee_led+b7_fr_ce.hex)|
+|480|1024|u7.7|`wes-hpr-c`|[urboot_atmega2560_14mhz7456_115200bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega2560/fcpu_14mhz7456/115200_bps/urboot_atmega2560_14mhz7456_115200bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

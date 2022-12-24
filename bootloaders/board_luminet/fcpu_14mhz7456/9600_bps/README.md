@@ -1,8 +1,8 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |252|256|u7.7|`w-u-jpr--`|[urboot_luminet_14mhz7456_9600bps_rxa3_txa2_led+a4_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_luminet/fcpu_14mhz7456/9600_bps/urboot_luminet_14mhz7456_9600bps_rxa3_txa2_led+a4_ur_vbl.hex)|
-|316|320|u7.7|`w-u-jPr-c`|[urboot_luminet_14mhz7456_9600bps_rxa3_txa2_led+a4_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_luminet/fcpu_14mhz7456/9600_bps/urboot_luminet_14mhz7456_9600bps_rxa3_txa2_led+a4_fr_ce_ur_vbl.hex)|
-|384|384|u7.7|`weu-jPr-c`|[urboot_luminet_14mhz7456_9600bps_rxa3_txa2_ee_led+a4_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_luminet/fcpu_14mhz7456/9600_bps/urboot_luminet_14mhz7456_9600bps_rxa3_txa2_ee_led+a4_fr_ce_ur_vbl.hex)|
+|314|320|u7.7|`w-u-jPr-c`|[urboot_luminet_14mhz7456_9600bps_rxa3_txa2_led+a4_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_luminet/fcpu_14mhz7456/9600_bps/urboot_luminet_14mhz7456_9600bps_rxa3_txa2_led+a4_fr_ce_ur_vbl.hex)|
+|382|384|u7.7|`weu-jPr-c`|[urboot_luminet_14mhz7456_9600bps_rxa3_txa2_ee_led+a4_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_luminet/fcpu_14mhz7456/9600_bps/urboot_luminet_14mhz7456_9600bps_rxa3_txa2_ee_led+a4_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

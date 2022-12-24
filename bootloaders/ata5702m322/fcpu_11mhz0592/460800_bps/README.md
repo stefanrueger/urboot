@@ -1,11 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |256|256|u7.7|`w-u-jpr--`|[urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_11mhz0592/460800_bps/urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_lednop_ur_vbl.hex)|
-|292|320|u7.7|`w-u-jPr--`|[urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_11mhz0592/460800_bps/urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
-|308|320|u7.7|`w-u-jpr-c`|[urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_11mhz0592/460800_bps/urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
 |316|320|u7.7|`weu-jpr--`|[urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_11mhz0592/460800_bps/urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_ee_ur_vbl.hex)|
+|318|320|u7.7|`w-u-jPr-c`|[urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_11mhz0592/460800_bps/urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
 |322|384|u7.7|`weu-jpr--`|[urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_11mhz0592/460800_bps/urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
-|384|384|u7.7|`weu-jPr-c`|[urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_11mhz0592/460800_bps/urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|380|384|u7.7|`weu-jPr-c`|[urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata5702m322/fcpu_11mhz0592/460800_bps/urboot_ata5702m322_11mhz0592_460800bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

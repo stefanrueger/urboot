@@ -2,13 +2,13 @@
 |:-:|:-:|:-:|:-:|:--|
 |248|256|u7.7|`w-u-jPr--`|[urboot_anarduino_1mhz_9600bps_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_led+b1_ur_vbl.hex)|
 |252|256|u7.7|`w-u-jpr--`|[urboot_anarduino_1mhz_9600bps_led+b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_led+b1_fr_ur_vbl.hex)|
-|360|384|u7.7|`weu-jPr-c`|[urboot_anarduino_1mhz_9600bps_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_ee_led+b1_fr_ce_ur_vbl.hex)|
-|342|512|u7.7|`weu-hpr-c`|[urboot_anarduino_1mhz_9600bps_ee_led+b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_ee_led+b1_fr_ce_ur.hex)|
+|358|384|u7.7|`weu-jPr-c`|[urboot_anarduino_1mhz_9600bps_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_ee_led+b1_fr_ce_ur_vbl.hex)|
+|340|512|u7.7|`weu-hpr-c`|[urboot_anarduino_1mhz_9600bps_ee_led+b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_ee_led+b1_fr_ce_ur.hex)|
 |382|512|u7.7|`w-udjpr--`|[urboot_anarduino_1mhz_9600bps_led+b1_csd5_dual_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_led+b1_csd5_dual_ur_vbl.hex)|
-|446|512|u7.7|`wes-hpr-c`|[urboot_anarduino_1mhz_9600bps_ee_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_ee_led+b1_fr_ce.hex)|
-|494|512|u7.7|`weudhpr-c`|[urboot_anarduino_1mhz_9600bps_ee_led+b1_csd5_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_ee_led+b1_csd5_dual_fr_ce_ur.hex)|
+|444|512|u7.7|`wes-hpr-c`|[urboot_anarduino_1mhz_9600bps_ee_led+b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_ee_led+b1_fr_ce.hex)|
+|492|512|u7.7|`weudhpr-c`|[urboot_anarduino_1mhz_9600bps_ee_led+b1_csd5_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_ee_led+b1_csd5_dual_fr_ce_ur.hex)|
 |500|512|u7.7|`w-sdhpr--`|[urboot_anarduino_1mhz_9600bps_led+b1_csd5_dual_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_led+b1_csd5_dual_fr.hex)|
-|598|1024|u7.7|`wesdhpr-c`|[urboot_anarduino_1mhz_9600bps_ee_led+b1_csd5_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_ee_led+b1_csd5_dual_fr_ce.hex)|
+|596|1024|u7.7|`wesdhpr-c`|[urboot_anarduino_1mhz_9600bps_ee_led+b1_csd5_dual_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_anarduino/fcpu_1mhz/9600_bps/urboot_anarduino_1mhz_9600bps_ee_led+b1_csd5_dual_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

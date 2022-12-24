@@ -1,11 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |254|256|u7.7|`w-u-hpr--`|[urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm161/fcpu_16mhz/115200_bps/urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ur.hex)|
-|324|384|u7.7|`w-u-jPr-c`|[urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm161/fcpu_16mhz/115200_bps/urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
-|358|384|u7.7|`weu-jPr--`|[urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm161/fcpu_16mhz/115200_bps/urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
-|372|384|u7.7|`weu-jpr-c`|[urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm161/fcpu_16mhz/115200_bps/urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
-|368|512|u7.7|`weu-hpr-c`|[urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm161/fcpu_16mhz/115200_bps/urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
-|472|512|u7.7|`wes-hpr-c`|[urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm161/fcpu_16mhz/115200_bps/urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
+|384|384|u7.7|`weu-jPr-c`|[urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm161/fcpu_16mhz/115200_bps/urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|366|512|u7.7|`weu-hpr-c`|[urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm161/fcpu_16mhz/115200_bps/urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
+|470|512|u7.7|`wes-hpr-c`|[urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/at90pwm161/fcpu_16mhz/115200_bps/urboot_at90pwm161_16mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

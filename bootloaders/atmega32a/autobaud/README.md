@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |256|256|u7.7|`w-u-jPra-`|[urboot_atmega32a_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/autobaud/urboot_atmega32a_autobaud_lednop_ur_vbl.hex)|
-|372|384|u7.7|`weu-jPrac`|[urboot_atmega32a_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/autobaud/urboot_atmega32a_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
-|354|512|u7.7|`weu-hprac`|[urboot_atmega32a_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/autobaud/urboot_atmega32a_autobaud_ee_lednop_fr_ce_ur.hex)|
-|458|512|u7.7|`wes-hprac`|[urboot_atmega32a_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/autobaud/urboot_atmega32a_autobaud_ee_lednop_fr_ce.hex)|
+|370|384|u7.7|`weu-jPrac`|[urboot_atmega32a_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/autobaud/urboot_atmega32a_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|352|512|u7.7|`weu-hprac`|[urboot_atmega32a_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/autobaud/urboot_atmega32a_autobaud_ee_lednop_fr_ce_ur.hex)|
+|456|512|u7.7|`wes-hprac`|[urboot_atmega32a_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32a/autobaud/urboot_atmega32a_autobaud_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

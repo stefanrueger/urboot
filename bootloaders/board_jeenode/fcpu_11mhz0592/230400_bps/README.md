@@ -2,9 +2,9 @@
 |:-:|:-:|:-:|:-:|:--|
 |244|256|u7.7|`w-u-jPr--`|[urboot_jeenode_11mhz0592_230400bps_led-b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_11mhz0592/230400_bps/urboot_jeenode_11mhz0592_230400bps_led-b1_ur_vbl.hex)|
 |248|256|u7.7|`w-u-jpr--`|[urboot_jeenode_11mhz0592_230400bps_led-b1_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_11mhz0592/230400_bps/urboot_jeenode_11mhz0592_230400bps_led-b1_fr_ur_vbl.hex)|
-|356|384|u7.7|`weu-jPr-c`|[urboot_jeenode_11mhz0592_230400bps_ee_led-b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_11mhz0592/230400_bps/urboot_jeenode_11mhz0592_230400bps_ee_led-b1_fr_ce_ur_vbl.hex)|
-|338|512|u7.7|`weu-hpr-c`|[urboot_jeenode_11mhz0592_230400bps_ee_led-b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_11mhz0592/230400_bps/urboot_jeenode_11mhz0592_230400bps_ee_led-b1_fr_ce_ur.hex)|
-|442|512|u7.7|`wes-hpr-c`|[urboot_jeenode_11mhz0592_230400bps_ee_led-b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_11mhz0592/230400_bps/urboot_jeenode_11mhz0592_230400bps_ee_led-b1_fr_ce.hex)|
+|354|384|u7.7|`weu-jPr-c`|[urboot_jeenode_11mhz0592_230400bps_ee_led-b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_11mhz0592/230400_bps/urboot_jeenode_11mhz0592_230400bps_ee_led-b1_fr_ce_ur_vbl.hex)|
+|336|512|u7.7|`weu-hpr-c`|[urboot_jeenode_11mhz0592_230400bps_ee_led-b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_11mhz0592/230400_bps/urboot_jeenode_11mhz0592_230400bps_ee_led-b1_fr_ce_ur.hex)|
+|440|512|u7.7|`wes-hpr-c`|[urboot_jeenode_11mhz0592_230400bps_ee_led-b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/fcpu_11mhz0592/230400_bps/urboot_jeenode_11mhz0592_230400bps_ee_led-b1_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

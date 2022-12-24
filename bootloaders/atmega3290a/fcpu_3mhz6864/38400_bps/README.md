@@ -2,9 +2,9 @@
 |:-:|:-:|:-:|:-:|:--|
 |252|256|u7.7|`w-u-jPr--`|[urboot_atmega3290a_3mhz6864_38400bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega3290a/fcpu_3mhz6864/38400_bps/urboot_atmega3290a_3mhz6864_38400bps_lednop_ur_vbl.hex)|
 |256|256|u7.7|`w-u-jpr--`|[urboot_atmega3290a_3mhz6864_38400bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega3290a/fcpu_3mhz6864/38400_bps/urboot_atmega3290a_3mhz6864_38400bps_lednop_fr_ur_vbl.hex)|
-|362|384|u7.7|`weu-jPr-c`|[urboot_atmega3290a_3mhz6864_38400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega3290a/fcpu_3mhz6864/38400_bps/urboot_atmega3290a_3mhz6864_38400bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|344|512|u7.7|`weu-hpr-c`|[urboot_atmega3290a_3mhz6864_38400bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega3290a/fcpu_3mhz6864/38400_bps/urboot_atmega3290a_3mhz6864_38400bps_ee_lednop_fr_ce_ur.hex)|
-|448|512|u7.7|`wes-hpr-c`|[urboot_atmega3290a_3mhz6864_38400bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega3290a/fcpu_3mhz6864/38400_bps/urboot_atmega3290a_3mhz6864_38400bps_ee_lednop_fr_ce.hex)|
+|360|384|u7.7|`weu-jPr-c`|[urboot_atmega3290a_3mhz6864_38400bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega3290a/fcpu_3mhz6864/38400_bps/urboot_atmega3290a_3mhz6864_38400bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|342|512|u7.7|`weu-hpr-c`|[urboot_atmega3290a_3mhz6864_38400bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega3290a/fcpu_3mhz6864/38400_bps/urboot_atmega3290a_3mhz6864_38400bps_ee_lednop_fr_ce_ur.hex)|
+|446|512|u7.7|`wes-hpr-c`|[urboot_atmega3290a_3mhz6864_38400bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega3290a/fcpu_3mhz6864/38400_bps/urboot_atmega3290a_3mhz6864_38400bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

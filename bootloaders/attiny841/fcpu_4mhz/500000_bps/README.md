@@ -1,10 +1,10 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |256|256|u7.7|`w-u-jPr--`|[urboot_attiny841_4mhz_500000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_4mhz/500000_bps/urboot_attiny841_4mhz_500000bps_lednop_ur_vbl.hex)|
-|306|320|u7.7|`w-u-jPr-c`|[urboot_attiny841_4mhz_500000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_4mhz/500000_bps/urboot_attiny841_4mhz_500000bps_lednop_fr_ce_ur_vbl.hex)|
+|304|320|u7.7|`w-u-jPr-c`|[urboot_attiny841_4mhz_500000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_4mhz/500000_bps/urboot_attiny841_4mhz_500000bps_lednop_fr_ce_ur_vbl.hex)|
 |308|320|u7.7|`weu-jpr--`|[urboot_attiny841_4mhz_500000bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_4mhz/500000_bps/urboot_attiny841_4mhz_500000bps_ee_lednop_ur_vbl.hex)|
 |316|320|u7.7|`weu-jPr--`|[urboot_attiny841_4mhz_500000bps_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_4mhz/500000_bps/urboot_attiny841_4mhz_500000bps_ee_ur_vbl.hex)|
-|368|384|u7.7|`weu-jPr-c`|[urboot_attiny841_4mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_4mhz/500000_bps/urboot_attiny841_4mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|366|384|u7.7|`weu-jPr-c`|[urboot_attiny841_4mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny841/fcpu_4mhz/500000_bps/urboot_attiny841_4mhz_500000bps_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

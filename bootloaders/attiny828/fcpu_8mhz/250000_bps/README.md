@@ -2,12 +2,12 @@
 |:-:|:-:|:-:|:-:|:--|
 |250|256|u7.7|`w-u-jPr--`|[urboot_attiny828_8mhz_250000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/250000_bps/urboot_attiny828_8mhz_250000bps_lednop_ur_vbl.hex)|
 |254|256|u7.7|`w-u-hpr--`|[urboot_attiny828_8mhz_250000bps_lednop_fr_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/250000_bps/urboot_attiny828_8mhz_250000bps_lednop_fr_ur.hex)|
-|300|320|u7.7|`w-u-jPr-c`|[urboot_attiny828_8mhz_250000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/250000_bps/urboot_attiny828_8mhz_250000bps_lednop_fr_ce_ur_vbl.hex)|
+|298|320|u7.7|`w-u-jPr-c`|[urboot_attiny828_8mhz_250000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/250000_bps/urboot_attiny828_8mhz_250000bps_lednop_fr_ce_ur_vbl.hex)|
 |312|320|u7.7|`weu-jPr--`|[urboot_attiny828_8mhz_250000bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/250000_bps/urboot_attiny828_8mhz_250000bps_ee_lednop_ur_vbl.hex)|
 |316|320|u7.7|`weu-jpr--`|[urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/250000_bps/urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ur_vbl.hex)|
-|358|384|u7.7|`weu-jPr-c`|[urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/250000_bps/urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|340|512|u7.7|`weu-hpr-c`|[urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/250000_bps/urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ce_ur.hex)|
-|444|512|u7.7|`wes-hpr-c`|[urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/250000_bps/urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ce.hex)|
+|356|384|u7.7|`weu-jPr-c`|[urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/250000_bps/urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|338|512|u7.7|`weu-hpr-c`|[urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/250000_bps/urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ce_ur.hex)|
+|442|512|u7.7|`wes-hpr-c`|[urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny828/fcpu_8mhz/250000_bps/urboot_attiny828_8mhz_250000bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

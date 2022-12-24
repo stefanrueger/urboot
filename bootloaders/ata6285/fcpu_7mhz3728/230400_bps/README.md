@@ -2,12 +2,12 @@
 |:-:|:-:|:-:|:-:|:--|
 |256|256|u7.7|`w-u-hpr--`|[urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_7mhz3728/230400_bps/urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ur.hex)|
 |298|320|u7.7|`w-u-jPr--`|[urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_7mhz3728/230400_bps/urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
-|312|320|u7.7|`w-u-jpr-c`|[urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_7mhz3728/230400_bps/urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|310|320|u7.7|`w-u-jpr-c`|[urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_7mhz3728/230400_bps/urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
 |322|384|u7.7|`weu-jpr--`|[urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_7mhz3728/230400_bps/urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_ur_vbl.hex)|
 |360|384|u7.7|`weu-jPr--`|[urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_7mhz3728/230400_bps/urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
-|374|384|u7.7|`weu-jpr-c`|[urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_7mhz3728/230400_bps/urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
-|370|512|u7.7|`weu-hpr-c`|[urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_7mhz3728/230400_bps/urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
-|474|512|u7.7|`wes-hpr-c`|[urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_7mhz3728/230400_bps/urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
+|372|384|u7.7|`weu-jpr-c`|[urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_7mhz3728/230400_bps/urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|368|512|u7.7|`weu-hpr-c`|[urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_7mhz3728/230400_bps/urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ce_ur.hex)|
+|472|512|u7.7|`wes-hpr-c`|[urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/ata6285/fcpu_7mhz3728/230400_bps/urboot_ata6285_7mhz3728_230400bps_rxb0_txb1_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

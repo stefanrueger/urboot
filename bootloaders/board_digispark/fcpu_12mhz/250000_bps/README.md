@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |246|256|u7.7|`w-u-jpr--`|[urboot_digispark_12mhz_250000bps_rxb4_txb3_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_digispark/fcpu_12mhz/250000_bps/urboot_digispark_12mhz_250000bps_rxb4_txb3_led+b1_ur_vbl.hex)|
-|310|320|u7.7|`w-u-jPr-c`|[urboot_digispark_12mhz_250000bps_rxb4_txb3_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_digispark/fcpu_12mhz/250000_bps/urboot_digispark_12mhz_250000bps_rxb4_txb3_led+b1_fr_ce_ur_vbl.hex)|
+|308|320|u7.7|`w-u-jPr-c`|[urboot_digispark_12mhz_250000bps_rxb4_txb3_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_digispark/fcpu_12mhz/250000_bps/urboot_digispark_12mhz_250000bps_rxb4_txb3_led+b1_fr_ce_ur_vbl.hex)|
 |318|320|u7.7|`weu-jpr--`|[urboot_digispark_12mhz_250000bps_rxb4_txb3_ee_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_digispark/fcpu_12mhz/250000_bps/urboot_digispark_12mhz_250000bps_rxb4_txb3_ee_led+b1_ur_vbl.hex)|
-|378|384|u7.7|`weu-jPr-c`|[urboot_digispark_12mhz_250000bps_rxb4_txb3_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_digispark/fcpu_12mhz/250000_bps/urboot_digispark_12mhz_250000bps_rxb4_txb3_ee_led+b1_fr_ce_ur_vbl.hex)|
+|376|384|u7.7|`weu-jPr-c`|[urboot_digispark_12mhz_250000bps_rxb4_txb3_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_digispark/fcpu_12mhz/250000_bps/urboot_digispark_12mhz_250000bps_rxb4_txb3_ee_led+b1_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

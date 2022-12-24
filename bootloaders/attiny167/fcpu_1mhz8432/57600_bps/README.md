@@ -2,8 +2,8 @@
 |:-:|:-:|:-:|:-:|:--|
 |250|256|u7.7|`w-u-jpr--`|[urboot_attiny167_1mhz8432_57600bps_rxb6_txb3_led+b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny167/fcpu_1mhz8432/57600_bps/urboot_attiny167_1mhz8432_57600bps_rxb6_txb3_led+b1_ur_vbl.hex)|
 |250|256|u7.7|`w-u-jpr--`|[urboot_attiny167_1mhz8432_57600bps_rxb6_txb3_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny167/fcpu_1mhz8432/57600_bps/urboot_attiny167_1mhz8432_57600bps_rxb6_txb3_lednop_ur_vbl.hex)|
-|376|384|u7.7|`weu-jPr-c`|[urboot_attiny167_1mhz8432_57600bps_rxb6_txb3_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny167/fcpu_1mhz8432/57600_bps/urboot_attiny167_1mhz8432_57600bps_rxb6_txb3_ee_led+b1_fr_ce_ur_vbl.hex)|
-|376|384|u7.7|`weu-jPr-c`|[urboot_attiny167_1mhz8432_57600bps_rxb6_txb3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny167/fcpu_1mhz8432/57600_bps/urboot_attiny167_1mhz8432_57600bps_rxb6_txb3_ee_lednop_fr_ce_ur_vbl.hex)|
+|374|384|u7.7|`weu-jPr-c`|[urboot_attiny167_1mhz8432_57600bps_rxb6_txb3_ee_led+b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny167/fcpu_1mhz8432/57600_bps/urboot_attiny167_1mhz8432_57600bps_rxb6_txb3_ee_led+b1_fr_ce_ur_vbl.hex)|
+|374|384|u7.7|`weu-jPr-c`|[urboot_attiny167_1mhz8432_57600bps_rxb6_txb3_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny167/fcpu_1mhz8432/57600_bps/urboot_attiny167_1mhz8432_57600bps_rxb6_txb3_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

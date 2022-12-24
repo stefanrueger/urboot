@@ -2,10 +2,10 @@
 |:-:|:-:|:-:|:-:|:--|
 |250|256|u7.7|`w-u-jpr--`|[urboot_attiny13_8mhz_57600bps_rxb0_txb1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_8mhz/57600_bps/urboot_attiny13_8mhz_57600bps_rxb0_txb1_lednop_ur_vbl.hex)|
 |286|288|u7.7|`w-u-jPr--`|[urboot_attiny13_8mhz_57600bps_rxb0_txb1_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_8mhz/57600_bps/urboot_attiny13_8mhz_57600bps_rxb0_txb1_lednop_fr_ur_vbl.hex)|
-|312|320|u7.7|`w-u-jPr-c`|[urboot_attiny13_8mhz_57600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_8mhz/57600_bps/urboot_attiny13_8mhz_57600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
+|310|320|u7.7|`w-u-jPr-c`|[urboot_attiny13_8mhz_57600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_8mhz/57600_bps/urboot_attiny13_8mhz_57600bps_rxb0_txb1_lednop_fr_ce_ur_vbl.hex)|
 |318|320|u7.7|`weu-jpr--`|[urboot_attiny13_8mhz_57600bps_rxb0_txb1_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_8mhz/57600_bps/urboot_attiny13_8mhz_57600bps_rxb0_txb1_ee_lednop_ur_vbl.hex)|
 |350|352|u7.7|`weu-jPr--`|[urboot_attiny13_8mhz_57600bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_8mhz/57600_bps/urboot_attiny13_8mhz_57600bps_rxb0_txb1_ee_lednop_fr_ur_vbl.hex)|
-|376|384|u7.7|`weu-jPr-c`|[urboot_attiny13_8mhz_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_8mhz/57600_bps/urboot_attiny13_8mhz_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|374|384|u7.7|`weu-jPr-c`|[urboot_attiny13_8mhz_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny13/fcpu_8mhz/57600_bps/urboot_attiny13_8mhz_57600bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -2,11 +2,11 @@
 |:-:|:-:|:-:|:-:|:--|
 |246|256|u7.7|`w-u-hpra-`|[urboot_atmega88a_autobaud_lednop_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/autobaud/urboot_atmega88a_autobaud_lednop_ur.hex)|
 |254|256|u7.7|`w-u-jPra-`|[urboot_atmega88a_autobaud_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/autobaud/urboot_atmega88a_autobaud_ur_vbl.hex)|
-|310|320|u7.7|`w-u-jPrac`|[urboot_atmega88a_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/autobaud/urboot_atmega88a_autobaud_lednop_fr_ce_ur_vbl.hex)|
+|308|320|u7.7|`w-u-jPrac`|[urboot_atmega88a_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/autobaud/urboot_atmega88a_autobaud_lednop_fr_ce_ur_vbl.hex)|
 |316|320|u7.7|`weu-jpra-`|[urboot_atmega88a_autobaud_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/autobaud/urboot_atmega88a_autobaud_ee_lednop_ur_vbl.hex)|
-|376|384|u7.7|`weu-jPrac`|[urboot_atmega88a_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/autobaud/urboot_atmega88a_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
-|358|512|u7.7|`weu-hprac`|[urboot_atmega88a_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/autobaud/urboot_atmega88a_autobaud_ee_lednop_fr_ce_ur.hex)|
-|462|512|u7.7|`wes-hprac`|[urboot_atmega88a_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/autobaud/urboot_atmega88a_autobaud_ee_lednop_fr_ce.hex)|
+|374|384|u7.7|`weu-jPrac`|[urboot_atmega88a_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/autobaud/urboot_atmega88a_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|356|512|u7.7|`weu-hprac`|[urboot_atmega88a_autobaud_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/autobaud/urboot_atmega88a_autobaud_ee_lednop_fr_ce_ur.hex)|
+|460|512|u7.7|`wes-hprac`|[urboot_atmega88a_autobaud_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega88a/autobaud/urboot_atmega88a_autobaud_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

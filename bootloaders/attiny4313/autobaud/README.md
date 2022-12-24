@@ -2,9 +2,9 @@
 |:-:|:-:|:-:|:-:|:--|
 |252|256|u7.7|`w-u-jPra-`|[urboot_attiny4313_autobaud_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny4313/autobaud/urboot_attiny4313_autobaud_lednop_ur_vbl.hex)|
 |256|256|u7.7|`w-u-jpra-`|[urboot_attiny4313_autobaud_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny4313/autobaud/urboot_attiny4313_autobaud_lednop_fr_ur_vbl.hex)|
-|302|320|u7.7|`w-u-jPrac`|[urboot_attiny4313_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny4313/autobaud/urboot_attiny4313_autobaud_lednop_fr_ce_ur_vbl.hex)|
+|300|320|u7.7|`w-u-jPrac`|[urboot_attiny4313_autobaud_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny4313/autobaud/urboot_attiny4313_autobaud_lednop_fr_ce_ur_vbl.hex)|
 |320|320|u7.7|`weu-jPra-`|[urboot_attiny4313_autobaud_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny4313/autobaud/urboot_attiny4313_autobaud_ee_lednop_ur_vbl.hex)|
-|366|384|u7.7|`weu-jPrac`|[urboot_attiny4313_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny4313/autobaud/urboot_attiny4313_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
+|364|384|u7.7|`weu-jPrac`|[urboot_attiny4313_autobaud_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny4313/autobaud/urboot_attiny4313_autobaud_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

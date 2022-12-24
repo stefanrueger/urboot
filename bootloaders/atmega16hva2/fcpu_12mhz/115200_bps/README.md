@@ -1,7 +1,7 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |252|256|u7.7|`w-u-jpr--`|[urboot_atmega16hva2_12mhz_115200bps_rxb0_txb1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16hva2/fcpu_12mhz/115200_bps/urboot_atmega16hva2_12mhz_115200bps_rxb0_txb1_ur_vbl.hex)|
-|380|384|u7.7|`weu-jPr-c`|[urboot_atmega16hva2_12mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16hva2/fcpu_12mhz/115200_bps/urboot_atmega16hva2_12mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
+|378|384|u7.7|`weu-jPr-c`|[urboot_atmega16hva2_12mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega16hva2/fcpu_12mhz/115200_bps/urboot_atmega16hva2_12mhz_115200bps_rxb0_txb1_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -2,9 +2,9 @@
 |:-:|:-:|:-:|:-:|:--|
 |246|256|u7.7|`w-u-jPr--`|[urboot_atmega644a_18mhz432_460800bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644a/fcpu_18mhz432/460800_bps/urboot_atmega644a_18mhz432_460800bps_lednop_ur_vbl.hex)|
 |250|256|u7.7|`w-u-jpr--`|[urboot_atmega644a_18mhz432_460800bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644a/fcpu_18mhz432/460800_bps/urboot_atmega644a_18mhz432_460800bps_lednop_fr_ur_vbl.hex)|
-|352|512|u7.7|`weu-jPr-c`|[urboot_atmega644a_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644a/fcpu_18mhz432/460800_bps/urboot_atmega644a_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|338|1024|u7.7|`weu-hpr-c`|[urboot_atmega644a_18mhz432_460800bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644a/fcpu_18mhz432/460800_bps/urboot_atmega644a_18mhz432_460800bps_ee_lednop_fr_ce_ur.hex)|
-|442|1024|u7.7|`wes-hpr-c`|[urboot_atmega644a_18mhz432_460800bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644a/fcpu_18mhz432/460800_bps/urboot_atmega644a_18mhz432_460800bps_ee_lednop_fr_ce.hex)|
+|350|512|u7.7|`weu-jPr-c`|[urboot_atmega644a_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644a/fcpu_18mhz432/460800_bps/urboot_atmega644a_18mhz432_460800bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|336|1024|u7.7|`weu-hpr-c`|[urboot_atmega644a_18mhz432_460800bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644a/fcpu_18mhz432/460800_bps/urboot_atmega644a_18mhz432_460800bps_ee_lednop_fr_ce_ur.hex)|
+|440|1024|u7.7|`wes-hpr-c`|[urboot_atmega644a_18mhz432_460800bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega644a/fcpu_18mhz432/460800_bps/urboot_atmega644a_18mhz432_460800bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

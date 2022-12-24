@@ -2,9 +2,9 @@
 |:-:|:-:|:-:|:-:|:--|
 |250|256|u7.7|`w-u-jPr--`|[urboot_atmega649_16mhz_9600bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_16mhz/9600_bps/urboot_atmega649_16mhz_9600bps_lednop_ur_vbl.hex)|
 |254|256|u7.7|`w-u-jpr--`|[urboot_atmega649_16mhz_9600bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_16mhz/9600_bps/urboot_atmega649_16mhz_9600bps_lednop_fr_ur_vbl.hex)|
-|354|512|u7.7|`weu-jPr-c`|[urboot_atmega649_16mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_16mhz/9600_bps/urboot_atmega649_16mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|340|1024|u7.7|`weu-hpr-c`|[urboot_atmega649_16mhz_9600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_16mhz/9600_bps/urboot_atmega649_16mhz_9600bps_ee_lednop_fr_ce_ur.hex)|
-|444|1024|u7.7|`wes-hpr-c`|[urboot_atmega649_16mhz_9600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_16mhz/9600_bps/urboot_atmega649_16mhz_9600bps_ee_lednop_fr_ce.hex)|
+|352|512|u7.7|`weu-jPr-c`|[urboot_atmega649_16mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_16mhz/9600_bps/urboot_atmega649_16mhz_9600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|338|1024|u7.7|`weu-hpr-c`|[urboot_atmega649_16mhz_9600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_16mhz/9600_bps/urboot_atmega649_16mhz_9600bps_ee_lednop_fr_ce_ur.hex)|
+|442|1024|u7.7|`wes-hpr-c`|[urboot_atmega649_16mhz_9600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega649/fcpu_16mhz/9600_bps/urboot_atmega649_16mhz_9600bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

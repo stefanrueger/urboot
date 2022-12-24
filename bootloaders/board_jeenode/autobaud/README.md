@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |250|256|u7.7|`w-u-jpra-`|[urboot_jeenode_autobaud_led-b1_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/autobaud/urboot_jeenode_autobaud_led-b1_ur_vbl.hex)|
-|376|384|u7.7|`weu-jPrac`|[urboot_jeenode_autobaud_ee_led-b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/autobaud/urboot_jeenode_autobaud_ee_led-b1_fr_ce_ur_vbl.hex)|
-|358|512|u7.7|`weu-hprac`|[urboot_jeenode_autobaud_ee_led-b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/autobaud/urboot_jeenode_autobaud_ee_led-b1_fr_ce_ur.hex)|
-|462|512|u7.7|`wes-hprac`|[urboot_jeenode_autobaud_ee_led-b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/autobaud/urboot_jeenode_autobaud_ee_led-b1_fr_ce.hex)|
+|374|384|u7.7|`weu-jPrac`|[urboot_jeenode_autobaud_ee_led-b1_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/autobaud/urboot_jeenode_autobaud_ee_led-b1_fr_ce_ur_vbl.hex)|
+|356|512|u7.7|`weu-hprac`|[urboot_jeenode_autobaud_ee_led-b1_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/autobaud/urboot_jeenode_autobaud_ee_led-b1_fr_ce_ur.hex)|
+|460|512|u7.7|`wes-hprac`|[urboot_jeenode_autobaud_ee_led-b1_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/board_jeenode/autobaud/urboot_jeenode_autobaud_ee_led-b1_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -1,9 +1,9 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
 |256|256|u7.7|`w-u-jPr--`|[urboot_atmega32u2_8mhz_57600bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32u2/fcpu_8mhz/57600_bps/urboot_atmega32u2_8mhz_57600bps_lednop_ur_vbl.hex)|
-|368|384|u7.7|`weu-jPr-c`|[urboot_atmega32u2_8mhz_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32u2/fcpu_8mhz/57600_bps/urboot_atmega32u2_8mhz_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
-|350|512|u7.7|`weu-hpr-c`|[urboot_atmega32u2_8mhz_57600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32u2/fcpu_8mhz/57600_bps/urboot_atmega32u2_8mhz_57600bps_ee_lednop_fr_ce_ur.hex)|
-|454|512|u7.7|`wes-hpr-c`|[urboot_atmega32u2_8mhz_57600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32u2/fcpu_8mhz/57600_bps/urboot_atmega32u2_8mhz_57600bps_ee_lednop_fr_ce.hex)|
+|366|384|u7.7|`weu-jPr-c`|[urboot_atmega32u2_8mhz_57600bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32u2/fcpu_8mhz/57600_bps/urboot_atmega32u2_8mhz_57600bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|348|512|u7.7|`weu-hpr-c`|[urboot_atmega32u2_8mhz_57600bps_ee_lednop_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32u2/fcpu_8mhz/57600_bps/urboot_atmega32u2_8mhz_57600bps_ee_lednop_fr_ce_ur.hex)|
+|452|512|u7.7|`wes-hpr-c`|[urboot_atmega32u2_8mhz_57600bps_ee_lednop_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/atmega32u2/fcpu_8mhz/57600_bps/urboot_atmega32u2_8mhz_57600bps_ee_lednop_fr_ce.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size

@@ -2,10 +2,10 @@
 |:-:|:-:|:-:|:-:|:--|
 |220|224|u7.7|`w-u-jpr--`|[urboot_attiny2313_2mhz_250000bps_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313/fcpu_2mhz/250000_bps/urboot_attiny2313_2mhz_250000bps_lednop_ur_vbl.hex)|
 |248|256|u7.7|`w-u-jPr--`|[urboot_attiny2313_2mhz_250000bps_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313/fcpu_2mhz/250000_bps/urboot_attiny2313_2mhz_250000bps_lednop_fr_ur_vbl.hex)|
-|278|288|u7.7|`w-u-jPr-c`|[urboot_attiny2313_2mhz_250000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313/fcpu_2mhz/250000_bps/urboot_attiny2313_2mhz_250000bps_lednop_fr_ce_ur_vbl.hex)|
+|276|288|u7.7|`w-u-jPr-c`|[urboot_attiny2313_2mhz_250000bps_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313/fcpu_2mhz/250000_bps/urboot_attiny2313_2mhz_250000bps_lednop_fr_ce_ur_vbl.hex)|
 |284|288|u7.7|`weu-jpr--`|[urboot_attiny2313_2mhz_250000bps_ee_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313/fcpu_2mhz/250000_bps/urboot_attiny2313_2mhz_250000bps_ee_lednop_ur_vbl.hex)|
 |316|320|u7.7|`weu-jPr--`|[urboot_attiny2313_2mhz_250000bps_ee_lednop_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313/fcpu_2mhz/250000_bps/urboot_attiny2313_2mhz_250000bps_ee_lednop_fr_ur_vbl.hex)|
-|342|352|u7.7|`weu-jPr-c`|[urboot_attiny2313_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313/fcpu_2mhz/250000_bps/urboot_attiny2313_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
+|340|352|u7.7|`weu-jPr-c`|[urboot_attiny2313_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/bootloaders/attiny2313/fcpu_2mhz/250000_bps/urboot_attiny2313_2mhz_250000bps_ee_lednop_fr_ce_ur_vbl.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
