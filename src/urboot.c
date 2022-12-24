@@ -1567,49 +1567,41 @@ void bitDelay();
 #endif // SWIO
 
 
-
-
-#if FLASHabove64k
-#define setzaddressnull() ({ RAMPZ = 0; zaddress = 0; })
-#define inczaddresspage() ({ zaddress += SPM_PAGESIZE; if(!zaddress) RAMPZ++; })
-#else
-#define setzaddressnull() ({ zaddress = 0; })
-#define inczaddresspage() ({ zaddress += SPM_PAGESIZE; })
-#endif
-
 #if CHIP_ERASE
-static void chip_erase() {
-  setzaddressnull();
 
-#if !FOUR_PAGE_ERASE
-
-  spm_pages_index_t numpages = (spm_pages_index_t) SPM_NUMPAGES;
-  do {
-    ub_page_erase();
-    wdt_reset();
-    inczaddresspage();
-  } while(--numpages);
-
-#else // FOUR_PAGE_ERASE
-
-#if SPM_NUMPAGES/4 <= 256
-  uint8_t numpages = (uint8_t) (SPM_NUMPAGES/4);
+#if FOUR_PAGE_ERASE
+#define CE_SIZE (4*SPM_PAGESIZE)
 #else
-  uint16_t numpages = SPM_NUMPAGES/4;
+#define CE_SIZE SPM_PAGESIZE
 #endif
+
+#if START % CE_SIZE != 0
+#error START must be a multiple of CE_SIZE
+#endif
+
+static void chip_erase() {
+  // Erase flash from top to bottom to protect reset vector in case of power loss
+  zaddress = START;
+#if FLASHabove64k
+  RAMPZ = START>>16;
+#endif
+
   do {
-    ub_page_erase();
-    wdt_reset();
-    zaddress += 4*SPM_PAGESIZE;
 #if FLASHabove64k
     if(!zaddress)
-      RAMPZ++;
+      RAMPZ--;
 #endif
-  } while(--numpages);
-
-#endif // !FOUR_PAGE_ERASE
+    zaddress -= CE_SIZE;
+    wdt_reset();
+    ub_page_erase();
+  } while(zaddress
+#if FLASHabove64k
+     || RAMPZ
+#endif
+     );
 }
-#endif
+
+#endif // CHIP_ERASE
 
 
 // Opcode for jmp START (jmp uses a word address, hence shift one extra bit on byte address START)
@@ -1813,6 +1805,13 @@ static void sfm_read_page() {
 
 
 #if DUAL
+
+#if FLASHabove64k
+#define inczaddresspage() ({ zaddress += SPM_PAGESIZE; if(!zaddress) RAMPZ++; })
+#else
+#define inczaddresspage() ({ zaddress += SPM_PAGESIZE; })
+#endif
+
 static void dual_boot() {
       /*
        * Define relevant SPI pins as outputs - CS must be output for SPI to work in master mode.
