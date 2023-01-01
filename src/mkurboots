@@ -170,7 +170,7 @@ if [[ $mcu == attiny85 ]]; then
   board+=/digispark:LED=AtmelPB1
 fi
 if [[ $mcu == attiny88 ]]; then
-  board+=/mh-tiny:LED=AtmelPB0
+  board+=/mh-tiny:LED=AtmelPD0
 fi
 if [[ $mcu == attiny167 ]]; then
   board+=/digispark-pro:LED=AtmelPB1
