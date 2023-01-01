@@ -2,7 +2,7 @@
 
 # published under GNU General Public License, version 3 (GPL-3.0)
 # author Stefan Rueger <stefan.rueger@urclocks.com>
-# 06.11.2022
+# 01.01.2023
 
 # Compile bootloaders for one MCU
 
@@ -13,7 +13,8 @@ cat <<END
 Syntax: $progname [<opt>] <mcu>
 Function: create bootloaders for the 8-bit AVR MCU <mcu> (all lower case)
 Option:
-    -b <dir>  directory in which the bootloaders are created (default bootloaders)
+    -m <dir>  directory in which mcu bootloaders are created (default mcus)
+    -b <dir>  directory in which board bootloaders are created (default boards)
     -f <fcpu> only create bootloaders for certain F_CPU values, eg, -f auto,16000000,8000000
     -B <baud> only create bootloaders for certain baud rates, eg, -B auto,115200,38400
     -d        dry run: show which bootloaders would be created
@@ -21,14 +22,17 @@ END
 }
 
 run=1
-bootloaders=bootloaders
+mcu_bls=mcus
+board_bls=boards
 fcpulist=""
 baudlist=""
 here=$(pwd)
 
-while getopts ":db:f:B:" opt; do
+while getopts ":dm:b:f:B:" opt; do
   case ${opt} in
-    b) bootloaders=$OPTARG
+    b) board_bls=$OPTARG
+        ;;
+    m) mcu_bls=$OPTARG
         ;;
     f) fcpulist=$OPTARG
         ;;
@@ -562,7 +566,7 @@ declare -A hexprotect
 declare -A hexassoc
 declare -A hexdirs
 
-[[ $run == 1 ]] && mkdir -p "$bootloaders/$mcu"
+[[ $run == 1 ]] && mkdir -p "$mcu_bls/$mcu"
 for fcpu in ${!baud[@]}; do
   mkfcpunm $fcpu
 
@@ -589,10 +593,12 @@ for fcpu in ${!baud[@]}; do
       continue
     fi
     if [[ $b == auto ]]; then
-      dir="$bootloaders/$mcu/autobaud"
+      mdir="$mcu_bls/$mcu/autobaud"
+      bdir="$board_bls/$mcu/autobaud"
       fcpu=16000000
     else
-      dir="$bootloaders/$mcu/fcpu_$fcpunm/${b}_bps"
+      mdir="$mcu_bls/$mcu/fcpu_$fcpunm/${b}_bps"
+      bdir="$board_bls/$mcu/fcpu_$fcpunm/${b}_bps"
     fi
     if [[ $b == auto ]]; then
       br=AUTOBAUD=1
@@ -646,7 +652,7 @@ for fcpu in ${!baud[@]}; do
                 fi
               else
                 echo make $args
-                # echo "$dir/$filename.hex"
+                # echo "$mdir/$filename.hex"
                 if [[ -n ${duplicate[$filename]} ]]; then
                   echo duplicate $filename ${duplicate[$filename]}
                   echo duplicate $filename $args
@@ -666,17 +672,17 @@ for fcpu in ${!baud[@]}; do
               done
               for hxn in ${hexname[@]}; do
                 if [[ -r $hxn.hex ]]; then
-                  hexassoc[$hxn]="$dir/$hxn"
-                  if [[ -z ${hexdirs[$dir]} ]]; then
-                    mkdir -p "$dir"
-                    hexdirs[$dir]=1
+                  hexassoc[$hxn]="$mdir/$hxn"
+                  if [[ -z ${hexdirs[$mdir]} ]]; then
+                    mkdir -p "$mdir"
+                    hexdirs[$mdir]=1
                   fi
-                  mv $hxn.{hex,out,elf,lst} "$dir/"
+                  mv $hxn.{hex,out,elf,lst} "$mdir/"
                   readarray -d , -t brdali <<<$bname
                   for ba in ${brdali[@]}; do
                     if [[ $ba != none && $ba != dual ]]; then
                       # Make bootloader available under board names, too
-                      badir=${dir/$mcu/board_$ba}
+                      badir=${bdir/$mcu/$ba}
                       banam=${hxn/$mcu/$ba}
                       if [[ -z ${hexdirs[$badir]} ]]; then
                         mkdir -p $badir
@@ -684,7 +690,7 @@ for fcpu in ${!baud[@]}; do
                       fi
                       hexassoc[$hxn]+="|$badir/$banam"
                       for ext in hex out elf lst; do
-                        ln -f $dir/$hxn.$ext $badir/$banam.$ext
+                        ln -f $mdir/$hxn.$ext $badir/$banam.$ext
                       done
                     fi
                   done
@@ -744,8 +750,8 @@ if [[ $run -eq 1 ]]; then
   # Generate the README.md files
   for dir in "${!hexdirs[@]}"; do
     cd "$dir"
-    "$here/hexls" -sort -md "https://raw.githubusercontent.com/stefanrueger/urboot/main/$dir" *.hex >README.md
+    "$here/hexls" -sort -md "https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/$dir" *.hex >README.md
     cd "$here"
   done
-  hash cmpls 2>/dev/null && cmpls -p $bootloaders/$mcu | grep \\.hex >>/tmp/equivalent-hex-files.txt
+  hash cmpls 2>/dev/null && cmpls -p $mcu_bls/$mcu | grep \\.hex >>/tmp/equivalent-hex-files.txt
 fi
