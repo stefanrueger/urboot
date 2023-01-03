@@ -42,7 +42,6 @@ override LDFLAGS       = -Wl,--relax -nostartfiles -nostdlib
 MCU ?= atmega328p
 F_CPU ?= 16000000L
 EEPROM ?= 1
-VBL ?= 0
 DUAL ?= 0
 FRILLS ?= 0
 WDTO = 1S
@@ -62,16 +61,19 @@ endif
 WHAT := $(WHAT)$(subst 0,,$(subst 1,w,$(PGMWRITEPAGE)))
 WHAT := $(WHAT)$(subst 0,,$(subst 1,e,$(EEPROM)))
 WHAT := $(WHAT)$(subst 0,,$(subst 1,d,$(DUAL)))
-WHAT := $(WHAT)$(subst 0,,$(subst 1,v1,$(subst 2,v2,$(subst 3,v3,$(VBL)))))f$(FRILLS)
+
+# vector bootloader (able to program a chip that resets to addr 0)
+ifdef VBL
+WHAT := $(WHAT)$(subst 0,,$(subst 1,v1,$(subst 2,v2,$(subst 3,v3,$(VBL)))))
+VBL_CMD = -DVBL=$(VBL)
+endif
+WHAT := $(WHAT)f$(FRILLS)
 
 # Support EEPROM R/W
 EEPROM_CMD = -DEEPROM=$(EEPROM)
 
 # DUAL boot from external SPI memory (you must set SFMCS below if so)
 DUAL_CMD = -DDUAL=$(DUAL)
-
-# vector bootloader (able to program a chip that resets to addr 0)
-VBL_CMD = -DVBL=$(VBL)
 
 # FRILLS=x on the command line sets defaults for the "lesser" options (which can be overwritten)
 FRILLS_CMD = -DFRILLS=$(FRILLS)

@@ -148,7 +148,7 @@ my %uP = (
   'attiny13' =>        [0x1E, 0x90, 0x07,  25, 0x00050,       0, 0x00400, 0x020,  0,      0,       0, 0x0040,  10],
   'attiny13a' =>       [0x1E, 0x90, 0x07,  25, 0x00050,       0, 0x00400, 0x020,  0,      0,       0, 0x0040,  10],
   'attiny15' =>        [0x1E, 0x90, 0x06,   1, 0x80000,       0, 0x00400, 0x001,  0,      0,       0, 0x0040,   9],
-  'attiny22' =>        [0x1E, 0x91, 0x06,   2,       0,       0, 0x00800,    -1, -1,     -1,      -1,     -1,   3],
+  'attiny22' =>        [0x1E, 0x91, 0x06,   2,       0,       0, 0x00800,    -1,  0,      0,      -1,     -1,   3],
   'attiny24' =>        [0x1E, 0x91, 0x0B,  25, 0x00050,       0, 0x00800, 0x020,  0,      0,       0, 0x0080,  17],
   'attiny24a' =>       [0x1E, 0x91, 0x0B,  25, 0x00050,       0, 0x00800, 0x020,  0,      0,       0, 0x0080,  17],
   'attiny25' =>        [0x1E, 0x91, 0x08,  25, 0x00050,       0, 0x00800, 0x020,  0,      0,       0, 0x0080,  15],
@@ -217,7 +217,7 @@ my %uP = (
   'atmega88p' =>       [0x1E, 0x93, 0x0F,   4, 0x00074,       0, 0x02000, 0x040,  4, 0x0100,       0, 0x0200,  26],
   'atmega88pa' =>      [0x1E, 0x93, 0x0F,   4, 0x00074,       0, 0x02000, 0x040,  4, 0x0100,       0, 0x0200,  26],
   'atmega88pb' =>      [0x1E, 0x93, 0x16,   4, 0x00074,       0, 0x02000, 0x040,  4, 0x0100,       0, 0x0200,  27],
-  'atmega103' =>       [0x1E, 0x97, 0x01,  31, 0x18303,       0, 0x20000, 0x100, -1,     -1,       0, 0x1000,  24],
+  'atmega103' =>       [0x1E, 0x97, 0x01,  31, 0x18303,       0, 0x20000, 0x100,  0,      0,       0, 0x1000,  24],
   'atmega128' =>       [0x1E, 0x97, 0x02,  51, 0x183f4,       0, 0x20000, 0x100,  4, 0x0400,       0, 0x1000,  35],
   'atmega128a' =>      [0x1E, 0x97, 0x02,  51, 0x183f4,       0, 0x20000, 0x100,  4, 0x0400,       0, 0x1000,  35],
   'atmega128rfa1' =>   [0x1E, 0xA7, 0x01,  51, 0x183f4,       0, 0x20000, 0x100,  4, 0x0400,       0, 0x1000,  72],
@@ -299,7 +299,7 @@ my %uP = (
   'at76c711' =>        [  -1,   -1,   -1,   3, 0x10200,       0, 0x04000,    -1, -1,     -1,      -1,     -1,   0],
   'at86rf401' =>       [0x1E, 0x91, 0x81,  25, 0x00050,       0, 0x00800,    -1, -1,     -1,      -1,     -1,   3],
   'at90pwm1' =>        [0x1E, 0x93, 0x83,   4, 0x00074,       0, 0x02000, 0x040,  4, 0x0100,       0, 0x0200,  32],
-  'at90pwm2' =>        [0x1E, 0x93, 0x81,   4, 0x00074,       0, 0x02000, 0x040,  4,     -1,       0, 0x0200,  32],
+  'at90pwm2' =>        [0x1E, 0x93, 0x81,   4, 0x00074,       0, 0x02000, 0x040,  4, 0x0100,       0, 0x0200,  32],
   'at90pwm2b' =>       [0x1E, 0x93, 0x83,   4, 0x00074,       0, 0x02000, 0x040,  4, 0x0100,       0, 0x0200,  32],
   'at90pwm3' =>        [0x1E, 0x93, 0x81,   4, 0x00074,       0, 0x02000, 0x040,  4, 0x0100,       0, 0x0200,  32],
   'at90pwm3b' =>       [0x1E, 0x93, 0x83,   4, 0x00074,       0, 0x02000, 0x040,  4, 0x0100,       0, 0x0200,  32],
@@ -315,19 +315,19 @@ my %uP = (
   'at90pwm316' =>      [0x1E, 0x94, 0x83,   5, 0x10274,       0, 0x04000, 0x080,  4, 0x0200,       0, 0x0200,  32],
   'at90usb646' =>      [0x1E, 0x96, 0x82,   5, 0x10274,       0, 0x10000, 0x100,  4, 0x0400,       0, 0x0800,  38],
   'at90usb647' =>      [0x1E, 0x96, 0x82,   5, 0x10274,       0, 0x10000, 0x100,  4, 0x0400,       0, 0x0800,  38],
-  'at90s1200' =>       [0x1E, 0x90, 0x01,   1, 0x80000,       0, 0x00400, 0x001, -1,     -1,       0, 0x0040,   4],
+  'at90s1200' =>       [0x1E, 0x90, 0x01,   1, 0x80000,       0, 0x00400, 0x001,  0,      0,       0, 0x0040,   4],
   'at90usb1286' =>     [0x1E, 0x97, 0x82,  51, 0x183f4,       0, 0x20000, 0x100,  4, 0x0400,       0, 0x1000,  38],
   'at90usb1287' =>     [0x1E, 0x97, 0x82,  51, 0x183f4,       0, 0x20000, 0x100,  4, 0x0400,       0, 0x1000,  38],
-  'at90s2313' =>       [0x1E, 0x91, 0x01,   2,       0,       0, 0x00800, 0x001, -1,     -1,       0, 0x0080,  11],
-  'at90s2323' =>       [0x1E, 0x91, 0x02,   2,       0,       0, 0x00800,    -1, -1,     -1,      -1,     -1,   3],
-  'at90s2333' =>       [0x1E, 0x91, 0x05,   2,       0,       0, 0x00800, 0x001, -1,     -1,       0, 0x0080,  14],
-  'at90s2343' =>       [0x1E, 0x91, 0x03,   2,       0,       0, 0x00800, 0x001, -1,     -1,       0, 0x0080,   3],
-  'at90s4414' =>       [0x1E, 0x92, 0x01,   2,       0,       0, 0x01000, 0x001, -1,     -1,       0, 0x0100,  13],
-  'at90s4433' =>       [0x1E, 0x92, 0x03,   2,       0,       0, 0x01000, 0x001, -1,     -1,       0, 0x0100,  14],
-  'at90s4434' =>       [0x1E, 0x92, 0x02,   2,       0,       0, 0x01000, 0x001, -1,     -1,       0, 0x0100,  17],
-  'at90s8515' =>       [0x1E, 0x93, 0x01,   2, 0x00002,       0, 0x02000, 0x001, -1,     -1,       0, 0x0200,  13],
+  'at90s2313' =>       [0x1E, 0x91, 0x01,   2,       0,       0, 0x00800, 0x001,  0,      0,       0, 0x0080,  11],
+  'at90s2323' =>       [0x1E, 0x91, 0x02,   2,       0,       0, 0x00800,    -1,  0,      0,      -1,     -1,   3],
+  'at90s2333' =>       [0x1E, 0x91, 0x05,   2,       0,       0, 0x00800, 0x001,  0,      0,       0, 0x0080,  14],
+  'at90s2343' =>       [0x1E, 0x91, 0x03,   2,       0,       0, 0x00800, 0x001,  0,      0,       0, 0x0080,   3],
+  'at90s4414' =>       [0x1E, 0x92, 0x01,   2,       0,       0, 0x01000, 0x001,  0,      0,       0, 0x0100,  13],
+  'at90s4433' =>       [0x1E, 0x92, 0x03,   2,       0,       0, 0x01000, 0x001,  0,      0,       0, 0x0100,  14],
+  'at90s4434' =>       [0x1E, 0x92, 0x02,   2,       0,       0, 0x01000, 0x001,  0,      0,       0, 0x0100,  17],
+  'at90s8515' =>       [0x1E, 0x93, 0x01,   2, 0x00002,       0, 0x02000, 0x001,  0,      0,       0, 0x0200,  13],
   'at90c8534' =>       [  -1,   -1,   -1,   2,       0,       0, 0x02000,    -1, -1,     -1,      -1,     -1,   0],
-  'at90s8535' =>       [0x1E, 0x93, 0x03,   2,       0,       0, 0x02000, 0x001, -1,     -1,       0, 0x0200,  17],
+  'at90s8535' =>       [0x1E, 0x93, 0x03,   2,       0,       0, 0x02000, 0x001,  0,      0,       0, 0x0200,  17],
   'at94k' =>           [  -1,   -1,   -1,   5, 0x10274,       0, 0x08000,    -1, -1,     -1,      -1,     -1,   0],
   'ata5272' =>         [0x1E, 0x93, 0x87,  25, 0x00050,       0, 0x02000, 0x080,  0,      0,       0, 0x0200,  37],
   'ata5505' =>         [0x1E, 0x94, 0x87,  35, 0x10250,       0, 0x04000, 0x080,  0,      0,       0, 0x0200,  20],
@@ -453,8 +453,9 @@ die "no architecture -mmcu=... argument?\n" if 1 != grep { /^-mmcu/ } @ARGV;
 my $elf = (grep { /^[^-].*elf$/ } @ARGV)[0];
 my $mcu = (grep { /^-mmcu=/ } @ARGV)[0];
 $mcu =~ s/-mmcu=//;
-my $novbl = !grep { /^-DVBL=/ } @ARGV;
-
+my $cmdvbl = grep { /^-DVBL=/ } @ARGV;
+my $reqvbl = grep { /^-DVBL=[1-3]$/ } @ARGV;
+my @warns;
 
 for my $reason (keys %unsupported) {
   die "$progname: $mcu not supported ($reason)\n"
@@ -484,7 +485,12 @@ do {
   );
 
   # Add vbl compile option if uP does not support boot section
-  push @injectparams, "-DVBL=1" if !$nowparams->[4] && $novbl;
+  if(!$nowparams->[4] && !$cmdvbl) {
+    $reqvbl = 1;
+    push @injectparams, "-DVBL=1";
+    push @warns, "Warning, part has no hardware boot sections: adding -DVBL=1 to command line\n"
+      if !grep { /adding -DVBL=1/ } @warns;
+  }
 
   # Add number of available bytes once compilation has converged
   push @injectparams, "-D_urboot_AVAILABLE=$nowparams->[5]" if defined($nowparams->[5]) && $nowparams->[5] > 0 && $addavailable > 0;
@@ -524,6 +530,7 @@ do {
   }
 } while(--$runs && (!$converged || $addavailable >= 0));
 
+print @warns;
 print "$lastcmd\n$lasterr";
 
 exit(0);
@@ -538,7 +545,7 @@ sub getplacement {
 
   # copy needed properties from table above
   my ($pagesz, $flashsz, $mcubootsz) = @{$uP{lc $mcu}}[(_pagesz, _flashsz, _bootsz)];
-  my ($bootsz, $hasboot) = ($mcubootsz, $mcubootsz > 0);
+  my ($bootsz, $hasboot) = ($mcubootsz, $mcubootsz > 0? "1": "0");
 
   # lex ATtiny28
   $pagesz = 1 if $pagesz < 1;
@@ -560,9 +567,9 @@ sub getplacement {
   my $size = int((getsize($elf)+$slack + $pagesz-1)/$pagesz)*$pagesz;
 
   die "page aligned boot loader size is implausible ($size)\n" if $size < 32;
-
   # vector bootloader: mcu w/o bootloader section or version capability of bootloader says so
   my $vbl = !$hasboot || (defined($caps) && ($caps & UR_VBLMASK) != 0);
+  die "Hardware boot section requested for part that does not support these\n" if !$hasboot && !$reqvbl;
 
   if($vbl) {
     # "boot size" is flexible - chose actual size
