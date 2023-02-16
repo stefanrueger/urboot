@@ -1906,7 +1906,7 @@ int main(void) {
 #endif // AUTOBAUD
 
 
-  if(&UART_BASE < (volatile uint8_t *) 0x40) { // Compiler uses out, good
+  if((uint8_t *)&UART_BASE - __SFR_OFFSET < (uint8_t *) 0x20) { // Compiler uses out, good
 #if AUTOBAUD
   asm volatile(
     AUTO_BRL                    // Measure and load the divisor for the baud rate register
