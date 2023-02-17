@@ -1912,7 +1912,7 @@ int main(void) {
 
 // Frame 8N1: hmm, this is the default in all data sheets that I've read: should we initialise UCSRnC?
 #ifndef UB_INIT_UCSRnC
-#define UB_INIT_UCSRnC         1
+#define UB_INIT_UCSRnC         0
 #endif
 
 #if defined(C_UCSZn0) &&  defined(C_UCSZn1)
