@@ -292,8 +292,19 @@
 // Contains definitions for UARTNUM=n, LED=AtmelPD3, LED=ArduinoPin9 and some avr name differences
 #include "pin_defs.h"
 #include "urboot_wdt.h"         // Don't use <avr/wdt.h> owing to unwanted interrupt overhead
-
 #include "errata.h"
+
+#ifndef UARTNUM                 // Default UART to 0
+#define UARTNUM 0
+#endif
+
+#ifndef UARTALT                 // Default UART ALT pin setting to 0 (not active)
+#define UARTALT 0
+#endif
+
+#include "ur_uart.h"            // Unified register and bit names for various UART types
+#include "ur_uartnum.h"         // Generic UARTn names depending on UARTNUM/UARTALT
+
 
 #ifndef VERSION
 #define VERSION             077 // v7.7 in octal, as minor version is in 3 least significant bits
@@ -535,13 +546,9 @@
 
 // I/O settings
 
-#if !defined(UDR0) && !defined(SWIO)
+#if UR_NUMUARTS == 0 && !defined(SWIO)
 #define SWIO 1
 #warning no uart: defaulting to SWIO=1
-#endif
-
-#ifndef UARTNUM
-#define UARTNUM 0
 #endif
 
 #ifndef SWIO
@@ -575,19 +582,24 @@
 #if !AUTOBAUD
 
 // Set the baud rate defaults
-#ifndef BAUD_RATE
+#if !defined(BAUD_RATE)
 #if   F_CPU >= 7800000L
-#define BAUD_RATE       115200L // Generally works with avrdude (but needs SWIO for ca 8 MHz)
+#define BAUD_RATE       115200L // Generally works (but needs SWIO for ca 8 MHz)
 #elif F_CPU >= 1000000L
-#define BAUD_RATE         9600L // 19200 also supported, but with significant error
+#define BAUD_RATE         9600L // 19200 may exhibit significant error
 #elif F_CPU >= 128000L
 #define BAUD_RATE         4800L // Good for 128 kHz internal RC
 #else
 #define BAUD_RATE         1200L // Good even at 32768 Hz
 #endif
-#endif
+#endif // !defined(BAUD_RATE)
 
-// Baud setting and actual baud rate in uart 2x mode and normal mode
+
+
+#if !SWIO                       // ... and compute baud rate settings for various UART types
+#if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
+
+// Baud setting and actual baud rate in UART 2x mode and normal mode
 #define BAUD_SETTING2X (((F_CPU + 4L*BAUD_RATE)/(8L*BAUD_RATE)) - 1)
 #define BAUD_ACTUAL2X  (F_CPU/(8L*(BAUD_SETTING2X+1)))
 #define BAUD_SETTING1X (((F_CPU + 8L*BAUD_RATE)/(16L*BAUD_RATE)) - 1)
@@ -596,12 +608,18 @@
 // Error per 1000, ie, in 0.1%
 #define baud_error(act) ((1000L*(BAUD_RATE>=(act)? BAUD_RATE-(act): (act)-BAUD_RATE))/BAUD_RATE)
 
+// Some classic parts cannot switch to 2x mode
+#if !defined(A_U2Xn)
+#undef UART2X
+#define UART2X 0
+#endif
+
 // Using double speed mode USART costs 6 byte initialisation. Is it worth it?
 #if  !defined(UART2X) || UART2X == 1
 #undef UART2X
 /*
- * switch on 2x mode if error for normal mode is > 2.5% and error with 2x less than normal mode
- * (note that normal mode has higher tolerances than 2X speed mode)
+ * Switch on 2x mode if error for normal mode is > 2.5% and error with 2x less than normal mode
+ * considering that normal mode has higher tolerances than 2x speed mode
  */
 #if 20*baud_error(BAUD_ACTUAL2X) < 15*baud_error(BAUD_ACTUAL1X) && baud_error(BAUD_ACTUAL1X) > 25
 #define UART2X 1
@@ -620,24 +638,23 @@
 #define BAUD_ERROR   baud_error(BAUD_ACTUAL1X)
 #endif
 
-#if !SWIO
 #if   BAUD_ERROR > 50 && BAUD_ACTUAL < BAUD_RATE
-#warning BAUD_RATE error exceeds -5%
+#warning BAUD_RATE quantisation error exceeds -5%
 #elif BAUD_ERROR > 50
-#warning BAUD_RATE error greater than 5%
+#warning BAUD_RATE quantisation error greater than 5%
 #elif  BAUD_ERROR > 25 && BAUD_ACTUAL < BAUD_RATE
-#warning BAUD_RATE error exceeds -2.5%
+#warning BAUD_RATE quantisation error exceeds -2.5%
 #elif BAUD_ERROR > 25
-#warning BAUD_RATE error greater than 2.5%
+#warning BAUD_RATE error quantisation greater than 2.5%
 #endif
 
-#if BAUD_SETTING > 250
+#if BAUD_SETTING > 255
 #error Unachievable baud rate (too slow)
-#elif BAUD_SETTING < 3
-#if BAUD_ERROR != 0             // Permit high bit-rates (eg, 1 Mbps @ 16 MHz) if error is zero
+#elif BAUD_SETTING < 0
 #error Unachievable baud rate (too fast)
 #endif
-#endif
+
+#endif // UR_UARTTYPE
 #endif // !SWIO
 
 #endif // !AUTOBAUD
@@ -1855,25 +1872,18 @@ int main(void) {
 
 // Initialise the USART
 
-#define min2(a, b) ((a) < (b)? (a): (b))
-#define min4(a, b, c, d) min2(min2(a, b), min2(c, d))
-#define UART_BASE (*min4(&UART_BRL, &UART_SRA, &UART_SRB, &UART_SRC))
 
-#define UART_SRA_VAL  _BV(U2X0) // Double speed mode
-#define UART_SRB_VAL (_BV(RXEN0) | _BV(TXEN0))
-
-// Frame: 8N1
-#define HAVE_UART_SRC         1 // Almost every part has this
-#if defined(URSEL0)             // Needed by some MCUs for shared I/O locations of UBRRH and UCSRC
-#define  UART_SRC_VAL (_BV(URSEL0) | _BV(UCSZ00) | _BV(UCSZ01))
-#elif defined(UCSZ00) && defined(UCSZ01)
-#define  UART_SRC_VAL (_BV(UCSZ00) | _BV(UCSZ01))
-#else                           // No UART_SRC register (ATmega161 and ATmega163)
-#undef  UART_BASE
-#define UART_BASE (*min4(&UART_BRL, &UART_SRA, &UART_SRB, &UART_SRB))
-#undef  HAVE_UART_SRC
-#define HAVE_UART_SRC         0
+// Frame 8N1: hmm, this is the default in all data sheets that I've read: should we initialise UCSRnC?
+#ifndef UB_INIT_UCSRnC
+#define UB_INIT_UCSRnC         1
 #endif
+
+#if defined(C_URSELn)            // Needed by some MCUs for shared I/O locations of UBRRH and UCSRC
+#define  UCSRnC_val (_BV(C_URSELn) | _BV(C_UCSZn0) | _BV(C_UCSZn1))
+#else
+#define  UCSRnC_val (_BV(C_UCSZn0) | _BV(C_UCSZn1))
+#endif
+
 
 #if AUTOBAUD
 
@@ -1881,12 +1891,12 @@ int main(void) {
 # error Baudrate loop takes 6 cycles not 5 (owing to XMEGAs 2-cycle sbis); todo: find a solution
 #endif
 
-// Measure cycles/rxbit = F_CPU/baudrate and set UART_BRL
+// Measure cycles/rxbit = F_CPU/baudrate and set UBBRnL
 // Loop 2 below modified from https://github.com/nerdralph/picoboot/
 
 #define AUTO_BRL \
   "   ldi   r26, 0x7f\n"        /* Initialise X with -0.5 in 8-bit fixed point representation */ \
-  "   ldi   r27, 0xff\n"        /* Want XH = UART_BRL=F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
+  "   ldi   r27, 0xff\n"        /* Want XH = UBRRnL = F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
   "1: sbic  %[RXPin],%[RXBit]\n" /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
   "   rjmp  1b\n" \
   "2: adiw  r26, 256/8\n"       /* Add 0.125 to X, ie, 256/8 to XL, in 8-bit fixed point rep */ \
@@ -1897,8 +1907,8 @@ int main(void) {
   "3: sbiw  r26, 1\n"           /* Drain input: run down X for 25.6 rx bits (256/8 * 4 c/5 c) */ \
   "   brne  3b\n"               /* 4-cycle loop */
 
-#ifndef UART2X
-#define UART2X              1
+#ifndef UART2X                  // Autobaud defaults to 2x speed for higher baud rate spectrum
+#define UART2X                1
 #endif
 
   // UR_PORT(RX) |= UR_BV(RX);  // Pullup rx (should be done by HW, really)
@@ -1906,25 +1916,25 @@ int main(void) {
 #endif // AUTOBAUD
 
 
-  if((uint8_t *)&UART_BASE - __SFR_OFFSET < (uint8_t *) 0x20) { // Compiler uses out, good
+  if(&UBRRnL - __SFR_OFFSET < (uint8_t *) 0x20) { // Can use out, good
 #if AUTOBAUD
   asm volatile(
     AUTO_BRL                    // Measure and load the divisor for the baud rate register
-    " out %[uart_brl], r27\n"
+    " out %[ubrrnl], r27\n"
     AUTO_DRAIN                  // Drain the two-byte input before initialising comms
-  :: [uart_brl] "I"(_SFR_IO_ADDR(UART_BRL)),
+  :: [ubrrnl] "I"(_SFR_IO_ADDR(UBRRnL)),
      [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX))
   : "r30", "r31", "r26", "r27"
   );
 #else
-    UART_BRL = BAUD_SETTING;
+    UBRRnL = BAUD_SETTING;
 #endif
 #if UART2X
-    UART_SRA = UART_SRA_VAL;
+    UCSRnA = _BV(A_U2Xn);
 #endif
-    UART_SRB = UART_SRB_VAL;
-#if HAVE_UART_SRC
-    UART_SRC = UART_SRC_VAL;
+    UCSRnB = (_BV(B_RXENn) | _BV(B_TXENn));
+#if UB_INIT_UCSRnC && defined(UCSRnC)
+    UCSRnC = UCSRnC_val;
 #endif
   } else {
     asm volatile(
@@ -1944,29 +1954,30 @@ int main(void) {
 #endif
       " ldi r27, lo8(%[srb_val])\n"
       " std Z+%[srb_off], r27\n"
-#if HAVE_UART_SRC
+#if UB_INIT_UCSRnC && defined(UCSRnC)
       " ldi r27, lo8(%[src_val])\n"
       " std Z+%[src_off], r27\n"
 #endif
-   :: [brl_off] "I" (&UART_BRL - &UART_BASE),
+   :: [brl_off] "I" (UBRRnL_off),
 #if AUTOBAUD
       [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX)),
 #else
       [brl_val] "n" (BAUD_SETTING),
 #endif
-      [sra_off] "I" (&UART_SRA - &UART_BASE),
-      [sra_val] "n" (UART_SRA_VAL),
-      [srb_off] "I" (&UART_SRB - &UART_BASE),
-      [srb_val] "n" (UART_SRB_VAL),
-#if HAVE_UART_SRC
-      [src_off] "I" (&UART_SRC - &UART_BASE),
-      [src_val] "n" (UART_SRC_VAL),
+      [sra_off] "I" (UCSRnA_off),
+#if UART2X
+      [sra_val] "n" (_BV(A_U2Xn)),
 #endif
-      [base] "n" ( _SFR_MEM_ADDR(UART_BASE))
+      [srb_off] "I" (UCSRnB_off),
+      [srb_val] "n" (_BV(B_RXENn) | _BV(B_TXENn)),
+#if UB_INIT_UCSRnC && defined(UCSRnC)
+      [src_off] "I" (UCSRnC_off),
+      [src_val] "n" (UCSRnC_val),
+#endif
+      [base] "n" ( _SFR_MEM_ADDR(*UARTn_base))
       : "r30", "r31", "r26", "r27"
     );
   }
-
 #endif
 
 
@@ -2113,9 +2124,9 @@ int main(void) {
 
 void putch(char chr) {
 #if !SWIO
-  while(!(UART_SRA & _BV(UDRE0)))
+  while(!(UCSRnA & _BV(A_UDREn)))
     continue;
-  UART_UDR = chr;
+  UDRn = chr;
 #else
   // By and large follows Atmel's AN AVR305
 #if defined(SWIO_STOP_BITS) && SWIO_STOP_BITS > 0
@@ -2214,22 +2225,22 @@ uint8_t getch2(void) {
 #else
   uint8_t usr;
   do {
-    usr = UART_SRA;
-  } while(!(usr & _BV(RXC0)));
+    usr = UCSRnA;
+  } while(!(usr & _BV(A_RXCn)));
 
-  // Watchdog reset wdr, (possibly skipped when frame error bit FE0 is set in uart status reg usr)
+  // Watchdog reset wdr, (possibly skipped when frame error bit A_FEn is set in uart status reg usr)
   asm volatile(
 #if EXITFE==2
-    "sbrc %[usr], %[fe0]\n"  // Skip 2-byte exit code if bit FE0 is clear in uart status register
+    "sbrc %[usr], %[fe0]\n"  // Skip 2-byte exit code if bit A_FEn is clear in uart status register
     RJMPQEXIT
 #elif EXITFE==1
-    "sbrs %[usr], %[fe0]\n"  // Skip wdr if bit FE0 is set in uart status register
+    "sbrs %[usr], %[fe0]\n"  // Skip wdr if bit A_FEn is set in uart status register
 #endif // EXITFE
     "wdr\n"
-    :: [usr] "r"(usr), [fe0] "I"(FE0)
+    :: [usr] "r"(usr), [fe0] "I"(A_FEn)
   );
 
-  chr = UART_UDR;
+  chr = UDRn;
 #endif
 
   led_off();

@@ -1,11 +1,11 @@
 /*
  * pin_defs.h
  *
- * Urboot helper defining the default pin assignments (DEFLED, TX, RX, ...) for the various chips
+ * This header defines the default pin assignments (DEFLED, TX, RX, ...) for the various chips
  * that are supported, though really, it's the boards that determine the default pins, not the
- * chip. The defaults can be overwritten by make arguments such as UARTNUM=2 TX=AtmelPB6
+ * chip. The defaults can be overwritten by make arguments such as TX=AtmelPB6
  *
- * Quite a bit modified 2016 and 2022 by Stefan Rueger
+ * Quite a bit modified 2016 and 2022-23 by Stefan Rueger
  * Copyright 2013-2015 by Bill Westfield
  * Copyright 2010 by Peter Knight
  * This software is licensed under version 2 of the Gnu Public Licence.
@@ -50,128 +50,6 @@
 
 #if defined(__AVR_ATmega161__) && !defined(EXTRF)
 #define EXTRF 1
-#endif
-
-
-// UART support
-
-/*
- * Ensure that bit positions are available with a 0 postfix, so we can always use the values for
- * UART0 for all UARTs. On the ATmega8, eg, the UART and its bits are not numbered (no RXC0 etc).
- */
-#if !defined(RXC0)
-
-// These devices have UDR0 defined as 0, undefine
-#if defined(__AVR_AT90PWM2B__) || defined(__AVR_AT90PWM3B__) || defined(__AVR_ATmega16A__) || \
-    defined(__AVR_ATtiny2313A__) || defined(__AVR_ATtiny4313__)
-#undef UDR0
-#endif
-
-#if defined(RXC)
-// ATmega8, eg, doesn't have UPE, only PE
-#if !defined(UPE) && defined(PE)
-#define UPE PE
-#endif
-#define RXC0   RXC
-#define RXEN0  RXEN
-#define TXC0   TXC
-#define TXEN0  TXEN
-#define U2X0   U2X
-#define FE0    FE
-#ifndef UDR0
-#define UDR0   UDR
-#endif
-#define UDRE0  UDRE
-#if defined(URSEL)
-#define URSEL0 URSEL
-#endif
-#if !defined(UCSZ00) && defined(UCSZ0)
-#define UCSZ00 UCSZ0
-#endif
-#if !defined(UCSZ01) && defined(UCSZ1)
-#define UCSZ01 UCSZ1
-#endif
-#if !defined(UCSR0A) && defined(UCSRA)
-#define UCSR0A UCSRA
-#endif
-#if !defined(UCSR0B) && defined(UCSRB)
-#define UCSR0B UCSRB
-#endif
-#if !defined(UCSR0C) && defined(UCSRC)
-#define UCSR0C UCSRC
-#endif
-#if !defined(UBRR0L) && defined(UBRRL)
-#define UBRR0L UBRRL
-#elif !defined(UBRR0L) && defined(UBRR0)
-#define UBRR0L UBRR0
-#elif !defined(UBRR0L) && defined(UBRR)
-#define UBRR0L UBRR
-#endif
-
-// Some devices have UART1 but no UART0
-#elif defined(RXC1)
-#define RXC0   RXC1
-#define RXEN0  RXEN1
-#define TXC0   TXC1
-#define TXEN0  TXEN1
-#define U2X0   U2X1
-#define FE0    FE1
-#define UDR0   UDR1
-#define UDRE0  UDRE1
-#if defined(URSEL1)
-#define URSEL0 URSEL1
-#endif
-#define UCSZ00 UCSZ10
-#define UCSZ01 UCSZ11
-#define UCSR0A UCSR1A
-#define UCSR0B UCSR1B
-#define UCSR0C UCSR1C
-#define UBRR0L UBRR1L
-#endif // defined(RXC1)
-
-#endif // !defined(RXC0)
-
-#ifndef UARTNUM
-#define UARTNUM 0
-#endif
-
-// Handle devices with up to 4 uarts (eg ATmega2560)
-#if UARTNUM == 0
-# define UART_SRA UCSR0A
-# define UART_SRB UCSR0B
-# define UART_SRC UCSR0C
-# define UART_BRL UBRR0L
-# define UART_UDR UDR0
-
-#elif UARTNUM == 1
-#if !defined(UDR1)
-#error UARTNUM == 1, but no UART1 on device
-#endif
-# define UART_SRA UCSR1A
-# define UART_SRB UCSR1B
-# define UART_SRC UCSR1C
-# define UART_BRL UBRR1L
-# define UART_UDR UDR1
-
-#elif UARTNUM == 2
-#if !defined(UDR2)
-#error UARTNUM == 2, but no UART2 on device
-#endif
-# define UART_SRA UCSR2A
-# define UART_SRB UCSR2B
-# define UART_SRC UCSR2C
-# define UART_BRL UBRR2L
-# define UART_UDR UDR2
-
-#elif UARTNUM == 3
-#if !defined(UDR1)
-#error UARTNUM == 3, but no UART3 on device
-#endif
-# define UART_SRA UCSR3A
-# define UART_SRB UCSR3B
-# define UART_SRC UCSR3C
-# define UART_BRL UBRR3L
-# define UART_UDR UDR3
 #endif
 
 
