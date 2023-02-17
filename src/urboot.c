@@ -614,7 +614,7 @@
 #define UART2X 0
 #endif
 
-// Using double speed mode USART costs 6 byte initialisation. Is it worth it?
+// Using double speed mode UART costs 6 byte initialisation. Is it worth it?
 #if  !defined(UART2X) || UART2X == 1
 #undef UART2X
 /*
@@ -653,6 +653,45 @@
 #elif BAUD_SETTING < 0
 #error Unachievable baud rate (too fast)
 #endif
+
+
+#elif UR_UARTTYPE == UR_UARTTYPE_LIN
+
+// 8-bit baud rate register given LBT value (number of samples in 8..63) and target baud rate bd
+#define _linbrr(lbt, bd)  ({ const int _brrlbt = (lbt); \
+  const long _brrret = (F_CPU + (_brrlbt)*(bd)/2)/((_brrlbt)*(bd)) - 1L; \
+  _brrret < 0? 0: _brrret > 255? 255: _brrret; \
+})
+
+// Baud rate given LBT value (number of samples in 8..63) and target baud rate bd
+#define _linbaud(lbt, bd) ({ const int _baudlbt = (lbt); F_CPU/((_baudlbt)*(_linbrr(_baudlbt, bd)+1L)); })
+
+// Baud rate quantisation error in 0.1 percent given LBT value and target baud rate bd
+#define _linabserr(lbt, bd) ({ const long _aebdf = 1000L*(_linbaud(lbt, bd) - (bd)); _aebdf >= 0? _aebdf/(bd): -_aebdf/(bd); })
+
+// Better of two LBT values: if the quantised(!) quantisation error is the same, the larger number of samples wins
+#define _better2(l1, l2, bd) ({ const int _l1 = (l1), _l2 = (l2); long _e1 = _linabserr(_l1, bd), _e2 = _linabserr(_l2, bd); \
+  _e1 < _e2? _l1: _e1 > _e2? _l2: _l1 > _l2? _l1: _l2; })
+#define _better4(l1, l2, l3, l4, bd) _better2(_better2(l1, l2, bd), _better2(l3, l4, bd), bd)
+#define _better8(l1, l2, l3, l4, l5, l6, l7, l8, bd) \
+  _better2(_better4(l1, l2, l3, l4, bd), _better4(l5, l6, l7, l8, bd), bd)
+
+// Best LBT value from 8..63
+#define _linbestlbt(bd) ({ const int \
+  _bestl2 =  _better8( 8,  9, 10, 11, 12, 13, 14, 15, bd), \
+  _bestl3 =  _better8(16, 17, 18, 19, 20, 21, 22, 23, bd), \
+  _bestl4 =  _better8(24, 25, 26, 27, 28, 29, 30, 31, bd), \
+  _bestl5 =  _better8(32, 33, 34, 35, 36, 37, 38, 39, bd), \
+  _bestl6 =  _better8(40, 41, 42, 43, 44, 45, 46, 47, bd), \
+  _bestl7 =  _better8(48, 49, 50, 51, 52, 53, 54, 55, bd), \
+  _bestl8 =  _better8(56, 57, 58, 59, 60, 61, 62, 63, bd); \
+  _better8(8, _bestl2, _bestl3, _bestl4, _bestl5, _bestl6, _bestl7, _bestl8, bd); \
+})
+
+// No need to check baud error as virtually all baud rates can be achieved within 2% error
+#define BAUD_LINLBT  _linbestlbt(BAUD_RATE)
+#define BAUD_SETTING _linbrr(_linbestlbt(BAUD_RATE), BAUD_RATE)
+#define UBRRnL LINBRRnL
 
 #endif // UR_UARTTYPE
 #endif // !SWIO
@@ -1814,7 +1853,6 @@ unsigned const int __attribute__ ((section(".version"))) urboot_version[] = {
 #endif
 
 
-// @@@
 // Main is put by linker at the start of the bootloader (same as compile-time constant START)
 int main(void) {
   register uint8_t mcusr asm("r2"); // Ask compiler to allocate r2 for reset flags
@@ -1870,18 +1908,19 @@ int main(void) {
 
 #else // !SWIO
 
-// Initialise the USART
-
+// Initialise the UART
 
 // Frame 8N1: hmm, this is the default in all data sheets that I've read: should we initialise UCSRnC?
 #ifndef UB_INIT_UCSRnC
 #define UB_INIT_UCSRnC         1
 #endif
 
+#if defined(C_UCSZn0) &&  defined(C_UCSZn1)
 #if defined(C_URSELn)            // Needed by some MCUs for shared I/O locations of UBRRH and UCSRC
 #define  UCSRnC_val (_BV(C_URSELn) | _BV(C_UCSZn0) | _BV(C_UCSZn1))
 #else
 #define  UCSRnC_val (_BV(C_UCSZn0) | _BV(C_UCSZn1))
+#endif
 #endif
 
 
@@ -1894,28 +1933,35 @@ int main(void) {
 // Measure cycles/rxbit = F_CPU/baudrate and set UBBRnL
 // Loop 2 below modified from https://github.com/nerdralph/picoboot/
 
+#ifndef UART2X                  // Autobaud defaults to 2x speed for higher baud rate spectrum
+#define UART2X                1
+#endif
+
+#if UART2X || UR_UARTTYPE == UR_UARTTYPE_LIN
+#define AUTO_INCX  "adiw  r26, 256/8\n"  // Add 0.125 to X, ie, 256/8 to XL, in 8-bit fixed point rep
+#else
+#define AUTO_INCX  "adiw  r26, 256/16\n" // Add 0.0625 to X, ie, 256/16 to XL, in 8-bit fixed point rep
+#endif
+
 #define AUTO_BRL \
-  "   ldi   r26, 0x7f\n"        /* Initialise X with -0.5 in 8-bit fixed point representation */ \
-  "   ldi   r27, 0xff\n"        /* Want XH = UBRRnL = F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
-  "1: sbic  %[RXPin],%[RXBit]\n" /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
-  "   rjmp  1b\n" \
-  "2: adiw  r26, 256/8\n"       /* Add 0.125 to X, ie, 256/8 to XL, in 8-bit fixed point rep */ \
-  "   sbis  %[RXPin],%[RXBit]\n" /* Loop as long as rx bit is low */ \
-  "   rjmp  2b\n"               /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */
+  "   ldi  r26, 0x7f\n"         /* Initialise X with -0.5 in 8-bit fixed point representation */ \
+  "   ldi  r27, 0xff\n"         /* Want XH = UBRRnL = F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
+  "1: sbic %[RXPin],%[RXBit]\n" /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
+  "   rjmp 1b\n" \
+  "2: " AUTO_INCX               /* Increment X (r26:27) so that final value of r27 is BRRL divisor */ \
+  "   sbis %[RXPin],%[RXBit]\n" /* Loop as long as rx bit is low */ \
+  "   rjmp 2b\n"                /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */
 
 #define AUTO_DRAIN \
   "3: sbiw  r26, 1\n"           /* Drain input: run down X for 25.6 rx bits (256/8 * 4 c/5 c) */ \
   "   brne  3b\n"               /* 4-cycle loop */
-
-#ifndef UART2X                  // Autobaud defaults to 2x speed for higher baud rate spectrum
-#define UART2X                1
-#endif
 
   // UR_PORT(RX) |= UR_BV(RX);  // Pullup rx (should be done by HW, really)
 
 #endif // AUTOBAUD
 
 
+#if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
   if(&UBRRnL - __SFR_OFFSET < (uint8_t *) 0x20) { // Can use out, good
 #if AUTOBAUD
   asm volatile(
@@ -1933,7 +1979,7 @@ int main(void) {
     UCSRnA = _BV(A_U2Xn);
 #endif
     UCSRnB = (_BV(B_RXENn) | _BV(B_TXENn));
-#if UB_INIT_UCSRnC && defined(UCSRnC)
+#if UB_INIT_UCSRnC && defined(UCSRnC_val)
     UCSRnC = UCSRnC_val;
 #endif
   } else {
@@ -1942,11 +1988,11 @@ int main(void) {
       " ldi r31, hi8(%[base])\n"
 #if AUTOBAUD
       AUTO_BRL
-      " std Z+%[brl_off], r27\n"
+      " std Z+%[brrl_off], r27\n"
       AUTO_DRAIN
 #else
-      " ldi r27, lo8(%[brl_val])\n"
-      " std Z+%[brl_off], r27\n"
+      " ldi r27, lo8(%[brrl_val])\n"
+      " std Z+%[brrl_off], r27\n"
 #endif
 #if UART2X
       " ldi r27, lo8(%[sra_val])\n"
@@ -1954,23 +2000,21 @@ int main(void) {
 #endif
       " ldi r27, lo8(%[srb_val])\n"
       " std Z+%[srb_off], r27\n"
-#if UB_INIT_UCSRnC && defined(UCSRnC)
+#if UB_INIT_UCSRnC && defined(UCSRnC_val)
       " ldi r27, lo8(%[src_val])\n"
       " std Z+%[src_off], r27\n"
 #endif
-   :: [brl_off] "I" (UBRRnL_off),
+   :: [brrl_off] "I" (UBRRnL_off),
 #if AUTOBAUD
       [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX)),
 #else
-      [brl_val] "n" (BAUD_SETTING),
+      [brrl_val] "n" (BAUD_SETTING),
 #endif
       [sra_off] "I" (UCSRnA_off),
-#if UART2X
       [sra_val] "n" (_BV(A_U2Xn)),
-#endif
       [srb_off] "I" (UCSRnB_off),
       [srb_val] "n" (_BV(B_RXENn) | _BV(B_TXENn)),
-#if UB_INIT_UCSRnC && defined(UCSRnC)
+#if UB_INIT_UCSRnC && defined(UCSRnC_val)
       [src_off] "I" (UCSRnC_off),
       [src_val] "n" (UCSRnC_val),
 #endif
@@ -1978,7 +2022,45 @@ int main(void) {
       : "r30", "r31", "r26", "r27"
     );
   }
+
+#elif UR_UARTTYPE == UR_UARTTYPE_LIN
+
+
+// LINBTRn = _BV(S_LDISRn) | (_sblbt << S_LBTn0);
+// LINBRRnL = _linbrr(_sblbt, Baud);
+// LINCRn = _BV(C_LENAn) | _BV(C_LCMDn2) | _BV(C_LCMDn1) | _BV(C_LCMDn0);
+
+  asm volatile(
+    " ldi r30, lo8(%[base])\n" // Load Z for st Z+offset, r27
+    " ldi r31, hi8(%[base])\n"
+    " ldi r27, %[btr_val]\n"
+    " std Z+%[btr_off], r27\n"
+#if AUTOBAUD
+    AUTO_BRL
+    " std Z+%[brrl_off], r27\n"
+    AUTO_DRAIN
+#else
+    " ldi r27, %[brrl_val]\n"
+    " std Z+%[brrl_off], r27\n"
 #endif
+    " ldi r27, %[lincr_val]\n"
+    " std Z+%[lincr_off], r27\n"
+ :: [brrl_off] "I" (LINBRRnL_off),
+    [btr_off] "I" (LINBTRn_off),
+#if AUTOBAUD
+    [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX)),
+    [btr_val] "n" (_BV(S_LDISRn) | (8 << S_LBTn0)),
+#else
+    [btr_val] "n" (_BV(S_LDISRn) | (BAUD_LINLBT << S_LBTn0)),
+    [brrl_val] "n" (BAUD_SETTING),
+#endif
+    [lincr_off] "I" (LINCRn_off),
+    [lincr_val] "n" (_BV(C_LENAn) | _BV(C_LCMDn2) | _BV(C_LCMDn1) | _BV(C_LCMDn0)),
+    [base] "n" ( _SFR_MEM_ADDR(*UARTn_base))
+    : "r30", "r31", "r26", "r27"
+  );
+#endif // UR_UARTTYPEs
+#endif // !SWIO
 
 
 // Swing a square wave of 5 periods on pin FREQ_PIN (can be LED) to enable exact F_CPU measurement
@@ -2124,9 +2206,15 @@ int main(void) {
 
 void putch(char chr) {
 #if !SWIO
+#if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
   while(!(UCSRnA & _BV(A_UDREn)))
     continue;
   UDRn = chr;
+#elif UR_UARTTYPE == UR_UARTTYPE_LIN
+  while(LINSIRn & _BV(A_LBUSYn))
+    continue;
+  LINDATn = chr;
+#endif
 #else
   // By and large follows Atmel's AN AVR305
 #if defined(SWIO_STOP_BITS) && SWIO_STOP_BITS > 0
@@ -2222,7 +2310,8 @@ uint8_t getch2(void) {
       : [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX))
       : "r25", "r18" // r25 is clobbered by bitDelay
   );
-#else
+#else // !SWIO
+#if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
   uint8_t usr;
   do {
     usr = UCSRnA;
@@ -2241,7 +2330,29 @@ uint8_t getch2(void) {
   );
 
   chr = UDRn;
-#endif
+
+#elif UR_UARTTYPE == UR_UARTTYPE_LIN
+  uint8_t usr;
+  do {
+    usr = LINSIRn;
+  } while(!(usr & _BV(A_LRXOKn)));
+
+  // Watchdog reset wdr, (possibly skipped when rx error bit A_LERRn is set in uart status reg usr)
+  asm volatile(
+#if EXITFE==2
+    "sbrc %[usr], %[lerr]\n"  // Skip 2-byte exit code if bit A_LERRn is clear in uart status register
+    RJMPQEXIT
+#elif EXITFE==1
+    "sbrs %[usr], %[lerr]\n"  // Skip wdr if bit A_LERRn is set in uart status register
+#endif // EXITFE
+    "wdr\n"
+    :: [usr] "r"(usr), [lerr] "I"(A_LERRn)
+  );
+
+  chr = LINDATn;
+
+#endif // UR_UARTTYPEs
+#endif // !SWIO
 
   led_off();
 
