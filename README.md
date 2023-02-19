@@ -195,4 +195,4 @@ for all `F_CPU` and a range of associated baudrates.
 
 The naming convention for the `.hex` files is given in the [larger comparison table covering a range of MCUs](https://github.com/stefanrueger/urboot/blob/main/docs/comparison.md).
 
-**Bugs.** The code still defaults to `URPROTOCOL=0`. The urprotocol should be chosen by default. :)
+**Bugs.** The code still defaults to `URPROTOCOL=0`. The urprotocol should be chosen by default! :)
