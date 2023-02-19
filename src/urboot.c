@@ -658,9 +658,9 @@
 #elif UR_UARTTYPE == UR_UARTTYPE_LIN
 
 // 8-bit baud rate register given LBT value (number of samples in 8..63) and target baud rate bd
-#define _linbrr(lbt, bd)  ({ const int _brrlbt = (lbt); \
-  const long _brrret = (F_CPU + (_brrlbt)*(bd)/2)/((_brrlbt)*(bd)) - 1L; \
-  _brrret < 0? 0: _brrret > 255? 255: _brrret; \
+#define _linbrr(lbt, bd)  ({ const int _brrlbt = (lbt); const long _bd = (bd); \
+  const long _brrret = (F_CPU + (_brrlbt)*(_bd)/2)/((_brrlbt)*(_bd)) - 1L; \
+  _brrret < 0? 0L: _brrret > 255L? 255L: _brrret; \
 })
 
 // Baud rate given LBT value (number of samples in 8..63) and target baud rate bd

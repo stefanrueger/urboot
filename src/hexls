@@ -56,7 +56,7 @@ my %feature = (
   'auto'   => "  + `autobaud` tries to match host baud rate; can be f/8, f/16, f/24, ..., f/2048 (f=F<sub>CPU</sub>)\n",
   'auto2'  => "  + `autobaud2` tries to match host baud rate; can be f/16, f/32, f/48, ..., f/4096 (f=F<sub>CPU</sub>)\n",
   'dual'   => "  + `dual` boot: serial and from external SPI flash memory\n",
-  'swio'   => "  + `swio` software I/O (not USART)\n",
+  'swio'   => "  + `swio` software I/O (not UART)\n",
   'swiorx' => "  + `rxd0 txd1` software I/O using, in this example, lines RX `D0` and TX `D1`\n",
   'ee'     => "  + `ee` bootloader supports EEPROM read/write\n",
   'led-b1' => "  + `led-b1` toggles an active-low LED on pin `B1`, `+` designates an active-high LED\n",
