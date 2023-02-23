@@ -140,7 +140,8 @@
   defined(__AVR_ATmega16A__) || defined(__AVR_ATmega16HVB__) || defined(__AVR_ATmega16M1__) || \
   defined(__AVR_ATmega16U2__) || defined(__AVR_ATmega16U4__) || defined(__AVR_ATmega16__) || \
   defined(__AVR_ATmega2560__) || defined(__AVR_ATmega2561__) || defined(__AVR_ATmega324A__) || \
-  defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega3250A__) || \
+  defined(__AVR_ATmega324PA__) || \
+  defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega3250A__) || \
   defined(__AVR_ATmega3250PA__) || defined(__AVR_ATmega3250P__) || defined(__AVR_ATmega3250__) || \
   defined(__AVR_ATmega325A__) || defined(__AVR_ATmega325PA__) || defined(__AVR_ATmega325P__) || \
   defined(__AVR_ATmega325__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328__) || \
@@ -201,6 +202,7 @@
 
 #define IS_328 ( \
   defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__) || \
+  defined(__AVR_ATmega328PB__) || \
   defined(__AVR_ATmega168A__) || defined(__AVR_ATmega168PA__) || \
   defined(__AVR_ATmega168__) || defined(__AVR_ATmega168P__) || \
   defined(__AVR_ATmega88A__) || defined(__AVR_ATmega88PA__) || \
@@ -220,6 +222,7 @@
   defined(__AVR_ATmega644A__) || defined(__AVR_ATmega644PA__) || \
   defined(__AVR_ATmega644__) || defined(__AVR_ATmega644P__) || \
   defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || \
+  defined(__AVR_ATmega324PB__) || \
   defined(__AVR_ATmega164A__) || defined(__AVR_ATmega164PA__) \
 )
 

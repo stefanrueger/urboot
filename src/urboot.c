@@ -60,7 +60,7 @@
  *   atmega165a atmega165p atmega165pa atmega168 atmega168a atmega168p atmega168pa atmega168pb
  *   atmega169 atmega169a atmega169p atmega169pa atmega16a atmega16hva atmega16hva2 atmega16hvb
  *   atmega16hvbrevb atmega16m1 atmega16u2 atmega16u4 atmega2561 atmega2564rfr2 atmega256rfr2
- *   atmega32 atmega323 atmega324a atmega324p atmega324pa atmega325 atmega3250 atmega3250a
+ *   atmega32 atmega323 atmega324a atmega324p atmega324pa atmega324pb atmega325 atmega3250 atmega3250a
  *   atmega3250p atmega3250pa atmega325a atmega325p atmega325pa atmega328 atmega328pb atmega329
  *   atmega3290 atmega3290a atmega3290p atmega3290pa atmega329a atmega329p atmega329pa atmega32a
  *   atmega32c1 atmega32hvb atmega32hvbrevb atmega32m1 atmega32u2 atmega32u4 atmega32u6 atmega406

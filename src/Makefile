@@ -258,7 +258,7 @@ endif
 
 # Toolchain 4.8.1 does not know some MCUs, bump to 5.4.0
 ifdef MCU
-ifeq (/$(MCU)/, $(findstring /$(MCU)/, /ata5702m322/ata5782/ata5791/ata5831/ata8210/ata8510/atmega168pb/atmega328pb/atmega48pb/atmega88pb/))
+ifeq (/$(MCU)/, $(findstring /$(MCU)/, /ata5702m322/ata5782/ata5791/ata5831/ata8210/ata8510/atmega168pb/atmega328pb/atmega48pb/atmega88pb/atmega324pb/))
 override TOOLVER := 5.4.0
 override GCCROOT = ./avr-toolchain/$(TOOLVER)/bin/
 endif
