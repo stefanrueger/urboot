@@ -254,7 +254,7 @@
  * Nov 2022
  * 7.7 smr: added autobaud and, for vector bootloaders, reset vector protection
  * Jun 2022
- * 7.6 smr: refined the URPROTOCOL protocol implementation, now compiles for 183 MCUs
+ * 7.6 smr: refined the URPROTOCOL protocol implementation, now compiles for 184 MCUs
  * Dec 2021
  * 7.5 smr: added option URPROTOCOL that significantly reduces code by shifting a lot of work
  *     to avrdude (patching vector table for vector bootloader, removing avrdude requests for
@@ -289,8 +289,7 @@
 #include "urboot_r30.h"         // Own definitions for address being kept globally in Z=r30/31
 #include "urboot_mcuid.h"       // MCU id (a small int constant sent to avrdude)
 
-// Contains definitions for UARTNUM=n, LED=AtmelPD3, LED=ArduinoPin9 and some avr name differences
-#include "pin_defs.h"
+#include "pin_defs.h"           // Definitions for LEDs and some avr name differences
 #include "urboot_wdt.h"         // Don't use <avr/wdt.h> owing to unwanted interrupt overhead
 #include "errata.h"
 
@@ -298,7 +297,7 @@
 #define UARTNUM 0
 #endif
 
-#ifndef UARTALT                 // Default UART ALT pin setting to 0 (not active)
+#ifndef UARTALT                 // Default UART ALT pin setting to 0 (ie, not active)
 #define UARTALT 0
 #endif
 
@@ -1910,7 +1909,7 @@ int main(void) {
 
 // Initialise the UART
 
-// Frame 8N1: hmm, this is the default in all data sheets that I've read: should we initialise UCSRnC?
+// Frame 8N1: this is the default in all data sheets that I've read: do not initialise UCSRnC
 #ifndef UB_INIT_UCSRnC
 #define UB_INIT_UCSRnC         0
 #endif
@@ -1922,7 +1921,6 @@ int main(void) {
 #define  UCSRnC_val (_BV(C_UCSZn0) | _BV(C_UCSZn1))
 #endif
 #endif
-
 
 #if AUTOBAUD
 
