@@ -967,8 +967,12 @@ typedef struct {
   uint8_t b4:1; uint8_t b5:1; uint8_t b6:1; uint8_t b7:1;
 } bools_t;
 
-#ifndef GPIOR0
-#define GPIOR0 TWBR             // ATmega32
+#if !defined(GPIOR0) && defined(TWBR)
+#define GPIOR0 TWBR             // ATmega8/16/32/64/128
+#endif
+
+#if !defined(GPIOR0) && VBL >= VBL_VERIFY // eg, ATmega161
+#error Cannot handle VBL level on this device
 #endif
 
 #if VBL >= VBL_VERIFY
@@ -1857,12 +1861,12 @@ int main(void) {
   register uint8_t mcusr asm("r2"); // Ask compiler to allocate r2 for reset flags
 
   asm volatile(" eor r1,r1");   // Clear temporary register r1 to zero
-#if !(IS_328 || IS_1284 || IS_2560 || IS_TINY5 || IS_TINY167)
-  SP = RAMEND;                  // Some MCUs might not reset the SP on reset?
+#if !UB_INIT_SP_IS_RAMEND       // Some MCUs initialise SP to 0, not RAMEND, after reset
+  SP = RAMEND;
 #endif
 
 #if VBL>=VBL_VERIFY // GPIOR0 (and TWBR) probably zero after reset
-#if !(IS_328 || IS_1284 || IS_2560 || IS_TINY5 || IS_TINY167)
+#if defined(UB_INIT_GPIOR0) && UB_INIT_GPIOR0
   GPIOR0 = 0;                   // But who wants to read all 184 atmel data sheets to verify this?
 #endif
 #endif
