@@ -1922,6 +1922,11 @@ int main(void) {
 #endif
 #endif
 
+// Only ATtiny441 or ATtiny841 can remap UART0 RX/TX pins
+#if UR_UARTTYPE == UR_UARTTYPE_CLASSIC && defined(U_REMAP) && defined(U0MAP) && UARTNUM == 0 && UARTALT == 1
+  U_REMAP = _BV(U0MAP);
+#endif
+
 #if AUTOBAUD
 
 #if defined(__AVR_XMEGA__)
