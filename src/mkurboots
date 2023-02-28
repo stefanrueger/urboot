@@ -110,17 +110,6 @@ if [[ -n $baudlist ]]; then
   done
 fi
 
-# for fcpu in ${!baud[@]}; do
-#   readarray -d / -t bauds <<<${baud[$fcpu]}
-#   for b in ${bauds[@]}; do
-#     if [[ -n $baudlist && -z ${baudok[$b]} ]]; then
-#       continue
-#     fi
-#     echo $fcpu/$b
-#   done
-# done
-# exit
-
 # Problematic combinations for UART (high baud rate error)
 declare -A nouart
 
@@ -199,38 +188,6 @@ fi
 
 
 ####
-# I/O pins for MCUs without UART for software I/O
-#
-declare -A swio
-
-# Generally, we don't know which lines are used by a board for SWIO, but cater for known boards
-swio[attiny84]="SWIO=1 RX=AtmelPA3 TX=AtmelPA2"  # Luminet
-swio[attiny85]="SWIO=1 RX=AtmelPB4 TX=AtmelPB3"  # Digispark
-swio[attiny88]="SWIO=1 RX=AtmelPD7 TX=AtmelPD6"  # MH Tiny
-
-# Unknown I/O: set RX=B0 and TX=B1 but this vvv unlikely what you want!
-
-# Parts that do not have an UART
-mcusnouart=(at86rf401 at90c8534 at90pwm1 at90pwm161 at90pwm81 at90s1200 at90s2323 at90s2343 \
-  ata5700m322 ata5702m322 ata5781 ata5782 ata5783 ata5790 ata5790n ata5791 ata5795 ata5831 \
-  ata5832 ata5833 ata6285 ata6286 ata8210 ata8215 ata8510 ata8515 atmega16hva atmega16hva2 \
-  atmega16hvb atmega16hvbrevb atmega32hvb atmega32hvbrevb atmega406 atmega8hva attiny10 attiny11 \
-  attiny12 attiny13 attiny13a attiny15 attiny20 attiny22 attiny24 attiny24a attiny25 attiny26 \
-  attiny261 attiny261a attiny28 attiny4 attiny40 attiny43u attiny44 attiny44a attiny45 attiny461 \
-  attiny461a attiny48 attiny5 attiny84 attiny84a attiny85 attiny861 attiny861a attiny88 attiny9 \
-)
-
-# Those with unknown UART registers/interrupts/pins
-mcusnouart+=(at43usb320 at43usb355 at76c711 at94k ata5272 ata5787 ata5835 ata6289 atmega32u6 \
-  attiny3214 m3000 \
-)
-
-for part in ${mcusnouart[@]}; do
-  [[ -z ${swio[$part]} ]] && swio[$part]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
-done
-
-
-####
 # Some intell about parts in general
 #
 
@@ -269,305 +226,6 @@ blmcus=(at90can128 at90can32 at90can64 at90pwm1 at90pwm161 at90pwm2 at90pwm216 a
 # Set ${hwboot[$part]} iff $part is known to have HW bootloader support
 declare -A hwboot
 for part in ${blmcus[@]}; do hwboot[$part]=1; done
-
-
-####
-# Number of UARTs
-#
-declare -A numuarts
-
-numuarts[attiny102]=1
-numuarts[attiny104]=1
-numuarts[attiny87]=1
-numuarts[attiny167]=1
-numuarts[attiny441]=2
-numuarts[attiny828]=1
-numuarts[attiny828r]=1
-numuarts[attiny841]=2
-numuarts[attiny1634]=2
-numuarts[attiny1634r]=2
-numuarts[attiny2313]=1
-numuarts[attiny2313a]=1
-numuarts[attiny4313]=1
-numuarts[atmega8]=1
-numuarts[atmega8a]=1
-numuarts[atmega8u2]=1
-numuarts[atmega16]=1
-numuarts[atmega16a]=1
-numuarts[atmega16m1]=1
-numuarts[atmega16u2]=1
-numuarts[atmega16u4]=1
-numuarts[atmega32]=1
-numuarts[atmega32a]=1
-numuarts[atmega32c1]=1
-numuarts[atmega32m1]=1
-numuarts[atmega32u2]=1
-numuarts[atmega32u4]=1
-numuarts[atmega32u6]=1
-numuarts[atmega48]=1
-numuarts[atmega48a]=1
-numuarts[atmega48p]=1
-numuarts[atmega48pa]=1
-numuarts[atmega48pb]=1
-numuarts[atmega64]=2
-numuarts[atmega64a]=2
-numuarts[atmega64hve]=1
-numuarts[atmega64c1]=1
-numuarts[atmega64m1]=1
-numuarts[atmega64hve2]=1
-numuarts[atmega64rfr2]=2
-numuarts[atmega88]=1
-numuarts[atmega88a]=1
-numuarts[atmega88p]=1
-numuarts[atmega88pa]=1
-numuarts[atmega88pb]=1
-numuarts[atmega103]=1
-numuarts[atmega128]=2
-numuarts[atmega128a]=2
-numuarts[atmega128rfa1]=2
-numuarts[atmega128rfr2]=2
-numuarts[atmega161]=2
-numuarts[atmega162]=2
-numuarts[atmega163]=1
-numuarts[atmega164a]=2
-numuarts[atmega164p]=2
-numuarts[atmega164pa]=2
-numuarts[atmega165]=1
-numuarts[atmega165a]=1
-numuarts[atmega165p]=1
-numuarts[atmega165pa]=1
-numuarts[atmega168]=1
-numuarts[atmega168a]=1
-numuarts[atmega168p]=1
-numuarts[atmega168pa]=1
-numuarts[atmega168pb]=1
-numuarts[atmega169]=1
-numuarts[atmega169a]=1
-numuarts[atmega169p]=1
-numuarts[atmega169pa]=1
-numuarts[atmega256rfr2]=2
-numuarts[atmega323]=1
-numuarts[atmega324a]=2
-numuarts[atmega324p]=2
-numuarts[atmega324pa]=2
-numuarts[atmega324pb]=3
-numuarts[atmega325]=1
-numuarts[atmega325a]=1
-numuarts[atmega325p]=1
-numuarts[atmega325pa]=1
-numuarts[atmega328]=1
-numuarts[atmega328p]=1
-numuarts[atmega328pb]=2
-numuarts[atmega329]=1
-numuarts[atmega329a]=1
-numuarts[atmega329p]=1
-numuarts[atmega329pa]=1
-numuarts[atmega640]=4
-numuarts[atmega644]=1
-numuarts[atmega644a]=2
-numuarts[atmega644p]=2
-numuarts[atmega644pa]=2
-numuarts[atmega644rfr2]=2
-numuarts[atmega645]=1
-numuarts[atmega645a]=1
-numuarts[atmega645p]=1
-numuarts[atmega649]=1
-numuarts[atmega649a]=1
-numuarts[atmega649p]=1
-numuarts[atmega1280]=4
-numuarts[atmega1281]=2
-numuarts[atmega1284]=2
-numuarts[atmega1284p]=2
-numuarts[atmega1284rfr2]=2
-numuarts[atmega2560]=4
-numuarts[atmega2561]=2
-numuarts[atmega2564rfr2]=2
-numuarts[atmega3250]=1
-numuarts[atmega3250a]=1
-numuarts[atmega3250p]=1
-numuarts[atmega3250pa]=1
-numuarts[atmega3290]=1
-numuarts[atmega3290a]=1
-numuarts[atmega3290p]=1
-numuarts[atmega3290pa]=1
-numuarts[atmega6450]=1
-numuarts[atmega6450a]=1
-numuarts[atmega6450p]=1
-numuarts[atmega6490]=1
-numuarts[atmega6490a]=1
-numuarts[atmega6490p]=1
-numuarts[atmega8515]=1
-numuarts[atmega8535]=1
-numuarts[at43usb320]=1
-numuarts[at90pwm2]=1
-numuarts[at90pwm2b]=1
-numuarts[at90pwm3]=1
-numuarts[at90pwm3b]=1
-numuarts[at90can32]=2
-numuarts[at90can64]=2
-numuarts[at90usb82]=1
-numuarts[at90scr100]=1
-numuarts[at90can128]=2
-numuarts[at90usb162]=1
-numuarts[at90pwm216]=1
-numuarts[at90pwm316]=1
-numuarts[at90usb646]=1
-numuarts[at90usb647]=1
-numuarts[at90usb1286]=1
-numuarts[at90usb1287]=1
-numuarts[at90s2313]=1
-numuarts[at90s2333]=1
-numuarts[at90s4414]=1
-numuarts[at90s4433]=1
-numuarts[at90s4434]=1
-numuarts[at90s8515]=1
-numuarts[at90s8535]=1
-numuarts[at94k]=2
-numuarts[ata5272]=1
-numuarts[ata5505]=1
-numuarts[ata5787]=1
-numuarts[ata5835]=1
-numuarts[ata6612c]=1
-numuarts[ata6613c]=1
-numuarts[ata6614q]=1
-numuarts[ata6616c]=1
-numuarts[ata6617c]=1
-numuarts[ata664251]=1
-numuarts[m3000]=1
-numuarts[lgt8f88p]=1
-numuarts[lgt8f168p]=1
-numuarts[lgt8f328p]=1
-numuarts[atxmega8e5]=2
-numuarts[atxmega16a4]=5
-numuarts[atxmega16a4u]=5
-numuarts[atxmega16c4]=3
-numuarts[atxmega16d4]=2
-numuarts[atxmega16e5]=2
-numuarts[atxmega32c3]=3
-numuarts[atxmega32d3]=3
-numuarts[atxmega32a4]=5
-numuarts[atxmega32a4u]=5
-numuarts[atxmega32c4]=3
-numuarts[atxmega32d4]=2
-numuarts[atxmega32e5]=2
-numuarts[atxmega64a1]=8
-numuarts[atxmega64a1u]=8
-numuarts[atxmega64b1]=2
-numuarts[atxmega64a3]=7
-numuarts[atxmega64a3u]=7
-numuarts[atxmega64b3]=1
-numuarts[atxmega64c3]=3
-numuarts[atxmega64d3]=3
-numuarts[atxmega64a4u]=5
-numuarts[atxmega64d4]=2
-numuarts[atxmega128a1]=8
-numuarts[atxmega128a1revd]=8
-numuarts[atxmega128a1u]=8
-numuarts[atxmega128b1]=2
-numuarts[atxmega128a3]=7
-numuarts[atxmega128a3u]=7
-numuarts[atxmega128b3]=1
-numuarts[atxmega128c3]=3
-numuarts[atxmega128d3]=3
-numuarts[atxmega128a4u]=5
-numuarts[atxmega128d4]=2
-numuarts[atxmega192a3]=7
-numuarts[atxmega192a3u]=7
-numuarts[atxmega192c3]=3
-numuarts[atxmega192d3]=3
-numuarts[atxmega256a3]=7
-numuarts[atxmega256a3b]=6
-numuarts[atxmega256a3bu]=6
-numuarts[atxmega256a3u]=7
-numuarts[atxmega256c3]=3
-numuarts[atxmega256d3]=3
-numuarts[atxmega384c3]=3
-numuarts[atxmega384d3]=3
-numuarts[attiny202]=1
-numuarts[attiny204]=1
-numuarts[attiny212]=1
-numuarts[attiny214]=1
-numuarts[attiny402]=1
-numuarts[attiny404]=1
-numuarts[attiny406]=1
-numuarts[attiny412]=1
-numuarts[attiny414]=1
-numuarts[attiny416]=1
-numuarts[attiny416auto]=1
-numuarts[attiny417]=1
-numuarts[attiny424]=2
-numuarts[attiny426]=2
-numuarts[attiny427]=2
-numuarts[attiny804]=1
-numuarts[attiny806]=1
-numuarts[attiny807]=1
-numuarts[attiny814]=1
-numuarts[attiny816]=1
-numuarts[attiny817]=1
-numuarts[attiny824]=2
-numuarts[attiny826]=2
-numuarts[attiny827]=2
-numuarts[attiny1604]=1
-numuarts[attiny1606]=1
-numuarts[attiny1607]=1
-numuarts[attiny1614]=1
-numuarts[attiny1616]=1
-numuarts[attiny1617]=1
-numuarts[attiny1624]=2
-numuarts[attiny1626]=2
-numuarts[attiny1627]=2
-numuarts[attiny3214]=1
-numuarts[attiny3216]=1
-numuarts[attiny3217]=1
-numuarts[attiny3224]=2
-numuarts[attiny3226]=2
-numuarts[attiny3227]=2
-numuarts[atmega808]=3
-numuarts[atmega809]=4
-numuarts[atmega1608]=3
-numuarts[atmega1609]=4
-numuarts[atmega3208]=3
-numuarts[atmega3209]=4
-numuarts[atmega4808]=3
-numuarts[atmega4809]=4
-numuarts[avr16dd14]=2
-numuarts[avr16dd20]=2
-numuarts[avr16dd28]=2
-numuarts[avr16dd32]=2
-numuarts[avr32dd14]=2
-numuarts[avr32dd20]=2
-numuarts[avr32da28]=3
-numuarts[avr32db28]=3
-numuarts[avr32dd28]=2
-numuarts[avr32da32]=3
-numuarts[avr32db32]=3
-numuarts[avr32dd32]=2
-numuarts[avr32da48]=5
-numuarts[avr32db48]=5
-numuarts[avr64dd14]=2
-numuarts[avr64dd20]=2
-numuarts[avr64da28]=3
-numuarts[avr64db28]=3
-numuarts[avr64dd28]=2
-numuarts[avr64ea28]=3
-numuarts[avr64da32]=3
-numuarts[avr64db32]=3
-numuarts[avr64dd32]=2
-numuarts[avr64ea32]=3
-numuarts[avr64da48]=5
-numuarts[avr64db48]=5
-numuarts[avr64ea48]=3
-numuarts[avr64da64]=6
-numuarts[avr64db64]=6
-numuarts[avr128da28]=3
-numuarts[avr128db28]=3
-numuarts[avr128da32]=3
-numuarts[avr128db32]=3
-numuarts[avr128da48]=5
-numuarts[avr128db48]=5
-numuarts[avr128da64]=6
-numuarts[avr128db64]=6
-
 
 ####
 # UART type (Classic = 1, LIN = 2, XMEGA = 4, AVR8X = 8)
@@ -881,293 +539,383 @@ uarttype[avr128db64]=8
 
 ####
 # IO pins of UART
-# Format: <uartnum>-<uartalt>/RX=Atmel<Pin> TX=Atmel<Pin>|...
+# Format: [SWIO=1|UARTNUM=<n> [UARTALT=<n>]] RX=Atmel<Pin> TX=Atmel<Pin>|...
+# Note: mcuio assignments below were automatically generated by mkavrintel.pl
 #
-declare -A uartio
+declare -A mcuio
 
-uartio[at90can128]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[at90can32]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[at90can64]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[at90pwm2]="0-0/RX=AtmelPD4 TX=AtmelPD3"
-uartio[at90pwm216]="0-0/RX=AtmelPD4 TX=AtmelPD3"
-uartio[at90pwm2b]="0-0/RX=AtmelPD4 TX=AtmelPD3"
-uartio[at90pwm3]="0-0/RX=AtmelPD4 TX=AtmelPD3"
-uartio[at90pwm316]="0-0/RX=AtmelPD4 TX=AtmelPD3"
-uartio[at90pwm3b]="0-0/RX=AtmelPD4 TX=AtmelPD3"
-uartio[at90s2313]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[at90s2333]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[at90s4414]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[at90s4433]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[at90s4434]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[at90s8515]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[at90s8535]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[at90scr100]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[at90usb1286]="0-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[at90usb1287]="0-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[at90usb162]="0-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[at90usb646]="0-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[at90usb647]="0-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[at90usb82]="0-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[ata5505]="0-0/RX=AtmelPA0 TX=AtmelPA1"
-uartio[ata6612c]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[ata6613c]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[ata6614q]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[ata6616c]="0-0/RX=AtmelPA0 TX=AtmelPA1"
-uartio[ata6617c]="0-0/RX=AtmelPA0 TX=AtmelPA1"
-uartio[ata664251]="0-0/RX=AtmelPA0 TX=AtmelPA1"
-uartio[atmega103]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega1280]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPH0 TX=AtmelPH1|3-0/RX=AtmelPJ0 TX=AtmelPJ1"
-uartio[atmega128]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega1281]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega1284]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega1284p]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega1284rfr2]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega128a]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega128rfa1]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega128rfr2]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega16]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega1608]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4"
-uartio[atmega1609]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4"
-uartio[atmega161]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPB2 TX=AtmelPB3"
-uartio[atmega162]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPB2 TX=AtmelPB3"
-uartio[atmega163]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega164a]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega164p]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega164pa]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega165]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega165a]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega165p]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega165pa]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega168]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega168a]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega168p]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega168pa]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega168pb]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega169]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega169a]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega169p]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega169pa]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega16a]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega16m1]="0-0/RX=AtmelPD4 TX=AtmelPD3"
-uartio[atmega16u2]="0-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega16u4]="0-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega2560]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPH0 TX=AtmelPH1|3-0/RX=AtmelPJ0 TX=AtmelPJ1"
-uartio[atmega2561]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega2564rfr2]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega256rfr2]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega32]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega3208]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4"
-uartio[atmega3209]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4"
-uartio[atmega323]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega324a]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega324p]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega324pa]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega324pb]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atmega3250]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega325]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega3250a]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega3250p]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega3250pa]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega325a]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega325p]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega325pa]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega328]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega328p]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega328pb]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPB4 TX=AtmelPB3"
-uartio[atmega3290]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega329]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega3290a]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega3290p]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega3290pa]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega329a]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega329p]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega329pa]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega32a]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega32c1]="0-0/RX=AtmelPD4 TX=AtmelPD3"
-uartio[atmega32m1]="0-0/RX=AtmelPD4 TX=AtmelPD3"
-uartio[atmega32u2]="0-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega32u4]="0-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega48]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega4808]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4"
-uartio[atmega4809]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4"
-uartio[atmega48a]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega48p]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega48pa]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega48pb]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega640]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPH0 TX=AtmelPH1|3-0/RX=AtmelPJ0 TX=AtmelPJ1"
-uartio[atmega64]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega644]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega644a]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega644p]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega644pa]="0-0/RX=AtmelPD0 TX=AtmelPD1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega644rfr2]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega6450]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega645]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega6450a]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega6450p]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega645a]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega645p]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega6490]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega649]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega6490a]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega6490p]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega649a]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega649p]="0-0/RX=AtmelPE0 TX=AtmelPE1"
-uartio[atmega64a]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega64c1]="0-0/RX=AtmelPD4 TX=AtmelPD3"
-uartio[atmega64hve]="0-0/RX=AtmelPB1 TX=AtmelPB3"
-uartio[atmega64hve2]="0-0/RX=AtmelPB1 TX=AtmelPB3"
-uartio[atmega64m1]="0-0/RX=AtmelPD4 TX=AtmelPD3"
-uartio[atmega64rfr2]="0-0/RX=AtmelPE0 TX=AtmelPE1|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atmega8]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega808]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4"
-uartio[atmega809]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4"
-uartio[atmega8515]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega8535]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega88]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega88a]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega88p]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega88pa]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega88pb]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega8a]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[atmega8u2]="0-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[attiny102]="0-0/RX=AtmelPB3 TX=AtmelPB2"
-uartio[attiny104]="0-0/RX=AtmelPB3 TX=AtmelPB2"
-uartio[attiny1604]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny1606]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny1607]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny1614]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny1616]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny1617]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny1624]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1|1-0/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny1626]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1|1-0/RX=AtmelPA2 TX=AtmelPA1|1-1/RX=AtmelPC1 TX=AtmelPC2"
-uartio[attiny1627]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1|1-0/RX=AtmelPA2 TX=AtmelPA1|1-1/RX=AtmelPC1 TX=AtmelPC2"
-uartio[attiny1634]="0-0/RX=AtmelPA7 TX=AtmelPB0|1-0/RX=AtmelPB1 TX=AtmelPB2"
-uartio[attiny1634r]="0-0/RX=AtmelPA7 TX=AtmelPB0|1-0/RX=AtmelPB1 TX=AtmelPB2"
-uartio[attiny167]="0-0/RX=AtmelPA0 TX=AtmelPA1"
-uartio[attiny202]="0-0/RX=AtmelPA7 TX=AtmelPA6|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny204]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny212]="0-0/RX=AtmelPA7 TX=AtmelPA6|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny214]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny2313]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[attiny2313a]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[attiny3216]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny3217]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny3224]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1|1-0/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny3226]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1|1-0/RX=AtmelPA2 TX=AtmelPA1|1-1/RX=AtmelPC1 TX=AtmelPC2"
-uartio[attiny3227]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1|1-0/RX=AtmelPA2 TX=AtmelPA1|1-1/RX=AtmelPC1 TX=AtmelPC2"
-uartio[attiny402]="0-0/RX=AtmelPA7 TX=AtmelPA6|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny404]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny406]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny412]="0-0/RX=AtmelPA7 TX=AtmelPA6|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny414]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny416]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny416auto]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny417]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny424]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1|1-0/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny426]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1|1-0/RX=AtmelPA2 TX=AtmelPA1|1-1/RX=AtmelPC1 TX=AtmelPC2"
-uartio[attiny427]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1|1-0/RX=AtmelPA2 TX=AtmelPA1|1-1/RX=AtmelPC1 TX=AtmelPC2"
-uartio[attiny4313]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[attiny441]="0-0/RX=AtmelPA2 TX=AtmelPA1|0-1/RX=AtmelPB2 TX=AtmelPA7|1-0/RX=AtmelPA4 TX=AtmelPA5"
-uartio[attiny804]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny806]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny807]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny814]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny816]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny817]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny824]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1|1-0/RX=AtmelPA2 TX=AtmelPA1"
-uartio[attiny826]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1|1-0/RX=AtmelPA2 TX=AtmelPA1|1-1/RX=AtmelPC1 TX=AtmelPC2"
-uartio[attiny827]="0-0/RX=AtmelPB3 TX=AtmelPB2|0-1/RX=AtmelPA2 TX=AtmelPA1|1-0/RX=AtmelPA2 TX=AtmelPA1|1-1/RX=AtmelPC1 TX=AtmelPC2"
-uartio[attiny828]="0-0/RX=AtmelPC2 TX=AtmelPC3"
-uartio[attiny828r]="0-0/RX=AtmelPC2 TX=AtmelPC3"
-uartio[attiny841]="0-0/RX=AtmelPA2 TX=AtmelPA1|0-1/RX=AtmelPB2 TX=AtmelPA7|1-0/RX=AtmelPA4 TX=AtmelPA5"
-uartio[attiny87]="0-0/RX=AtmelPA0 TX=AtmelPA1"
-uartio[atxmega128a1]="0-0/RX=AtmelPC2 TX=AtmelPC3|1-0/RX=AtmelPC6 TX=AtmelPC7|2-0/RX=AtmelPD2 TX=AtmelPD3|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|5-0/RX=AtmelPE6 TX=AtmelPE7|6-0/RX=AtmelPF2 TX=AtmelPF3|7-0/RX=AtmelPF6 TX=AtmelPF7"
-uartio[atxmega128a1revd]="0-0/RX=AtmelPC2 TX=AtmelPC3|1-0/RX=AtmelPC6 TX=AtmelPC7|2-0/RX=AtmelPD2 TX=AtmelPD3|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|5-0/RX=AtmelPE6 TX=AtmelPE7|6-0/RX=AtmelPF2 TX=AtmelPF3|7-0/RX=AtmelPF6 TX=AtmelPF7"
-uartio[atxmega128a1u]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPC6 TX=AtmelPC7|2-0/RX=AtmelPD2 TX=AtmelPD3|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|5-0/RX=AtmelPE6 TX=AtmelPE7|6-0/RX=AtmelPF2 TX=AtmelPF3|7-0/RX=AtmelPF6 TX=AtmelPF7"
-uartio[atxmega128a3]="0-0/RX=AtmelPC2 TX=AtmelPC3|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|5-0/RX=AtmelPE6 TX=AtmelPE7|6-0/RX=AtmelPF2 TX=AtmelPF3"
-uartio[atxmega128a3u]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|2-1/RX=AtmelPD6 TX=AtmelPD7|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|4-1/RX=AtmelPE6 TX=AtmelPE7|5-0/RX=AtmelPE6 TX=AtmelPE7|6-0/RX=AtmelPF2 TX=AtmelPF3|6-1/RX=AtmelPF6 TX=AtmelPF7"
-uartio[atxmega128a4u]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|2-1/RX=AtmelPD6 TX=AtmelPD7|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega128b1]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPE2 TX=AtmelPE3|1-1/RX=AtmelPE6 TX=AtmelPE7"
-uartio[atxmega128b3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7"
-uartio[atxmega128c3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega128d3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega128d4]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atxmega16a4]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPD6 TX=AtmelPD7|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|2-1/RX=AtmelPD6 TX=AtmelPD7|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega16a4u]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|2-1/RX=AtmelPD6 TX=AtmelPD7|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega16c4]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPC6 TX=AtmelPC7|2-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atxmega16d4]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atxmega16e5]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|1-1/RX=AtmelPD6 TX=AtmelPD7"
-uartio[atxmega192a3]="0-0/RX=AtmelPC2 TX=AtmelPC3|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|5-0/RX=AtmelPE6 TX=AtmelPE7|6-0/RX=AtmelPF2 TX=AtmelPF3"
-uartio[atxmega192a3u]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|2-1/RX=AtmelPD6 TX=AtmelPD7|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|4-1/RX=AtmelPE6 TX=AtmelPE7|5-0/RX=AtmelPE6 TX=AtmelPE7|6-0/RX=AtmelPF2 TX=AtmelPF3|6-1/RX=AtmelPF6 TX=AtmelPF7"
-uartio[atxmega192c3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega192d3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega256a3]="0-0/RX=AtmelPC2 TX=AtmelPC3|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|5-0/RX=AtmelPE6 TX=AtmelPE7|6-0/RX=AtmelPF2 TX=AtmelPF3"
-uartio[atxmega256a3b]="0-0/RX=AtmelPC2 TX=AtmelPC3|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|5-0/RX=AtmelPF2 TX=AtmelPF3"
-uartio[atxmega256a3bu]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|2-1/RX=AtmelPD6 TX=AtmelPD7|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|5-0/RX=AtmelPF2 TX=AtmelPF3"
-uartio[atxmega256a3u]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|2-1/RX=AtmelPD6 TX=AtmelPD7|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|4-1/RX=AtmelPE6 TX=AtmelPE7|5-0/RX=AtmelPE6 TX=AtmelPE7|6-0/RX=AtmelPF2 TX=AtmelPF3|6-1/RX=AtmelPF6 TX=AtmelPF7"
-uartio[atxmega256c3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega256d3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega32a4]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPD6 TX=AtmelPD7|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|2-1/RX=AtmelPD6 TX=AtmelPD7|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega32a4u]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|2-1/RX=AtmelPD6 TX=AtmelPD7|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega32c3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega32c4]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPC6 TX=AtmelPC7|2-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atxmega32d3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega32d4]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atxmega32e5]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|1-1/RX=AtmelPD6 TX=AtmelPD7"
-uartio[atxmega384c3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega384d3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega64a1]="0-0/RX=AtmelPC2 TX=AtmelPC3|1-0/RX=AtmelPC6 TX=AtmelPC7|2-0/RX=AtmelPD2 TX=AtmelPD3|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|5-0/RX=AtmelPE6 TX=AtmelPE7|6-0/RX=AtmelPF2 TX=AtmelPF3|7-0/RX=AtmelPF6 TX=AtmelPF7"
-uartio[atxmega64a1u]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPC6 TX=AtmelPC7|2-0/RX=AtmelPD2 TX=AtmelPD3|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|5-0/RX=AtmelPE6 TX=AtmelPE7|6-0/RX=AtmelPF2 TX=AtmelPF3|7-0/RX=AtmelPF6 TX=AtmelPF7"
-uartio[atxmega64a3]="0-0/RX=AtmelPC2 TX=AtmelPC3|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|5-0/RX=AtmelPE6 TX=AtmelPE7|6-0/RX=AtmelPF2 TX=AtmelPF3"
-uartio[atxmega64a3u]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|2-1/RX=AtmelPD6 TX=AtmelPD7|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3|4-1/RX=AtmelPE6 TX=AtmelPE7|5-0/RX=AtmelPE6 TX=AtmelPE7|6-0/RX=AtmelPF2 TX=AtmelPF3|6-1/RX=AtmelPF6 TX=AtmelPF7"
-uartio[atxmega64a4u]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD6 TX=AtmelPD7|2-0/RX=AtmelPD2 TX=AtmelPD3|2-1/RX=AtmelPD6 TX=AtmelPD7|3-0/RX=AtmelPD6 TX=AtmelPD7|4-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega64b1]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPE2 TX=AtmelPE3|1-1/RX=AtmelPE6 TX=AtmelPE7"
-uartio[atxmega64b3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7"
-uartio[atxmega64c3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega64d3]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|2-0/RX=AtmelPE2 TX=AtmelPE3"
-uartio[atxmega64d4]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3"
-uartio[atxmega8e5]="0-0/RX=AtmelPC2 TX=AtmelPC3|0-1/RX=AtmelPC6 TX=AtmelPC7|1-0/RX=AtmelPD2 TX=AtmelPD3|1-1/RX=AtmelPD6 TX=AtmelPD7"
-uartio[avr128da28]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0"
-uartio[avr128da32]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4"
-uartio[avr128da48]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4|4-0/RX=AtmelPE1 TX=AtmelPE0"
-uartio[avr128da64]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4|4-0/RX=AtmelPE1 TX=AtmelPE0|4-1/RX=AtmelPE5 TX=AtmelPE4|5-0/RX=AtmelPG1 TX=AtmelPG0|5-1/RX=AtmelPG5 TX=AtmelPG4"
-uartio[avr128db28]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0"
-uartio[avr128db32]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4"
-uartio[avr128db48]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4|4-0/RX=AtmelPE1 TX=AtmelPE0"
-uartio[avr128db64]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4|4-0/RX=AtmelPE1 TX=AtmelPE0|4-1/RX=AtmelPE5 TX=AtmelPE4|5-0/RX=AtmelPG1 TX=AtmelPG0|5-1/RX=AtmelPG5 TX=AtmelPG4"
-uartio[avr16dd14]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-2/RX=AtmelPD7 TX=AtmelPD6"
-uartio[avr16dd20]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|0-2/RX=AtmelPA3 TX=AtmelPA2|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-2/RX=AtmelPD7 TX=AtmelPD6"
-uartio[avr16dd28]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|0-2/RX=AtmelPA3 TX=AtmelPA2|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-0/RX=AtmelPC1 TX=AtmelPC0|1-2/RX=AtmelPD7 TX=AtmelPD6"
-uartio[avr16dd32]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|0-2/RX=AtmelPA3 TX=AtmelPA2|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-0/RX=AtmelPC1 TX=AtmelPC0|1-2/RX=AtmelPD7 TX=AtmelPD6"
-uartio[avr32da28]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0"
-uartio[avr32da32]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4"
-uartio[avr32da48]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4|4-0/RX=AtmelPE1 TX=AtmelPE0"
-uartio[avr32db28]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0"
-uartio[avr32db32]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4"
-uartio[avr32db48]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4|4-0/RX=AtmelPE1 TX=AtmelPE0"
-uartio[avr32dd14]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-2/RX=AtmelPD7 TX=AtmelPD6"
-uartio[avr32dd20]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|0-2/RX=AtmelPA3 TX=AtmelPA2|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-2/RX=AtmelPD7 TX=AtmelPD6"
-uartio[avr32dd28]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|0-2/RX=AtmelPA3 TX=AtmelPA2|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-0/RX=AtmelPC1 TX=AtmelPC0|1-2/RX=AtmelPD7 TX=AtmelPD6"
-uartio[avr32dd32]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|0-2/RX=AtmelPA3 TX=AtmelPA2|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-0/RX=AtmelPC1 TX=AtmelPC0|1-2/RX=AtmelPD7 TX=AtmelPD6"
-uartio[avr64da28]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0"
-uartio[avr64da32]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4"
-uartio[avr64da48]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4|4-0/RX=AtmelPE1 TX=AtmelPE0"
-uartio[avr64da64]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4|4-0/RX=AtmelPE1 TX=AtmelPE0|4-1/RX=AtmelPE5 TX=AtmelPE4|5-0/RX=AtmelPG1 TX=AtmelPG0|5-1/RX=AtmelPG5 TX=AtmelPG4"
-uartio[avr64db28]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0"
-uartio[avr64db32]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4"
-uartio[avr64db48]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4|4-0/RX=AtmelPE1 TX=AtmelPE0"
-uartio[avr64db64]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4|3-0/RX=AtmelPB1 TX=AtmelPB0|3-1/RX=AtmelPB5 TX=AtmelPB4|4-0/RX=AtmelPE1 TX=AtmelPE0|4-1/RX=AtmelPE5 TX=AtmelPE4|5-0/RX=AtmelPG1 TX=AtmelPG0|5-1/RX=AtmelPG5 TX=AtmelPG4"
-uartio[avr64dd14]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-2/RX=AtmelPD7 TX=AtmelPD6"
-uartio[avr64dd20]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|0-2/RX=AtmelPA3 TX=AtmelPA2|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-2/RX=AtmelPD7 TX=AtmelPD6"
-uartio[avr64dd28]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|0-2/RX=AtmelPA3 TX=AtmelPA2|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-0/RX=AtmelPC1 TX=AtmelPC0|1-2/RX=AtmelPD7 TX=AtmelPD6"
-uartio[avr64dd32]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|0-2/RX=AtmelPA3 TX=AtmelPA2|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-0/RX=AtmelPC1 TX=AtmelPC0|1-2/RX=AtmelPD7 TX=AtmelPD6"
-uartio[avr64ea28]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|0-2/RX=AtmelPA3 TX=AtmelPA2|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-0/RX=AtmelPC1 TX=AtmelPC0|1-2/RX=AtmelPD7 TX=AtmelPD6|2-0/RX=AtmelPF1 TX=AtmelPF0"
-uartio[avr64ea32]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|0-2/RX=AtmelPA3 TX=AtmelPA2|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-0/RX=AtmelPC1 TX=AtmelPC0|1-2/RX=AtmelPD7 TX=AtmelPD6|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4"
-uartio[avr64ea48]="0-0/RX=AtmelPA1 TX=AtmelPA0|0-1/RX=AtmelPA5 TX=AtmelPA4|0-2/RX=AtmelPA3 TX=AtmelPA2|0-3/RX=AtmelPD5 TX=AtmelPD4|0-4/RX=AtmelPC2 TX=AtmelPC1|1-0/RX=AtmelPC1 TX=AtmelPC0|1-1/RX=AtmelPC5 TX=AtmelPC4|1-2/RX=AtmelPD7 TX=AtmelPD6|2-0/RX=AtmelPF1 TX=AtmelPF0|2-1/RX=AtmelPF5 TX=AtmelPF4"
-uartio[lgt8f168p]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[lgt8f328p]="0-0/RX=AtmelPD0 TX=AtmelPD1"
-uartio[lgt8f88p]="0-0/RX=AtmelPD0 TX=AtmelPD1"
+mcuio[attiny4]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny5]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny9]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny10]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny20]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny40]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny102]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2"
+mcuio[attiny104]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2"
+mcuio[attiny11]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny12]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny13]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny13a]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny15]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny22]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny24]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny24a]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny25]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny26]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny28]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny43u]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny44]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny44a]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny45]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny48]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny84]="SWIO=1 RX=AtmelPA3 TX=AtmelPA2"
+mcuio[attiny84a]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny85]="SWIO=1 RX=AtmelPB4 TX=AtmelPB3"
+mcuio[attiny87]="UARTNUM=0 RX=AtmelPA0 TX=AtmelPA1"
+mcuio[attiny88]="SWIO=1 RX=AtmelPD7 TX=AtmelPD6"
+mcuio[attiny167]="UARTNUM=0 RX=AtmelPA0 TX=AtmelPA1"
+mcuio[attiny261]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny261a]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny441]="UARTNUM=0 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=0 UARTALT=1 RX=AtmelPB2 TX=AtmelPA7|UARTNUM=1 RX=AtmelPA4 TX=AtmelPA5"
+mcuio[attiny461]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny461a]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny828]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3"
+mcuio[attiny828r]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3"
+mcuio[attiny841]="UARTNUM=0 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=0 UARTALT=1 RX=AtmelPB2 TX=AtmelPA7|UARTNUM=1 RX=AtmelPA4 TX=AtmelPA5"
+mcuio[attiny861]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny861a]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny1634]="UARTNUM=0 RX=AtmelPA7 TX=AtmelPB0|UARTNUM=1 RX=AtmelPB1 TX=AtmelPB2"
+mcuio[attiny1634r]="UARTNUM=0 RX=AtmelPA7 TX=AtmelPB0|UARTNUM=1 RX=AtmelPB1 TX=AtmelPB2"
+mcuio[attiny2313]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[attiny2313a]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[attiny4313]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega8]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega8a]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega8hva]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atmega8u2]="UARTNUM=0 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega16]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega16a]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega16hva]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atmega16hvb]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atmega16hvbrevb]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atmega16m1]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
+mcuio[atmega16hva2]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atmega16u2]="UARTNUM=0 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega16u4]="UARTNUM=0 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega32]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega32a]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega32hvb]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atmega32hvbrevb]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atmega32c1]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
+mcuio[atmega32m1]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
+mcuio[atmega32u2]="UARTNUM=0 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega32u4]="UARTNUM=0 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega32u6]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atmega48]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega48a]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega48p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega48pa]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega48pb]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega64]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega64a]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega64hve]="UARTNUM=0 RX=AtmelPB1 TX=AtmelPB3"
+mcuio[atmega64c1]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
+mcuio[atmega64m1]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
+mcuio[atmega64hve2]="UARTNUM=0 RX=AtmelPB1 TX=AtmelPB3"
+mcuio[atmega64rfr2]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega88]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega88a]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega88p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega88pa]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega88pb]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega103]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega128]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega128a]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega128rfa1]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega128rfr2]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega161]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPB2 TX=AtmelPB3"
+mcuio[atmega162]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPB2 TX=AtmelPB3"
+mcuio[atmega163]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega164a]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega164p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega164pa]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega165]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega165a]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega165p]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega165pa]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega168]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega168a]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega168p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega168pa]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega168pb]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega169]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega169a]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega169p]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega169pa]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega256rfr2]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega323]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega324a]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega324p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega324pa]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega324pb]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atmega325]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega325a]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega325p]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega325pa]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega328]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega328p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega328pb]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPB4 TX=AtmelPB3"
+mcuio[atmega329]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega329a]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega329p]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega329pa]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega406]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atmega640]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPH0 TX=AtmelPH1|UARTNUM=3 RX=AtmelPJ0 TX=AtmelPJ1"
+mcuio[atmega644]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega644a]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega644p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega644pa]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega644rfr2]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega645]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega645a]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega645p]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega649]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega649a]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega649p]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega1280]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPH0 TX=AtmelPH1|UARTNUM=3 RX=AtmelPJ0 TX=AtmelPJ1"
+mcuio[atmega1281]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega1284]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega1284p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega1284rfr2]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega2560]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPH0 TX=AtmelPH1|UARTNUM=3 RX=AtmelPJ0 TX=AtmelPJ1"
+mcuio[atmega2561]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega2564rfr2]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atmega3250]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega3250a]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega3250p]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega3250pa]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega3290]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega3290a]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega3290p]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega3290pa]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega6450]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega6450a]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega6450p]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega6490]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega6490a]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega6490p]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
+mcuio[atmega8515]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atmega8535]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[at43usb320]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[at43usb355]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[at76c711]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[at86rf401]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[at90pwm1]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[at90pwm2]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
+mcuio[at90pwm2b]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
+mcuio[at90pwm3]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
+mcuio[at90pwm3b]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
+mcuio[at90can32]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[at90can64]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[at90pwm81]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[at90usb82]="UARTNUM=0 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[at90scr100]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[at90can128]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[at90pwm161]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[at90usb162]="UARTNUM=0 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[at90pwm216]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
+mcuio[at90pwm316]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
+mcuio[at90usb646]="UARTNUM=0 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[at90usb647]="UARTNUM=0 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[at90s1200]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[at90usb1286]="UARTNUM=0 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[at90usb1287]="UARTNUM=0 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[at90s2313]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[at90s2323]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[at90s2333]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[at90s2343]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[at90s4414]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[at90s4433]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[at90s4434]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[at90s8515]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[at90c8534]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[at90s8535]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[at94k]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5272]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5505]="UARTNUM=0 RX=AtmelPA0 TX=AtmelPA1"
+mcuio[ata5700m322]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5702m322]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5781]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5782]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5783]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5787]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5790]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5790n]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5791]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5795]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5831]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5832]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5833]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata5835]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata6285]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata6286]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata6289]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata6612c]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[ata6613c]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[ata6614q]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[ata6616c]="UARTNUM=0 RX=AtmelPA0 TX=AtmelPA1"
+mcuio[ata6617c]="UARTNUM=0 RX=AtmelPA0 TX=AtmelPA1"
+mcuio[ata8210]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata8215]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata8510]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata8515]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[ata664251]="UARTNUM=0 RX=AtmelPA0 TX=AtmelPA1"
+mcuio[m3000]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[lgt8f88p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[lgt8f168p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[lgt8f328p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
+mcuio[atxmega8e5]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=1 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7"
+mcuio[atxmega16a4]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega16a4u]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega16c4]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atxmega16d4]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atxmega16e5]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=1 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7"
+mcuio[atxmega32c3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega32d3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega32a4]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega32a4u]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega32c4]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atxmega32d4]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atxmega32e5]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=1 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7"
+mcuio[atxmega64a1]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=5 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=6 RX=AtmelPF2 TX=AtmelPF3|UARTNUM=7 RX=AtmelPF6 TX=AtmelPF7"
+mcuio[atxmega64a1u]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=5 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=6 RX=AtmelPF2 TX=AtmelPF3|UARTNUM=7 RX=AtmelPF6 TX=AtmelPF7"
+mcuio[atxmega64b1]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=1 UARTALT=1 RX=AtmelPE6 TX=AtmelPE7"
+mcuio[atxmega64a3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=5 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=6 RX=AtmelPF2 TX=AtmelPF3"
+mcuio[atxmega64a3u]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=4 UARTALT=1 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=5 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=6 RX=AtmelPF2 TX=AtmelPF3|UARTNUM=6 UARTALT=1 RX=AtmelPF6 TX=AtmelPF7"
+mcuio[atxmega64b3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7"
+mcuio[atxmega64c3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega64d3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega64a4]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atxmega64a4u]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega64d4]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atxmega128a1]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=5 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=6 RX=AtmelPF2 TX=AtmelPF3|UARTNUM=7 RX=AtmelPF6 TX=AtmelPF7"
+mcuio[atxmega128a1revd]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=5 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=6 RX=AtmelPF2 TX=AtmelPF3|UARTNUM=7 RX=AtmelPF6 TX=AtmelPF7"
+mcuio[atxmega128a1u]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=5 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=6 RX=AtmelPF2 TX=AtmelPF3|UARTNUM=7 RX=AtmelPF6 TX=AtmelPF7"
+mcuio[atxmega128b1]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=1 UARTALT=1 RX=AtmelPE6 TX=AtmelPE7"
+mcuio[atxmega128a3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=5 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=6 RX=AtmelPF2 TX=AtmelPF3"
+mcuio[atxmega128a3u]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=4 UARTALT=1 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=5 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=6 RX=AtmelPF2 TX=AtmelPF3|UARTNUM=6 UARTALT=1 RX=AtmelPF6 TX=AtmelPF7"
+mcuio[atxmega128b3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7"
+mcuio[atxmega128c3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega128d3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega128a4]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atxmega128a4u]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega128d4]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3"
+mcuio[atxmega192a1]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atxmega192a3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=5 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=6 RX=AtmelPF2 TX=AtmelPF3"
+mcuio[atxmega192a3u]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=4 UARTALT=1 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=5 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=6 RX=AtmelPF2 TX=AtmelPF3|UARTNUM=6 UARTALT=1 RX=AtmelPF6 TX=AtmelPF7"
+mcuio[atxmega192c3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega192d3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega256a1]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atxmega256a3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=5 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=6 RX=AtmelPF2 TX=AtmelPF3"
+mcuio[atxmega256a3b]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=5 RX=AtmelPF2 TX=AtmelPF3"
+mcuio[atxmega256a3bu]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=5 RX=AtmelPF2 TX=AtmelPF3"
+mcuio[atxmega256a3u]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=2 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 UARTALT=1 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=3 RX=AtmelPD6 TX=AtmelPD7|UARTNUM=4 RX=AtmelPE2 TX=AtmelPE3|UARTNUM=4 UARTALT=1 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=5 RX=AtmelPE6 TX=AtmelPE7|UARTNUM=6 RX=AtmelPF2 TX=AtmelPF3|UARTNUM=6 UARTALT=1 RX=AtmelPF6 TX=AtmelPF7"
+mcuio[atxmega256c3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega256d3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega384c3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[atxmega384d3]="UARTNUM=0 RX=AtmelPC2 TX=AtmelPC3|UARTNUM=0 UARTALT=1 RX=AtmelPC6 TX=AtmelPC7|UARTNUM=1 RX=AtmelPD2 TX=AtmelPD3|UARTNUM=2 RX=AtmelPE2 TX=AtmelPE3"
+mcuio[attiny202]="UARTNUM=0 RX=AtmelPA7 TX=AtmelPA6|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny204]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny212]="UARTNUM=0 RX=AtmelPA7 TX=AtmelPA6|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny214]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny402]="UARTNUM=0 RX=AtmelPA7 TX=AtmelPA6|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny404]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny406]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny412]="UARTNUM=0 RX=AtmelPA7 TX=AtmelPA6|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny414]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny416]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny416auto]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny417]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny424]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny426]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 UARTALT=1 RX=AtmelPC1 TX=AtmelPC2"
+mcuio[attiny427]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 UARTALT=1 RX=AtmelPC1 TX=AtmelPC2"
+mcuio[attiny804]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny806]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny807]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny814]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny816]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny817]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny824]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny826]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 UARTALT=1 RX=AtmelPC1 TX=AtmelPC2"
+mcuio[attiny827]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 UARTALT=1 RX=AtmelPC1 TX=AtmelPC2"
+mcuio[attiny1604]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny1606]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny1607]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny1614]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny1616]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny1617]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny1624]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny1626]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 UARTALT=1 RX=AtmelPC1 TX=AtmelPC2"
+mcuio[attiny1627]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 UARTALT=1 RX=AtmelPC1 TX=AtmelPC2"
+mcuio[attiny3214]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny3216]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny3217]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny3224]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 RX=AtmelPA2 TX=AtmelPA1"
+mcuio[attiny3226]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 UARTALT=1 RX=AtmelPC1 TX=AtmelPC2"
+mcuio[attiny3227]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2|UARTNUM=0 UARTALT=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 RX=AtmelPA2 TX=AtmelPA1|UARTNUM=1 UARTALT=1 RX=AtmelPC1 TX=AtmelPC2"
+mcuio[atmega808]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[atmega809]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4"
+mcuio[atmega1608]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[atmega1609]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4"
+mcuio[atmega3208]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[atmega3209]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4"
+mcuio[atmega4808]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[atmega4809]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4"
+mcuio[avr8ea28]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[avr8ea32]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[avr16dd14]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
+mcuio[avr16dd20]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
+mcuio[avr16dd28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
+mcuio[avr16ea28]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[avr16dd32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
+mcuio[avr16ea32]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[avr16ea48]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[avr32dd14]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
+mcuio[avr32dd20]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
+mcuio[avr32da28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
+mcuio[avr32db28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
+mcuio[avr32dd28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
+mcuio[avr32ea28]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[avr32da32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[avr32db32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[avr32dd32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
+mcuio[avr32ea32]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[avr32da48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0"
+mcuio[avr32db48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0"
+mcuio[avr32ea48]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[avr64dd14]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
+mcuio[avr64dd20]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
+mcuio[avr64da28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
+mcuio[avr64db28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
+mcuio[avr64dd28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
+mcuio[avr64ea28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
+mcuio[avr64da32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[avr64db32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[avr64dd32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
+mcuio[avr64ea32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[avr64da48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0"
+mcuio[avr64db48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0"
+mcuio[avr64ea48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[avr64da64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0|UARTNUM=4 UARTALT=1 RX=AtmelPE5 TX=AtmelPE4|UARTNUM=5 RX=AtmelPG1 TX=AtmelPG0|UARTNUM=5 UARTALT=1 RX=AtmelPG5 TX=AtmelPG4"
+mcuio[avr64db64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0|UARTNUM=4 UARTALT=1 RX=AtmelPE5 TX=AtmelPE4|UARTNUM=5 RX=AtmelPG1 TX=AtmelPG0|UARTNUM=5 UARTALT=1 RX=AtmelPG5 TX=AtmelPG4"
+mcuio[avr128da28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
+mcuio[avr128db28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
+mcuio[avr128da32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[avr128db32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[avr128da48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0"
+mcuio[avr128db48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0"
+mcuio[avr128da64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0|UARTNUM=4 UARTALT=1 RX=AtmelPE5 TX=AtmelPE4|UARTNUM=5 RX=AtmelPG1 TX=AtmelPG0|UARTNUM=5 UARTALT=1 RX=AtmelPG5 TX=AtmelPG4"
+mcuio[avr128db64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0|UARTNUM=4 UARTALT=1 RX=AtmelPE5 TX=AtmelPE4|UARTNUM=5 RX=AtmelPG1 TX=AtmelPG0|UARTNUM=5 UARTALT=1 RX=AtmelPG5 TX=AtmelPG4"
 
 ####
 # Put human readable F_CPU into variable fcpunm
@@ -1193,29 +941,34 @@ mkfilename() {
   local cfg=$8
   [[ "$cfg" == TEMPLATE=1 ]] && cfg=_lednop
   [[ "$cfg" == TEMPLATE=1_DUAL=1 ]] && cfg=_template_dual
-  cfg=${cfg/LEDPOLARITY=-1_LED=AtmelP/_led-}; cfg=${cfg/LED=AtmelP/_led+}
+  cfg=${cfg/LEDPOLARITY=-1_LED=AtmelP/_led-}
+  cfg=${cfg/LED=AtmelP/_led+}
   cfg=${cfg/_SFMCS=AtmelP/_cs}
   cfg=${cfg/_DUAL=1/_dual}
   cfg=${cfg,,}
-  local swio=$9; swio=${swio/SWIO=1/}
-  swio=${swio/ RX=AtmelP/_rx}; swio=${swio/ TX=AtmelP/_tx}; swio=${swio,,}
-
+  local swio=$9
+  swio=${swio/SWIO=1/_swio}
+  swio=${swio/UARTNUM=/_uart}
+  swio=${swio/UARTALT=0/}
+  swio=${swio/UARTALT=/_alt}
+  swio=${swio/RX=AtmelP/_rx}
+  swio=${swio/TX=AtmelP/_tx}
+  swio=${swio// /}
+  swio="${swio%"${swio##*[![:space:]]}"}"  # Remove trailing whitespace
+  swio=${swio,,}
   if [[ $2 == auto ]]; then
-    filename=urboot_$1_autobaud$swio
+    filename="urboot_$1_autobaud$swio"
   else
-    filename=urboot_$1_$2_$3bps$swio
+    filename="urboot_$1_$2_$3bps$swio"
   fi
   [[ $5 -eq 1 ]] && filename+=_ee
   # Do not makes LEDs part of filename for FRILLS=0
   [[ $7 -eq 0 ]] || filename+=$cfg
-#  # But use _dual when on FRILLS=0
-#  [[ $7 -eq 0 && $cfg == *_dual* ]] && filename+=$cfg
   [[ $7 -eq 6 ]] && filename+=_fr
   [[ $7 -eq 7 ]] && filename+=_fr_ce
   [[ $6 -eq 1 ]] && filename+=_ur
   [[ $4 -eq 1 ]] && filename+=_vbl
 }
-
 
 declare -A duplicate
 declare -A hexuse
@@ -1224,136 +977,150 @@ declare -A hexassoc
 declare -A hexdirs
 
 [[ $run == 1 ]] && mkdir -p "$mcu_bls/$mcu"
-for fcpu in ${!baud[@]}; do
-  mkfcpunm $fcpu
 
-  readarray -d / -t bauds <<<${baud[$fcpu]}
-  for b in ${bauds[@]}; do
-    if [[ -n $baudlist && -z ${baudok[$b]} ]]; then
-      continue
-    fi
+readarray -d \| -t iospecs <<<${mcuio[$mcu]}
+for io in "${iospecs[@]}"; do
 
-    io="${swio[$mcu]}"        # Empty when UART is available and used
-    if [[ $b == auto && -z ${uartio[$mcu]} ]]; then # autobaud only works with UART where RX is known
-      continue;
-    fi
-    # Classic UART experiences too high baud rate error for this F_CPU/baud combo
-    if [[ -z "$io" && "${nouart[$fcpu/$b]}" -eq 1 && "${uarttype[$mcu]}" -eq 1 ]]; then
-      if [[ -n "${uartio[$mcu]}" ]]; then
-        io="SWIO=1 ${uartio[$mcu]:4:23}" # Switch to SWIO instead of using the UART
+  for fcpu in ${!baud[@]}; do
+    mkfcpunm $fcpu
+
+    readarray -d / -t bauds <<<${baud[$fcpu]}
+    for b in ${bauds[@]}; do
+      if [[ -n $baudlist && -z ${baudok[$b]} ]]; then
+        continue
+      fi
+      # Autobaud needs UART
+      if [[ $b == auto && ${io:0:4} == SWIO ]]; then
+        continue
+      fi
+      # Autobaud needs classic UART with RX in I/O space: exclude ports H...L
+      if [[ $b == auto && $io =~ RX=AtmelP[H-L] && "${uarttype[$mcu]}" -eq 1 ]]; then
+        continue
+      fi
+
+      thisio="$io"
+      # Classic UART experiences too high baud rate error for this F_CPU/baud combo
+      if [[ ${thisio:0:4} == UART && "${nouart[$fcpu/$b]}" -eq 1 && "${uarttype[$mcu]}" -eq 1 ]]; then
+        # Switch to SWIO instead of using the UART
+        thisio=${thisio/UARTNUM=?/SWIO=1}
+        thisio=${thisio/UARTALT=?/}
+      fi
+
+      # SWIO cannot deal with certain F_CPU/baud rate combos
+      if [[ ${thisio:0:4} == SWIO && "${noswio[$fcpu/$b]}" -eq 1 ]]; then
+        continue
+      fi
+      # SWIO on classic/LIN parts needs RX/TX in I/O space: exclude ports H...L
+      if [[ ${thisio:0:4} == SWIO && $io =~ [RT]X=AtmelP[H-L] && "${uarttype[$mcu]}" -lt 3 ]]; then
+        continue
+      fi
+
+      if [[ $b == auto ]]; then
+        mdir="$mcu_bls/$mcu/autobaud"
+        bdir="$board_bls/$mcu/autobaud"
+        fcpu=16000000
       else
-        continue              # Don't know the IO lines of the UART: bail
+        mdir="$mcu_bls/$mcu/fcpu_$fcpunm/${b}_bps"
+        bdir="$board_bls/$mcu/fcpu_$fcpunm/${b}_bps"
       fi
-    fi
-    # SWIO cannot deal with certain F_CPU/baud rate combos
-    if [[ -n "$io" && "${noswio[$fcpu/$b]}" -eq 1 ]]; then
-      continue
-    fi
-    if [[ $b == auto ]]; then
-      mdir="$mcu_bls/$mcu/autobaud"
-      bdir="$board_bls/$mcu/autobaud"
-      fcpu=16000000
-    else
-      mdir="$mcu_bls/$mcu/fcpu_$fcpunm/${b}_bps"
-      bdir="$board_bls/$mcu/fcpu_$fcpunm/${b}_bps"
-    fi
-    if [[ $b == auto ]]; then
-      br=AUTOBAUD=1
-    else
-      br=BAUD_RATE=$b
-    fi
-
-    for ur in 0 1; do
-      # Only generate STK500 bootloaders ($ur = 0) for MCUs that have HW boot sections
-      if [[ $ur -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
-        continue;
+      if [[ $b == auto ]]; then
+        br=AUTOBAUD=1
+      else
+        br=BAUD_RATE=$b
       fi
 
-      for ee in 0 1; do
+      for ur in 0 1; do
+        # Only generate STK500 bootloaders ($ur = 0) for MCUs that have HW boot sections
+        if [[ $ur -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
+          continue;
+        fi
 
-        readarray -d / -t brd <<<$board
-        for bb in ${brd[@]}; do
-          bcfg=${bb#*:}
-          bname=${bb%:*}
+        for ee in 0 1; do
 
-          for vbl in 0 1; do
-            # Don't generate hardware-supported bootloaders (vbl=0) for MCUs that don't have HW boot sections
-            if [[ $vbl -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
-              continue;
-            fi
-            # Don't generate vector boot loaders for STK500 protocol
-            if [[ $vbl -eq 1 && $ur -eq 0 ]]; then
-              continue;
-            fi
+          readarray -d / -t brd <<<$board
+          for bb in ${brd[@]}; do
+            bcfg=${bb#*:}
+            bname=${bb%:*}
 
-            hexname=()
-            for f in 0 1 6 7; do
-              if [[ $f -eq 0 && $bname != none ]]; then
-                continue
+            for vbl in 0 1; do
+              # Don't generate hardware-supported bootloaders (vbl=0) for MCUs that don't have HW boot sections
+              if [[ $vbl -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
+                continue;
               fi
-              if [[ $ee -eq 0 && $f -gt 7 ]]; then
+              # Don't generate vector boot loaders for STK500 protocol
+              if [[ $vbl -eq 1 && $ur -eq 0 ]]; then
                 continue;
               fi
 
-              mkfilename $mcu $fcpunm $b $vbl $ee $ur $f "$bcfg" "$io"
-              args="MCU=$mcu F_CPU=${fcpu}L $br $io VBL=$vbl EEPROM=$ee ${bcfg//_/ } URPROTOCOL=$ur FRILLS=$f MOVETO=$filename"
+              hexname=()
+              for f in 0 1 6 7; do
+                if [[ $f -eq 0 && $bname != none ]]; then
+                  continue
+                fi
+                if [[ $ee -eq 0 && $f -gt 7 ]]; then
+                  continue;
+                fi
+
+                mkfilename $mcu $fcpunm $b $vbl $ee $ur $f "$bcfg" "$thisio"
+                args="MCU=$mcu F_CPU=${fcpu}L $br $thisio VBL=$vbl EEPROM=$ee ${bcfg//_/ } URPROTOCOL=$ur FRILLS=$f MOVETO=$filename"
+                if [[ $run -eq 1 ]]; then
+                  make $args >& $filename.out
+                  if [[ -r $filename.hex ]]; then
+                    hexname+=("$filename")
+                    hexlsout=($(hexls $filename.hex))
+                    hexuse[$filename]=${hexlsout[1]}
+                    hexprotect[$filename]=${hexlsout[3]:5:1} # p or P
+                  else
+                    echo warning compilation for $filename failed
+                  fi
+                else
+                  echo make $args
+                  # echo "$mdir/$filename.hex"
+                  if [[ -n ${duplicate[$filename]} ]]; then
+                    echo duplicate $filename ${duplicate[$filename]}
+                    echo duplicate $filename $args
+                  else
+                    duplicate[$filename]="$args"
+                  fi
+                fi
+              done
               if [[ $run -eq 1 ]]; then
-                make $args >& $filename.out
-                if [[ -r $filename.hex ]]; then
-                  hexname+=("$filename")
-                  hexlsout=($(hexls $filename.hex))
-                  hexuse[$filename]=${hexlsout[1]}
-                  hexprotect[$filename]=${hexlsout[3]:5:1} # p or P
-                else
-                  echo warning compilation for $filename failed
-                fi
-              else
-                echo make $args
-                # echo "$mdir/$filename.hex"
-                if [[ -n ${duplicate[$filename]} ]]; then
-                  echo duplicate $filename ${duplicate[$filename]}
-                  echo duplicate $filename $args
-                else
-                  duplicate[$filename]="$args"
-                fi
+                # Delete bootloaders of same size that have fewer features and same protection
+                for (( i=0; i<${#hexname[@]}-1; i++ )); do
+                  if [[ ${hexuse[${hexname[$i]}]} -ge ${hexuse[${hexname[$i+1]}]} ]]; then
+                    if [[ ${hexprotect[${hexname[$i]}]} == ${hexprotect[${hexname[$i+1]}]} ]]; then
+                      rm "${hexname[$i]}".{lst,elf,hex,out}
+                    fi
+                  fi
+                done
+                for hxn in ${hexname[@]}; do
+                  if [[ -r $hxn.hex ]]; then
+                    hexassoc[$hxn]="$mdir/$hxn"
+                    if [[ -z ${hexdirs[$mdir]} ]]; then
+                      mkdir -p "$mdir"
+                      hexdirs[$mdir]=1
+                    fi
+                    mv $hxn.{hex,out,elf,lst} "$mdir/"
+                    readarray -d , -t brdali <<<$bname
+                    for ba in ${brdali[@]}; do
+                      if [[ $ba != none && $ba != dual ]]; then
+                        # Make bootloader available under board names, too
+                        badir=${bdir/$mcu/$ba}
+                        banam=${hxn/$mcu/$ba}
+                        if [[ -z ${hexdirs[$badir]} ]]; then
+                          mkdir -p $badir
+                          hexdirs[$badir]=1
+                        fi
+                        hexassoc[$hxn]+="|$badir/$banam"
+                        for ext in hex out elf lst; do
+                          ln -f $mdir/$hxn.$ext $badir/$banam.$ext
+                        done
+                      fi
+                    done
+                  fi
+                done
               fi
             done
-            if [[ $run -eq 1 ]]; then
-              # Delete bootloaders of same size that have fewer features and same protection
-              for (( i=0; i<${#hexname[@]}-1; i++ )); do
-                if [[ ${hexuse[${hexname[$i]}]} -ge ${hexuse[${hexname[$i+1]}]} ]]; then
-                  if [[ ${hexprotect[${hexname[$i]}]} == ${hexprotect[${hexname[$i+1]}]} ]]; then
-                    rm "${hexname[$i]}".{lst,elf,hex,out}
-                  fi
-                fi
-              done
-              for hxn in ${hexname[@]}; do
-                if [[ -r $hxn.hex ]]; then
-                  hexassoc[$hxn]="$mdir/$hxn"
-                  if [[ -z ${hexdirs[$mdir]} ]]; then
-                    mkdir -p "$mdir"
-                    hexdirs[$mdir]=1
-                  fi
-                  mv $hxn.{hex,out,elf,lst} "$mdir/"
-                  readarray -d , -t brdali <<<$bname
-                  for ba in ${brdali[@]}; do
-                    if [[ $ba != none && $ba != dual ]]; then
-                      # Make bootloader available under board names, too
-                      badir=${bdir/$mcu/$ba}
-                      banam=${hxn/$mcu/$ba}
-                      if [[ -z ${hexdirs[$badir]} ]]; then
-                        mkdir -p $badir
-                        hexdirs[$badir]=1
-                      fi
-                      hexassoc[$hxn]+="|$badir/$banam"
-                      for ext in hex out elf lst; do
-                        ln -f $mdir/$hxn.$ext $badir/$banam.$ext
-                      done
-                    fi
-                  done
-                fi
-              done
-            fi
           done
         done
       done

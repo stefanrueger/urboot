@@ -57,7 +57,9 @@ my %feature = (
   'auto2'  => "  + `autobaud2` tries to match host baud rate; can be f/16, f/32, f/48, ..., f/4096 (f=F<sub>CPU</sub>)\n",
   'dual'   => "  + `dual` boot: serial and from external SPI flash memory\n",
   'swio'   => "  + `swio` software I/O (not UART)\n",
-  'swiorx' => "  + `rxd0 txd1` software I/O using, in this example, lines RX `D0` and TX `D1`\n",
+  'uart'   => "  + `uart0` UART number, in this case `0`\n",
+  'alt'    => "  + `alt1` alternative RX/TX pin assignment\n",
+  'rxtx'   => "  + `rxd0 txd1` I/O using, in this example, lines RX `D0` and TX `D1`\n",
   'ee'     => "  + `ee` bootloader supports EEPROM read/write\n",
   'led-b1' => "  + `led-b1` toggles an active-low LED on pin `B1`, `+` designates an active-high LED\n",
   'led9'   => "  + `led9` toggles an LED on, in this example, Arduino pin 9\n",
@@ -88,8 +90,10 @@ sub f {
     $legend{auto2} = 1 if $name =~ /_autobaud2[_.]/;
     $legend{template} = 1 if $name =~ /_template[_.]/;
     $legend{dual} = 1 if $name =~ /_dual[_.]/;
-    $legend{swiorx} = 1 if $name =~ /_[rt]x[a-z][0-7][_.]/;
+    $legend{rxtx} = 1 if $name =~ /_[rt]x[a-z][0-7][_.]/;
     $legend{swio} = 1 if $name =~ /_swio[_.]/;
+    $legend{uart} = 1 if $name =~ /_uart[0-9]/;
+    $legend{alt} = 1 if $name =~ /_alt[0-9]/;
     $legend{ee} = 1 if $name =~ /_ee[_.]/;
     $legend{'led-b1'} = 1 if $name =~ /_led[+-][a-z][0-7][_.]/;
     $legend{'ledPB1'} = 1 if $name =~ /_led[+-]P[A-Z][0-7][_.]/;
@@ -285,7 +289,7 @@ if(!$check) {
      "- **Features:**\n";
      print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p P r a c ? . -));
      print "- **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by\n";
-     print $feature{$_} for grep { $legend{$_} } (qw(auto auto2 swio swiorx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB0 csnop template dual fp9 fr ce ur ddd v2 v3 vbl min));
+     print $feature{$_} for grep { $legend{$_} } (qw(auto auto2 swio uart alt rxtx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB0 csnop template dual fp9 fr ce ur ddd v2 v3 vbl min));
   }
 }
 
