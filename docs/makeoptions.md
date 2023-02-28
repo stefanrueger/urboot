@@ -59,14 +59,18 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
 
 ## Serial communication
 
- - `UARTNUM=<n> UART2X=<0|1> AUTOBAUD=<0|1> RX=...`
- - `UARTNUM=<n> UART2X=<0|1|2> BAUD_RATE=<baud>`
+ - `UARTNUM=<n> UARTALT=<n> UART2X=<0|1> AUTOBAUD=<0|1> RX=...`
+ - `UARTNUM=<n> UARTALT=<n> UART2X=<0|1|2> BAUD_RATE=<baud>`
  - `SWIO=<0|1> RX=... TX=... BAUD_RATE=<baud>`
 
-   These three different settings determine how the serial communication is implemented. When
-   the MCU has a hardware UART using that will normally create shorter code, and this is the
-   default. In case the MCU has more than one UART, then `UARTNUM` specifies which one to use (0, 1,
-   ...).
+   These three different settings determine how the serial communication is implemented. When the
+   MCU has a hardware UART using that will normally create shorter code, and this is the default.
+   In case the MCU has more than one UART, then `UARTNUM` specifies which one to use (0, 1, ...).
+   Note that `UARTNUM` always counts from 0, irrespective whether the only UART is actually
+   called `USART1` or whether the UARTs have a different naming scheme as with the XMEGA UARTs
+   that are named after the port, eg, `USARTC0`. `UARTALT`, if given, specifies an alternative
+   pin assignment for RX/TX. It is usually a small number that aligns with the available
+   alternative assignments lined out in the data sheet.
 
    If `AUTOBAUD` is set then the generated bootloader will try to initialise the USART with the
    host communication speed that the bootloader augurs from the first byte that is expected from
@@ -131,6 +135,10 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    utilise the set of higher baud rates only, setting it to 0 will always utilise the set of lower
    baud rates to match the desired BAUD_RATE.
 
+   Some classic parts, eg the ATmega103, do not have a way to set double UART speed. Setting
+   `UART2X` to 1 has no effect for these, and the set of available `AUTOBAUD` baud rates is as if
+   `UART2X` had been set to 0.
+
    `SWIO=1` creates code for software I/O. That is not only useful for those MCUs that don't have
    an UART, but also for those combinations of `F_CPU` and `BAUD_RATE` where an UART would create
    too large deviations. It may be necessary to resort to software I/O when the board uses the
@@ -187,7 +195,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
 
    This option is valid for parts that do not have a `UDPI` interface. It determines whether or not
    a vector bootloader is generated. The default for this option is `VBL=0` for devices that have
-   hardware boot section support. 
+   hardware boot section support.
 
    `VBL=1` creates a vector bootloader: The AVR interrupt vector table consists of 4-byte `jmp`
    instructions or 2-byte `rjmp` instructions (if the MCU has no more than 8 kB flash it is always
@@ -216,7 +224,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    `hardware/arduino/avr/cores/arduino/main.cpp` source that will then automatically be included
    into every application:
    ```
-   // Additional vector in ISR vector table used by the urboot bootloader 
+   // Additional vector in ISR vector table used by the urboot bootloader
    uint8_t __attribute__((used)) __attribute__((section(".vectors")))
      _vbl_jmp_to_application[FLASHEND+1UL > 8192? 4: 2] = {0x0C, 0x94};
    ```
@@ -615,7 +623,7 @@ $ hexls --sort -*.hex
    Alternatively, `GCCROOT`, the directories with the binaries of the toolchain, can be specified
    directly; the default is `./avr-toolchain/$(TOOLVER)/bin/`.
 
-   Below a comparison table that has been compiled from different toolchain versions. Urboot is the 
+   Below a comparison table that has been compiled from different toolchain versions. Urboot is the
    one where the `Makefile` automatically selects between the available ones in this repository, and
    with rare exceptions the best choice. Later versions tend to have larger code still.
 
