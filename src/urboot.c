@@ -1183,13 +1183,13 @@ void bitDelay();
 #endif // SWIO_B_VALUE
 
 #if SWIO_B_VALUE > 255
-#error Baud rate too slow for software serial
+#error Baud rate too slow for SWIO
 #elif SWIO_B_VALUE < 0
-#error Baud rate too fast for software serial
+#error Baud rate too fast for SWIO
 #endif
 
 #if B_EXTRA > 5 || B_EXTRA < 0
-# error B_EXTRA really should come out between 0 and 5 - what happened there?
+# error Baud rate incompatible with F_CPU for SWIO
 #endif
 
 #endif // SWIO
