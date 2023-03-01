@@ -15,6 +15,7 @@ Function: create bootloaders for the 8-bit AVR MCU <mcu> (all lower case)
 Option:
     -m <dir>  directory in which mcu bootloaders are created (default mcus)
     -b <dir>  directory in which board bootloaders are created (default boards)
+    -c <dir>  directory in which core bootloaders are created (default cores)
     -f <fcpu> only create bootloaders for certain F_CPU values, eg, -f auto,16000000,8000000
     -B <baud> only create bootloaders for certain baud rates, eg, -B auto,115200,38400
     -d        dry run: show which bootloaders would be created
@@ -24,15 +25,18 @@ END
 run=1
 mcu_bls=mcus
 board_bls=boards
+core_bls=cores
 fcpulist=""
 baudlist=""
 here=$(pwd)
 
-while getopts ":dm:b:f:B:" opt; do
+while getopts ":dm:b:c:f:B:" opt; do
   case ${opt} in
+    m) mcu_bls=$OPTARG
+        ;;
     b) board_bls=$OPTARG
         ;;
-    m) mcu_bls=$OPTARG
+    c) core_bls=$OPTARG
         ;;
     f) fcpulist=$OPTARG
         ;;
@@ -87,7 +91,7 @@ baud[2000000]=250000/57600/38400/19200/9600
 baud[1843200]=230400/115200/57600/38400/19200/9600
 baud[1000000]=38400/19200/9600
 
-if [[ /attiny167/atmega328/attiny13/attiny13a/ =~ /$mcu/ ]]; then
+if [[ /attiny13/attiny13a/ =~ /$mcu/ ]]; then
   baud[9600000]=250000/230400/115200/57600/38400/19200/9600
   baud[4800000]=115200/57600/38400/19200/9600
   baud[1200000]=38400/19200/9600
@@ -208,6 +212,20 @@ if [[ $mcu == atmega2560 ]]; then
 fi
 if [[ $mcu == atmega1280 ]]; then
   board+=/mega1280:LED=AtmelPB7
+fi
+
+# Treat MightyCore, MiniCore, MegaCore and MajorCore initially as boards
+if [[ /atmega1284p/atmega1284/atmega644p/atmega644a/atmega324pb/atmega324pa/atmega324p/atmega324a/atmega164p/atmega164a/atmega32/atmega16/atmega8535/ =~ /$mcu/ ]]; then
+  board+=/mightycore:LED=AtmelPB0
+  board+=/mightycore:LED=AtmelPB7
+elif [[ /atmega328pb/atmega328p/atmega328/atmega168pb/atmega168p/atmega168/atmega88pb/atmega88p/atmega88/atmega48pb/atmega48p/atmega48/atmega8/ =~ /$mcu/ ]]; then
+  board+=/minicore:LED=AtmelPB5
+elif [[ /atmega6490p/atmega6490/atmega6450p/atmega6450/atmega3290p/atmega3290/atmega3250p/atmega3250/atmega2560/atmega1280/atmega640/ =~ /$mcu/ ]]; then
+  board+=/megacore:LED=AtmelPB7
+elif [[ /atmega2561/atmega1281/atmega649p/atmega649/atmega645p/atmega645/atmega329p/atmega329/atmega325p/atmega325/atmega169p/atmega169a/atmega165p/atmega165a/atmega128/atmega64/at90can128/at90can64/at90can32/ =~ /$mcu/ ]]; then
+  board+=/megacore:LED=AtmelPB5
+elif [[ /atmega162/atmega8515/ =~ /$mcu/ ]]; then
+  board+=/majorcore:LED=AtmelPB0
 fi
 
 
@@ -1042,10 +1060,12 @@ for io in "${iospecs[@]}"; do
       if [[ $b == auto ]]; then
         mdir="$mcu_bls/$mcu/autobaud"
         bdir="$board_bls/$mcu/autobaud"
+        cdir="$core_bls/_Core_/$mcu/autobaud"
         fcpu=16000000
       else
         mdir="$mcu_bls/$mcu/fcpu_$fcpunm/${b}_bps"
         bdir="$board_bls/$mcu/fcpu_$fcpunm/${b}_bps"
+        cdir="$core_bls/_Core_/$mcu/fcpu_$fcpunm/${b}_bps"
       fi
       if [[ $b == auto ]]; then
         br=AUTOBAUD=1
@@ -1128,9 +1148,14 @@ for io in "${iospecs[@]}"; do
                     readarray -d , -t brdali <<<$bname
                     for ba in ${brdali[@]}; do
                       if [[ $ba != none && $ba != dual ]]; then
-                        # Make bootloader available under board names, too
-                        badir=${bdir/$mcu/$ba}
-                        banam=${hxn/$mcu/$ba}
+                        # Make bootloader available under boards/cores directories, too
+                        if [[ $ba/ =~ core/ ]]; then
+                          badir=${cdir/_Core_/$ba}
+                          banam=$hxn
+                        else
+                          badir=${bdir/$mcu/$ba}
+                          banam=${hxn/$mcu/$ba}
+                        fi
                         if [[ -z ${hexdirs[$badir]} ]]; then
                           mkdir -p $badir
                           hexdirs[$badir]=1
