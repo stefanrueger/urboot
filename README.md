@@ -55,7 +55,7 @@ More detailed information here: [`make` options](https://github.com/stefanrueger
 <p id="pre-compiled"></p>
 
 **Pre-compiled bootloaders.** If compiling bootloaders is not feasible, feel free to try out one of
-the 32,774 *different* pre-compiled bootloaders in the directory tree for
+the 45,407 *different* pre-compiled bootloaders in the directory tree for
 [`MCU parts`](https://github.com/stefanrueger/urboot.hex/tree/main/mcus/). You can find bootloaders for
 popular boards in a corresponding directory for [boards](https://github.com/stefanrueger/urboot.hex/tree/main/boards/),
 for example, autobaud bootloaders for the venerable ATmega328P based
@@ -166,13 +166,13 @@ for all `F_CPU` and a range of associated baudrates.
 
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|218|224|u7.7|`w-u-jpr--`|[urboot_attiny2313_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/fcpu_16mhz/115200_bps/urboot_attiny2313_16mhz_115200bps_lednop_ur_vbl.hex)|
-|248|256|u7.7|`w-u-jpr--`|[urboot_atmega328p_led+b5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/fcpu_16mhz/115200_bps/urboot_atmega328p_16mhz_115200bps_led+b5_fr_ur_vbl.hex)|
-|370|384|u7.7|`weu-jPrac`|[urboot_atmega328p_autobaud_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot_atmega328p_autobaud_ee_led+b5_fr_ce_ur_vbl.hex)|
-|440|512|u7.7|`wes-hpr-c`|[urboot_atmega328p_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/fcpu_16mhz/115200_bps/urboot_atmega328p_16mhz_115200bps_ee_led+b5_fr_ce.hex)|
-|456|512|u7.7|`wes-hprac`|[urboot_atmega328p_autobaud_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot_atmega328p_autobaud_ee_led+b5_fr_ce.hex)|
+|214|224|u7.7|`w-u-jpr--`|[urboot_attiny2313_16mhz_115200bps_uart0_rxd0_txd1_lednop_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/fcpu_16mhz/115200_bps/urboot_attiny2313_16mhz_115200bps_uart0_rxd0_txd1_lednop_ur_vbl.hex)|
+|248|256|u7.7|`w-u-jpr--`|[urboot_atmega328p_16mhz_115200bps_uart0_rxd0_txd1_led+b5_fr_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/fcpu_16mhz/115200_bps/urboot_atmega328p_16mhz_115200bps_uart0_rxd0_txd1_led+b5_fr_ur_vbl.hex)|
+|370|384|u7.7|`weu-jPrac`|[urboot_atmega328p_autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce_ur_vbl.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot_atmega328p_autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce_ur_vbl.hex)|
+|440|512|u7.7|`wes-hpr-c`|[urboot_atmega328p_16mhz_115200bps_uart0_rxd0_txd1_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/fcpu_16mhz/115200_bps/urboot_atmega328p_16mhz_115200bps_uart0_rxd0_txd1_ee_led+b5_fr_ce.hex)|
+|456|512|u7.7|`wes-hprac`|[urboot_atmega328p_autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot_atmega328p_autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce.hex)|
 |474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
-|496|512|u7.7|`weudhprac`|[urboot_urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/boards/urclockusb/autobaud/urboot_urclockusb_autobaud_ee_led+d5_csb0_dual_fr_ce_ur.hex)|
+|496|512|u7.7|`weudhprac`|[urboot_urclockusb_autobaud_uart0_rxd0_txd1_ee_led+d5_csb0_dual_fr_ce_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/boards/urclockusb/autobaud/urboot_urclockusb_autobaud_uart0_rxd0_txd1_ee_led+d5_csb0_dual_fr_ce_ur.hex)|
 |710|1024|o8.3|`-es-h-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex)|
 
 - **Size:** Bootloader code size including small table at top end
