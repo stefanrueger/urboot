@@ -647,7 +647,11 @@
 #warning BAUD_RATE error quantisation greater than 2.5%
 #endif
 
-#if (!defined(UBRRnH) && BAUD_SETTING > 255) ||  BAUD_SETTING > 4095
+#if (defined(__AVR_ATmega161__) || defined(__AVR_AT94K__))
+#if BAUD_SETTING > 4095
+#error Unachievable baud rate (too slow)
+#endif
+#elif (!defined(UBRRnH) && BAUD_SETTING > 255) ||  BAUD_SETTING > 4095
 #error Unachievable baud rate (too slow)
 #elif BAUD_SETTING < 0
 #error Unachievable baud rate (too fast)
@@ -1986,7 +1990,10 @@ int main(void) {
   : "r30", "r31", "r26", "r27"
   );
 #else
-#if defined(UBRRnH) && BAUD_SETTING > 255
+// The joy of two UARTs sharing the register for the high byte of the baud rate divisor
+#if UARTNUM==1 && (defined(__AVR_ATmega161__) || defined(__AVR_AT94K__)) && BAUD_SETTING > 255
+    U_UBRR0H = (BAUD_SETTING>>8) << 4; // Sic! UART0's high BRR serves in its top 4 bit UART1's
+#elif defined(UBRRnH) && BAUD_SETTING > 255
     UBRRnH = BAUD_SETTING>>8;
 #endif
     UBRRnL = BAUD_SETTING & 0xff;

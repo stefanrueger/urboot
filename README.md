@@ -55,7 +55,7 @@ More detailed information here: [`make` options](https://github.com/stefanrueger
 <p id="pre-compiled"></p>
 
 **Pre-compiled bootloaders.** If compiling bootloaders is not feasible, feel free to try out one of
-the 77,209 *different* pre-compiled bootloaders in the directory tree for
+the 96,217 *different* pre-compiled bootloaders in the directory tree for
 [`MCU parts`](https://github.com/stefanrueger/urboot.hex/tree/main/mcus/). You can find bootloaders for
 popular boards in a corresponding directory for [boards](https://github.com/stefanrueger/urboot.hex/tree/main/boards/),
 for example, autobaud bootloaders for the venerable ATmega328P based
@@ -68,7 +68,9 @@ ATmega2560 [Mega R3 board](https://github.com/stefanrueger/urboot.hex/tree/main/
 [ATtiny167 based Digispark Pro](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark-pro/fcpu_16mhz/115200_bps/README.md), the
 [ATtiny85 based Disgispark](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark/fcpu_16mhz/115200_bps/README.md) and the
 [ATtiny84 based Luminet](https://github.com/stefanrueger/urboot.hex/tree/main/boards/luminet/fcpu_16mhz/115200_bps/README.md).
-
+Finally, there are pre-compiled urboot bootloaders for popular Arduino cores in the
+[cores](https://github.com/stefanrueger/urboot.hex/tree/main/cores) directory of the
+[urboot.hex](https://github.com/stefanrueger/urboot.hex) repository.
 
 <p id="how-to-select"></p>
 
@@ -140,7 +142,7 @@ board and followed above but programming does not work as expected?
    need voltage level shifters.
  - Check the mechanical connections. Do the contacts fit tight?
  - Reset the board manually. Some boards have a hardware mechanism that allows avrdude to reset the
-   board by plucking the RTS or the DTR line for a short while. Avdude does both before starting
+   board by plucking the RTS or the DTR line for a short while. Avrdude does both before starting
    communication, but if the board lacks the hardware for that, it needs to be reset manually
    before programming: *First* press the reset button of the board and release it; *then* start
    avrdude by pressing enter of the previously typed command line within the `WDTO` time (typically
