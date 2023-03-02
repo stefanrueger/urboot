@@ -160,7 +160,7 @@ if [[ $mcu == atmega328p ]]; then
   board+=/anarduino,moteino:LED=AtmelPB1
   board+=/urclockusb:LED=AtmelPD5
   board+=/ursense:LEDPOLARITY=-1_LED=AtmelPD5
-  board+=/uno,rbbb,promini:LED=AtmelPB5
+  board+=/uno,rbbb,promini,minicore:LED=AtmelPB5
   board+=/dual:TEMPLATE=1_DUAL=1
   board+=/urclock,timeduino:LEDPOLARITY=-1_LED=AtmelPB1_SFMCS=AtmelPB0_DUAL=1
   board+=/anarduino:LED=AtmelPB1_SFMCS=AtmelPD5_DUAL=1
@@ -181,7 +181,8 @@ if [[ $mcu == attiny84 ]]; then
   board+=/luminet:LED=AtmelPA4
 fi
 if [[ $mcu == atmega1284p ]]; then
-  board+=/bobuino,mighty1284,wildfire-v2:LED=AtmelPB7
+  board+=/bobuino,mighty1284,wildfire-v2,mightycore:LED=AtmelPB7
+  board+=/mightycore:LED=AtmelPB0
   board+=/wildfire:LED=AtmelPB5
   board+=/moteinomega:LED=AtmelPD7
   board+=/urclockmega:LED=AtmelPC7
@@ -190,22 +191,23 @@ if [[ $mcu == atmega1284p ]]; then
   board+=/urclockmega:LED=AtmelPC7_SFMCS=AtmelPB3_DUAL=1
 fi
 if [[ $mcu == atmega644p ]]; then
-  board+=/sanguino:LED=AtmelPB0
+  board+=/sanguino,mightycore:LED=AtmelPB0
+  board+=/mightycore:LED=AtmelPB7
 fi
 if [[ $mcu == atmega2560 ]]; then
-  board+=/mega-r3:LED=AtmelPB7
+  board+=/mega-r3,megacore:LED=AtmelPB7
 fi
 if [[ $mcu == atmega1280 ]]; then
-  board+=/mega1280:LED=AtmelPB7
+  board+=/mega1280,megacore:LED=AtmelPB7
 fi
 
-# Treat MightyCore, MiniCore, MegaCore and MajorCore initially as boards
-if [[ /atmega1284p/atmega1284/atmega644p/atmega644a/atmega324pb/atmega324pa/atmega324p/atmega324a/atmega164p/atmega164a/atmega32/atmega16/atmega8535/ =~ /$mcu/ ]]; then
+# Treat MightyCore, MiniCore, MegaCore and MajorCore initially as boards (note some are already subsumed above)
+if [[ /atmega1284/atmega644a/atmega324pb/atmega324pa/atmega324p/atmega324a/atmega164p/atmega164a/atmega32/atmega16/atmega8535/ =~ /$mcu/ ]]; then
   board+=/mightycore:LED=AtmelPB0
   board+=/mightycore:LED=AtmelPB7
-elif [[ /atmega328pb/atmega328p/atmega328/atmega168pb/atmega168p/atmega168/atmega88pb/atmega88p/atmega88/atmega48pb/atmega48p/atmega48/atmega8/ =~ /$mcu/ ]]; then
+elif [[ /atmega328pb/atmega328/atmega168pb/atmega168p/atmega168/atmega88pb/atmega88p/atmega88/atmega48pb/atmega48p/atmega48/atmega8/ =~ /$mcu/ ]]; then
   board+=/minicore:LED=AtmelPB5
-elif [[ /atmega6490p/atmega6490/atmega6450p/atmega6450/atmega3290p/atmega3290/atmega3250p/atmega3250/atmega2560/atmega1280/atmega640/ =~ /$mcu/ ]]; then
+elif [[ /atmega6490p/atmega6490/atmega6450p/atmega6450/atmega3290p/atmega3290/atmega3250p/atmega3250/atmega640/ =~ /$mcu/ ]]; then
   board+=/megacore:LED=AtmelPB7
 elif [[ /atmega2561/atmega1281/atmega649p/atmega649/atmega645p/atmega645/atmega329p/atmega329/atmega325p/atmega325/atmega169p/atmega169a/atmega165p/atmega165a/atmega128/atmega64/at90can128/at90can64/at90can32/ =~ /$mcu/ ]]; then
   board+=/megacore:LED=AtmelPB5
