@@ -946,6 +946,13 @@ mcuio[avr128db48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=Atme
 mcuio[avr128da64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0|UARTNUM=4 UARTALT=1 RX=AtmelPE5 TX=AtmelPE4|UARTNUM=5 RX=AtmelPG1 TX=AtmelPG0|UARTNUM=5 UARTALT=1 RX=AtmelPG5 TX=AtmelPG4"
 mcuio[avr128db64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0|UARTNUM=4 UARTALT=1 RX=AtmelPE5 TX=AtmelPE4|UARTNUM=5 RX=AtmelPG1 TX=AtmelPG0|UARTNUM=5 UARTALT=1 RX=AtmelPG5 TX=AtmelPG4"
 
+# F_CPU/baud range for SWIO depends on architecture and whether 22-bit PC (flash > 128k) or 16-bit PC
+minbval=29; [[ /$mcu =~ /atxmega ]] && minbval=28
+if [[ /atmega256rfr2/atmega2560/atmega2561/atmega2564rfr2/atxmega128a1/atxmega128a1revd/atxmega128a1u/atxmega128b1/atxmega128a3/atxmega128a3u/atxmega128b3/atxmega128c3/atxmega128d3/atxmega128a4/atxmega128a4u/atxmega128d4/atxmega192a1/atxmega192a3/atxmega192a3u/atxmega192c3/atxmega192d3/atxmega256a1/atxmega256a3/atxmega256a3b/atxmega256a3bu/atxmega256a3u/atxmega256c3/atxmega256d3/atxmega384c3/atxmega384d3/ =~ /$mcu/ ]]; then
+  minbval=$((minbval+4))
+fi
+maxbval=$((255*6+$minbval+2))
+
 ####
 # Put human readable F_CPU into variable fcpunm
 #
@@ -1035,9 +1042,12 @@ for io in "${iospecs[@]}"; do
         thisio=${thisio/UARTALT=?/}
       fi
 
-      # SWIO: baud rate is too high or too low
-      if [[ ${thisio:0:4} == SWIO &&  ( $(( ($fcpu/$b-30)/6 )) -gt 255  || $(( $fcpu/$b )) -lt 30 ) ]]; then
-        continue
+      # SWIO: is baud rate too high or too low? Number of clock cycles per RX bit must be in range
+      if [[ ${thisio:0:4} == SWIO ]]; then
+        cpb=$(( ($fcpu+$b/2)/$b ))
+        if [[ $cpb -gt $maxbval ||  $cpb -lt $minbval ]]; then
+          continue
+        fi
       fi
       # SWIO on classic/LIN parts needs RX/TX in I/O space: exclude ports H...L
       if [[ ${thisio:0:4} == SWIO && $io =~ [RT]X=AtmelP[H-L] && "${uarttype[$mcu]}" -lt 3 ]]; then

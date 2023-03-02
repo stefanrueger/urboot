@@ -1161,7 +1161,7 @@ void bitDelay();
 #endif
 
 #ifndef SWIO_B_VALUE
-#if IS_REDUCED_CORE_TINY
+#if IS_REDUCED_CORE_TINY        // Actually unsupported for bootloaders
 #define SWIO_B_VALUE ((CPB-16-9+B_OFF)/6)
 #define CPB_B(b) (6*(b)+16+9)
 #define SWIO_B_DLYTX          1 // Delay tx timing so it's same as rx timing
@@ -1190,7 +1190,7 @@ void bitDelay();
 
 #if SWIO_B_VALUE > 255
 #error Baud rate too slow for SWIO
-#elif SWIO_B_VALUE < 0
+#elif SWIO_B_VALUE < 1
 #error Baud rate too fast for SWIO
 #endif
 
