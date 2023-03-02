@@ -599,9 +599,9 @@
 #if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
 
 // Baud setting and actual baud rate in UART 2x mode and normal mode
-#define BAUD_SETTING2X (((F_CPU + 4L*BAUD_RATE)/(8L*BAUD_RATE)) - 1)
+#define BAUD_SETTING2X (((F_CPU + 4L*BAUD_RATE)/(8L*BAUD_RATE)) < 1? 0: ((F_CPU + 4L*BAUD_RATE)/(8L*BAUD_RATE)) - 1)
 #define BAUD_ACTUAL2X  (F_CPU/(8L*(BAUD_SETTING2X+1)))
-#define BAUD_SETTING1X (((F_CPU + 8L*BAUD_RATE)/(16L*BAUD_RATE)) - 1)
+#define BAUD_SETTING1X (((F_CPU + 8L*BAUD_RATE)/(16L*BAUD_RATE)) < 1? 0: ((F_CPU + 8L*BAUD_RATE)/(16L*BAUD_RATE)) -1 )
 #define BAUD_ACTUAL1X  (F_CPU/(16L*(BAUD_SETTING1X+1)))
 
 // Error per 1000, ie, in 0.1%
@@ -647,7 +647,7 @@
 #warning BAUD_RATE error quantisation greater than 2.5%
 #endif
 
-#if BAUD_SETTING > 255
+#if (!defined(UBRRnH) && BAUD_SETTING > 255) ||  BAUD_SETTING > 4095
 #error Unachievable baud rate (too slow)
 #elif BAUD_SETTING < 0
 #error Unachievable baud rate (too fast)
@@ -1986,7 +1986,10 @@ int main(void) {
   : "r30", "r31", "r26", "r27"
   );
 #else
-    UBRRnL = BAUD_SETTING;
+#if defined(UBRRnH) && BAUD_SETTING > 255
+    UBRRnH = BAUD_SETTING>>8;
+#endif
+    UBRRnL = BAUD_SETTING & 0xff;
 #endif
 #if UART2X
     UCSRnA = _BV(A_U2Xn);
@@ -2004,6 +2007,10 @@ int main(void) {
       " std Z+%[brrl_off], r27\n"
       AUTO_DRAIN
 #else
+#if defined(UBRRnH_off) && BAUD_SETTING > 255
+      " ldi r27, hi8(%[brrl_val])\n"
+      " std Z+%[brrh_off], r27\n"
+#endif
       " ldi r27, lo8(%[brrl_val])\n"
       " std Z+%[brrl_off], r27\n"
 #endif
@@ -2018,6 +2025,9 @@ int main(void) {
       " std Z+%[src_off], r27\n"
 #endif
    :: [brrl_off] "I" (UBRRnL_off),
+#if defined(UBRRnH_off)
+      [brrh_off] "I" (UBRRnH_off),
+#endif
 #if AUTOBAUD
       [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX)),
 #else
