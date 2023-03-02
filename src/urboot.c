@@ -687,10 +687,16 @@
   _better8(8, _bestl2, _bestl3, _bestl4, _bestl5, _bestl6, _bestl7, _bestl8, bd); \
 })
 
-// No need to check baud error as virtually all baud rates can be achieved within 2% error
 #define BAUD_LINLBT  _linbestlbt(BAUD_RATE)
 #define BAUD_SETTING _linbrr(_linbestlbt(BAUD_RATE), BAUD_RATE)
 #define UBRRnL LINBRRnL
+
+// Most baud rates can be generated, though there are some edge cases
+#if F_CPU > BAUD_RATE*63L*260L
+#error LIN_UART BAUD_RATE too small for 8-bit LINBRR
+#elif F_CPU < 78L*BAUD_RATE/10L
+#error LIN_UART BAUD_RATE too big
+#endif
 
 #endif // UR_UARTTYPE
 #endif // !SWIO
@@ -1170,7 +1176,7 @@ void bitDelay();
 #define CPB_B(b) (6*(b)+12+10)
 #define SWIO_B_DLYTX          2
 
-#elif IS_MEGA && defined(EIND)
+#elif defined(EIND)
 #define SWIO_B_VALUE ((CPB-18-9+B_OFF)/6)
 #define CPB_B(b) (6*(b)+18+9)
 #define SWIO_B_DLYTX          0
