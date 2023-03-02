@@ -350,7 +350,7 @@ version:
 # 224 bytes
 #
 attiny2313_min:
-	$(MAKE) $(MK_OPTS) MCU=attiny2313 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=2 VBL_VECT_NUM=EEPROM_READY_vect_num MOVETO=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny2313 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=0 VBL_VECT_NUM=EEPROM_READY_vect_num MOVETO=$@
 
 
 ##
@@ -544,7 +544,7 @@ digisparkpro:
 # Luminet is a 1 MHz clocked board (capable of 9600 baud)
 #
 attiny84_min:
-	$(MAKE) $(MK_OPTS) MCU=attiny84 URPROTOCOL=1 SWIO=1 TX=AtmelPA2 RX=AtmelPA3 EEPROM=0 VBL=1 FRILLS=2 MOVETO=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny84 URPROTOCOL=1 SWIO=1 TX=AtmelPA2 RX=AtmelPA3 EEPROM=0 VBL=1 FRILLS=4 MOVETO=$@
 
 
 # LED=AtmelPA4
