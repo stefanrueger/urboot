@@ -126,11 +126,11 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    bytes code and has a higher tolerance of 2% but will restrict available baud rates to half of
    above baud rates: `F_CPU/16`, `F_CPU/32`, `F_CPU/48`, ..., `F_CPU/4096`.
 
-   In order for the `AUTOBAUD` feature to work, urboot will need to know the rx line of the UART so
-   it can measure the host's baud rate. In addition, the rx line needs to reside on a port that is
-   within the bit-addressable bytes of the MCU, which are typically located in [0x20, 0x3f].
-   Therefore UARTs for which the rx pin is located on Port `H` and  above are not available for
-   `AUTOBAUD`, eg, UART2 and UART3 of the ATmega2560.
+   In order for the `AUTOBAUD` feature to work, urboot will need to (and usually does) know the rx
+   line of the UART so it can measure the host's baud rate. In addition, the rx line needs to
+   reside on a port that is within the bit-addressable bytes of the MCU, which are typically
+   located in [0x20, 0x3f]. Therefore UARTs for which the rx pin is located on Port `H` and above
+   are not available for `AUTOBAUD`, eg, UART2 and UART3 of the ATmega2560.
 
    If `AUTOBAUD` is not set or if it is set to 0, the code automatically selects reasonably good
    settings to match the desired fixed baud rate `BAUD_RATE`. In the absence of `AUTOBAUD` if
@@ -145,25 +145,26 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
 
    A dozen or so AVR parts support the automotive Local Interconnect Network that can be used as
    ordinary UART. This includes the LIN/UARTs of ATtiny167/87. They allow the setting the number of
-   samples to 8..63 in addition to the baud rate divisor. Most classic UARTs only can set the
-   number of samples to 16 or 8 (the latter is actually what `UART2x=1` does). As a consequence,
-   LIN/UARTs can create almost all baud rates well within 1% of quantisation error with far fewer
-   blind spots. Urboot bootloaders for these parts make use of that automagically. The setting of
-   `UART2X` takes no effect for these parts when working with fixed baud rates. `AUTOBAUD` though
-   works exactly as in the other classic parts, ie, the number of samples will be either set to 8
-   or 16 depending on the setting of `UART2X` as described above.
+   samples per transferred bit to 8..63 in addition to the baud rate divisor. Most classic UARTs
+   only can set the number of samples to 16 or 8 (the latter is actually what `UART2x=1` does). As
+   a consequence, LIN/UARTs can create almost all baud rates well within 1% of quantisation error
+   with far fewer blind spots. Urboot bootloaders for these parts make use of that automagically.
+   The setting of `UART2X` takes no effect for these parts when working with fixed baud rates.
+   `AUTOBAUD` though works exactly as for the other classic parts, ie, the number of samples will be
+   either set to 8 or 16 depending on the setting of `UART2X` as described above.
 
    `SWIO=1` creates code for software I/O. That is not only useful for those MCUs that don't have
    an UART, but also for those combinations of `F_CPU` and `BAUD_RATE` where an UART would create
-   too large deviations. It may be necessary to resort to software I/O when the board uses the
-   MCU's rx and tx lines otherwise. The options `RX` and `TX` specify which pins are used for
-   software I/O. The syntax is the same as with `LED` and `SFMCS`: Use any pin descriptor in Atmel
-   format such as `AtmelPB2` or as Arduino pin number as in `TX=ArduinoPin2`. The default baud rate
-   depends on the CPU frequency of the board and is 115,200 for 8 MHz or above. Again, the ports
-   of the rx and tx line need to be below Port `H` for software I/O to work.
+   too large quantisation errors for the baud rate. It might also be necessary to resort to
+   software I/O when the board uses the MCU's rx and tx lines otherwise. The options `RX` and `TX`
+   specify which pins are used for software I/O. The syntax is the same as with `LED` and `SFMCS`:
+   Use any pin descriptor in Atmel format such as `AtmelPB2` or as Arduino pin number as in
+   `TX=ArduinoPin2`. The default baud rate depends on the CPU frequency of the board and is 115,200
+   for 8 MHz or above. Again, the ports of the rx and tx line need to be below Port `H` for
+   software I/O to work.
 
-   Admissible baud rates depend on the CPU frequency. The table below details the approximate
-   boundaries as implemented in urboot bootloaders
+   Admissible baud rates also depend on the CPU frequency. The table below details the approximate
+   boundaries as implemented in urboot bootloaders:
 
    | Baud rate | Lowest | Highest | Min @ F<sub>CPU</sub> = 16 MHz | Max @ F<sub>CPU</sub> = 16 MHz |
    | --: | --: | --: | --: | --: |
