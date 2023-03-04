@@ -477,6 +477,54 @@
   defined(__AVR_ATtiny1634__) || defined(__AVR_ATtiny1634R__))
 
 
+#if defined(DEBUG_FREQ)
+// Set LED pin as default if no frequency pin defined
+#if !defined(FREQ_PIN) && defined(LED)
+#define FREQ_PIN LED
+#if !defined(FREQ_POLARITY) && defined(LEDPOLARITY)
+#define FREQ_POLARITY LEDPOLARITY
+#endif
+#endif
+
+#if !defined(FREQ_PIN)
+#error you need to define FREQ_PIN for DEBUG_FREQ
+#endif
+
+#if defined(EXACT_DF) && EXACT_DF
+#define _debug_freq_us(x) _delay_us(x)
+#else
+// Delay of microseconds that generates shorter code at the expense of being up to 5 CPU cycles shorter
+#define _debug_freq_us(us) ({ \
+  const double tus = (us); \
+  uint32_t  loops, cycles = (uint32_t) (((F_CPU) / 1e6) * (tus>0? tus: 0)); \
+  \
+  if(83886082UL <= cycles && cycles <= 0xFFFFFFFFUL) { \
+    loops = ((cycles - 9) / 6) + 1; \
+    cycles = ((loops - 1) * 6) + 9; \
+  } else if(262145UL <= cycles && cycles <= 83886081UL) { \
+    loops = ((cycles - 7) / 5) + 1; \
+    if(loops > 0xFFFFFFUL) \
+      loops = 0xFFFFFFUL;  \
+    cycles = ((loops - 1) * 5) + 7; \
+  } else if(768 <= cycles && cycles <= 262144UL) { \
+    loops = ((cycles - 5) / 4) + 1; \
+    if(loops > 0xFFFF) \
+      loops = 0xFFFF;  \
+    cycles = ((loops - 1) * 4) + 5; \
+  } else if(30 <= cycles && cycles <= 767) { \
+    loops = cycles / 3; \
+    if(loops > 255) \
+      loops = 255;  \
+    cycles = loops * 3; \
+  } \
+ \
+  __builtin_avr_delay_cycles(cycles); \
+})
+
+#endif
+
+#endif // defined(DEBUG_FREQ)
+
 
 #if TEMPLATE
 // Different NOP codes (mov rN,rN) can be replaced on the fly by urloader
@@ -527,6 +575,12 @@
 #define led_off()       (UR_PORT(LED) &= ~UR_BV(LED))
 #endif
 #define led_setup()     (UR_DDR(LED) |= UR_BV(LED))
+#if defined(DEBUG_FREQ) && defined(FREQ_PIN)
+#if UR_PIN_VALUE(FREQ_PIN) == UR_PIN_VALUE(LED)
+#undef led_setup
+#define led_setup()     // Not needed as FREQ_PIN already set up
+#endif
+#endif
 #define led_resetddr()  (UR_DDR(LED) = 0)
 #define led_resetport() (UR_PORT(LED) = 0)
 #endif // TEMPLATE
@@ -539,8 +593,6 @@
 #define led_resetddr()
 #define led_resetport()
 #endif
-
-
 
 
 // I/O settings
@@ -695,10 +747,10 @@
 #define BAUD_SETTING _linbrr(_linbestlbt(BAUD_RATE), BAUD_RATE)
 #define UBRRnL LINBRRnL
 
-// Most baud rates can be generated, though there are some edge cases
-#if F_CPU > BAUD_RATE*63L*260L
+// Most baud rates within below range can be generated, though there are some edge cases
+#if F_CPU > BAUD_RATE*64L*256L  // Quantisation error 64/63, ie, ca 1.6%
 #error LIN_UART BAUD_RATE too small for 8-bit LINBRR
-#elif F_CPU < 78L*BAUD_RATE/10L
+#elif F_CPU < 79L*BAUD_RATE/10L // Quantisation error 79/80, ie, ca 1.25%
 #error LIN_UART BAUD_RATE too big
 #endif
 
@@ -2093,18 +2145,32 @@ int main(void) {
 #endif // !SWIO
 
 
-// Swing a square wave of 5 periods on pin FREQ_PIN (can be LED) to enable exact F_CPU measurement
-#if defined(DEBUG_FREQ) && DEBUG_FREQ && !defined(FREQ_PIN)
-#error you need to define FREQ_PIN for DEBUG_FREQ
-#elif defined(DEBUG_FREQ) && DEBUG_FREQ
-  // Set FREQ_PIN pin as output
-  UR_DDR(FREQ_PIN) |= UR_BV(FREQ_PIN);
+// Swing a square wave of 5 periods on pin FREQ_PIN (defaults to LED) to enable exact F_CPU measurement
+#if defined(DEBUG_FREQ)
+
+#if UB_CANNOT_TOGGLE_PORT
+#define UB_FREQ_PIN_Toggle() (UR_PORT(FREQ_PIN) ^= UR_BV(FREQ_PIN))
+#define UB_DEBUG_OHEAD (6e6/F_CPU)     // Subtract CPU cycles for loop overhead
+#else
+#define UB_FREQ_PIN_Toggle() (UR_PIN(FREQ_PIN) |= UR_BV(FREQ_PIN))
+#if IS_XMEGA
+#define UB_DEBUG_OHEAD (4e6/F_CPU)
+#else
+#define UB_DEBUG_OHEAD (5e6/F_CPU)
+#endif
+#endif
+
+  UR_DDR(FREQ_PIN) |= UR_BV(FREQ_PIN); // Set FREQ_PIN pin as output
   uint8_t rn = 5*2;
   do {
-    UR_PIN(FREQ_PIN) |= UR_BV(FREQ_PIN);     // 1-2 CPU cycles
-    _delay_us(0.5e6/DEBUG_FREQ - 5e6/F_CPU); // Subtract 5 CPU cycles for loop overhead
+#if defined(FREQ_POLARITY) && FREQ_POLARITY < 0
+    _debug_freq_us(0.5e6/DEBUG_FREQ - UB_DEBUG_OHEAD);
+    UB_FREQ_PIN_Toggle();
+#else
+    UB_FREQ_PIN_Toggle();
+    _debug_freq_us(0.5e6/DEBUG_FREQ - UB_DEBUG_OHEAD);
+#endif
   } while(--rn);
-  UR_DDR(FREQ_PIN) &= ~UR_BV(FREQ_PIN);
 #endif
 
   // Exit loop by causing WDT reset - which will initialise the MCU

@@ -173,3 +173,7 @@
   defined(__AVR_ATtiny461A__) || defined(__AVR_ATtiny861A__) || defined(__AVR_ATtiny441__) || \
   defined(__AVR_ATtiny841__) || defined(__AVR_ATtiny43U__) || defined(__AVR_ATtiny48__) || \
   defined(__AVR_ATtiny88__) || defined(__AVR_ATtiny828__))
+
+#define UB_CANNOT_TOGGLE_PORT (defined(__AVR_ATmega8__) || defined(__AVR_ATmega8515__) || \
+  defined(__AVR_ATmega8535__) || defined(__AVR_ATmega16__) || defined(__AVR_ATmega162__) || \
+  defined(__AVR_ATmega32__) || defined(__AVR_ATmega64__)   || defined(__AVR_ATmega128__))

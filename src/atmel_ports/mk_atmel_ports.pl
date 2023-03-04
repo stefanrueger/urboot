@@ -43,7 +43,8 @@ print <<"__END";
  * // switch LED off
  * UR_PORT(activityLedPin) &= ~UR_BV(activityLedPin);
  * // toggle LED
- * UR_PIN(activityLedPin)  = UR_BV(activityLedPin);
+ * UR_PIN(activityLedPin)  |= UR_BV(activityLedPin);
+ * UR_PORT(activityLedPin) ^= UR_BV(activityLedPin); // Older AVRs (ATmega8 etc)
  *
  * // check whether pins are the same
  * #if UR_PIN_VALUE(AtmelSCK) == UR_PIN_VALUE(activityLedPin)
