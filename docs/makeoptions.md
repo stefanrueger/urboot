@@ -333,8 +333,8 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
 
 
    The `SFMCS=<AtmelPxx|ArduinoPinX>` option encodes the pin number of the SPI flash memory chip
-   select line: either use a constant such as `AtmelPB0` (port B, pin 0) or, eg, `ArduninoPin8,
-   which uses the Arduino Pin numbers that is available for some boards/MCUs.
+   select line: either use a constant such as `AtmelPB0` (port B, pin 0) or, eg, `ArduinoPin8`,
+   which uses the Arduino Pin numbers that are available for some boards/MCUs.
 
    `TEMPLATE=1` creates a template bootloader with different nop opcodes (`mov rN,rN`) where the
    `SFMCS` pin needs to be manipulated. These template bootloaders cannot be used as they are, but
@@ -348,9 +348,9 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    Setting `PROTECTME=1` prevents the bootloader from overwriting itself. This can only in rare
    circumstances be safely switched off, eg, when no `pgm_write_page()` function is exported, the
    bootloader uses hardware boot section support and the lock bits are set to protect the
-   bootloader. As the protection code is only between 4 and 10 bytes `PROTECTME` and the user might
-   forget  protecting the hardware supported boot section through lockbits, this protection can no
-   longer be switched off from v7.7 onwards.
+   bootloader. As the protection code is only between 4 and 10 bytes and the user might forget
+   protecting the hardware supported boot section through lockbits, this protection can no longer
+   be switched off from v7.7 onwards.
 
 
  - `PROTECTRESET=<1|0>`
