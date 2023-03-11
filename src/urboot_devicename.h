@@ -3,13 +3,13 @@
  *
  * urboot_devicename.h
  *
- * device name from avrintel.h
+ * Device name from avrintel.h
  *
- * published under GNU General Public License, version 3 (GPL-3.0)
- * meta-author Stefan Rueger <stefan.rueger@urclocks.com>
+ * Published under GNU General Public License, version 3 (GPL-3.0)
+ * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.1
- * 04.11.2022
+ * 04.03.2023
  *
  */
 
@@ -516,6 +516,12 @@
 
 #elif defined(__AVR_AT86RF401__)
 #define __AVR_DEVICE_NAME__ at86rf401
+
+#elif defined(__AVR_AT89S51__)
+#define __AVR_DEVICE_NAME__ at89s51
+
+#elif defined(__AVR_AT89S52__)
+#define __AVR_DEVICE_NAME__ at89s52
 
 #elif defined(__AVR_AT90PWM1__)
 #define __AVR_DEVICE_NAME__ at90pwm1

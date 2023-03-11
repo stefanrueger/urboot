@@ -5,11 +5,11 @@
  *
  * unique device id from avrintel.h
  *
- * published under GNU General Public License, version 3 (GPL-3.0)
- * meta-author Stefan Rueger <stefan.rueger@urclocks.com>
+ * Published under GNU General Public License, version 3 (GPL-3.0)
+ * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.2
- * 04.11.2022
+ * 04.03.2023
  *
  */
 
@@ -201,6 +201,8 @@
 #define id_at43usb355      163u
 #define id_at76c711        164u
 #define id_at86rf401       165u
+#define id_at89s51         372u
+#define id_at89s52         373u
 #define id_at90pwm1        166u
 #define id_at90pwm2        167u
 #define id_at90pwm2b       168u
@@ -464,7 +466,7 @@
 #define vbu_atmega16m1       31
 #define vbu_atmega16hva2     22
 #define vbu_atmega16u2       29
-#define vbu_atmega16u4       43
+#define vbu_atmega16u4        5
 #define vbu_atmega32         21
 #define vbu_atmega32a        21
 #define vbu_atmega32hvb      29
@@ -472,7 +474,7 @@
 #define vbu_atmega32c1       31
 #define vbu_atmega32m1       31
 #define vbu_atmega32u2       29
-#define vbu_atmega32u4       43
+#define vbu_atmega32u4        5
 #define vbu_atmega32u6       38
 #define vbu_atmega48         26
 #define vbu_atmega48a        26
@@ -485,7 +487,7 @@
 #define vbu_atmega64c1       31
 #define vbu_atmega64m1       31
 #define vbu_atmega64hve2     25
-#define vbu_atmega64rfr2     77
+#define vbu_atmega64rfr2     51
 #define vbu_atmega88         26
 #define vbu_atmega88a        26
 #define vbu_atmega88p        26
@@ -494,8 +496,8 @@
 #define vbu_atmega103        24
 #define vbu_atmega128        35
 #define vbu_atmega128a       35
-#define vbu_atmega128rfa1    72
-#define vbu_atmega128rfr2    77
+#define vbu_atmega128rfa1    51
+#define vbu_atmega128rfr2    51
 #define vbu_atmega161        21
 #define vbu_atmega162        28
 #define vbu_atmega163        18
@@ -515,7 +517,7 @@
 #define vbu_atmega169a       23
 #define vbu_atmega169p       23
 #define vbu_atmega169pa      23
-#define vbu_atmega256rfr2    77
+#define vbu_atmega256rfr2    51
 #define vbu_atmega323        21
 #define vbu_atmega324a       31
 #define vbu_atmega324p       31
@@ -538,7 +540,7 @@
 #define vbu_atmega644a       31
 #define vbu_atmega644p       31
 #define vbu_atmega644pa      31
-#define vbu_atmega644rfr2    77
+#define vbu_atmega644rfr2    51
 #define vbu_atmega645        22
 #define vbu_atmega645a       22
 #define vbu_atmega645p       22
@@ -546,45 +548,45 @@
 #define vbu_atmega649a       23
 #define vbu_atmega649p       23
 #define vbu_atmega1280       57
-#define vbu_atmega1281       57
+#define vbu_atmega1281       51
 #define vbu_atmega1284       35
 #define vbu_atmega1284p      35
-#define vbu_atmega1284rfr2   77
+#define vbu_atmega1284rfr2   51
 #define vbu_atmega2560       57
-#define vbu_atmega2561       57
-#define vbu_atmega2564rfr2   77
-#define vbu_atmega3250       25
-#define vbu_atmega3250a      25
-#define vbu_atmega3250p      25
-#define vbu_atmega3250pa     25
+#define vbu_atmega2561       51
+#define vbu_atmega2564rfr2   51
+#define vbu_atmega3250       22
+#define vbu_atmega3250a      22
+#define vbu_atmega3250p      22
+#define vbu_atmega3250pa     22
 #define vbu_atmega3290       25
 #define vbu_atmega3290a      25
 #define vbu_atmega3290p      25
 #define vbu_atmega3290pa     25
-#define vbu_atmega6450       25
-#define vbu_atmega6450a      25
-#define vbu_atmega6450p      25
+#define vbu_atmega6450       22
+#define vbu_atmega6450a      22
+#define vbu_atmega6450p      22
 #define vbu_atmega6490       25
 #define vbu_atmega6490a      25
 #define vbu_atmega6490p      25
 #define vbu_atmega8515       17
 #define vbu_atmega8535       21
 #define vbu_at86rf401         3
-#define vbu_at90pwm1         32
+#define vbu_at90pwm1         14
 #define vbu_at90pwm2         14
-#define vbu_at90pwm2b        32
-#define vbu_at90pwm3         32
-#define vbu_at90pwm3b        32
+#define vbu_at90pwm2b        14
+#define vbu_at90pwm3         14
+#define vbu_at90pwm3b        14
 #define vbu_at90can32        37
 #define vbu_at90can64        37
 #define vbu_at90pwm81        20
 #define vbu_at90usb82        29
-#define vbu_at90scr100       38
+#define vbu_at90scr100       24
 #define vbu_at90can128       37
 #define vbu_at90pwm161       20
 #define vbu_at90usb162       29
-#define vbu_at90pwm216       32
-#define vbu_at90pwm316       32
+#define vbu_at90pwm216       14
+#define vbu_at90pwm316       14
 #define vbu_at90usb646       38
 #define vbu_at90usb647       38
 #define vbu_at90s1200         4

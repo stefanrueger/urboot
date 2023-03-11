@@ -3,13 +3,13 @@
  *
  * urboot_sram.h
  *
- * ensure both RAMSTART and RAMSIZE are available as far as possible
+ * Ensure both RAMSTART and RAMSIZE are available as far as possible
  *
- * published under GNU General Public License, version 3 (GPL-3.0)
- * meta-author Stefan Rueger <stefan.rueger@urclocks.com>
+ * Published under GNU General Public License, version 3 (GPL-3.0)
+ * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.1
- * 04.11.2022
+ * 04.03.2023
  *
  */
 
@@ -683,6 +683,14 @@
 #elif defined(__AVR_AT86RF401__)
 #define RAMSTART 0x0060
 #define RAMSIZE  0x0080
+
+#elif defined(__AVR_AT89S51__)
+#define RAMSTART     -1
+#define RAMSIZE      -1
+
+#elif defined(__AVR_AT89S52__)
+#define RAMSTART     -1
+#define RAMSIZE      -1
 
 #elif defined(__AVR_AT90PWM1__)
 #define RAMSTART 0x0100

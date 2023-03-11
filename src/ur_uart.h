@@ -10,7 +10,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.0
- * 17.02.2023
+ * 04.03.2023
  *
  */
 
@@ -2449,7 +2449,8 @@
 #define B_RXB8n               1
 #define B_TXB8n               0
 
-#elif defined(__AVR_AT43USB355__) || defined(__AVR_AT76C711__) || defined(__AVR_ATA6289__)
+#elif defined(__AVR_AT43USB355__) || defined(__AVR_AT76C711__) || defined(__AVR_AT89S51__) || \
+  defined(__AVR_AT89S52__) || defined(__AVR_ATA6289__)
 
 #define UR_UARTTYPE UR_UARTTYPE_UNKNOWN
 #define UR_NUMUARTS           0

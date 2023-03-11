@@ -13,7 +13,7 @@
  * encode and set the upper 4 bit of the register UBRRHI that is shared with UBRR0H.
  *
  * v 1.0
- * 17.02.2023
+ * 04.03.2023
  *
  */
 
