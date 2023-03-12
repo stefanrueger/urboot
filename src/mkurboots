@@ -121,6 +121,8 @@ if [[ -n $baudlist ]]; then
   done
 fi
 
+# List of considered F_CPUs in descending order
+fcpus=($(printf '%s\n' "${!baud[@]}" | sort -rn))
 
 # Problematic combinations for classic or LIN UART (high baud rate error)
 declare -A nouart
@@ -946,6 +948,9 @@ mcuio[avr128db48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=Atme
 mcuio[avr128da64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0|UARTNUM=4 UARTALT=1 RX=AtmelPE5 TX=AtmelPE4|UARTNUM=5 RX=AtmelPG1 TX=AtmelPG0|UARTNUM=5 UARTALT=1 RX=AtmelPG5 TX=AtmelPG4"
 mcuio[avr128db64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0|UARTNUM=4 UARTALT=1 RX=AtmelPE5 TX=AtmelPE4|UARTNUM=5 RX=AtmelPG1 TX=AtmelPG0|UARTNUM=5 UARTALT=1 RX=AtmelPG5 TX=AtmelPG4"
 
+# All the I/O specs for *this* MCU
+readarray -d \| -t iospecs <<<${mcuio[$mcu]}
+
 # SWIO: range of F_CPU/baud rate depends on architecture and whether 22-bit PC (flash > 128k) or 16-bit PC
 minbval=29; [[ /$mcu =~ /atxmega ]] && minbval=28
 if [[ /atmega256rfr2/atmega2560/atmega2561/atmega2564rfr2/atxmega128a1/atxmega128a1revd/atxmega128a1u/atxmega128b1/atxmega128a3/atxmega128a3u/atxmega128b3/atxmega128c3/atxmega128d3/atxmega128a4/atxmega128a4u/atxmega128d4/atxmega192a1/atxmega192a3/atxmega192a3u/atxmega192c3/atxmega192d3/atxmega256a1/atxmega256a3/atxmega256a3b/atxmega256a3bu/atxmega256a3u/atxmega256c3/atxmega256d3/atxmega384c3/atxmega384d3/ =~ /$mcu/ ]]; then
@@ -960,21 +965,31 @@ brrrange=4095; [[ ${uarttype[$mcu]} -eq 2 || /at43usb320/at90s2313/at90s4414/at9
 maxsamples=16; [[ ${uarttype[$mcu]} -eq 2 ]] && maxsamples=63
 minsamples=8; [[ /atmega103/at43usb320/at90s2313/at90s2333/at90s4433/at90s4414/at90s8515/at90s4434/at90s8535/ =~ /$mcu/ ]] && minsamples=16
 
+# Variation of autobaud on certain parts that can only detect fcpu/16, fcpu/32, fcpu/24, ...
+autovar=; [[ /atmega103/at43usb320/at90s2313/at90s2333/at90s4433/at90s4414/at90s8515/at90s4434/at90s8535/ =~ /$mcu/ ]] && autovar=2
+
 ####
 # Put human readable F_CPU into variable fcpunm
 #
 mkfcpunm() {
-  local frq=$1;
-  if [[ "$frq" == auto ]]; then
-    :
-  elif [[ ${#1} > 6 ]]; then
-    frq=${1%??????}mhz${1:${#1}-6:6}
-    frq=${frq%000}; frq=${frq%00}; frq=${frq%0}
-  elif  [[ ${#1} > 3 ]]; then
-    frq=${1%???}khz${1:${#1}-3:3}
-    frq=${frq%00}; frq=${frq%0}
+  local frq="$1";
+  if [[ "$frq" != auto ]]; then
+    while [[ ${#frq} < 7 ]]; do frq="0$frq"; done
+    frq="${frq::-6}m${frq: -6:-2}"
+    [[ ${#frq} < 7 ]] && frq="$2$frq"
   fi
-  fcpunm=$frq
+  fcpunm="$frq"
+}
+
+####
+# Put human readable baud rate into variable baudnm
+#
+mkbaudnm() {
+  local bd="$1";
+  while [[ ${#bd} < 4 ]]; do bd="0$bd"; done
+  bd="${bd::-3}k${bd: -3:-2}"
+  while [[ ${#bd} < 6 ]]; do bd="$2$bd"; done
+  baudnm="$bd"
 }
 
 ####
@@ -1000,9 +1015,9 @@ mkfilename() {
   swio="${swio%"${swio##*[![:space:]]}"}"  # Remove trailing whitespace
   swio=${swio,,}
   if [[ $2 == auto ]]; then
-    filename="urboot_$1_autobaud$swio"
+    filename="urboot+$1+autobaud$autovar$swio"
   else
-    filename="urboot_$1_$2_$3bps$swio"
+    filename="urboot+$1+$2+$3$swio"
   fi
   [[ $5 -eq 1 ]] && filename+=_ee
   # Do not makes LEDs part of filename for FRILLS=0
@@ -1018,21 +1033,39 @@ declare -A hexuse
 declare -A hexprotect
 declare -A hexassoc
 declare -A hexdirs
+declare -A topdirs
+declare -A divseen
+declare -A equivalent
 
 [[ $run == 1 ]] && mkdir -p "$mcu_bls/$mcu"
 
-readarray -d \| -t iospecs <<<${mcuio[$mcu]}
-for io in "${iospecs[@]}"; do
+topmdir="$mcu_bls/$mcu"
+topbdir="$board_bls/$mcu"
+topcdir="$core_bls/_Core_/$mcu"
 
-  for fcpu in ${!baud[@]}; do
-    mkfcpunm $fcpu
+for fcpu in ${fcpus[@]}; do
+  mkfcpunm $fcpu +
 
-    readarray -d / -t bauds <<<${baud[$fcpu]}
-    for b in ${bauds[@]}; do
-      if [[ -n $baudlist && -z ${baudok[$b]} ]]; then
+  readarray -d / -t bauds <<<${baud[$fcpu]}
+  for b in ${bauds[@]}; do
+    if [[ -n $baudlist && -z ${baudok[$b]} ]]; then
+      continue
+    fi
+
+    if [[ $b != auto ]]; then
+      # Can this F_CPU/baud rate combo later be created from an existing one?
+      # Bootloaders are the same (unless -DDEBUG_FREQ is used) if quotient $fcpu/$b is the same
+      div=$(($fcpu/($b/20)))
+      if [[ -z ${divseen[$div]} ]]; then
+        divseen[$div]=$fcpu/$b
+      # elif [[ $fcpu/$b != ${divseen[$div]} ]]; then
+      else
+        equivalent[$fcpu/$b]=${divseen[$div]}
         continue
       fi
+    fi
 
+    for io in "${iospecs[@]}"; do
       thisio="$io"
       if [[ $b == auto ]]; then
         # Autobaud needs UART and must have RX in I/O space: exclude ports H...L
@@ -1043,9 +1076,9 @@ for io in "${iospecs[@]}"; do
           continue
         fi
 
-        mdir="$mcu_bls/$mcu/autobaud"
-        bdir="$board_bls/$mcu/autobaud"
-        cdir="$core_bls/_Core_/$mcu/autobaud"
+        mdir="$topmdir/autobaud"
+        bdir="$topbdir/autobaud"
+        cdir="$topcdir/autobaud"
         fcpu=16000000
         br=AUTOBAUD=1
       else
@@ -1076,9 +1109,10 @@ for io in "${iospecs[@]}"; do
           fi
         fi
 
-        mdir="$mcu_bls/$mcu/fcpu_$fcpunm/${b}_bps"
-        bdir="$board_bls/$mcu/fcpu_$fcpunm/${b}_bps"
-        cdir="$core_bls/_Core_/$mcu/fcpu_$fcpunm/${b}_bps"
+        mkbaudnm $b +
+        mdir="$topmdir/fcpu+${fcpunm}_Hz/br+${baudnm}_bps"
+        bdir="$topbdir/fcpu+${fcpunm}_Hz/br+${baudnm}_bps"
+        cdir="$topcdir/fcpu+${fcpunm}_Hz/br+${baudnm}_bps"
         br=BAUD_RATE=$b
       fi
 
@@ -1114,7 +1148,7 @@ for io in "${iospecs[@]}"; do
                   continue;
                 fi
 
-                mkfilename $mcu $fcpunm $b $vbl $ee $ur $f "$bcfg" "$thisio"
+                mkfilename $mcu $fcpunm $baudnm $vbl $ee $ur $f "$bcfg" "$thisio"
                 args="MCU=$mcu F_CPU=${fcpu}L $br $thisio VBL=$vbl EEPROM=$ee ${bcfg//_/ } URPROTOCOL=$ur FRILLS=$f MOVETO=$filename"
                 if [[ $run -eq 1 ]]; then
                   make $args >& $filename.out
@@ -1151,6 +1185,7 @@ for io in "${iospecs[@]}"; do
                     hexassoc[$hxn]="$mdir/$hxn"
                     if [[ -z ${hexdirs[$mdir]} ]]; then
                       mkdir -p "$mdir"
+                      topdirs[$topmdir]=1
                       hexdirs[$mdir]=1
                     fi
                     mv $hxn.{hex,out,elf,lst} "$mdir/"
@@ -1160,9 +1195,11 @@ for io in "${iospecs[@]}"; do
                         # Make bootloader available under boards/cores directories, too
                         if [[ $ba/ =~ core/ ]]; then
                           badir=${cdir/_Core_/$ba}
+                          topdirs[${topcdir/_Core_/$ba}]=1
                           banam=$hxn
                         else
                           badir=${bdir/$mcu/$ba}
+                          topdirs[${topbdir/$mcu/$ba}]=1
                           banam=${hxn/$mcu/$ba}
                         fi
                         if [[ -z ${hexdirs[$badir]} ]]; then
@@ -1185,6 +1222,13 @@ for io in "${iospecs[@]}"; do
     done
   done
 done
+
+    for dd in  ${!topdirs[@]}; do
+      echo $dd
+    done
+  for combo in ${!equivalent[@]}; do
+    echo Copy equivalent bootloaders over from ${equivalent[$combo]} to $combo
+  done
 
 if [[ $run -eq 1 ]]; then
   # Remove all non _ee bootloaders that have the same usage as the _ee ones and the same protection
@@ -1227,6 +1271,40 @@ if [[ $run -eq 1 ]]; then
   done
   for torm in ${todel[@]}; do
     unset hexassoc[$torm]
+  done
+
+  # Copy equivalent bootloaders over from ${equivalent[$combo]} to $combo
+  for combo in ${!equivalent[@]}; do
+
+    readarray -d / -t fcpubd <<<${equivalent[$combo]}
+    mkfcpunm ${fcpubd[0]} +
+    mkbaudnm ${fcpubd[1]} +
+    chfcpu=$fcpunm
+    chbaud=$baudnm
+    srcdir="fcpu+${fcpunm}_Hz/br+${baudnm}_bps"
+
+    readarray -d / -t fcpubd <<<$combo
+    mkfcpunm ${fcpubd[0]} +
+    mkbaudnm ${fcpubd[1]} +
+    dstdir="fcpu+${fcpunm}_Hz/br+${baudnm}_bps"
+
+    for dd in  ${!topdirs[@]}; do
+      if [[ -d "$dd/$srcdir" ]]; then
+        if [[ -z ${hexdirs["$dd/$dstdir"]} ]]; then
+          mkdir -p "$dd/$dstdir"
+          hexdirs["$dd/$dstdir"]=1
+        fi
+        for src in "$dd/$srcdir"/*; do
+          if [[ -r "$src" ]]; then
+            dst=${src//+$chfcpu/+$fcpunm}
+            dst=${dst//+$chbaud/+$baudnm}
+            if [[ ! -r "$dst" ]]; then
+              cp -a "$src" "$dst"
+            fi
+          fi
+        done
+      fi
+    done
   done
 
   # Generate the README.md files

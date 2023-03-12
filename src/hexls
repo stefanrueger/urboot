@@ -5,8 +5,8 @@
 # published under GNU General Public License, version 3 (GPL-3.0)
 # author Stefan Rueger
 #
-# v 1.05
-# 06.11.2022
+# v 1.07
+# 12.03.2023
 # first version 16.07.2016
 #
 
@@ -18,20 +18,22 @@ use Scalar::Util qw(looks_like_number);
 use Getopt::Long qw(GetOptions);
 
 my $progname = basename($0);
-my $myvers = "1.05";
+my $myvers = "1.07";
 my $Usage = <<"END_USAGE";
 Syntax: $progname {<bootloader>.hex}
 Function: list urboot bootloader hex files with size, version, features and name
 Options:
-  -version     print version ($myvers) and exit
-  -md=url      print neat markdown table with header (files use url)
-  -check       check rjmp op code at end (if pgm_page_write-enabled and .lst file there)
-  -sort        sort rows according to use, size, version, features, name
-  -use         print number of bytes occupied by bootloader and exit
+  -version     Print version ($myvers) and exit
+  -pre=<text>  Print <text> as preamble
+  -mcu=<name>  Assume the hex files were compiled for MCU <name>
+  -md=url      Print neat markdown table with header (files use url)
+  -check       Check rjmp op code at end (if pgm_page_write-enabled and .lst file there)
+  -sort        Sort rows according to use, size, version, features, name
+  -use         Print number of bytes occupied by bootloader and exit
 END_USAGE
 
-my ($version, $check, $srt, $usage, $md, $l, $c, $t, $title, $in, $disthex, $rjmpop, $vers, $distelf, $pgmwriteaddr, $addrlst);
-my (@rows, $siz, $use, $ver, $fea, $nam, %legend);
+my ($version, $check, $srt, $usage, $md, $mcu, $pre, $l, $c, $t, $title, $in, $disthex, $rjmpop,
+    $vers, $distelf, $pgmwriteaddr, $addrlst, @rows, $siz, $use, $ver, $fea, $nam, %legend);
 
 my %feature = (
   'w'      => "  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`\n",
@@ -53,8 +55,10 @@ my %feature = (
   '?'      => "  + `?` unable to tell from .hex file whether this feature is present\n",
   '.'      => "  + `.` unable to tell from .hex file whether this feature is present\n",
   '-'      => "  + `-` corresponding feature not present\n",
-  'auto'   => "  + `autobaud` tries to match host baud rate; can be f/8, f/16, f/24, ..., f/2048 (f=F<sub>CPU</sub>)\n",
-  'auto2'  => "  + `autobaud2` tries to match host baud rate; can be f/16, f/32, f/48, ..., f/4096 (f=F<sub>CPU</sub>)\n",
+  'fcpu'   => "  + `9m6000` indicates the clock frequency of the MCU: `9m6000` means 9.6000 MHz\n",
+  'baud'   => "  + `115k2` shows the fixed baud rate of the bootloader: `115k2` means 115200 baud\n",
+  'auto'   => "  + `autobaud` tries to detect host baud rate f/8, f/16, f/24, ... or f/2048 (f=F<sub>CPU</sub>)\n",
+  'auto2'  => "  + `autobaud2` tries to detect host baud rate f/16, f/32, f/48, ... or f/4096 (f=F<sub>CPU</sub>)\n",
   'dual'   => "  + `dual` boot: serial and from external SPI flash memory\n",
   'swio'   => "  + `swio` software I/O (not UART)\n",
   'uart'   => "  + `uart0` UART number, in this case `0`\n",
@@ -73,7 +77,9 @@ my %feature = (
   'fr'     => "  + `fr` bootloader provides non-essential code for smoother error handing\n",
   'ce'     => "  + `ce` bootloader provides a chip erase command\n",
   'ur'     => "  + `ur` uses urprotocol and requires `avrdude -c urclock` for programming\n",
+  'stk500' => "  + `stk500` uses deprecated STK500v1 protocol to communicate with bootloader\n",
   'vbl'    => "  + `vbl` vector bootloader: set fuses to jump to reset, not the HW boot section\n",
+  'hw'     => "  + `hw` hardware supported bootloader: set fuses to jump to the HW boot section, not to reser vector\n",
   'v2'     => "  + `v2` vector bootloader that patches application itself\n",
   'v3'     => "  + `v3` vector bootloader that patches application itself and skips verifying the first page\n",
   'fp9'    => "  + `fp9` for debugging the bootloader uses, eg, Arduino pin 9 to swing a signal of low frequency, eg, 50 Hz\n",
@@ -81,13 +87,17 @@ my %feature = (
   'min'    => "  + `min` most feature-rich bootloader for smallest achievable flash usage (implies `ur`)\n",
 );
 
+my $isauto2 = 0;
+
 sub f {
   my $name = shift;
   if(length($name) == 1) {
     $legend{$name} = 1;
   } else {
-    $legend{auto} = 1 if $name =~ /_autobaud[_.]/;
-    $legend{auto2} = 1 if $name =~ /_autobaud2[_.]/;
+    $legend{fcpu} = 1 if $name =~ /[+][0-9]+m[0-9]+[+]/;
+    $legend{baud} = 1 if $name =~ /[+][0-9]+k[0-9]+_/;
+    $legend{auto} = 1 if !$isauto2 && $name =~ /[_+]autobaud[_.]/;
+    $legend{auto2} = 1 if ($isauto2 && $name =~ /[_+]autobaud[_.]/) || $name =~ /[_+]autobaud2[_.]/;
     $legend{template} = 1 if $name =~ /_template[_.]/;
     $legend{dual} = 1 if $name =~ /_dual[_.]/;
     $legend{rxtx} = 1 if $name =~ /_[rt]x[a-z][0-7][_.]/;
@@ -105,6 +115,8 @@ sub f {
     $legend{csPB0} = 1 if $name	=~ /_csP[A-Z][0-7][_.]/;
     $legend{fp9} = 1 if $name =~ /_fp[0-9]+[_.]/;
     $legend{fr} = 1 if $name =~ /_fr[_.]/;
+    $legend{hw} = 1 if $name =~ /_hw[_.]/;
+    $legend{stk500} = 1 if $name =~ /_stk500[_.]/;
     $legend{ce} = 1 if $name =~ /_ce[_.]/;
     $legend{ur} = 1 if $name =~ /[d_]ur[_.]/;
     $legend{ddd} = 1 if $name =~ /_d[vu_.]/;
@@ -117,14 +129,20 @@ sub f {
   return $name;
 }
 
+$mcu="atmega328p";
+$pre='';
+
 GetOptions(
   'version' => \$version,
   'check' => \$check,
+  'mcu=s' => \$mcu,
+  'pre=s' => \$pre,
   'md=s' => \$md,
   'sort' => \$srt,
   'use'  => \$usage,
 ) or die $Usage;
 
+$isauto2 = 1 if "_atmega103_at43usb320_at90s2313_at90s2333_at90s4433_at90s4414_at90s8515_at90s4434_at90s8535_" =~ /_${mcu}_/i;
 
 print("$progname version $myvers\n"), exit(0) if $version;
 
@@ -273,6 +291,8 @@ if(!$check) {
     exit
   }
 
+  print "$pre\n\n" if $pre;
+
   if(defined($md) && @rows) {
     print("|Size|Usage|Version|Features|Hex file|\n");
     print("|:-:|:-:|:-:|:-:|:--|\n");
@@ -288,8 +308,8 @@ if(!$check) {
      "- **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version\n".
      "- **Features:**\n";
      print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p P r a c ? . -));
-     print "- **Hex file:** typically MCU name, oscillator frequency (16 MHz default) and baud rate (115200 default) followed by\n";
-     print $feature{$_} for grep { $legend{$_} } (qw(auto auto2 swio uart alt rxtx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB0 csnop template dual fp9 fr ce ur ddd v2 v3 vbl min));
+     print "- **Hex file:** typically MCU name followed by\n";
+     print $feature{$_} for grep { $legend{$_} } (qw(fcpu baud auto auto2 swio uart alt rxtx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB0 csnop template dual fp9 fr ce ur stk500 ddd v2 v3 vbl hw min));
   }
 }
 
