@@ -1024,8 +1024,8 @@ mkfilename() {
   [[ $7 -eq 0 ]] || filename+=$cfg
   [[ $7 -eq 6 ]] && filename+=_fr
   [[ $7 -eq 7 ]] && filename+=_fr_ce
-  [[ $6 -eq 1 ]] && filename+=_ur
-  [[ $4 -eq 1 ]] && filename+=_vbl
+  [[ $6 -eq 0 ]] && filename+=_stk500
+  [[ $4 -eq 0 ]] && filename+=_hw
 }
 
 declare -A duplicate
@@ -1253,18 +1253,18 @@ if [[ $run -eq 1 ]]; then
     unset hexassoc[$torm]
   done
 
-  # Remove all _vbl bootloaders that have the same usage as non _vbl ones (protection might differ)
+  # Remove all vector bootloaders that have the same usage as hw supported ones (protection might differ)
   todel=()
-  for hxvbl in "${!hexassoc[@]}"; do
-    if [[ $hxvbl == *_vbl* ]]; then
-      hxhard=${hxvbl//_vbl/}
-      if [[ -n ${hexassoc[$hxhard]} ]]; then
+  for hxhard in "${!hexassoc[@]}"; do
+    if [[ $hxhard == *_hw* ]]; then
+      hxvbl=${hxhard//_hw/}
+      if [[ -n ${hexassoc[$hxvbl]} ]]; then
         if [[ ${hexuse[$hxhard]} -le ${hexuse[$hxvbl]} ]]; then
           readarray -d \| -t torm <<<${hexassoc[$hxvbl]}
           for tormfn in ${torm[@]}; do
             rm $tormfn.{hex,lst,elf,out}
           done
-          todel+=($hxhard)
+          todel+=($hxvbl)
         fi
       fi
     fi
