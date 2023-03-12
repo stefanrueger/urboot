@@ -1223,13 +1223,6 @@ for fcpu in ${fcpus[@]}; do
   done
 done
 
-    for dd in  ${!topdirs[@]}; do
-      echo $dd
-    done
-  for combo in ${!equivalent[@]}; do
-    echo Copy equivalent bootloaders over from ${equivalent[$combo]} to $combo
-  done
-
 if [[ $run -eq 1 ]]; then
   # Remove all non _ee bootloaders that have the same usage as the _ee ones and the same protection
   todel=()
