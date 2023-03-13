@@ -57,9 +57,9 @@ my %feature = (
   '-'      => "  + `-` corresponding feature not present\n",
   'fcpu'   => "  + `9m6000` indicates the clock frequency of the MCU: `9m6000` means 9.6000 MHz\n",
   'baud'   => "  + `115k2` shows the fixed baud rate of the bootloader: `115k2` means 115200 baud\n",
-  'auto'   => "  + `autobaud` tries to detect host baud rate f/8, f/16, f/24, ... or f/2048 (f=F<sub>CPU</sub>)\n",
-  'auto2'  => "  + `autobaud2` tries to detect host baud rate f/16, f/32, f/48, ... or f/4096 (f=F<sub>CPU</sub>)\n",
-  'dual'   => "  + `dual` boot: serial and from external SPI flash memory\n",
+  'auto'   => "  + `autobaud` detects host baud rate f/8, f/16, f/24, ..., f/2048 (f=F<sub>CPU</sub>)\n",
+  'auto2'  => "  + `autobaud2` detects host baud rate f/16, f/32, f/48, ..., f/4096 (f=F<sub>CPU</sub>)\n",
+  'dual'   => "  + `dual` boot both from external SPI flash memory and from serial interface\n",
   'swio'   => "  + `swio` software I/O (not UART)\n",
   'uart'   => "  + `uart0` UART number, in this case `0`\n",
   'alt'    => "  + `alt1` alternative RX/TX pin assignment\n",
@@ -74,7 +74,7 @@ my %feature = (
   'cs8'    => "  + `cs8` for dual boot uses, in this example, Arduino pin 8 as chip select of external SPI flash memory\n",
   'csPB0'  => "  + `csPB0` for dual boot uses, in this example, pin B0 as chip select of external SPI flash memory\n",
   'csnop'  => "  + `csnop` like `lednop` generates nops that can be replaced to toggle the correct CS pin\n",
-  'fr'     => "  + `fr` bootloader provides non-essential code for smoother error handing\n",
+  'fr'     => "  + `fr` bootloader provides non-essential code (\"frills\") for smoother error handling\n",
   'ce'     => "  + `ce` bootloader provides a chip erase command\n",
   'ur'     => "  + `ur` uses urprotocol and requires `avrdude -c urclock` for programming\n",
   'stk500' => "  + `stk500` uses deprecated STK500v1 protocol to communicate with bootloader\n",
@@ -84,6 +84,7 @@ my %feature = (
   'v3'     => "  + `v3` vector bootloader that patches application itself and skips verifying the first page\n",
   'fp9'    => "  + `fp9` for debugging the bootloader uses, eg, Arduino pin 9 to swing a signal of low frequency, eg, 50 Hz\n",
   'ddd'    => "  + `d` dual boot\n",
+  'dur'    => "  + `d` dual boot and uses urprotocol\n",
   'min'    => "  + `min` most feature-rich bootloader for smallest achievable flash usage (implies `ur`)\n",
 );
 
@@ -118,8 +119,9 @@ sub f {
     $legend{hw} = 1 if $name =~ /_hw[_.]/;
     $legend{stk500} = 1 if $name =~ /_stk500[_.]/;
     $legend{ce} = 1 if $name =~ /_ce[_.]/;
-    $legend{ur} = 1 if $name =~ /[d_]ur[_.]/;
-    $legend{ddd} = 1 if $name =~ /_d[vu_.]/;
+    $legend{ur} = 1 if $name =~ /[_]ur[_.]/;
+    $legend{ddd} = 1 if $name =~ /_d[_.]/;
+    $legend{dur} = 1 if $name =~ /_dur[_.]/;
     $legend{v3} = 1 if $name =~ /[d_]v3[_.]/;
     $legend{v2} = 1 if $name =~ /[d_]v2[_.]/;
     $legend{vbl} = 1 if $name =~ /_vbl[_.]/;
@@ -309,7 +311,7 @@ if(!$check) {
      "- **Features:**\n";
      print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p P r a c ? . -));
      print "- **Hex file:** typically MCU name followed by\n";
-     print $feature{$_} for grep { $legend{$_} } (qw(fcpu baud auto auto2 swio uart alt rxtx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB0 csnop template dual fp9 fr ce ur stk500 ddd v2 v3 vbl hw min));
+     print $feature{$_} for grep { $legend{$_} } (qw(fcpu baud auto auto2 swio uart alt rxtx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB0 csnop template dual fp9 fr ce ur stk500 ddd dur v2 v3 vbl hw min));
   }
 }
 
