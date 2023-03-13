@@ -22,6 +22,11 @@ Option:
 END
 }
 
+
+# Maximum allowed UART/SWIO baud rate quantisation error per mille (22 is 2.1%)
+maxuarterror=21
+maxswioerror=21
+
 run=1
 mcu_bls=mcus
 board_bls=boards
@@ -123,31 +128,6 @@ fi
 
 # List of considered F_CPUs in descending order
 fcpus=($(printf '%s\n' "${!baud[@]}" | sort -rn))
-
-# Problematic combinations for classic or LIN UART (high baud rate error)
-declare -A nouart
-
-for cc in 1/24000000/460800 1/22118400/1000000 1/22118400/500000 1/20000000/1000000 \
-  1/20000000/460800 1/18432000/1000000 1/18432000/500000 1/18432000/250000 1/16000000/460800 \
-  1/16000000/230400 1/14745600/1000000 1/14745600/500000 1/14745600/250000 1/12000000/1000000 \
-  1/12000000/460800 1/12000000/230400 1/12000000/76800 1/11059200/1000000 1/11059200/500000 \
-  1/11059200/250000 1/9600000/76800 1/9600000/500000 1/9600000/460800 1/9600000/250000 \
-  1/9600000/230400 1/9600000/115200 1/9600000/1000000 1/8000000/460800 1/8000000/230400 \
-  1/8000000/115200 1/7372800/500000 1/7372800/250000 1/7372800/1000000 1/4800000/76800 \
-  1/4800000/57600 1/4800000/500000 1/4800000/460800 1/4800000/38400 1/4800000/250000 \
-  1/4800000/230400 1/4800000/115200 1/4000000/76800 1/4000000/57600 1/4000000/460800 \
-  1/4000000/230400 1/4000000/115200 1/3686400/500000 1/3686400/250000 1/2000000/76800 \
-  1/2000000/57600 1/2000000/38400 1/2000000/28800 1/2000000/230400 1/2000000/115200 \
-  1/1843200/250000 1/1200000/9600 1/1200000/76800 1/1200000/57600 1/1200000/38400 \
-  1/1200000/28800 1/1200000/19200 1/1200000/14400 1/1200000/115200 1/1000000/76800 \
-  1/1000000/57600 1/1000000/38400 1/1000000/28800 1/1000000/19200 1/1000000/14400 \
-  1/1000000/115200 \
-  2/18432000/1000000 2/9600000/1000000 2/4800000/500000 2/4800000/460800 2/4000000/460800 \
-  2/2000000/230400 2/1200000/76800 2/1200000/115200 2/1000000/115200; do
-
-  nouart[$cc]=1
-done
-
 
 ####
 # Known boards
@@ -951,20 +931,6 @@ mcuio[avr128db64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=Atme
 # All the I/O specs for *this* MCU
 readarray -d \| -t iospecs <<<${mcuio[$mcu]}
 
-# SWIO: range of F_CPU/baud rate depends on architecture and whether 22-bit PC (flash > 128k) or 16-bit PC
-minbval=29; [[ /$mcu =~ /atxmega ]] && minbval=28
-if [[ /atmega256rfr2/atmega2560/atmega2561/atmega2564rfr2/atxmega128a1/atxmega128a1revd/atxmega128a1u/atxmega128b1/atxmega128a3/atxmega128a3u/atxmega128b3/atxmega128c3/atxmega128d3/atxmega128a4/atxmega128a4u/atxmega128d4/atxmega192a1/atxmega192a3/atxmega192a3u/atxmega192c3/atxmega192d3/atxmega256a1/atxmega256a3/atxmega256a3b/atxmega256a3bu/atxmega256a3u/atxmega256c3/atxmega256d3/atxmega384c3/atxmega384d3/ =~ /$mcu/ ]]; then
-  minbval=$((minbval+4))
-fi
-maxbval=$((255*6+$minbval+2))
-
-# UART: range of F_CPU/baud rate depends on UART type and variants
-# 8-bit or 12-bit BRR? Technically, LIN/UART has 12-bit BRR but urboot.c only uses lower byte (can go as low as 1200 baud @ 20 MHz)
-brrrange=4095; [[ ${uarttype[$mcu]} -eq 2 || /at43usb320/at90s2313/at90s4414/at90s4434/at90s8515/at90s8535/atmega103/atmega163/ =~ /$mcu/ ]] && brrrange=255
-# Range of possible samples
-maxsamples=16; [[ ${uarttype[$mcu]} -eq 2 ]] && maxsamples=63
-minsamples=8; [[ /atmega103/at43usb320/at90s2313/at90s2333/at90s4433/at90s4414/at90s8515/at90s4434/at90s8535/ =~ /$mcu/ ]] && minsamples=16
-
 # Variation of autobaud on certain parts that can only detect fcpu/16, fcpu/32, fcpu/24, ...
 autovar=; [[ /atmega103/at43usb320/at90s2313/at90s2333/at90s4433/at90s4414/at90s8515/at90s4434/at90s8535/ =~ /$mcu/ ]] && autovar=2
 
@@ -1068,7 +1034,7 @@ for fcpu in ${fcpus[@]}; do
     for io in "${iospecs[@]}"; do
       thisio="$io"
       if [[ $b == auto ]]; then
-        # Autobaud needs UART and must have RX in I/O space: exclude ports H...L
+        # Autobaud needs UART and must have RX in I/O space: exclude ports H..L
         if [[ ${io:0:4} == SWIO ]]; then
           continue
         fi
@@ -1082,29 +1048,20 @@ for fcpu in ${fcpus[@]}; do
         fcpu=16000000
         br=AUTOBAUD=1
       else
-        # Classic or LIN UART experiences too high baud rate error for this F_CPU/baud combo
-        if [[ ${thisio:0:4} == UART && "${nouart[${uarttype[$mcu]}/$fcpu/$b]}" -eq 1 ]]; then
+        # Classic or LIN UART experiences too high baud rate error for this F_CPU/baud combo?
+        if [[ ${thisio:0:4} == UART && $(bauderror -ai -f$fcpu -b$b $mcu) -gt $maxuarterror ]]; then
           # Switch to SWIO instead of using the UART
           thisio=${thisio/UARTNUM=?/SWIO=1}
           thisio=${thisio/UARTALT=?/}
         fi
 
-        # Is the baud rate too high or too low?
         if [[ ${thisio:0:4} == SWIO ]]; then
-          # SWIO: Number of clock cycles per RX bit must be in range
-          cpb=$(( ($fcpu+$b/2)/$b ))
-          if [[ $cpb -gt $maxbval ||  $cpb -lt $minbval ]]; then
+          # Is the SWIO baud rate too high or too low?
+          if [[ $(bauderror -sai -f$fcpu -b$b $mcu) -gt $maxswioerror ]]; then
             continue
           fi
-          # Also needs RX/TX in I/O space: exclude ports H...L
+          # Also needs RX/TX in I/O space: exclude ports H..L
           if [[ $io =~ [RT]X=AtmelP[H-L] && "${uarttype[$mcu]}" -lt 3 ]]; then
-            continue
-          fi
-        else
-          # UART: possible BRR divisors must be in range [0, brrrange]
-          minbrr=$(( ($fcpu+$maxsamples*$b/2)/($maxsamples*$b)-1 ))
-          maxbrr=$(( ($fcpu+$minsamples*$b/2)/($minsamples*$b)-1 ))
-          if [[ $minbrr -gt $brrrange || $maxbrr -lt 0 ]]; then
             continue
           fi
         fi

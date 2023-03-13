@@ -306,6 +306,7 @@ COMMON_OPTIONS = $(WDTO_CMD) $(AUTOBAUD_CMD) $(BAUD_RATE_CMD) $(UART2X_CMD) $(LE
   $(DEBUG_FREQ_CMD) $(EXACT_DF_CMD) $(FREQ_PIN_CMD) $(FREQ_POLARITY_CMD) $(FLASHWRAPS_CMD) \
   $(PROTECTRESET_CMD)
 
+
 bootloader: CFLAGS += $(COMMON_OPTIONS)
 bootloader: $(WHAT).hex
 
@@ -758,6 +759,10 @@ else
 	@echo -- `./hexls $@`
 endif
 	@echo
+
+# Prints baud rate quantisation error for bootloader urboot.c implementation
+bauderror: bauderror.c ur_uarttable.c
+	gcc bauderror.c -lm -o $@
 
 clean:
 	rm -rf *.o *.elf *.lst *.map *.sym *.lss *.eep *.srec *.bin *.hex *.tmp.sh *.out
