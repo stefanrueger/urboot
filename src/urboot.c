@@ -665,14 +665,15 @@
 #define UART2X 0
 #endif
 
-// Using double speed mode UART costs 6 byte initialisation. Is it worth it?
+// Select UART2X automatically
 #if  !defined(UART2X) || UART2X == 1
 #undef UART2X
 /*
- * Switch on 2x mode if error for normal mode is > 2.5% and error with 2x less than normal mode
- * considering that normal mode has higher tolerances than 2x speed mode
+ * Using double speed mode UART costs 6 byte initialisation. Is it worth it? Switch to 2x mode if
+ * error for normal mode is > 1.4% and error with 2x less than normal mode considering that
+ * normal mode has higher tolerances than 2x speed mode
  */
-#if 20*baud_error(BAUD_ACTUAL2X) < 15*baud_error(BAUD_ACTUAL1X) && baud_error(BAUD_ACTUAL1X) > 25
+#if 20*baud_error(BAUD_ACTUAL2X) < 15*baud_error(BAUD_ACTUAL1X) && baud_error(BAUD_ACTUAL1X) > 14
 #define UART2X 1
 #else
 #define UART2X 0

@@ -70,17 +70,19 @@ int uartqerr(Uart_info *up, long f_cpu, long br, int nsamples) {
 
 // Return either UART2X=1 or UART2X=0 depending on f_cpu, desired baud rate and preference u2x
 int uart2x(Uart_info *up, long f_cpu, long br, int u2x) {
-  if(!u2x || !up->has_u2x) // No choice: must use 1x mode
+  if(!u2x || !up->has_u2x)      // No choice: must use 1x mode
+    return 0;
+  if(u2x == 2)                  // No choice: must use 2x mode
     return 0;
   /*
    * Part can choose between UART2X = 1 (nsamples == 8) and UART2X = 0 (nsamples == 16) and the
-   * user doesn't mind. Switch on 2x mode if error for normal mode is > 2.5% and error with 2x
+   * user doesn't mind. Switch to 2x mode if error for normal mode is > 1.4% and error with 2x
    * less than normal mode considering that normal mode has higher tolerances than 2x speed mode.
    * The reason for a slight preference for UART2X=0 is that is costs less code in urboot.c.
    */
   int e1 = abs(uartqerr(up, f_cpu, br, 8)), e0 = abs(uartqerr(up, f_cpu, br, 16));
 
-  return 20*e1 < 15*e0 && e0 > 25;
+  return 20*e1 < 15*e0 && e0 > 14;
 }
 
 
@@ -176,7 +178,11 @@ int main(int argc, char **argv) {
           p=""-1;
           break;
         case 'u':
-          u2x = 0;
+          if(*++p=='=')
+            p++;
+          if(!*p || p[1] || *p < '0' || *p > '2')
+            fatal("unknown value for -u: must be 0, 1 or 2");
+          u2x = *p-'0';
           break;
         case 'v':
           verbose++;
@@ -200,7 +206,7 @@ int main(int argc, char **argv) {
   }
 
   if(filargc > 2)
-    fatal("too many MCUs specified\n");
+    fatal("too many MCUs specified");
 
   if(filargc == 2)
     mcu = argv[1];
@@ -300,7 +306,7 @@ void Usage() {
     "    -s         Software I/O instead of UART\n",
     "    -a         Print absolute error, not a signed error\n"
     "    -i         Print integer error per mille, eg, -12 means -1.2%\n"
-    "    -u         Enforce UART2X = 0 for classic UART part\n",
+    "    -u=[0|1|2] Assume UART2X=<u> for classic UART part\n",
     "    -v         Verbose mode\n",
     NULL
   };
