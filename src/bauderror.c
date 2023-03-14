@@ -138,13 +138,13 @@ int swio_b_value(Uart_info *up, int cpb, int b_off) {
   int is_xmega = strncasecmp(up->avrname, "ATxmega", 7) == 0;
 
   if(!is_xmega && !up->pc_22bit)
-    return (cpb-14-9+b_off)/6;  // Classic MCU with 16-bit PC
+    return (cpb-14-9+b_off+60)/6-10;  // Classic MCU with 16-bit PC
   if(!is_xmega)
-    return (cpb-18-9+b_off)/6;  // Classic MCU with 22-bit PC
+    return (cpb-18-9+b_off+60)/6-10;  // Classic MCU with 22-bit PC
   if(!!up->pc_22bit)
-    return (cpb-12-10+b_off)/6; // XMEGA with 16-bit PC
+    return (cpb-12-10+b_off+60)/6-10; // XMEGA with 16-bit PC
 
-  return (cpb-16-10+b_off)/6;   // XMEGA with 22-bit PC
+  return (cpb-16-10+b_off+60)/6-10;   // XMEGA with 22-bit PC
 }
 
 
@@ -249,16 +249,16 @@ int main(int argc, char **argv) {
     // Cycles per tx/rx bit
     long cpb = (f_cpu+brate/2)/brate;
     // Delay loop has granularity of 6 cycles - want around 1% accuracy
-    int b_off = cpb > 300?
+    int b_off = cpb > 600?
       3: // 3 centres the error: max error is +/- 3 cycles
       0; // Underestimate b_value and insert opcodes for extra cycles (0..5)
     int b_value = swio_b_value(up, cpb, b_off);
     int b_cpb = swio_cpb(up, b_value);
-    int b_extra = cpb > 300? 0: cpb - b_cpb;
+    int b_extra = cpb > 600? 0: cpb - b_cpb;
 
     if(b_value > 255)
       errstr = "baud rate too slow for SWIO";
-    else if(b_value < 1)
+    else if(b_value < 0)
      errstr = "baud rate too fast for SWIO";
     else if(b_extra > 5 || b_extra < 0)
       errstr = "baud rate incompatible with F_CPU for SWIO";

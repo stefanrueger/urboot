@@ -1208,9 +1208,9 @@ void bitDelay();
 #define CPB ((F_CPU+BAUD_RATE/2)/BAUD_RATE)
 
 // The bitDelay() function has a granularity of 6 cycles - want around 1% accuracy
-#if CPB > 300
+#if CPB > 600
 #define B_OFF                 3 // To centre error (max error is +/- 3 cycles)
-#define B_EXTRA               0 // No further correction (3/300+ cycles < 1% error)
+#define B_EXTRA               0 // No further correction (3/600+ cycles < 0.5% error)
 #else
 #define B_OFF                 0 // Underestimate B_VALUE and insert opcodes for B_EXTRA cycles
 #define B_EXTRA (CPB-CPB_B(SWIO_B_VALUE))
@@ -1218,27 +1218,27 @@ void bitDelay();
 
 #ifndef SWIO_B_VALUE
 #if IS_REDUCED_CORE_TINY        // Actually unsupported for bootloaders
-#define SWIO_B_VALUE ((CPB-16-9+B_OFF)/6)
+#define SWIO_B_VALUE ((CPB-16-9+B_OFF+60)/6-10)
 #define CPB_B(b) (6*(b)+16+9)
 #define SWIO_B_DLYTX          1 // Delay tx timing so it's same as rx timing
 
 #elif IS_XMEGA && defined(EIND)
-#define SWIO_B_VALUE ((CPB-16-10+B_OFF)/6)
+#define SWIO_B_VALUE ((CPB-16-10+B_OFF+60)/6-10)
 #define CPB_B(b) (6*(b)+16+10)
 #define SWIO_B_DLYTX          2
 
 #elif IS_XMEGA
-#define SWIO_B_VALUE ((CPB-12-10+B_OFF)/6)
+#define SWIO_B_VALUE ((CPB-12-10+B_OFF+60)/6-10)
 #define CPB_B(b) (6*(b)+12+10)
 #define SWIO_B_DLYTX          2
 
 #elif defined(EIND)
-#define SWIO_B_VALUE ((CPB-18-9+B_OFF)/6)
+#define SWIO_B_VALUE ((CPB-18-9+B_OFF+60)/6-10)
 #define CPB_B(b) (6*(b)+18+9)
 #define SWIO_B_DLYTX          0
 
 #else
-#define SWIO_B_VALUE ((CPB-14-9+B_OFF)/6)
+#define SWIO_B_VALUE ((CPB-14-9+B_OFF+60)/6-10)
 #define CPB_B(b) (6*(b)+14+9)
 #define SWIO_B_DLYTX          0
 #endif
@@ -1246,7 +1246,7 @@ void bitDelay();
 
 #if SWIO_B_VALUE > 255
 #error Baud rate too slow for SWIO
-#elif SWIO_B_VALUE < 1
+#elif SWIO_B_VALUE < 0
 #error Baud rate too fast for SWIO
 #endif
 
@@ -2350,8 +2350,10 @@ void putch(char chr) {
     "   rcall halfBitDelay\n"
     "halfBitDelay: "
     "   ldi r25,%[bvalue]\n"
+#if SWIO_B_VALUE > 0
     "1: dec r25\n"
     "   brne 1b\n"
+#endif
 #if B_EXTRA == 4 || B_EXTRA == 5
     "   rjmp .+0\n"
 #endif
