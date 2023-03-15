@@ -65,9 +65,9 @@ for example, autobaud bootloaders for the venerable ATmega328P based
 ATmega1284P based [Moteino Mega](https://github.com/stefanrueger/urboot.hex/tree/main/boards/moteinomega/autobaud/README.md) and the
 ATmega2560 [Mega R3 board](https://github.com/stefanrueger/urboot.hex/tree/main/boards/mega-r3/autobaud/README.md); or, eg, some
 16 MHz and 115,200 baud bootloaders for the
-[ATtiny167 based Digispark Pro](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark-pro/fcpu+16m0000_Hz/br++115k2_bps/README.md), the
-[ATtiny85 based Disgispark](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark/fcpu+16m0000_Hz/br++115k2_bps/README.md) and the
-[ATtiny84 based Luminet](https://github.com/stefanrueger/urboot.hex/tree/main/boards/luminet/fcpu+16m0000_Hz/br++115k2_bps/README.md).
+[ATtiny167 based Digispark Pro](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark-pro/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/README.md), the
+[ATtiny85 based Disgispark](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/README.md) and the
+[ATtiny84 based Luminet](https://github.com/stefanrueger/urboot.hex/tree/main/boards/luminet/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/README.md).
 Finally, there are pre-compiled urboot bootloaders for popular Arduino cores in the
 [cores](https://github.com/stefanrueger/urboot.hex/tree/main/cores) directory of the
 [urboot.hex](https://github.com/stefanrueger/urboot.hex) repository.
@@ -168,10 +168,10 @@ for all `F_CPU` and a range of associated baudrates.
 
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|214|224|u7.7|`w-u-jpr--`|[urboot+attiny2313_uart0_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/fcpu+16m0000_Hz/br++115k2_bps/urboot+attiny2313+16m0000++115k2_uart0_rxd0_txd1_lednop.hex)|
-|248|256|u7.7|`w-u-jpr--`|[urboot+atmega328p_uart0_led+b5_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/fcpu+16m0000_Hz/br++115k2_bps/urboot+atmega328p+16m0000++115k2_uart0_rxd0_txd1_led+b5_fr.hex)|
+|214|224|u7.7|`w-u-jpr--`|[urboot+attiny2313_uart0_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+attiny2313+16m0000x++115k2_uart0_rxd0_txd1_lednop.hex)|
+|248|256|u7.7|`w-u-jpr--`|[urboot+atmega328p_uart0_led+b5_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+atmega328p+16m0000x++115k2_uart0_rxd0_txd1_led+b5_fr.hex)|
 |370|384|u7.7|`weu-jPrac`|[urboot+atmega328p+autobaud_uart0_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot+atmega328p+autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce.hex)|
-|440|512|u7.7|`wes-hpr-c`|[urboot+atmega328p_uart0_ee_led+b5_fr_ce_stk500_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/fcpu+16m0000_Hz/br++115k2_bps/urboot+atmega328p+16m0000++115k2_uart0_rxd0_txd1_ee_led+b5_fr_ce_stk500_hw.hex)|
+|440|512|u7.7|`wes-hpr-c`|[urboot+atmega328p_uart0_ee_led+b5_fr_ce_stk500_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+atmega328p+16m0000x++115k2_uart0_rxd0_txd1_ee_led+b5_fr_ce_stk500_hw.hex)|
 |456|512|u7.7|`wes-hprac`|[urboot+atmega328p+autobaud_uart0_ee_led+b5_fr_ce_stk500_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot+atmega328p+autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce_stk500_hw.hex)|
 |474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
 |496|512|u7.7|`weudhprac`|[urboot+urclockusb+autobaud_uart0_ee_led+d5_csb0_dual_fr_ce_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/boards/urclockusb/autobaud/urboot+urclockusb+autobaud_uart0_rxd0_txd1_ee_led+d5_csb0_dual_fr_ce_hw.hex)|

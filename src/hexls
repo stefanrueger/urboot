@@ -55,7 +55,8 @@ my %feature = (
   '?'      => "  + `?` unable to tell from .hex file whether this feature is present\n",
   '.'      => "  + `.` unable to tell from .hex file whether this feature is present\n",
   '-'      => "  + `-` corresponding feature not present\n",
-  'fcpu'   => "  + `9m6000` indicates the clock frequency of the MCU: `9m6000` means 9.6000 MHz\n",
+  'fcpux'  => "  + `12m0000x` is F<sub>CPU</sub> of an external oscillator, here 12.0000 MHz\n",
+  'fcpui'  => "  + `9m6000i` is F<sub>CPU</sub> of an internal oscillator, here 9.6000 MHz\n",
   'baud'   => "  + `115k2` shows the fixed baud rate of the bootloader: `115k2` means 115200 baud\n",
   'auto'   => "  + `autobaud` detects host baud rate f/8, f/16, f/24, ..., f/2048 (f=F<sub>CPU</sub>)\n",
   'auto2'  => "  + `autobaud2` detects host baud rate f/16, f/32, f/48, ..., f/4096 (f=F<sub>CPU</sub>)\n",
@@ -79,7 +80,7 @@ my %feature = (
   'ur'     => "  + `ur` uses urprotocol and requires `avrdude -c urclock` for programming\n",
   'stk500' => "  + `stk500` uses deprecated STK500v1 protocol to communicate with bootloader\n",
   'vbl'    => "  + `vbl` vector bootloader: set fuses to jump to reset, not the HW boot section\n",
-  'hw'     => "  + `hw` hardware supported bootloader: set fuses to jump to the HW boot section, not to reser vector\n",
+  'hw'     => "  + `hw` hardware supported bootloader: set fuses to jump to the HW boot section, not to reset vector\n",
   'v2'     => "  + `v2` vector bootloader that patches application itself\n",
   'v3'     => "  + `v3` vector bootloader that patches application itself and skips verifying the first page\n",
   'fp9'    => "  + `fp9` for debugging the bootloader uses, eg, Arduino pin 9 to swing a signal of low frequency, eg, 50 Hz\n",
@@ -95,7 +96,8 @@ sub f {
   if(length($name) == 1) {
     $legend{$name} = 1;
   } else {
-    $legend{fcpu} = 1 if $name =~ /[+][0-9]+m[0-9]+[+]/;
+    $legend{fcpux} = 1 if $name =~ /[+][0-9]+m[0-9]+x[+]/;
+    $legend{fcpui} = 1 if $name =~ /[+][0-9]+m[0-9]+i[+]/;
     $legend{baud} = 1 if $name =~ /[+][0-9]+k[0-9]+_/;
     $legend{auto} = 1 if !$isauto2 && $name =~ /[_+]autobaud[_.]/;
     $legend{auto2} = 1 if ($isauto2 && $name =~ /[_+]autobaud[_.]/) || $name =~ /[_+]autobaud2[_.]/;
@@ -311,7 +313,7 @@ if(!$check) {
      "- **Features:**\n";
      print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p P r a c ? . -));
      print "- **Hex file:** typically MCU name followed by\n";
-     print $feature{$_} for grep { $legend{$_} } (qw(fcpu baud auto auto2 swio uart alt rxtx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB0 csnop template dual fp9 fr ce ur stk500 ddd dur v2 v3 vbl hw min));
+     print $feature{$_} for grep { $legend{$_} } (qw(fcpux fcpui baud auto auto2 swio uart alt rxtx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB0 csnop template dual fp9 fr ce ur stk500 ddd dur v2 v3 vbl hw min));
   }
 }
 

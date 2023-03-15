@@ -154,7 +154,7 @@ int main(int argc, char **argv) {
   int filargc=1, i=0;
   char *p;
 
-  int u2x = 1, swio = 0, intnum = 0, absnum = 0, verbose = 0, raw, mxb, smp;
+  int u2x = 1, swio = 0, ppt = 0, ppm = 0, absnum = 0, verbose = 0, raw, mxb, smp;
   const char *mcu = "ATmega328P", *errstr = NULL, *mode = "UNKNOWN";
   long f_cpu = 16000000L, brate = 115200L, gotbaud = 123L;
   double err;
@@ -193,8 +193,11 @@ int main(int argc, char **argv) {
         case 'a':
           absnum = 1;
           break;
-        case 'i':
-          intnum = 1;
+        case 't':
+          ppt = 1;
+          break;
+        case 'm':
+          ppm = 1;
           break;
         default:
           Usage();
@@ -207,6 +210,9 @@ int main(int argc, char **argv) {
 
   if(filargc > 2)
     fatal("too many MCUs specified");
+
+  if(ppt && ppm)
+   fatal("conflicting -t and -m specified");
 
   if(filargc == 2)
     mcu = argv[1];
@@ -289,8 +295,10 @@ int main(int argc, char **argv) {
     else
       printf("The %s @ %ld Hz has a %s baud rate of %ld baud = %ld%+.2f%% baud.\n",
         mcu, f_cpu, mode, gotbaud, brate, err);
-  } else if(intnum)
+  } else if(ppt)
     printf("%ld\n", lround(10*err));
+  else if(ppm)
+    printf("%ld\n", lround(10000*err));
   else
     printf(absnum? "%.2f%%\n": "%+.2f%%\n", err);
 }
@@ -305,7 +313,8 @@ void Usage() {
     "    -b=<baud>  Desired baud rate <baud> (default 115200 baud)\n",
     "    -s         Software I/O instead of UART\n",
     "    -a         Print absolute error, not a signed error\n"
-    "    -i         Print integer error per mille, eg, -12 means -1.2%\n"
+    "    -t         Print integer error per thousand, eg, -12 means -1.2%\n"
+    "    -m         Print integer error per million, eg, +4999 means +0.4999%\n"
     "    -u=[0|1|2] Assume UART2X=<u> for classic UART part\n",
     "    -v         Verbose mode\n",
     NULL

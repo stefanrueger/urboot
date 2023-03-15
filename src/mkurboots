@@ -23,9 +23,16 @@ END
 }
 
 
-# Maximum allowed UART/SWIO baud rate quantisation error per mille (22 is 2.1%)
-maxuarterror=21
-maxswioerror=21
+# Maximum allowed UART/SWIO baud rate quantisation errors in ppm (22000 is 2.2%)
+declare -A maxioerror
+# External oscillators are relatively precise, can afford high quantisation error
+maxioerror[x]=22000
+# Space Fcpu for internal oscillators by 1%, so want quantisation error < 0.5%
+maxioerror[i]=4999
+
+declare -A ftypedir
+ftypedir[x]=external_oscillator/fcpu
+ftypedir[i]=internal_oscillator/fint
 
 run=1
 mcu_bls=mcus
@@ -64,8 +71,8 @@ shift $((OPTIND -1))
 
 if [ $# != 1 ]; then Usage 1>&2; exit 1; fi
 
-mcu="$1"
 
+mcu="$1"
 
 ####
 # Set out for which targets, F_CPUs, baud rates and I/O lines (for SW I/O) to compile
@@ -97,15 +104,18 @@ baud[1843200]=230400/115200/57600/38400/19200/9600/4800/2400
 baud[1000000]=57600/38400/19200/9600/4800/2400
 
 if [[ /attiny13/attiny13a/ =~ /$mcu/ ]]; then
-  baud[9600000]=250000/230400/115200/57600/38400/19200/9600/4800/2400
-  baud[4800000]=115200/57600/38400/19200/9600/4800/2400
-  baud[1200000]=38400/19200/9600/4800/2400
-  baud[600000]=19200/9600/4800/2400
+  baud[9600000+6]=250000/230400/115200/57600/38400/19200/9600/4800/2400
+  baud[4800000+6]=115200/57600/38400/19200/9600/4800/2400
+  baud[1200000+6]=38400/19200/9600/4800/2400
+  baud[600000+6]=19200/9600/4800/2400
+else
+  baud[8000000+6]=250000/230400/115200/57600/38400/19200/9600/4800/2400
+  baud[1000000+6]=250000/230400/115200/57600/38400/19200/9600/4800/2400
 fi
 
 # Remove computation for F_CPU values not mentioned in -f
 if [[ -n $fcpulist ]]; then
-  readarray -d , -t flist <<<$fcpulist
+  readarray -td , flist < <(printf '%s' "$fcpulist")
   declare -A fcpuok
   for ff in ${flist[@]}; do
      fcpuok[$ff]=1;
@@ -120,7 +130,7 @@ fi
 # Create list of -B baud rates
 declare -A baudok
 if [[ -n $baudlist ]]; then
-  readarray -d , -t blist <<<$baudlist
+  readarray -td , blist < <(printf '%s' "$baudlist")
   for bb in ${blist[@]}; do
      baudok[$bb]=1
   done
@@ -128,6 +138,7 @@ fi
 
 # List of considered F_CPUs in descending order
 fcpus=($(printf '%s\n' "${!baud[@]}" | sort -rn))
+
 
 ####
 # Known boards
@@ -929,7 +940,7 @@ mcuio[avr128da64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=Atme
 mcuio[avr128db64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0|UARTNUM=4 UARTALT=1 RX=AtmelPE5 TX=AtmelPE4|UARTNUM=5 RX=AtmelPG1 TX=AtmelPG0|UARTNUM=5 UARTALT=1 RX=AtmelPG5 TX=AtmelPG4"
 
 # All the I/O specs for *this* MCU
-readarray -d \| -t iospecs <<<${mcuio[$mcu]}
+readarray -td \| iospecs < <(printf '%s' "${mcuio[$mcu]}")
 
 # Variation of autobaud on certain parts that can only detect fcpu/16, fcpu/32, fcpu/24, ...
 autovar=; [[ /atmega103/at43usb320/at90s2313/at90s2333/at90s4433/at90s4414/at90s8515/at90s4434/at90s8535/ =~ /$mcu/ ]] && autovar=2
@@ -939,11 +950,13 @@ autovar=; [[ /atmega103/at43usb320/at90s2313/at90s2333/at90s4433/at90s4414/at90s
 #
 mkfcpunm() {
   local frq="$1";
-  if [[ "$frq" != auto ]]; then
-    while [[ ${#frq} < 7 ]]; do frq="0$frq"; done
+  while [[ ${#frq} < 7 ]]; do frq="0$frq"; done
+  if [[ ${frq: -2} == 00 ]]; then
     frq="${frq::-6}m${frq: -6:-2}"
-    [[ ${#frq} < 7 ]] && frq="$2$frq"
+  else
+    frq="${frq::-6}m${frq: -6}"
   fi
+  [[ ${#frq} < 7 ]] && frq="$2$frq"
   fcpunm="$frq"
 }
 
@@ -980,7 +993,7 @@ mkfilename() {
   swio=${swio// /}
   swio="${swio%"${swio##*[![:space:]]}"}"  # Remove trailing whitespace
   swio=${swio,,}
-  if [[ $2 == auto ]]; then
+  if [[ $2 == auto* ]]; then
     filename="urboot+$1+autobaud$autovar$swio"
   else
     filename="urboot+$1+$2+$3$swio"
@@ -1010,168 +1023,197 @@ topbdir="$board_bls/$mcu"
 topcdir="$core_bls/_Core_/$mcu"
 
 for fcpu in ${fcpus[@]}; do
-  mkfcpunm $fcpu +
+  ftype=x
+  ndf=0
+  if [[ $fcpu == auto ]]; then
+    fbase=16000000
+    fcpunm=auto
+  elif [[ $fcpu == *+[0-9] ]]; then
+     # 9600000+6 means loop F_cpu from F_cpu-6% to F_cpu+6%
+    ftype=i
+    fbase=${fcpu%??}
+    maxerr=maxioerror[i]
+    ndf=${fcpu: -1}
+  else
+    fbase=$fcpu
+    maxerr=maxioerror[x]
+  fi
 
-  readarray -d / -t bauds <<<${baud[$fcpu]}
+  readarray -td / bauds < <(printf '%s' "${baud[$fcpu]}")
+  declare -p bauds
   for b in ${bauds[@]}; do
     if [[ -n $baudlist && -z ${baudok[$b]} ]]; then
       continue
     fi
 
-    if [[ $b != auto ]]; then
-      # Can this F_CPU/baud rate combo later be created from an existing one?
-      # Bootloaders are the same (unless -DDEBUG_FREQ is used) if quotient $fcpu/$b is the same
-      div=$(($fcpu/($b/20)))
-      if [[ -z ${divseen[$div]} ]]; then
-        divseen[$div]=$fcpu/$b
-      # elif [[ $fcpu/$b != ${divseen[$div]} ]]; then
-      else
-        equivalent[$fcpu/$b]=${divseen[$div]}
-        continue
-      fi
+    # Ensure br < Fcpu/100 for all internal oscillator Fcpu variations
+    if [[ $ftype == i && $b -ge $(($fbase*(1-$ndf/100)/100)) ]]; then
+      continue
     fi
 
-    for io in "${iospecs[@]}"; do
-      thisio="$io"
-      if [[ $b == auto ]]; then
-        # Autobaud needs UART and must have RX in I/O space: exclude ports H..L
-        if [[ ${io:0:4} == SWIO ]]; then
-          continue
-        fi
-        if [[ $io =~ RX=AtmelP[H-L] && "${uarttype[$mcu]}" -lt 3 ]]; then
-          continue
-        fi
+    for (( df=-$ndf; df<=$ndf; df++ )); do
+      thisfcpu=$(($fbase + $df*$fbase/100))
+      [[ $fcpu != auto ]] && mkfcpunm $thisfcpu +
 
+      preamble="$mcu"
+      if [[ $b == auto ]]; then
+        br=AUTOBAUD=1
+        preamble="Note that autobaud bootloaders normally can only detect host baud rates = f/8, f/16, ... f/2048 +/- 1.5%, where f=F<sub>CPU</sub>."
+        preamble+="Internal oscillators have a high unknown deviation: use baud rates under f/260 for these."
         mdir="$topmdir/autobaud"
         bdir="$topbdir/autobaud"
         cdir="$topcdir/autobaud"
-        fcpu=16000000
-        br=AUTOBAUD=1
       else
-        # Classic or LIN UART experiences too high baud rate error for this F_CPU/baud combo?
-        if [[ ${thisio:0:4} == UART && $(bauderror -ai -f$fcpu -b$b $mcu) -gt $maxuarterror ]]; then
-          # Switch to SWIO instead of using the UART
-          thisio=${thisio/UARTNUM=?/SWIO=1}
-          thisio=${thisio/UARTALT=?/}
-        fi
-
-        if [[ ${thisio:0:4} == SWIO ]]; then
-          # Is the SWIO baud rate too high or too low?
-          if [[ $(bauderror -sai -f$fcpu -b$b $mcu) -gt $maxswioerror ]]; then
-            continue
-          fi
-          # Also needs RX/TX in I/O space: exclude ports H..L
-          if [[ $io =~ [RT]X=AtmelP[H-L] && "${uarttype[$mcu]}" -lt 3 ]]; then
-            continue
-          fi
+        # Can this F_CPU/baud rate combo later be created from an existing one?
+        # Bootloaders are the same (unless -DDEBUG_FREQ is used) if quotient $thisfcpu/$b is the same
+        div=$((100*$thisfcpu/$b))/$ftype
+        if [[ -z ${divseen[$div]} ]]; then
+          divseen[$div]=$thisfcpu/$b/$ftype/
+        else
+          equivalent[$thisfcpu/$b/$ftype/]=${divseen[$div]}
+          continue
         fi
 
         mkbaudnm $b +
-        mdir="$topmdir/fcpu+${fcpunm}_Hz/br+${baudnm}_bps"
-        bdir="$topbdir/fcpu+${fcpunm}_Hz/br+${baudnm}_bps"
-        cdir="$topcdir/fcpu+${fcpunm}_Hz/br+${baudnm}_bps"
+        mdir="$topmdir/${ftypedir[$ftype]}+${fcpunm}_Hz/br+${baudnm}_bps"
+        bdir="$topbdir/${ftypedir[$ftype]}+${fcpunm}_Hz/br+${baudnm}_bps"
+        cdir="$topcdir/${ftypedir[$ftype]}+${fcpunm}_Hz/br+${baudnm}_bps"
         br=BAUD_RATE=$b
       fi
 
-      for ur in 0 1; do
-        # Only generate STK500 bootloaders ($ur = 0) for MCUs that have HW boot sections
-        if [[ $ur -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
-          continue;
+      for io in "${iospecs[@]}"; do
+        thisio="$io"
+        if [[ $b == auto ]]; then
+          # Autobaud needs UART and must have RX in I/O space: exclude ports H..L
+          if [[ ${io:0:4} == SWIO ]]; then
+            continue
+          fi
+          if [[ $io =~ RX=AtmelP[H-L] && "${uarttype[$mcu]}" -lt 3 ]]; then
+            continue
+          fi
+        else
+          # Classic or LIN UART experiences too high baud rate error for this F_CPU/baud combo?
+          if [[ ${thisio:0:4} == UART && $(bauderror -am -f$thisfcpu -b$b $mcu) -gt $maxerr ]]; then
+            # Switch to SWIO instead of using the UART
+            thisio=${thisio/UARTNUM=?/SWIO=1}
+            thisio=${thisio/UARTALT=?/}
+          fi
+
+          if [[ ${thisio:0:4} == SWIO ]]; then
+            # Is the SWIO baud rate too high or too low?
+            if [[ $(bauderror -sam -f$thisfcpu -b$b $mcu) -gt $maxerr ]]; then
+              continue
+            fi
+            # Also needs RX/TX in I/O space: exclude ports H..L
+            if [[ $io =~ [RT]X=AtmelP[H-L] && "${uarttype[$mcu]}" -lt 3 ]]; then
+              continue
+            fi
+            preamble=$(bauderror -s -v -f$thisfcpu -b$b $mcu)
+          else
+            preamble=$(bauderror    -v -f$thisfcpu -b$b $mcu)
+          fi
         fi
 
-        for ee in 0 1; do
+        for ur in 0 1; do
+          # Only generate STK500 bootloaders ($ur = 0) for MCUs that have HW boot sections
+          if [[ $ur -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
+            continue;
+          fi
 
-          readarray -d / -t brd <<<$board
-          for bb in ${brd[@]}; do
-            bcfg=${bb#*:}
-            bname=${bb%:*}
+          for ee in 0 1; do
 
-            for vbl in 0 1; do
-              # Don't generate hardware-supported bootloaders (vbl=0) for MCUs that don't have HW boot sections
-              if [[ $vbl -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
-                continue;
-              fi
-              # Don't generate vector boot loaders for STK500 protocol
-              if [[ $vbl -eq 1 && $ur -eq 0 ]]; then
-                continue;
-              fi
+            readarray -td / brd < <(printf '%s' "$board")
+            for bb in ${brd[@]}; do
+              bcfg=${bb#*:}
+              bname=${bb%:*}
 
-              hexname=()
-              for f in 0 1 6 7; do
-                if [[ $f -eq 0 && $bname != none ]]; then
-                  continue
+              for vbl in 0 1; do
+                # Do not generate hardware-supported bootloaders (vbl=0) for MCUs without HW boot sections
+                if [[ $vbl -eq 0 && ${hwboot[$mcu]} -ne 1 ]]; then
+                  continue;
                 fi
-                if [[ $ee -eq 0 && $f -gt 7 ]]; then
+                # Do not generate vector boot loaders for STK500 protocol
+                if [[ $vbl -eq 1 && $ur -eq 0 ]]; then
                   continue;
                 fi
 
-                mkfilename $mcu $fcpunm $baudnm $vbl $ee $ur $f "$bcfg" "$thisio"
-                args="MCU=$mcu F_CPU=${fcpu}L $br $thisio VBL=$vbl EEPROM=$ee ${bcfg//_/ } URPROTOCOL=$ur FRILLS=$f MOVETO=$filename"
+                hexname=()
+                for f in 0 1 6 7; do
+                  if [[ $f -eq 0 && $bname != none ]]; then
+                    continue
+                  fi
+                  if [[ $ee -eq 0 && $f -gt 7 ]]; then
+                    continue;
+                  fi
+
+                  mkfilename $mcu $fcpunm$ftype "$baudnm" $vbl $ee $ur $f "$bcfg" "$thisio"
+                  args="MCU=$mcu F_CPU=${thisfcpu}L $br $thisio VBL=$vbl EEPROM=$ee ${bcfg//_/ } URPROTOCOL=$ur FRILLS=$f MOVETO=$filename"
+                  if [[ $run -eq 1 ]]; then
+                    make $args >& $filename.out
+                    if [[ -r $filename.hex ]]; then
+                      hexname+=("$filename")
+                      hexlsout=($(hexls $filename.hex))
+                      hexuse[$filename]=${hexlsout[1]}
+                      hexprotect[$filename]=${hexlsout[3]:5:1} # p or P
+                    else
+                      echo warning compilation for $filename failed
+                    fi
+                  else
+                    echo make $args
+                    # echo "$mdir/$filename.hex"
+                    if [[ -n ${duplicate[$filename]} ]]; then
+                      echo duplicate $filename ${duplicate[$filename]}
+                      echo duplicate $filename $args
+                    else
+                      duplicate[$filename]="$args"
+                    fi
+                  fi
+                done
                 if [[ $run -eq 1 ]]; then
-                  make $args >& $filename.out
-                  if [[ -r $filename.hex ]]; then
-                    hexname+=("$filename")
-                    hexlsout=($(hexls $filename.hex))
-                    hexuse[$filename]=${hexlsout[1]}
-                    hexprotect[$filename]=${hexlsout[3]:5:1} # p or P
-                  else
-                    echo warning compilation for $filename failed
-                  fi
-                else
-                  echo make $args
-                  # echo "$mdir/$filename.hex"
-                  if [[ -n ${duplicate[$filename]} ]]; then
-                    echo duplicate $filename ${duplicate[$filename]}
-                    echo duplicate $filename $args
-                  else
-                    duplicate[$filename]="$args"
-                  fi
+                  # Delete bootloaders of same size that have fewer features and same protection
+                  for (( i=0; i<${#hexname[@]}-1; i++ )); do
+                    if [[ ${hexuse[${hexname[$i]}]} -ge ${hexuse[${hexname[$i+1]}]} ]]; then
+                      if [[ ${hexprotect[${hexname[$i]}]} == ${hexprotect[${hexname[$i+1]}]} ]]; then
+                        rm "${hexname[$i]}".{lst,elf,hex,out}
+                      fi
+                    fi
+                  done
+                  for hxn in ${hexname[@]}; do
+                    if [[ -r $hxn.hex ]]; then
+                      hexassoc[$hxn]="$mdir/$hxn"
+                      if [[ -z ${hexdirs[$mdir]} ]]; then
+                        mkdir -p "$mdir"
+                        topdirs[$topmdir]=1
+                        hexdirs[$mdir]="$preamble"
+                      fi
+                      mv $hxn.{hex,out,elf,lst} "$mdir/"
+                      readarray -td , brdali < <(printf '%s' "$bname")
+                      for ba in ${brdali[@]}; do
+                        if [[ $ba != none && $ba != dual ]]; then
+                          # Make bootloader available under boards/cores directories, too
+                          if [[ $ba/ =~ core/ ]]; then
+                            badir=${cdir/_Core_/$ba}
+                            topdirs[${topcdir/_Core_/$ba}]=1
+                            banam=$hxn
+                          else
+                            badir=${bdir/$mcu/$ba}
+                            topdirs[${topbdir/$mcu/$ba}]=1
+                            banam=${hxn/$mcu/$ba}
+                          fi
+                          if [[ -z ${hexdirs[$badir]} ]]; then
+                            mkdir -p $badir
+                            hexdirs[$badir]="$preamble"
+                          fi
+                          hexassoc[$hxn]+="|$badir/$banam"
+                          for ext in hex out elf lst; do
+                            ln -f $mdir/$hxn.$ext $badir/$banam.$ext
+                          done
+                        fi
+                      done
+                    fi
+                  done
                 fi
               done
-              if [[ $run -eq 1 ]]; then
-                # Delete bootloaders of same size that have fewer features and same protection
-                for (( i=0; i<${#hexname[@]}-1; i++ )); do
-                  if [[ ${hexuse[${hexname[$i]}]} -ge ${hexuse[${hexname[$i+1]}]} ]]; then
-                    if [[ ${hexprotect[${hexname[$i]}]} == ${hexprotect[${hexname[$i+1]}]} ]]; then
-                      rm "${hexname[$i]}".{lst,elf,hex,out}
-                    fi
-                  fi
-                done
-                for hxn in ${hexname[@]}; do
-                  if [[ -r $hxn.hex ]]; then
-                    hexassoc[$hxn]="$mdir/$hxn"
-                    if [[ -z ${hexdirs[$mdir]} ]]; then
-                      mkdir -p "$mdir"
-                      topdirs[$topmdir]=1
-                      hexdirs[$mdir]=1
-                    fi
-                    mv $hxn.{hex,out,elf,lst} "$mdir/"
-                    readarray -d , -t brdali <<<$bname
-                    for ba in ${brdali[@]}; do
-                      if [[ $ba != none && $ba != dual ]]; then
-                        # Make bootloader available under boards/cores directories, too
-                        if [[ $ba/ =~ core/ ]]; then
-                          badir=${cdir/_Core_/$ba}
-                          topdirs[${topcdir/_Core_/$ba}]=1
-                          banam=$hxn
-                        else
-                          badir=${bdir/$mcu/$ba}
-                          topdirs[${topbdir/$mcu/$ba}]=1
-                          banam=${hxn/$mcu/$ba}
-                        fi
-                        if [[ -z ${hexdirs[$badir]} ]]; then
-                          mkdir -p $badir
-                          hexdirs[$badir]=1
-                        fi
-                        hexassoc[$hxn]+="|$badir/$banam"
-                        for ext in hex out elf lst; do
-                          ln -f $mdir/$hxn.$ext $badir/$banam.$ext
-                        done
-                      fi
-                    done
-                  fi
-                done
-              fi
             done
           done
         done
@@ -1189,7 +1231,7 @@ if [[ $run -eq 1 ]]; then
       if [[ -n ${hexassoc[$hxnoee]} ]]; then
         if [[ ${hexuse[$hxn]} -le ${hexuse[$hxnoee]} ]]; then
           if [[ ${hexprotect[$hxn]} == ${hexprotect[$hxnoee]} ]]; then
-            readarray -d \| -t torm <<<${hexassoc[$hxnoee]}
+            readarray -td \| torm < <(printf '%s' "${hexassoc[$hxnoee]}")
             for tormfn in ${torm[@]}; do
               rm $tormfn.{hex,lst,elf,out}
             done
@@ -1210,7 +1252,7 @@ if [[ $run -eq 1 ]]; then
       hxvbl=${hxhard//_hw/}
       if [[ -n ${hexassoc[$hxvbl]} ]]; then
         if [[ ${hexuse[$hxhard]} -le ${hexuse[$hxvbl]} ]]; then
-          readarray -d \| -t torm <<<${hexassoc[$hxvbl]}
+          readarray -td \| torm < <(printf '%s' "${hexassoc[$hxvbl]}")
           for tormfn in ${torm[@]}; do
             rm $tormfn.{hex,lst,elf,out}
           done
@@ -1225,24 +1267,28 @@ if [[ $run -eq 1 ]]; then
 
   # Copy equivalent bootloaders over from ${equivalent[$combo]} to $combo
   for combo in ${!equivalent[@]}; do
-
-    readarray -d / -t fcpubd <<<${equivalent[$combo]}
+    # echo Copy $combo from ${equivalent[$combo]}
+    readarray -td / fcpubd < <(printf '%s' "${equivalent[$combo]}")
     mkfcpunm ${fcpubd[0]} +
     mkbaudnm ${fcpubd[1]} +
+    ftype=${fcpubd[2]}
     chfcpu=$fcpunm
     chbaud=$baudnm
-    srcdir="fcpu+${fcpunm}_Hz/br+${baudnm}_bps"
+    srcdir="${ftypedir[$ftype]}+${fcpunm}_Hz/br+${baudnm}_bps"
 
-    readarray -d / -t fcpubd <<<$combo
+    readarray -td / fcpubd < <(printf '%s' "$combo")
     mkfcpunm ${fcpubd[0]} +
     mkbaudnm ${fcpubd[1]} +
-    dstdir="fcpu+${fcpunm}_Hz/br+${baudnm}_bps"
+    dstdir="${ftypedir[$ftype]}+${fcpunm}_Hz/br+${baudnm}_bps"
 
     for dd in  ${!topdirs[@]}; do
       if [[ -d "$dd/$srcdir" ]]; then
         if [[ -z ${hexdirs["$dd/$dstdir"]} ]]; then
           mkdir -p "$dd/$dstdir"
-          hexdirs["$dd/$dstdir"]=1
+          hexdirs["$dd/$dstdir"]="${hexdirs[$dd/$srcdir]}"
+          if [[ -z ${hexdirs["$dd/$dstdir"]} ]]; then
+            echo Warning: no preamble for "$dd/$srcdir"
+          fi
         fi
         for src in "$dd/$srcdir"/*; do
           if [[ -r "$src" ]]; then
@@ -1260,7 +1306,7 @@ if [[ $run -eq 1 ]]; then
   # Generate the README.md files
   for dir in "${!hexdirs[@]}"; do
     cd "$dir"
-    "$here/hexls" -sort -md "https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/$dir" *.hex >README.md
+    "$here/hexls" -pre="${hexdirs[$dir]}" -sort -md "https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/$dir" *.hex >README.md
     cd "$here"
   done
   hash cmpls 2>/dev/null && cmpls -p $mcu_bls/$mcu | grep \\.hex >>/tmp/equivalent-hex-files.txt
