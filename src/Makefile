@@ -375,7 +375,7 @@ attiny2313_min:
 # 256 bytes == 2 pages (no EEPROM support, needs to be programmed with avrdude -c urclock)
 #
 atmega328p_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=6 MOVETO=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=4  MOVETO=$@
 
 atmega328p_amin:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=3 MOVETO=$@
