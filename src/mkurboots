@@ -203,6 +203,8 @@ elif [[ /atmega2561/atmega1281/atmega649p/atmega649/atmega645p/atmega645/atmega3
   board+=/megacore:LED=AtmelPB5
 elif [[ /atmega162/atmega8515/ =~ /$mcu/ ]]; then
   board+=/majorcore:LED=AtmelPB0
+elif [[ /attiny13/attiny13a/ =~ /$mcu/ ]]; then
+  board+=/microcore:LED=AtmelPB2
 fi
 
 
@@ -573,8 +575,8 @@ mcuio[attiny102]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2"
 mcuio[attiny104]="UARTNUM=0 RX=AtmelPB3 TX=AtmelPB2"
 mcuio[attiny11]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[attiny12]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
-mcuio[attiny13]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
-mcuio[attiny13a]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[attiny13]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1|SWIO=1 RX=AtmelPB1 TX=AtmelPB0"
+mcuio[attiny13a]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1|SWIO=1 RX=AtmelPB1 TX=AtmelPB0"
 mcuio[attiny15]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[attiny22]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[attiny24]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
@@ -729,6 +731,8 @@ mcuio[at43usb320]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[at43usb355]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[at76c711]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[at86rf401]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[at89s51]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[at89s52]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[at90pwm1]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[at90pwm2]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
 mcuio[at90pwm2b]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
