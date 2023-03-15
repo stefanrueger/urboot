@@ -5,9 +5,11 @@
  * modified avr/wdt.h
  *
  *   - wdt_enable() is called isr_wdt_config()
- *   - removed code that disables interrupts as they are disabled in bootloader
- *   - argument of isr_wdt_config() is the bit code for the watchdog register:
+ *   - Removed code that disables interrupts as they are disabled in bootloader
+ *   - Argument of isr_wdt_config() is the bit code for the watchdog register:
  *     it is *not* the time code of wdt_enable()
+ *   - Removed wdr from isr_wdt_config(): this is a bug in almost all other contexts
+ *     except here in this bootloader seeing that we get here after reset...
  */
 
 #if defined(WDTCSR)
@@ -60,7 +62,6 @@
 #if defined(__AVR_TINY__)
 
 #define isr_wdt_config(value) __asm__ __volatile__ ( \
-  "wdr\n\t"  \
   "out %[CCPADDRESS],%[SIGNATURE]\n\t"  \
   "out %[WDTREG],%[WDVALUE]\n\t"  \
   : /* no outputs */  \
@@ -75,7 +76,7 @@
 static __inline__ __attribute__ ((__always_inline__)) void isr_wdt_config(const uint8_t value) {
   if (!_SFR_IO_REG_P (CCP) && !_SFR_IO_REG_P (_WD_CONTROL_REG)) {
     __asm__ __volatile__ (
-      "wdr\n\t"
+      // "wdr\n\t"
       "sts %[CCPADDRESS],%[SIGNATURE]\n\t"
       "sts %[WDTREG],%[WDVALUE]\n\t"
       : /* no outputs */
@@ -86,7 +87,7 @@ static __inline__ __attribute__ ((__always_inline__)) void isr_wdt_config(const 
     );
   } else if (!_SFR_IO_REG_P (CCP) && _SFR_IO_REG_P (_WD_CONTROL_REG)) {
     __asm__ __volatile__ (
-      "wdr\n\t"
+      // "wdr\n\t"
       "sts %[CCPADDRESS],%[SIGNATURE]\n\t"
       "out %[WDTREG],%[WDVALUE]\n\t"
       : /* no outputs */
@@ -97,7 +98,7 @@ static __inline__ __attribute__ ((__always_inline__)) void isr_wdt_config(const 
     );
   } else if (_SFR_IO_REG_P (CCP) && !_SFR_IO_REG_P (_WD_CONTROL_REG)) {
     __asm__ __volatile__ (
-      "wdr\n\t"
+      // "wdr\n\t"
       "out %[CCPADDRESS],%[SIGNATURE]\n\t"
       "sts %[WDTREG],%[WDVALUE]\n\t"
       : /* no outputs */
@@ -108,7 +109,7 @@ static __inline__ __attribute__ ((__always_inline__)) void isr_wdt_config(const 
     );
   } else {
     __asm__ __volatile__ (
-      "wdr\n\t"
+      // "wdr\n\t"
       "out %[CCPADDRESS],%[SIGNATURE]\n\t"
       "out %[WDTREG],%[WDVALUE]\n\t"
       : /* no outputs */
@@ -125,7 +126,7 @@ static __inline__ __attribute__ ((__always_inline__)) void isr_wdt_config(const 
 static __inline__ __attribute__ ((__always_inline__)) void isr_wdt_config (const uint8_t value) {
   if (_SFR_IO_REG_P (_WD_CONTROL_REG)) {
     __asm__ __volatile__ (
-      "wdr\n\t"
+      // "wdr\n\t"
       "out %0, %1\n\t"
       "out %0, %2" "\n \t"
       : /* no outputs */
@@ -135,7 +136,7 @@ static __inline__ __attribute__ ((__always_inline__)) void isr_wdt_config (const
     );
   } else {
     __asm__ __volatile__ (
-      "wdr\n\t"
+      // "wdr\n\t"
       "sts %0, %1\n\t"
       "sts %0, %2" "\n \t"
       : /* no outputs */
