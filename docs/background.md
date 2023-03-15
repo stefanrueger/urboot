@@ -1,23 +1,23 @@
 # How bootloaders work
 
-In common with bootloaders, it runs after every reset and tries to communicate with an external
-uploader program via a serial interface using a variant of the STK500v1 protocol. Hence, only the
-serial I/O needs to be connected from a Raspberry Pi/PC/laptop host to the board with the
-to-be-programmed MCU on it. After every reset the bootloader code determines its cause: if that was
-an external reset as opposed to power-up reset or watchdog timeout (WDT) it waits a small time for
-protocol initialisation bytes from an uploader program. If there was was a valid handshake, the
-bootloader carries out one of several possible tasks driven by the host's uploader such as
-receiving and burning a new sketch, downloading an existing sketch on the MCU, and, if compiled for
-it, reading or writing the EEPROM on the MCU. The bootloader finishes this part typically through a
-watchdog timeout reset that kicks in when initially no valid handshake could be detected, when a
-serial hardware or protocol error occurred during burning/verification or when the bootloader
-finished its task successfully. Watchdog timeout resets the MCU just like an external reset. When
-the bootloader is entered under this condition, though, it then normally jumps directly to the
-application. However, when the bootloader was compiled with dual-boot support, it first checks
-external SPI flash memory to see it contains a new sketch, in which case a copy of it is burned
-from external memory onto internal flash. The idea is that the application sketch could have been
-written to receive a new version via a radio and have placed it onto the external SPI flash memory
-before issuing a WDT reset. Hence, this dual-boot property is also called over the air programming,
+In common with bootloaders, an urboot bootloader runs after every reset and tries to communicate
+with an external uploader program via a serial interface. Hence, only the serial I/O needs to be
+connected from a Raspberry Pi/PC/laptop host to the board with the to-be-programmed MCU on it.
+After every reset the bootloader code determines its cause: if that was an external reset as
+opposed to power-up reset or watchdog timeout (WDT) it waits a small time for protocol
+initialisation bytes from an uploader program. If there was was a valid handshake, the bootloader
+carries out one of several possible tasks driven by the host's uploader such as receiving and
+burning a new sketch, downloading an existing sketch on the MCU, and, if compiled for it, reading
+or writing the EEPROM on the MCU. The bootloader finishes this part typically through a watchdog
+timeout reset that kicks in when initially no valid handshake could be detected, when a serial
+hardware or protocol error occurred during burning/verification or when the bootloader finished its
+task successfully. Watchdog timeout resets the MCU just like an external reset. When the bootloader
+is entered under this condition, though, it then normally jumps directly to the application.
+However, when the bootloader was compiled with dual-boot support, it first checks external SPI
+flash memory to see it contains a new sketch, in which case a copy of it is burned from external
+memory onto internal flash. The idea is that the application sketch could have been written to
+receive a new version via a radio and have placed it onto the external SPI flash memory before
+issuing a WDT reset. Hence, this dual-boot property is also called over the air programming,
 although one could conceivably also plug a new external SPI flash into a board for programming.
 
 ## Condition to enter the bootloader
@@ -27,7 +27,7 @@ When should the application be started, when the serial bootloader be run, and w
 flash memory be checked for a viable program image? In this implementation the first decision is
 between serial bootloader code and starting the app. If the latter then the external flash
 memory is checked if and only if the watchdog reset flag was set; that check happens before the
-actual app is started. Here the choices for the first decision:
+actual app is started. Here some choices for the first decision:
 
  - `if(ch != _BV(EXTRF))`
 
@@ -80,8 +80,8 @@ actual app is started. Here the choices for the first decision:
     pull the board's reset line low for a short time; on a Raspberry Pi external GPIO pins can
     be used for that. If that is not possible either, then setting the watchdog timeout to a
     long time (see the WDTO option below) may be helpful, so one can manually reset the board
-    before calling avrdude. The default for the timeout is 500 ms. Only with the urclock
-    programmer can smaller timeouts down to 128 ms be reliably utilised.
+    before calling avrdude. The default for the timeout is 500 ms, but only with the urclock
+    programmer can small timeouts down to 256 ms be reliably utilised.
 
 
 ## Assumptions, limitations, caveats, tips and tricks for *this* bootloader
@@ -133,7 +133,7 @@ actual app is started. Here the choices for the first decision:
     vector bootloaders cannot be used. The urloader sketch sets fuses and lock bits appropriately
     when burning a vector bootloader onto your board. More on VBLs below.
 
-  - The code makes several assumptions that reduce the code size (eg, no interrupts can occur, `SP`
-    points to `RAMEND`). They are true after a hardware reset, but will not necessarily be true if
-    the bootloader is called directly. So don't.
+  - The code makes several assumptions that reduce the code size (eg, no interrupts can occur, the `USART`
+    character size register defaults to 8N1). They are true after a hardware reset, but will not
+    necessarily be true if the bootloader is called directly. So don't.
 
