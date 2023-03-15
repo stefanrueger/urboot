@@ -2337,7 +2337,7 @@ void putch(char chr) {
     "   dec %[bitcnt]\n"
     "   brne 1b\n"
 
-#if !defined(SWIO_ADD_NEARLY_ONE_STOP_BIT) || ! SWIO_ADD_NEARLY_ONE_STOP_BIT
+#if FLASHabove8k
     "   ret\n"                  // When ret is removed putch() increases the length of the last
 #endif                          // stop bit by ~ 0.9 bits (depends on F_CPU/BAUD_RATE)
 
