@@ -1047,6 +1047,11 @@ for fcpu in ${fcpus[@]}; do
       continue
     fi
 
+    # Limit baud rates to be not smaller than f_cpu/1024
+    if [[ $fcpu != auto && $b -lt $(($fbase/1024)) ]]; then
+      continue
+    fi
+
     for (( df=-$ndf; df<=$ndf; df++ )); do
       thisfcpu=$(($fbase + $df*$fbase/100))
       [[ $fcpu != auto ]] && mkfcpunm $thisfcpu +
