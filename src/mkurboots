@@ -951,13 +951,13 @@ autovar=; [[ /atmega103/at43usb320/at90s2313/at90s2333/at90s4433/at90s4414/at90s
 #
 mkfcpunm() {
   local frq="$1";
-  while [[ ${#frq} < 7 ]]; do frq="0$frq"; done
+  while [[ ${#frq} -lt 7 ]]; do frq="0$frq"; done
   if [[ ${frq: -2} == 00 ]]; then
     frq="${frq::-6}m${frq: -6:-2}"
   else
     frq="${frq::-6}m${frq: -6}"
   fi
-  [[ ${#frq} < 7 ]] && frq="$2$frq"
+  [[ $1 -lt 10000000 ]] && frq="$2$frq"
   fcpunm="$frq"
 }
 
@@ -966,9 +966,9 @@ mkfcpunm() {
 #
 mkbaudnm() {
   local bd="$1";
-  while [[ ${#bd} < 4 ]]; do bd="0$bd"; done
+  while [[ ${#bd} -lt 4 ]]; do bd="0$bd"; done
   bd="${bd::-3}k${bd: -3:-2}"
-  while [[ ${#bd} < 6 ]]; do bd="$2$bd"; done
+  while [[ ${#bd} -lt 6 ]]; do bd="$2$bd"; done
   baudnm="$bd"
 }
 
@@ -1064,7 +1064,7 @@ for fcpu in ${fcpus[@]}; do
       if [[ $b == auto ]]; then
         br=AUTOBAUD=1
         preamble="Note that autobaud bootloaders normally can only detect host baud rates = f/8, f/16, ... f/2048 +/- 1.5%, where f=F<sub>CPU</sub>."
-        preamble+="Internal oscillators have a high unknown deviation: use baud rates under f/260 for these."
+        preamble+=" Internal oscillators have a high unknown deviation: baud rates under f/260 are recommended for these."
         mdir="$topmdir/autobaud"
         bdir="$topbdir/autobaud"
         cdir="$topcdir/autobaud"
