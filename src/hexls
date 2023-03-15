@@ -85,7 +85,8 @@ my %feature = (
   'v3'     => "  + `v3` vector bootloader that patches application itself and skips verifying the first page\n",
   'fp9'    => "  + `fp9` for debugging the bootloader uses, eg, Arduino pin 9 to swing a signal of low frequency, eg, 50 Hz\n",
   'ddd'    => "  + `d` dual boot\n",
-  'dur'    => "  + `d` dual boot and uses urprotocol\n",
+  'dur'    => "  + `dur` dual boot and uses urprotocol\n",
+  'adur'    => " + `adur` autobaud, dual boot and uses urprotocol\n",
   'min'    => "  + `min` most feature-rich bootloader for smallest achievable flash usage (implies `ur`)\n",
 );
 
@@ -124,6 +125,7 @@ sub f {
     $legend{ur} = 1 if $name =~ /[_]ur[_.]/;
     $legend{ddd} = 1 if $name =~ /_d[_.]/;
     $legend{dur} = 1 if $name =~ /_dur[_.]/;
+    $legend{adur} = 1 if $name =~ /_adur[_.]/;
     $legend{v3} = 1 if $name =~ /[d_]v3[_.]/;
     $legend{v2} = 1 if $name =~ /[d_]v2[_.]/;
     $legend{vbl} = 1 if $name =~ /_vbl[_.]/;
@@ -313,7 +315,7 @@ if(!$check) {
      "- **Features:**\n";
      print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p P r a c ? . -));
      print "- **Hex file:** typically MCU name followed by\n";
-     print $feature{$_} for grep { $legend{$_} } (qw(fcpux fcpui baud auto auto2 swio uart alt rxtx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB0 csnop template dual fp9 fr ce ur stk500 ddd dur v2 v3 vbl hw min));
+     print $feature{$_} for grep { $legend{$_} } (qw(fcpux fcpui baud auto auto2 swio uart alt rxtx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB0 csnop template dual fp9 fr ce ur stk500 ddd dur adur v2 v3 vbl hw min));
   }
 }
 

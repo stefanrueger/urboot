@@ -55,7 +55,7 @@ More detailed information here: [`make` options](https://github.com/stefanrueger
 <p id="pre-compiled"></p>
 
 **Pre-compiled bootloaders.** If compiling bootloaders is not feasible, feel free to try out one of
-the 96,217 *different* pre-compiled bootloaders in the directory tree for
+the 220,738 *different* pre-compiled bootloaders in the directory tree for
 [`MCU parts`](https://github.com/stefanrueger/urboot.hex/tree/main/mcus/). You can find bootloaders for
 popular boards in a corresponding directory for [boards](https://github.com/stefanrueger/urboot.hex/tree/main/boards/),
 for example, autobaud bootloaders for the venerable ATmega328P based
@@ -168,13 +168,14 @@ for all `F_CPU` and a range of associated baudrates.
 
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|214|224|u7.7|`w-u-jpr--`|[urboot+attiny2313_uart0_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+attiny2313+16m0000x++115k2_uart0_rxd0_txd1_lednop.hex)|
-|248|256|u7.7|`w-u-jpr--`|[urboot+atmega328p_uart0_led+b5_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+atmega328p+16m0000x++115k2_uart0_rxd0_txd1_led+b5_fr.hex)|
-|370|384|u7.7|`weu-jPrac`|[urboot+atmega328p+autobaud_uart0_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot+atmega328p+autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce.hex)|
-|440|512|u7.7|`wes-hpr-c`|[urboot+atmega328p_uart0_ee_led+b5_fr_ce_stk500_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+atmega328p+16m0000x++115k2_uart0_rxd0_txd1_ee_led+b5_fr_ce_stk500_hw.hex)|
-|456|512|u7.7|`wes-hprac`|[urboot+atmega328p+autobaud_uart0_ee_led+b5_fr_ce_stk500_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot+atmega328p+autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce_stk500_hw.hex)|
+|212|224|u7.7|`w-u-jpr--`|[urboot+attiny2313_uart0_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+attiny2313+16m0000x++115k2_uart0_rxd0_txd1_lednop.hex)|
+|256|256|u7.7|`w-u-jPra-`|[urboot+attiny2313+autobaud_uart0_rxd0_txd1_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/autobaud/urboot+attiny2313+autobaud_uart0_rxd0_txd1_lednop_fr.hex)|
+|242|256|u7.7|`w-u-jPr--`|[urboot+atmega328p_uart0_led+b5.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+atmega328p+16m0000x++115k2_uart0_rxd0_txd1_led+b5.hex)|
+|368|384|u7.7|`weu-jPrac`|[urboot+atmega328p+autobaud_uart0_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot+atmega328p+autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce.hex)|
+|438|512|u7.7|`wes-hpr-c`|[urboot+atmega328p_uart0_ee_led+b5_fr_ce_stk500_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+atmega328p+16m0000x++115k2_uart0_rxd0_txd1_ee_led+b5_fr_ce_stk500_hw.hex)|
+|454|512|u7.7|`wes-hprac`|[urboot+atmega328p+autobaud_uart0_ee_led+b5_fr_ce_stk500_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot+atmega328p+autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce_stk500_hw.hex)|
 |474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
-|496|512|u7.7|`weudhprac`|[urboot+urclockusb+autobaud_uart0_ee_led+d5_csb0_dual_fr_ce_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/boards/urclockusb/autobaud/urboot+urclockusb+autobaud_uart0_rxd0_txd1_ee_led+d5_csb0_dual_fr_ce_hw.hex)|
+|494|512|u7.7|`weudhprac`|[urboot+urclockusb+autobaud_uart0_ee_led+d5_csb0_dual_fr_ce_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/boards/urclockusb/autobaud/urboot+urclockusb+autobaud_uart0_rxd0_txd1_ee_led+d5_csb0_dual_fr_ce_hw.hex)|
 |710|1024|o8.3|`-es-h-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex)|
 
 - **Size:** Bootloader code size including small table at top end
