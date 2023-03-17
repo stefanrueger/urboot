@@ -75,6 +75,12 @@ if [ $# != 1 ]; then Usage 1>&2; exit 1; fi
 mcu="$1"
 
 ####
+# setarray arr , 1,2,3,
+# Split a string into an array
+#
+setarray(){ declare -n a=$1; local IFS=$2 -; set -f; a=($3); }
+
+####
 # Set out for which targets, F_CPUs, baud rates and I/O lines (for SW I/O) to compile
 #
 
@@ -112,7 +118,7 @@ done
 
 # Remove computation for F_CPU values not mentioned in -f
 if [[ -n $fcpulist ]]; then
-  readarray -td , flist < <(printf '%s' "$fcpulist")
+  setarray flist , "$fcpulist"
   declare -A fcpuok
   for ff in ${flist[@]}; do
      fcpuok[$ff]=1;
@@ -127,7 +133,7 @@ fi
 # Create list of -B baud rates
 declare -A baudok
 if [[ -n $baudlist ]]; then
-  readarray -td , blist < <(printf '%s' "$baudlist")
+  setarray blist , "$baudlist"
   for bb in ${blist[@]}; do
      baudok[$bb]=1
   done
@@ -941,10 +947,11 @@ mcuio[avr128da64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=Atme
 mcuio[avr128db64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0|UARTNUM=4 UARTALT=1 RX=AtmelPE5 TX=AtmelPE4|UARTNUM=5 RX=AtmelPG1 TX=AtmelPG0|UARTNUM=5 UARTALT=1 RX=AtmelPG5 TX=AtmelPG4"
 
 # All the I/O specs for *this* MCU
-readarray -td \| iospecs < <(printf '%s' "${mcuio[$mcu]}")
+setarray iospecs \| "${mcuio[$mcu]}"
 
 # Variation of autobaud on certain parts that can only detect fcpu/16, fcpu/32, fcpu/24, ...
 autovar=; [[ /atmega103/at43usb320/at90s2313/at90s2333/at90s4433/at90s4414/at90s8515/at90s4434/at90s8535/ =~ /$mcu/ ]] && autovar=2
+
 
 ####
 # Put human readable F_CPU into variable fcpunm
@@ -1040,7 +1047,7 @@ for fcpu in ${fcpus[@]}; do
     maxerr=maxioerror[x]
   fi
 
-  readarray -td / bauds < <(printf '%s' "${baud[$fcpu]}")
+  setarray bauds / "${baud[$fcpu]}"
   for b in ${bauds[@]}; do
     if [[ -n $baudlist && -z ${baudok[$b]} ]]; then
       continue
@@ -1127,10 +1134,15 @@ for fcpu in ${fcpus[@]}; do
 
           for ee in 0 1; do
 
-            readarray -td / brd < <(printf '%s' "$board")
+            setarray brd / "$board"
             for bb in ${brd[@]}; do
               bcfg=${bb#*:}
               bname=${bb%:*}
+
+              # Do not create STK500 b/loader with dual boot
+              if [[ $ur -eq 0 && $bcfg =~ DUAL ]]; then
+                continue;
+              fi
 
               for vbl in 0 1; do
                 # Do not generate hardware-supported bootloaders (vbl=0) for MCUs without HW boot sections
@@ -1192,7 +1204,7 @@ for fcpu in ${fcpus[@]}; do
                         hexdirs[$mdir]="$preamble"
                       fi
                       mv $hxn.{hex,out,elf,lst} "$mdir/"
-                      readarray -td , brdali < <(printf '%s' "$bname")
+                      setarray brdali , "$bname"
                       for ba in ${brdali[@]}; do
                         if [[ $ba != none && $ba != dual ]]; then
                           # Make bootloader available under boards/cores directories, too
@@ -1236,7 +1248,7 @@ if [[ $run -eq 1 ]]; then
       if [[ -n ${hexassoc[$hxnoee]} ]]; then
         if [[ ${hexuse[$hxn]} -le ${hexuse[$hxnoee]} ]]; then
           if [[ ${hexprotect[$hxn]} == ${hexprotect[$hxnoee]} ]]; then
-            readarray -td \| torm < <(printf '%s' "${hexassoc[$hxnoee]}")
+            setarray torm \| "${hexassoc[$hxnoee]}"
             for tormfn in ${torm[@]}; do
               rm $tormfn.{hex,lst,elf,out}
             done
@@ -1257,7 +1269,7 @@ if [[ $run -eq 1 ]]; then
       hxvbl=${hxhard//_hw/}
       if [[ -n ${hexassoc[$hxvbl]} ]]; then
         if [[ ${hexuse[$hxhard]} -le ${hexuse[$hxvbl]} ]]; then
-          readarray -td \| torm < <(printf '%s' "${hexassoc[$hxvbl]}")
+          setarray torm \| "${hexassoc[$hxvbl]}"
           for tormfn in ${torm[@]}; do
             rm $tormfn.{hex,lst,elf,out}
           done
@@ -1273,7 +1285,7 @@ if [[ $run -eq 1 ]]; then
   # Copy equivalent bootloaders over from ${equivalent[$combo]} to $combo
   for combo in ${!equivalent[@]}; do
     # echo Copy $combo from ${equivalent[$combo]}
-    readarray -td / fcpubd < <(printf '%s' "${equivalent[$combo]}")
+    setarray fcpubd / "${equivalent[$combo]}"
     mkfcpunm ${fcpubd[0]} +
     mkbaudnm ${fcpubd[1]} +
     ftype=${fcpubd[2]}
@@ -1281,7 +1293,7 @@ if [[ $run -eq 1 ]]; then
     chbaud=$baudnm
     srcdir="${ftypedir[$ftype]}+${fcpunm}_Hz/br+${baudnm}_bps"
 
-    readarray -td / fcpubd < <(printf '%s' "$combo")
+    setarray fcpubd / "$combo"
     mkfcpunm ${fcpubd[0]} +
     mkbaudnm ${fcpubd[1]} +
     dstdir="${ftypedir[$ftype]}+${fcpunm}_Hz/br+${baudnm}_bps"
