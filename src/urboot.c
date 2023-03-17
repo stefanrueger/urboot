@@ -40,6 +40,7 @@
  *  - ATtiny2313
  *  - ATtiny1634
  *  - ATtiny841
+ *  - ATtiny13A
  *
  * Unsupported (without ever planning to support them)
  *  - AVRtiny core (ATtiny4, ATtiny5, ATtiny9, ATtiny10, ATtiny20, ATtiny40, ATtiny102, ATtiny104)
@@ -60,16 +61,16 @@
  *   atmega165a atmega165p atmega165pa atmega168 atmega168a atmega168p atmega168pa atmega168pb
  *   atmega169 atmega169a atmega169p atmega169pa atmega16a atmega16hva atmega16hva2 atmega16hvb
  *   atmega16hvbrevb atmega16m1 atmega16u2 atmega16u4 atmega2561 atmega2564rfr2 atmega256rfr2
- *   atmega32 atmega323 atmega324a atmega324p atmega324pa atmega324pb atmega325 atmega3250 atmega3250a
- *   atmega3250p atmega3250pa atmega325a atmega325p atmega325pa atmega328 atmega328pb atmega329
- *   atmega3290 atmega3290a atmega3290p atmega3290pa atmega329a atmega329p atmega329pa atmega32a
- *   atmega32c1 atmega32hvb atmega32hvbrevb atmega32m1 atmega32u2 atmega32u4 atmega32u6 atmega406
- *   atmega48 atmega48a atmega48p atmega48pa atmega48pb atmega64 atmega640 atmega644 atmega644a
- *   atmega644p atmega644pa atmega644rfr2 atmega645 atmega6450 atmega6450a atmega6450p atmega645a
- *   atmega645p atmega649 atmega6490 atmega6490a atmega6490p atmega649a atmega649p atmega64a
- *   atmega64c1 atmega64hve atmega64hve2 atmega64m1 atmega64rfr2 atmega8 atmega8515 atmega8535
- *   atmega88 atmega88a atmega88p atmega88pa atmega88pb atmega8a atmega8hva atmega8u2 attiny13
- *   attiny13a attiny2313a attiny24 attiny24a attiny25 attiny261 attiny261a attiny4313 attiny43u
+ *   atmega32 atmega323 atmega324a atmega324p atmega324pa atmega324pb atmega325 atmega3250
+ *   atmega3250a atmega3250p atmega3250pa atmega325a atmega325p atmega325pa atmega328 atmega328pb
+ *   atmega329 atmega3290 atmega3290a atmega3290p atmega3290pa atmega329a atmega329p atmega329pa
+ *   atmega32a atmega32c1 atmega32hvb atmega32hvbrevb atmega32m1 atmega32u2 atmega32u4 atmega32u6
+ *   atmega406 atmega48 atmega48a atmega48p atmega48pa atmega48pb atmega64 atmega640 atmega644
+ *   atmega644a atmega644p atmega644pa atmega644rfr2 atmega645 atmega6450 atmega6450a atmega6450p
+ *   atmega645a atmega645p atmega649 atmega6490 atmega6490a atmega6490p atmega649a atmega649p
+ *   atmega64a atmega64c1 atmega64hve atmega64hve2 atmega64m1 atmega64rfr2 atmega8 atmega8515
+ *   atmega8535 atmega88 atmega88a atmega88p atmega88pa atmega88pb atmega8a atmega8hva atmega8u2
+ *   attiny13 attiny2313a attiny24 attiny24a attiny25 attiny261 attiny261a attiny4313 attiny43u
  *   attiny44 attiny441 attiny44a attiny45 attiny461 attiny461a attiny48 attiny828 attiny84
  *   attiny84a attiny861 attiny861a
  *
@@ -1910,12 +1911,12 @@ unsigned const int __attribute__ ((section(".version"))) urboot_version[] = {
 
 
 
-// Normal app start: jump to reset vector or dedicated VBL vector
+// Normal app start: jump to reset vector or dedicated VBL vector, reminding compiler mcusr needed
 #if FLASHin8k || FLASHWRAPS
 #define jmpToAppOpcode() asm("rjmp urboot_version+%0\n" :: \
-  "n"(sizeof urboot_version+appstart_vec_loc))
+  "n"(sizeof urboot_version+appstart_vec_loc), "r"(mcusr))
 #else
-#define jmpToAppOpcode() asm("jmp %0\n" :: "n"(appstart_vec_loc))
+#define jmpToAppOpcode() asm("jmp %0\n" :: "n"(appstart_vec_loc), "r"(mcusr))
 #endif
 
 
