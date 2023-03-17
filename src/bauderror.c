@@ -292,9 +292,17 @@ int main(int argc, char **argv) {
   if(verbose) {
     if(errstr)
       printf("The %s @ %ld Hz cannot create %s %ld baud: %s\n", mcu, f_cpu, mode, brate, errstr);
-    else
-      printf("The %s @ %ld Hz has a %s baud rate of %ld baud = %ld%+.2f%% baud.\n",
-        mcu, f_cpu, mode, gotbaud, brate, err);
+    else {
+      printf("The %s exhibits a %s baud rate quantisation error of %+.2f%% for this F_CPU and baud rate combination.", mcu, mode, err);
+      if(fabs(100*err) >= 0.5) {
+        printf(" Assuming perfect F<sub>CPU</sub>, the actual baud rate is therefore %.2f%% %s than wanted."
+          " An overall deviation (including that of the oscillator and that of the uploading computer)"
+          " of up to 1.5%% is well within communication tolerance."
+          " In practice, up to 2.5%% deviation is likely to work with short cables and benign line noise.",
+          fabs(err), err > 0? "higher": "lower");
+      }
+      printf("\n");
+    }
   } else if(ppt)
     printf("%ld\n", lround(10*err));
   else if(ppm)
