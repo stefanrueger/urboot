@@ -2318,7 +2318,7 @@ void putch(char chr) {
 #if defined(SWIO_STOP_BITS) && SWIO_STOP_BITS > 0
   uint8_t bitcount=9+SWIO_STOP_BITS; // Start bit, 8 data bits, n stop bits
 #else
-  uint8_t bitcount=10;          // Start bit, 8 data bits, stop bit
+  uint8_t bitcount=10;          // Start bit, 8 data bits, 1 stop bit
 #endif
   asm volatile(
     "   com %[chr]\n"           // One's complement
@@ -2337,10 +2337,7 @@ void putch(char chr) {
     "   lsr %[chr]\n"           // Push lsb into carry, on empty byte carry is clear (stop bit)
     "   dec %[bitcnt]\n"
     "   brne 1b\n"
-
-#if FLASHabove8k
-    "   ret\n"                  // When ret is removed putch() increases the length of the last
-#endif                          // stop bit by ~ 0.9 bits (depends on F_CPU/BAUD_RATE)
+    "   ret\n"
 
   "bitDelay: \n"
 #if B_EXTRA & 1
