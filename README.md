@@ -65,9 +65,9 @@ for example, autobaud bootloaders for the venerable ATmega328P based
 ATmega1284P based [Moteino Mega](https://github.com/stefanrueger/urboot.hex/tree/main/boards/moteinomega/autobaud/README.md) and the
 ATmega2560 [Mega R3 board](https://github.com/stefanrueger/urboot.hex/tree/main/boards/mega-r3/autobaud/README.md); or, eg, some
 16 MHz and 115,200 baud bootloaders for the
-[ATtiny167 based Digispark Pro](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark-pro/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/README.md), the
-[ATtiny85 based Disgispark](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/README.md) and the
-[ATtiny84 based Luminet](https://github.com/stefanrueger/urboot.hex/tree/main/boards/luminet/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/README.md).
+[ATtiny167 based Digispark Pro](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark-pro/external_oscillator/fcpu_16m0x/br_+115k2/README.md), the
+[ATtiny85 based Disgispark](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark/external_oscillator/fcpu_16m0x/br_+115k2/README.md) and the
+[ATtiny84 based Luminet](https://github.com/stefanrueger/urboot.hex/tree/main/boards/luminet/external_oscillator/fcpu_16m0x/br_+115k2/README.md).
 Finally, there are pre-compiled urboot bootloaders for popular Arduino cores in the
 [cores](https://github.com/stefanrueger/urboot.hex/tree/main/cores) directory of the
 [urboot.hex](https://github.com/stefanrueger/urboot.hex) repository.
@@ -168,14 +168,14 @@ for all `F_CPU` and a range of associated baudrates.
 
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|212|224|u7.7|`w-u-jpr--`|[urboot+attiny2313_uart0_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+attiny2313+16m0000x++115k2_uart0_rxd0_txd1_lednop.hex)|
-|256|256|u7.7|`w-u-jPra-`|[urboot+attiny2313+autobaud_uart0_rxd0_txd1_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/autobaud/urboot+attiny2313+autobaud_uart0_rxd0_txd1_lednop_fr.hex)|
-|242|256|u7.7|`w-u-jPr--`|[urboot+atmega328p_uart0_led+b5.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+atmega328p+16m0000x++115k2_uart0_rxd0_txd1_led+b5.hex)|
-|368|384|u7.7|`weu-jPrac`|[urboot+atmega328p+autobaud_uart0_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot+atmega328p+autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce.hex)|
-|438|512|u7.7|`wes-hpr-c`|[urboot+atmega328p_uart0_ee_led+b5_fr_ce_stk500_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+atmega328p+16m0000x++115k2_uart0_rxd0_txd1_ee_led+b5_fr_ce_stk500_hw.hex)|
-|454|512|u7.7|`wes-hprac`|[urboot+atmega328p+autobaud_uart0_ee_led+b5_fr_ce_stk500_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot+atmega328p+autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce_stk500_hw.hex)|
+|212|224|u7.7|`w-u-jpr--`|[urboot_attiny2313_uart0_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/external_oscillator/fcpu_16m0x/br_+115k2/urboot_attiny2313_16m0x_+115k2_uart0_rxd0_txd1_lednop.hex)|
+|256|256|u7.7|`w-u-jPra-`|[urboot_attiny2313_autobaud_uart0_rxd0_txd1_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/autobaud/urboot_attiny2313_autobaud_uart0_rxd0_txd1_lednop_fr.hex)|
+|242|256|u7.7|`w-u-jPr--`|[urboot_atmega328p_uart0_led+b5.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/external_oscillator/fcpu_16m0x/br_+115k2/urboot_atmega328p_16m0x_+115k2_uart0_rxd0_txd1_led+b5.hex)|
+|368|384|u7.7|`weu-jPrac`|[urboot_atmega328p_autobaud_uart0_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot_atmega328p_autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce.hex)|
+|438|512|u7.7|`wes-hpr-c`|[urboot_atmega328p_uart0_ee_led+b5_fr_ce_stk500_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/external_oscillator/fcpu_16m0x/br_+115k2/urboot_atmega328p_16m0x_+115k2_uart0_rxd0_txd1_ee_led+b5_fr_ce_stk500_hw.hex)|
+|454|512|u7.7|`wes-hprac`|[urboot_atmega328p_autobaud_uart0_ee_led+b5_fr_ce_stk500_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot_atmega328p_autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce_stk500_hw.hex)|
 |474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
-|494|512|u7.7|`weudhprac`|[urboot+urclockusb+autobaud_uart0_ee_led+d5_csb0_dual_fr_ce_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/boards/urclockusb/autobaud/urboot+urclockusb+autobaud_uart0_rxd0_txd1_ee_led+d5_csb0_dual_fr_ce_hw.hex)|
+|494|512|u7.7|`weudhprac`|[urboot_urclockusb_autobaud_uart0_ee_led+d5_csb0_dual_fr_ce_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/boards/urclockusb/autobaud/urboot_urclockusb_autobaud_uart0_rxd0_txd1_ee_led+d5_csb0_dual_fr_ce_hw.hex)|
 |710|1024|o8.3|`-es-h-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex)|
 
 - **Size:** Bootloader code size including small table at top end
