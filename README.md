@@ -146,7 +146,7 @@ board and followed above but programming does not work as expected?
    communication, but if the board lacks the hardware for that, it needs to be reset manually
    before programming: *First* press the reset button of the board and release it; *then* start
    avrdude by pressing enter of the previously typed command line within the `WDTO` time (typically
-   one seconds).
+   one second).
  - Ensure neither the actual F_CPU nor the used baud rate deviates by more than 1%
     + Does the bootloader match the actual F_CPU frequency? Check the crystal on the board and/or
       the board documentation. Has the `CKDIV8` fuse been programmed? In that case the MCU runs

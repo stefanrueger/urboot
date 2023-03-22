@@ -22,6 +22,7 @@ Option:
 END
 }
 
+shopt -s extglob
 
 # Maximum allowed UART/SWIO baud rate quantisation errors in ppm (22000 is 2.2%)
 declare -A maxioerror
@@ -32,7 +33,7 @@ maxioerror[i]=4999
 
 declare -A ftypedir
 ftypedir[x]=external_oscillator/fcpu
-ftypedir[i]=internal_oscillator/fint
+ftypedir[i]=internal_oscillator/fcpu
 
 run=1
 mcu_bls=mcus
@@ -89,10 +90,6 @@ setarray(){ declare -n a=$1; local IFS=$2 -; set -f; a=($3); }
 #
 
 # Map F_CPU to baud rates: compile for these combinations
-# Some are redundant: eg, 16 MHz @ 115200 baud is the same as 8 MHz @ 57600 baud
-declare -A baud
-
-# Map F_CPU to baud rates: compile for these combinations
 # Many are redundant: eg, 16 MHz @ 115200 baud is the same as 8 MHz @ 57600 baud
 declare -A baud
 
@@ -113,7 +110,7 @@ allbauds=115200/76800/57600/38400/28800/19200/14400/9600/7200/4800/2400/1800/120
 
 baud[auto]=auto
 for fcpu in ${fcpus[@]}; do
-  if [[ $fcpu == *+[0-9] ]]; then baud[$fcpu]=$allbauds; else baud[$fcpu]=$extbauds/$allbauds; fi
+  if [[ $fcpu == *+[0-8] ]]; then baud[$fcpu]=$allbauds; else baud[$fcpu]=$extbauds/$allbauds; fi
 done
 
 # Remove computation for F_CPU values not mentioned in -f
@@ -952,18 +949,15 @@ setarray iospecs \| "${mcuio[$mcu]}"
 # Variation of autobaud on certain parts that can only detect fcpu/16, fcpu/32, fcpu/24, ...
 autovar=; [[ /atmega103/at43usb320/at90s2313/at90s2333/at90s4433/at90s4414/at90s8515/at90s4434/at90s8535/ =~ /$mcu/ ]] && autovar=2
 
-
 ####
 # Put human readable F_CPU into variable fcpunm
 #
 mkfcpunm() {
   local frq="$1";
   while [[ ${#frq} -lt 7 ]]; do frq="0$frq"; done
-  if [[ ${frq: -2} == 00 ]]; then
-    frq="${frq::-6}m${frq: -6:-2}"
-  else
-    frq="${frq::-6}m${frq: -6}"
-  fi
+  frq="${frq::-6}m${frq: -6}"
+  frq="${frq%%+(0)}"
+  [[ ${frq: -1} == m ]] && frq=${frq}0
   [[ $1 -lt 10000000 ]] && frq="$2$frq"
   fcpunm="$frq"
 }
@@ -1002,9 +996,9 @@ mkfilename() {
   swio="${swio%"${swio##*[![:space:]]}"}"  # Remove trailing whitespace
   swio=${swio,,}
   if [[ $2 == auto* ]]; then
-    filename="urboot+$1+autobaud$autovar$swio"
+    filename="urboot_$1_autobaud$autovar$swio"
   else
-    filename="urboot+$1+$2+$3$swio"
+    filename="urboot_$1_$2_$3$swio"
   fi
   [[ $5 -eq 1 ]] && filename+=_ee
   # Do not makes LEDs part of filename for FRILLS=0
@@ -1014,6 +1008,9 @@ mkfilename() {
   [[ $6 -eq 0 ]] && filename+=_stk500
   [[ $4 -eq 0 ]] && filename+=_hw
 }
+
+
+alphabet=({a..z})
 
 declare -A duplicate
 declare -A hexuse
@@ -1036,7 +1033,7 @@ for fcpu in ${fcpus[@]}; do
   if [[ $fcpu == auto ]]; then
     fbase=16000000
     fcpunm=auto
-  elif [[ $fcpu == *+[0-9] ]]; then
+  elif [[ $fcpu == *+[0-8] ]]; then
      # 9600000+4 means loop F_cpu from F_cpu-4% to F_cpu+4%
     ftype=i
     fbase=${fcpu%??}
@@ -1063,34 +1060,41 @@ for fcpu in ${fcpus[@]}; do
       continue
     fi
 
+    [[ $fcpu != auto ]] && mkfcpunm $fbase +
     for (( df=-$ndf; df<=$ndf; df++ )); do
       thisfcpu=$(($fbase + $df*$fbase/100))
-      [[ $fcpu != auto ]] && mkfcpunm $thisfcpu +
 
       preamble="$mcu"
       if [[ $b == auto ]]; then
         br=AUTOBAUD=1
+        fchr=""
         preamble="Note that autobaud bootloaders normally can only detect host baud rates = f/8, f/16, ... f/2048 +/- 1.5%, where f=F<sub>CPU</sub>."
         preamble+=" Internal oscillators have a high unknown deviation: baud rates under f/260 are recommended for these."
         mdir="$topmdir/autobaud"
         bdir="$topbdir/autobaud"
         cdir="$topcdir/autobaud"
       else
+        br=BAUD_RATE=$b
+        # fcpu characterisation x (external) or j-4 (internal -4%) ... r+4 (internal +4%)
+        fchr=x;
+        if [[ $ftype == i && $df == 0 ]]; then
+          fchr=i
+        elif [[ $ftype == i ]]; then
+          fchr=${alphabet[$((8+$df))]}$(printf "%+d" $df)
+        fi
+        mkbaudnm $b +
+        mdir="$topmdir/${ftypedir[$ftype]}_${fcpunm}$fchr/br_${baudnm}"
+        bdir="$topbdir/${ftypedir[$ftype]}_${fcpunm}$fchr/br_${baudnm}"
+        cdir="$topcdir/${ftypedir[$ftype]}_${fcpunm}$fchr/br_${baudnm}"
         # Can this F_CPU/baud rate combo later be created from an existing one?
-        # Bootloaders are the same (unless -DDEBUG_FREQ is used) if quotient $thisfcpu/$b is the same
-        div=$((100*$thisfcpu/$b))/$ftype
+        # Bootloaders are the same (unless -DDEBUG_FREQ is used) if quotient $fbase/$b is the same
+        div=$((100*$fbase/$b))/$fchr
         if [[ -z ${divseen[$div]} ]]; then
-          divseen[$div]=$thisfcpu/$b/$ftype/
+          divseen[$div]=$fbase/$b/$fchr/
         else
-          equivalent[$thisfcpu/$b/$ftype/]=${divseen[$div]}
+          equivalent[$fbase/$b/$fchr/]=${divseen[$div]}
           continue
         fi
-
-        mkbaudnm $b +
-        mdir="$topmdir/${ftypedir[$ftype]}+${fcpunm}_Hz/br+${baudnm}_bps"
-        bdir="$topbdir/${ftypedir[$ftype]}+${fcpunm}_Hz/br+${baudnm}_bps"
-        cdir="$topcdir/${ftypedir[$ftype]}+${fcpunm}_Hz/br+${baudnm}_bps"
-        br=BAUD_RATE=$b
       fi
 
       for io in "${iospecs[@]}"; do
@@ -1163,7 +1167,7 @@ for fcpu in ${fcpus[@]}; do
                     continue;
                   fi
 
-                  mkfilename $mcu $fcpunm$ftype "$baudnm" $vbl $ee $ur $f "$bcfg" "$thisio"
+                  mkfilename $mcu $fcpunm$fchr "$baudnm" $vbl $ee $ur $f "$bcfg" "$thisio"
                   args="MCU=$mcu F_CPU=${thisfcpu}L $br $thisio VBL=$vbl EEPROM=$ee ${bcfg//_/ } URPROTOCOL=$ur FRILLS=$f MOVETO=$filename"
                   if [[ $run -eq 1 ]]; then
                     make $args >& $filename.out
@@ -1288,15 +1292,16 @@ if [[ $run -eq 1 ]]; then
     setarray fcpubd / "${equivalent[$combo]}"
     mkfcpunm ${fcpubd[0]} +
     mkbaudnm ${fcpubd[1]} +
-    ftype=${fcpubd[2]}
+    fchr=${fcpubd[2]}
+    ftype=${fchr::1}; [[ $ftype != x ]] && ftype=i
     chfcpu=$fcpunm
     chbaud=$baudnm
-    srcdir="${ftypedir[$ftype]}+${fcpunm}_Hz/br+${baudnm}_bps"
+    srcdir="${ftypedir[$ftype]}_${fcpunm}$fchr/br_${baudnm}"
 
     setarray fcpubd / "$combo"
     mkfcpunm ${fcpubd[0]} +
     mkbaudnm ${fcpubd[1]} +
-    dstdir="${ftypedir[$ftype]}+${fcpunm}_Hz/br+${baudnm}_bps"
+    dstdir="${ftypedir[$ftype]}_${fcpunm}$fchr/br_${baudnm}"
 
     for dd in  ${!topdirs[@]}; do
       if [[ -d "$dd/$srcdir" ]]; then
@@ -1309,10 +1314,10 @@ if [[ $run -eq 1 ]]; then
         fi
         for src in "$dd/$srcdir"/*; do
           if [[ -r "$src" ]]; then
-            dst=${src//+$chfcpu/+$fcpunm}
-            dst=${dst//+$chbaud/+$baudnm}
+            dst=${src//_$chfcpu/_$fcpunm}
+            dst=${dst//_$chbaud/_$baudnm}
             if [[ ! -r "$dst" ]]; then
-              cp -a "$src" "$dst"
+              ln "$src" "$dst"
             fi
           fi
         done

@@ -8,7 +8,7 @@ for a 16 MHz MCU and 115,200 baud serial communication speed, except where noted
 
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|214|224|u7.7|`w-u-jpr--`|[urboot+attiny2313+16m0000x++115k2_uart0_rxd0_txd1_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+attiny2313+16m0000x++115k2_uart0_rxd0_txd1_lednop.hex)|
+|212|224|u7.7|`w-u-jpr--`|[urboot+attiny2313+16m0000x++115k2_uart0_rxd0_txd1_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+attiny2313+16m0000x++115k2_uart0_rxd0_txd1_lednop.hex)|
 |238|256|u7.7|`w-u-hpr--`|[urboot+atmega16a+16m0000x++115k2_uart0_rxd0_txd1_lednop_fr_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega16a/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+atmega16a+16m0000x++115k2_uart0_rxd0_txd1_lednop_fr_hw.hex)|
 |242|256|u7.7|`w-u-hpr--`|[urboot+atmega88a+16m0000x++115k2_uart0_rxd0_txd1_lednop_fr_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega88a/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+atmega88a+16m0000x++115k2_uart0_rxd0_txd1_lednop_fr_hw.hex)|
 |242|256|u7.7|`w-u-hpr--`|[urboot+atmega168a+16m0000x++115k2_uart0_rxd0_txd1_lednop_fr_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega168a/external_oscillator/fcpu+16m0000_Hz/br++115k2_bps/urboot+atmega168a+16m0000x++115k2_uart0_rxd0_txd1_lednop_fr_hw.hex)|
