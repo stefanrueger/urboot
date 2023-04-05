@@ -9,7 +9,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.1
- * 04.03.2023
+ * 05.04.2023
  *
  */
 
@@ -274,6 +274,9 @@
 #elif defined(__AVR_ATmega103__)
 #define __AVR_DEVICE_NAME__ atmega103
 
+#elif defined(__AVR_ATmega103comp__)
+#define __AVR_DEVICE_NAME__ atmega103comp
+
 #elif defined(__AVR_ATmega128__)
 #define __AVR_DEVICE_NAME__ atmega128
 
@@ -288,6 +291,9 @@
 
 #elif defined(__AVR_ATmega161__)
 #define __AVR_DEVICE_NAME__ atmega161
+
+#elif defined(__AVR_ATmega161comp__)
+#define __AVR_DEVICE_NAME__ atmega161comp
 
 #elif defined(__AVR_ATmega162__)
 #define __AVR_DEVICE_NAME__ atmega162
@@ -553,6 +559,9 @@
 #elif defined(__AVR_AT90SCR100__)
 #define __AVR_DEVICE_NAME__ at90scr100
 
+#elif defined(__AVR_AT90SCR100H__)
+#define __AVR_DEVICE_NAME__ at90scr100h
+
 #elif defined(__AVR_AT90CAN128__)
 #define __AVR_DEVICE_NAME__ at90can128
 
@@ -607,11 +616,17 @@
 #elif defined(__AVR_AT90S8515__)
 #define __AVR_DEVICE_NAME__ at90s8515
 
+#elif defined(__AVR_AT90S8515comp__)
+#define __AVR_DEVICE_NAME__ at90s8515comp
+
 #elif defined(__AVR_AT90C8534__)
 #define __AVR_DEVICE_NAME__ at90c8534
 
 #elif defined(__AVR_AT90S8535__)
 #define __AVR_DEVICE_NAME__ at90s8535
+
+#elif defined(__AVR_AT90S8535comp__)
+#define __AVR_DEVICE_NAME__ at90s8535comp
 
 #elif defined(__AVR_AT94K__)
 #define __AVR_DEVICE_NAME__ at94k

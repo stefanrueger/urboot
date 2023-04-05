@@ -9,7 +9,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.1
- * 04.03.2023
+ * 05.04.2023
  *
  */
 
@@ -360,6 +360,10 @@
 #define RAMSTART 0x0060
 #define RAMSIZE  0x0fa0
 
+#elif defined(__AVR_ATmega103comp__)
+#define RAMSTART     -1
+#define RAMSIZE      -1
+
 #elif defined(__AVR_ATmega128__)
 #define RAMSTART 0x0100
 #define RAMSIZE  0x1000
@@ -379,6 +383,10 @@
 #elif defined(__AVR_ATmega161__)
 #define RAMSTART 0x0060
 #define RAMSIZE  0x0400
+
+#elif defined(__AVR_ATmega161comp__)
+#define RAMSTART     -1
+#define RAMSIZE      -1
 
 #elif defined(__AVR_ATmega162__)
 #define RAMSTART 0x0100
@@ -732,6 +740,10 @@
 #define RAMSTART 0x0100
 #define RAMSIZE  0x1000
 
+#elif defined(__AVR_AT90SCR100H__)
+#define RAMSTART     -1
+#define RAMSIZE      -1
+
 #elif defined(__AVR_AT90CAN128__)
 #define RAMSTART 0x0100
 #define RAMSIZE  0x1000
@@ -804,6 +816,10 @@
 #define RAMSTART 0x0060
 #define RAMSIZE  0x0200
 
+#elif defined(__AVR_AT90S8515comp__)
+#define RAMSTART     -1
+#define RAMSIZE      -1
+
 #elif defined(__AVR_AT90C8534__)
 #define RAMSTART 0x0060
 #define RAMSIZE  0x0100
@@ -811,6 +827,10 @@
 #elif defined(__AVR_AT90S8535__)
 #define RAMSTART 0x0060
 #define RAMSIZE  0x0200
+
+#elif defined(__AVR_AT90S8535comp__)
+#define RAMSTART     -1
+#define RAMSIZE      -1
 
 #elif defined(__AVR_AT94K__)
 #define RAMSTART 0x0060

@@ -9,7 +9,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.2
- * 04.03.2023
+ * 05.04.2023
  *
  */
 
@@ -120,11 +120,13 @@
 #define id_atmega88pa       82u
 #define id_atmega88pb       83u
 #define id_atmega103        84u
+#define id_atmega103comp   374u
 #define id_atmega128        85u
 #define id_atmega128a       86u
 #define id_atmega128rfa1    87u
 #define id_atmega128rfr2    88u
 #define id_atmega161        89u
+#define id_atmega161comp   375u
 #define id_atmega162        90u
 #define id_atmega163        91u
 #define id_atmega164a       92u
@@ -213,6 +215,7 @@
 #define id_at90pwm81       173u
 #define id_at90usb82       174u
 #define id_at90scr100      175u
+#define id_at90scr100h     376u
 #define id_at90can128      176u
 #define id_at90pwm161      177u
 #define id_at90usb162      178u
@@ -231,8 +234,10 @@
 #define id_at90s4433       191u
 #define id_at90s4434       192u
 #define id_at90s8515       193u
+#define id_at90s8515comp   377u
 #define id_at90c8534       194u
 #define id_at90s8535       195u
+#define id_at90s8535comp   378u
 #define id_at94k           196u
 #define id_ata5272         197u
 #define id_ata5505         198u

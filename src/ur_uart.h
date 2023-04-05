@@ -10,7 +10,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.0
- * 04.03.2023
+ * 05.04.2023
  *
  */
 
@@ -1371,6 +1371,14 @@
 #define B_RXB8n               1
 #define B_TXB8n               0
 
+#elif defined(__AVR_ATmega103comp__) || defined(__AVR_ATmega161comp__) || \
+  defined(__AVR_AT43USB355__) || defined(__AVR_AT76C711__) || defined(__AVR_AT89S51__) || \
+  defined(__AVR_AT89S52__) || defined(__AVR_AT90S8515comp__) || defined(__AVR_AT90S8535comp__) || \
+  defined(__AVR_ATA6289__)
+
+#define UR_UARTTYPE UR_UARTTYPE_UNKNOWN
+#define UR_NUMUARTS           0
+
 #elif defined(__AVR_ATmega161__)
 
 #define UR_UARTTYPE UR_UARTTYPE_CLASSIC
@@ -2449,12 +2457,6 @@
 #define B_RXB8n               1
 #define B_TXB8n               0
 
-#elif defined(__AVR_AT43USB355__) || defined(__AVR_AT76C711__) || defined(__AVR_AT89S51__) || \
-  defined(__AVR_AT89S52__) || defined(__AVR_ATA6289__)
-
-#define UR_UARTTYPE UR_UARTTYPE_UNKNOWN
-#define UR_NUMUARTS           0
-
 #elif defined(__AVR_AT90PWM2__) || defined(__AVR_AT90PWM2B__) || defined(__AVR_AT90PWM3__) || \
   defined(__AVR_AT90PWM3B__) || defined(__AVR_AT90PWM216__) || defined(__AVR_AT90PWM316__)
 
@@ -2651,7 +2653,7 @@
 #define C_UCSZn0              1
 #define C_UCPOLn              0
 
-#elif defined(__AVR_AT90SCR100__)
+#elif defined(__AVR_AT90SCR100__) || defined(__AVR_AT90SCR100H__)
 
 #define UR_UARTTYPE UR_UARTTYPE_CLASSIC
 #define UR_NUMUARTS           1

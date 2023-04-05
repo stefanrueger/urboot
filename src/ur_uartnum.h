@@ -13,7 +13,7 @@
  * encode and set the upper 4 bit of the register UBRRHI that is shared with UBRR0H.
  *
  * v 1.0
- * 04.03.2023
+ * 05.04.2023
  *
  */
 
@@ -1803,7 +1803,7 @@
 #warning UARTNUM value not recognised
 #endif
 
-#elif defined(__AVR_AT90SCR100__)
+#elif defined(__AVR_AT90SCR100__) || defined(__AVR_AT90SCR100H__)
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
