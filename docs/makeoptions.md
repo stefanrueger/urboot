@@ -25,7 +25,7 @@ all bootloader generation options can be put on the command line for make withou
 example, issuing the command
 
 ```
- $ make MCU=attiny45 F_CPU=123456L SWIO=1 RX=AtmelPB0 TX=AtmelPB1 MOVETO=myboard
+ $ make MCU=attiny45 F_CPU=123456L SWIO=1 RX=AtmelPB0 TX=AtmelPB1 NAME=myboard
 ```
 
 creates a bootloader file `myboard.hex` for a board with the MCU ATtiny45 and the CPU frequency
@@ -48,14 +48,15 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
     option `AUTOBAUD` is selected, the bootloader code needs to know the CPU frequency as the
     serial communication baud rate is derived from it.
 
- - `MOVETO=<name>`
+ - `NAME=<name>`
 
    This is a make-only option that determines the base name of the three files that `make` creates:
      + `<name>.hex` is an Intel hex file of the bootloader
      + `<name>.elf` is the executable and linkable format file
      + `<name>.lst` is a crude ASCII listing of an assembler file
 
-   In absence of this option `make` invents its own name that may or may not be agreeable.
+   In absence of this option `make` invents its own name that may or may not be agreeable. For backward
+   compatibility `MOVETO=<name>` does the same thing.
 
 ## Serial communication
 
@@ -512,6 +513,16 @@ The options below are frills, ie, not really essential for the functionality of 
    |`BLINK`      | `FRILLS >= 1` |
 
 
+ - `AUTOFRILLS=<level-list>`
+
+   In absence of `FRILLS=<level>`, this option asks `urboot-gcc` to try out the first `<level>`
+   of the comma-separated `<level-list>` of `FRILLS` levels, to then determine the
+   the highest `FRILLS` level of the list that fits into the usage occupied by the first level.
+   For example `AUTOFRILLS=0,7,6,1,2,3,4` first determines the space usage of a bootloader with
+   `FRILLS=0` and then figures out which of the other `FRILLS` levels also fit into that space.
+   The finally compiled bootloader uses the biggest of these. This option is only seen by
+   the `avr-gcc` wrapper `urboot-gcc` and not passed on to the actual compiler.
+
 
 ## Debug options
 
@@ -722,16 +733,16 @@ $ hexls --sort -*.hex
 ### Generating bootloaders with `make`
 
 ```
-make MCU=attiny2313 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=2 VBL_VECT_NUM=EEPROM_READY_vect_num MOVETO=attiny2313_min
-make MCU=atmega328p URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=6 MOVETO=atmega328p_min
-make MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=3 MOVETO=atmega328p_amin
-make MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 MOVETO=atmega328p_autobaud_ur
-make MCU=atmega328p URPROTOCOL=1 VBL=1 FRILLS=7 MOVETO=atmega328p_ur
-make MCU=atmega328p F_CPU=8000000L URPROTOCOL=1 SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 FRILLS=7 MOVETO=atmega328p_8000khz_swio_ur
-make MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 VBL=1 LED=AtmelPB5 FRILLS=7 MOVETO=promini_led13_ur
-make MCU=atmega168 F_CPU=8000000L URPROTOCOL=1 SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 FRILLS=7 MOVETO=lilypad_ur
-make MCU=atmega2560 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=3 MOVETO=atmega2560_min
-make MCU=atmega2560 URPROTOCOL=1 VBL=1 FRILLS=7 MOVETO=atmega2560_ur
+make MCU=attiny2313 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=2 VBL_VECT_NUM=EEPROM_READY_vect_num NAME=attiny2313_min
+make MCU=atmega328p URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=6 NAME=atmega328p_min
+make MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=3 NAME=atmega328p_amin
+make MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=atmega328p_autobaud_ur
+make MCU=atmega328p URPROTOCOL=1 VBL=1 FRILLS=7 NAME=atmega328p_ur
+make MCU=atmega328p F_CPU=8000000L URPROTOCOL=1 SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 FRILLS=7 NAME=atmega328p_8000khz_swio_ur
+make MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 VBL=1 LED=AtmelPB5 FRILLS=7 NAME=promini_led13_ur
+make MCU=atmega168 F_CPU=8000000L URPROTOCOL=1 SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 FRILLS=7 NAME=lilypad_ur
+make MCU=atmega2560 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=3 NAME=atmega2560_min
+make MCU=atmega2560 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=atmega2560_ur
 ```
 
 ### Generating bootloaders with `urboot-gcc`
