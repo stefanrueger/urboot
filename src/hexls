@@ -5,8 +5,8 @@
 # published under GNU General Public License, version 3 (GPL-3.0)
 # author Stefan Rueger
 #
-# v 1.07
-# 12.03.2023
+# v 1.8
+# 7.04.2023
 # first version 16.07.2016
 #
 
@@ -55,33 +55,40 @@ my %feature = (
   '?'      => "  + `?` unable to tell from .hex file whether this feature is present\n",
   '.'      => "  + `.` unable to tell from .hex file whether this feature is present\n",
   '-'      => "  + `-` corresponding feature not present\n",
+  'wdto'   => "  + `%1` watchdog timeout, ie, time window for upload after external reset\n",
+  'xfcpu'  => "  + `x%1m%2` is F<sub>CPU</sub> of an external oscillator, here %1.%2 MHz\n",
+  'ifcpu'  => "  + `i%1m%2` is F<sub>CPU</sub> of an internal oscillator, here %1.%2 MHz\n",
+  '<fcpu'  => "  + `%1%2m%3` is F<sub>CPU</sub> of a too slow internal oscillator, here %2.%3 MHz - %p%\n",
+  '>fcpu'  => "  + `%1%2m%3` is F<sub>CPU</sub> of a too fast internal oscillator, here %2.%3 MHz + %p%\n",
   'fcpux+' => "  + `12m0x` is F<sub>CPU</sub> of an external oscillator, here 12.0 MHz\n",
   'fcpui+' => "  + `9m6i` is F<sub>CPU</sub> of an internal oscillator, here 9.6 MHz\n",
   'fcpupm' => "  + `8m0j+1` is F<sub>CPU</sub> of an internal oscillator varied by some percent, here 8 MHz + 1\%\n",
-  'baud+'  => "  + `115k2` shows the fixed baud rate of the bootloader: `115k2` means 115200 baud\n",
+  'baud+'  => "  + `%1k%2` shows the fixed communication baud rate, here %z%200 baud\n",
   'auto'   => "  + `autobaud` detects host baud rate f/8, f/16, f/24, ..., f/2048 (f=F<sub>CPU</sub>)\n",
   'auto2'  => "  + `autobaud2` detects host baud rate f/16, f/32, f/48, ..., f/4096 (f=F<sub>CPU</sub>)\n",
-  'dual'   => "  + `dual` boot both from external SPI flash memory and from serial interface\n",
+  'dual'   => "  + `dual` can upload from external SPI flash memory and from serial interface\n",
   'swio'   => "  + `swio` software I/O (not UART)\n",
-  'uart'   => "  + `uart0` UART number, in this case `0`\n",
+  'uart'   => "  + `uart%1` UART number\n",
   'alt'    => "  + `alt1` alternative RX/TX pin assignment\n",
   'rxtx'   => "  + `rxd0 txd1` I/O using, in this example, lines RX `D0` and TX `D1`\n",
-  'ee'     => "  + `ee` bootloader supports EEPROM read/write\n",
-  'led-b1' => "  + `led-b1` toggles an active-low LED on pin `B1`, `+` designates an active-high LED\n",
+  'led-b1' => "  + `led%1%2` toggles %s LED on pin `%u`\n",
   'led9'   => "  + `led9` toggles an LED on, in this example, Arduino pin 9\n",
   'ledPB1' => "  + `ledPB1` toggles an LED on, in this example, pin B1\n",
+  'no-led' => "  + `no-led` bootloader does not operate LEDs\n",
   'lednop' => "  + `lednop` is a template bootloader with `mov rx,rx` nops as placeholders for LED operations\n",
   'template'=>"  + `template` bootloaders contains `mov rx,rx` nops as placeholders for LED and CS operations\n",
-  'csb0'   => "  + `csb0` for dual boot uses, in this example, pin B0 as chip select of external SPI flash memory\n",
-  'cs8'    => "  + `cs8` for dual boot uses, in this example, Arduino pin 8 as chip select of external SPI flash memory\n",
-  'csPB0'  => "  + `csPB0` for dual boot uses, in this example, pin B0 as chip select of external SPI flash memory\n",
+  'csb0'   => "  + `cs%1` uses pin %u as chip select of external SPI flash memory for dual boot\n",
+  'cs8'    => "  + `cs8` uses Arduino pin 8 as chip select of external SPI flash memory for dual boot\n",
+  'csPB0'  => "  + `csPB0` boot uses pin B0 as chip select of external SPI flash memory for dual boot\n",
   'csnop'  => "  + `csnop` like `lednop` generates nops that can be replaced to toggle the correct CS pin\n",
+  'pr'     => "  + `pr` vector bootloader protecting the reset vector\n",
+  'ee'     => "  + `ee` bootloader supports EEPROM read/write\n",
   'fr'     => "  + `fr` bootloader provides non-essential code (\"frills\") for smoother error handling\n",
   'ce'     => "  + `ce` bootloader provides a chip erase command\n",
   'ur'     => "  + `ur` uses urprotocol and requires `avrdude -c urclock` for programming\n",
   'stk500' => "  + `stk500` uses deprecated STK500v1 protocol to communicate with bootloader\n",
   'vbl'    => "  + `vbl` vector bootloader: set fuses to jump to reset, not the HW boot section\n",
-  'hw'     => "  + `hw` hardware supported bootloader: set fuses to jump to the HW boot section, not to reset vector\n",
+  'hw'     => "  + `hw` hardware supported bootloader: set fuses to jump to the HW boot section, not to addr 0\n",
   'v2'     => "  + `v2` vector bootloader that patches application itself\n",
   'v3'     => "  + `v3` vector bootloader that patches application itself and skips verifying the first page\n",
   'fp9'    => "  + `fp9` for debugging the bootloader uses, eg, Arduino pin 9 to swing a signal of low frequency, eg, 50 Hz\n",
@@ -98,24 +105,80 @@ sub f {
   if(length($name) == 1) {
     $legend{$name} = 1;
   } else {
+    my ($p1, $p2, $p3);
+
+    if(($p1) = $name =~ /_([0-9]+m?s)_/) {
+      $legend{wdto} = 1;
+      $feature{wdto} =~ s/%1/$p1/g;
+    }
+    if(($p1, $p2) = $name =~ /_x([0-9]+)m([0-9]+)_/) {
+      $legend{xfcpu} = 1;
+      $feature{xfcpu} =~ s/%1/$p1/g;
+      $feature{xfcpu} =~ s/%2/$p2/g;
+    }
+    if(($p1, $p2) = $name =~ /_i([0-9]+)m([0-9]+)_/) {
+      $legend{ifcpu} = 1;
+      $feature{ifcpu} =~ s/%1/$p1/g;
+      $feature{ifcpu} =~ s/%2/$p2/g;
+    }
+    if(($p1, $p2, $p3) = $name =~ /_([a-h])([0-9]+)m([0-9]+)_/) {
+      $legend{'<fcpu'} = 1;
+      $feature{'<fcpu'} =~ s/%1/$p1/g;
+      $feature{'<fcpu'} =~ s/%2/$p2/g;
+      $feature{'<fcpu'} =~ s/%3/$p3/g;
+      $feature{'<fcpu'} =~ s/%n/$p3/g;
+      my $perc = ord('i')-ord($p1);
+      $feature{'<fcpu'} =~ s/%p/$perc/g;
+    }
+    if(($p1, $p2, $p3) = $name =~ /_([j-q])([0-9]+)m([0-9]+)_/) {
+      $legend{'>fcpu'} = 1;
+      $feature{'>fcpu'} =~ s/%1/$p1/g;
+      $feature{'>fcpu'} =~ s/%2/$p2/g;
+      $feature{'>fcpu'} =~ s/%3/$p3/g;
+      my $perc = ord($p1)-ord('i');
+      $feature{'>fcpu'} =~ s/%p/$perc/g;
+    }
     $legend{'fcpux+'} = 1 if $name =~ /[+_][0-9]+m[0-9]+x[+_]/;
     $legend{'fcpui+'} = 1 if $name =~ /[+_][0-9]+m[0-9]+i[+_]/;
     $legend{'fcpupm'} = 1 if $name =~ /[+_][0-9]+m[0-9]+[a-hj-q][+-][1-8]/;
-    $legend{'baud+'} = 1 if $name =~ /[+_][0-9]+k[0-9]+_/;
+    if(($p1, $p2) = $name =~ /[+_]([0-9]+)k([0-9]+)_/) {
+      $legend{'baud+'} = 1;
+      $feature{'baud+'} =~ s/%1/$p1/g;
+      $feature{'baud+'} =~ s/%2/$p2/g;
+      my $pz=$p1>0? $p1: "";
+      $feature{'baud+'} =~ s/%z/$pz/g;
+    }
     $legend{auto} = 1 if !$isauto2 && $name =~ /[_+]autobaud[_.]/;
     $legend{auto2} = 1 if ($isauto2 && $name =~ /[_+]autobaud[_.]/) || $name =~ /[_+]autobaud2[_.]/;
     $legend{template} = 1 if $name =~ /_template[_.]/;
     $legend{dual} = 1 if $name =~ /_dual[_.]/;
     $legend{rxtx} = 1 if $name =~ /_[rt]x[a-z][0-7][_.]/;
     $legend{swio} = 1 if $name =~ /_swio[_.]/;
-    $legend{uart} = 1 if $name =~ /_uart[0-9]/;
+    if(($p1) = $name =~ /_uart([0-9])/) {
+      $legend{uart} = 1;
+      $feature{uart} =~ s/%1/$p1/g;
+    }
     $legend{alt} = 1 if $name =~ /_alt[0-9]/;
     $legend{ee} = 1 if $name =~ /_ee[_.]/;
-    $legend{'led-b1'} = 1 if $name =~ /_led[+-][a-z][0-7][_.]/;
-    $legend{'ledPB1'} = 1 if $name =~ /_led[+-]P[A-Z][0-7][_.]/;
+    if(($p1, $p2) = $name =~ /_led([+-])([a-z][0-7])[_.]/) {
+      $legend{'led-b1'} = 1;
+      $feature{'led-b1'} =~ s/%1/$p1/g;
+      $feature{'led-b1'} =~ s/%2/$p2/g;
+      my $polarity = $p1 eq'+'? "an active-high (`+`)":  "an active-low (`-`)";
+      my $pin = uc $p2;
+      $feature{'led-b1'} =~ s/%s/$polarity/g;
+      $feature{'led-b1'} =~ s/%u/$pin/g;
+    }
+    $legend{ledPB1} = 1 if $name =~ /_led[+-]P[A-Z][0-7][_.]/;
+    $legend{'no-led'} = 1 if $name =~ /_no-led[_.]/;
     $legend{lednop} = 1 if $name =~ /_lednop[_.]/;
     $legend{led9} = 1 if $name =~ /_led[0-9]+[_.]/;
-    $legend{csb0} = 1 if $name =~ /_cs[a-z][0-7][_.]/;
+    if(($p1) = $name =~ /_cs([a-z][0-7])[_.]/) {
+      $legend{csb0} = 1;
+      $feature{csb0} =~ s/%1/$p1/g;
+      my $pin = uc $p1;
+      $feature{csb0} =~ s/%u/$pin/g;
+    }
     $legend{csnop} = 1 if $name =~ /_csnop[_.]/;
     $legend{cs8} = 1 if $name =~ /_cs[0-9]+[_.]/;
     $legend{csPB0} = 1 if $name	=~ /_csP[A-Z][0-7][_.]/;
@@ -123,6 +186,7 @@ sub f {
     $legend{fr} = 1 if $name =~ /_fr[_.]/;
     $legend{hw} = 1 if $name =~ /_hw[_.]/;
     $legend{stk500} = 1 if $name =~ /_stk500[_.]/;
+    $legend{pr} = 1 if $name =~ /_pr[_.]/;
     $legend{ce} = 1 if $name =~ /_ce[_.]/;
     $legend{ur} = 1 if $name =~ /[_]ur[_.]/;
     $legend{ddd} = 1 if $name =~ /_d[_.]/;
@@ -306,7 +370,7 @@ if(!$check) {
     print("|:-:|:-:|:-:|:-:|:--|\n");
   }
   for my $line (@rows) {
-    $line->[4] = sprintf("[%s]($md/%s)", $line->[4], $line->[4]) if defined($md) && $md ne "";
+    $line->[4] = sprintf("[%s](%s/%s)", $line->[4], $md, $line->[4]) if defined($md) && $md ne "";
     printf("$l%d$c%d$c%s$c$t%s$t$c%s$l\n", @{$line});
   }
   if(defined($md) && @rows) {
@@ -316,8 +380,9 @@ if(!$check) {
      "- **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version\n".
      "- **Features:**\n";
      print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p P r a c ? . -));
-     print "- **Hex file:** typically MCU name followed by, eg, F<sub>CPU</sub>, baud rate, I/O channels etc configuration\n";
-     print $feature{$_} for grep { $legend{$_} } (qw(fcpux+ fcpui+ fcpupm baud+ auto auto2 swio uart alt rxtx ee led-b1 led9 ledPB1 lednop csb0 cs8 csPB0 csnop template dual fp9 fr ce ur stk500 ddd dur adur v2 v3 vbl hw min));
+     print "- **Hex file:** often qualified by the MCU name and/or configuration\n";
+     print $feature{$_} for grep { $legend{$_} } (qw(wdto xfcpu ifcpu <fcpu >fcpu fcpux+ fcpui+ fcpupm baud+ auto auto2 swio uart alt rxtx
+       led-b1 led9 ledPB1 lednop no-led csb0 cs8 csPB0 csnop template dual fp9 pr ee ce fr vbl hw ur stk500 ddd dur adur v2 v3 min));
   }
 }
 
