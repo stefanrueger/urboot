@@ -48,26 +48,33 @@ with the corresponding ones in the directory
 taken, it is pretty easy to create own bootloaders with commands such as
 ```
  $ make MCU=atmega328p F_CPU=16000000L BAUD_RATE=115200 EEPROM=1 URPROTOCOL=1 \
-   LED=AtmelPB1 SFMCS=AtmelPB0 DUAL=1 FRILLS=7 MOVETO=moteino-dual
+   LED=AtmelPB1 SFMCS=AtmelPB0 DUAL=1 FRILLS=7 NAME=moteino-dual
 ```
 More detailed information here: [`make` options](https://github.com/stefanrueger/urboot/blob/main/docs/makeoptions.md)
 
 <p id="pre-compiled"></p>
 
 **Pre-compiled bootloaders.** If compiling bootloaders is not feasible, feel free to try out one of
-the 220,738 *different* pre-compiled bootloaders in the directory tree for
-[`MCU parts`](https://github.com/stefanrueger/urboot.hex/tree/main/mcus/). You can find bootloaders for
-popular boards in a corresponding directory for [boards](https://github.com/stefanrueger/urboot.hex/tree/main/boards/),
-for example, autobaud bootloaders for the venerable ATmega328P based
-[Uno](https://github.com/stefanrueger/urboot.hex/blob/main/boards/uno/autobaud/README.md) with a LED on PB5, the
-[Arduino Pro Mini](https://github.com/stefanrueger/urboot.hex/tree/main/boards/promini/autobaud/README.md) (same bootloaders), the
-[Jeenode](https://github.com/stefanrueger/urboot.hex/tree/main/boards/jeenode/autobaud/README.md) with a low-active LED on PB1, the
-ATmega1284P based [Moteino Mega](https://github.com/stefanrueger/urboot.hex/tree/main/boards/moteinomega/autobaud/README.md) and the
-ATmega2560 [Mega R3 board](https://github.com/stefanrueger/urboot.hex/tree/main/boards/mega-r3/autobaud/README.md); or, eg, some
-16 MHz and 115,200 baud bootloaders for the
-[ATtiny167 based Digispark Pro](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark-pro/external_oscillator/fcpu_16m0x/br_+115k2/README.md), the
-[ATtiny85 based Disgispark](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark/external_oscillator/fcpu_16m0x/br_+115k2/README.md) and the
-[ATtiny84 based Luminet](https://github.com/stefanrueger/urboot.hex/tree/main/boards/luminet/external_oscillator/fcpu_16m0x/br_+115k2/README.md).
+the 924,272 *different* pre-compiled bootloaders in the directory tree for [`MCU
+parts`](https://github.com/stefanrueger/urboot.hex/tree/main/mcus/). You can find bootloaders for
+popular boards in a corresponding directory for
+[boards](https://github.com/stefanrueger/urboot.hex/tree/main/boards/), for example, autobaud
+bootloaders for the venerable ATmega328P based
+[Uno](https://github.com/stefanrueger/urboot.hex/blob/main/boards/uno/atmega328p/watchdog_1_s/autobaud//uart0_rxd0_txd1/led+b5/README.md)
+with a LED on PB5, the [Arduino Pro
+Mini](https://github.com/stefanrueger/urboot.hex/tree/main/boards/promini/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+b5/README.md)
+(same bootloaders), the
+[Jeenode](https://github.com/stefanrueger/urboot.hex/tree/main/boards/jeenode/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led-b1/README.md)
+with a low-active LED on PB1, the ATmega1284P based [Moteino
+Mega](https://github.com/stefanrueger/urboot.hex/tree/main/boards/moteinomega/atmega1284p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+d7/README.md)
+and the ATmega2560 [Mega R3
+board](https://github.com/stefanrueger/urboot.hex/tree/main/boards/mega-r3/atmega2560/watchdog_1_s/autobaud/uart0_rxe0_txe1/led+b7/README.md);
+or, eg, some 16 MHz and 115,200 baud bootloaders for the [ATtiny167 based Digispark
+Pro](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark-pro/attiny167/watchdog_1_s/external_oscillator/16m000000_hz/+115k2_baud/uart0_rxa0_txa1/led+b1/README.md),
+the [ATtiny85 based
+Disgispark](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark/attiny85/watchdog_1_s/external_oscillator/16m000000_hz/+115k2_baud/swio_rxb4_txb3/led+b1/README.md)
+and the [ATtiny84 based
+Luminet](https://github.com/stefanrueger/urboot.hex/tree/main/boards/luminet/attiny84/watchdog_1_s/external_oscillator/16m000000_hz/+115k2_baud/swio_rxa3_txa2/led+a4/README.md).
 Finally, there are pre-compiled urboot bootloaders for popular Arduino cores in the
 [cores](https://github.com/stefanrueger/urboot.hex/tree/main/cores) directory of the
 [urboot.hex](https://github.com/stefanrueger/urboot.hex) repository.
@@ -112,6 +119,8 @@ address 0 on an otherwise erased flash will therefore eventually run into the st
 bootloader. Uploading the first application with `avrdude -c urclock` will then set the reset
 vector correctly to jump to the bootloader.
 
+Some parts also need the `SELFPRGEN` fuse set allowing the vital `spm` opcode (store to program
+memory) to be executed without which bootloaders cannot write to flash.
 
 Once the board has its bootloader the board can be directly connected to and programmed from the
 host/laptop/PC (without a physical programmer), eg, through
@@ -168,14 +177,14 @@ for all `F_CPU` and a range of associated baudrates.
 
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|212|224|u7.7|`w-u-jpr--`|[urboot_attiny2313_uart0_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/external_oscillator/fcpu_16m0x/br_+115k2/urboot_attiny2313_16m0x_+115k2_uart0_rxd0_txd1_lednop.hex)|
-|256|256|u7.7|`w-u-jPra-`|[urboot_attiny2313_autobaud_uart0_rxd0_txd1_lednop_fr.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/autobaud/urboot_attiny2313_autobaud_uart0_rxd0_txd1_lednop_fr.hex)|
-|242|256|u7.7|`w-u-jPr--`|[urboot_atmega328p_uart0_led+b5.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/external_oscillator/fcpu_16m0x/br_+115k2/urboot_atmega328p_16m0x_+115k2_uart0_rxd0_txd1_led+b5.hex)|
-|368|384|u7.7|`weu-jPrac`|[urboot_atmega328p_autobaud_uart0_ee_led+b5_fr_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot_atmega328p_autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce.hex)|
-|438|512|u7.7|`wes-hpr-c`|[urboot_atmega328p_uart0_ee_led+b5_fr_ce_stk500_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/external_oscillator/fcpu_16m0x/br_+115k2/urboot_atmega328p_16m0x_+115k2_uart0_rxd0_txd1_ee_led+b5_fr_ce_stk500_hw.hex)|
-|454|512|u7.7|`wes-hprac`|[urboot_atmega328p_autobaud_uart0_ee_led+b5_fr_ce_stk500_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/autobaud/urboot_atmega328p_autobaud_uart0_rxd0_txd1_ee_led+b5_fr_ce_stk500_hw.hex)|
+|222|224|u7.7|`w-u-jpr--`|[urboot_t2313_1s_x16m0_115k2_uart0_rxd0_txd1_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/watchdog_1_s/external_oscillator/16m000000_hz/+115k2_baud/uart0_rxd0_txd1/lednop/urboot_t2313_1s_x16m0_115k2_uart0_rxd0_txd1_lednop.hex)|
+|256|256|u7.7|`w-u-jPra-`|[urboot_t2313_1s_autobaud_uart0_rxd0_txd1_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/watchdog_1_s/autobaud/uart0_rxd0_txd1/lednop/urboot_t2313_1s_autobaud_uart0_rxd0_txd1_lednop.hex)|
+|252|256|u7.7|`w-u-jPr--`|[urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/external_oscillator/16m000000_hz/+115k2_baud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5.hex)|
+|368|384|u7.7|`weu-jPrac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_pr_ee_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_pr_ee_ce.hex)|
+|438|512|u7.7|`wes-hpr-c`|[urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/external_oscillator/16m000000_hz/+115k2_baud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex)|
+|454|512|u7.7|`wes-hprac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex)|
 |474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
-|494|512|u7.7|`weudhprac`|[urboot_urclockusb_autobaud_uart0_ee_led+d5_csb0_dual_fr_ce_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/boards/urclockusb/autobaud/urboot_urclockusb_autobaud_uart0_rxd0_txd1_ee_led+d5_csb0_dual_fr_ce_hw.hex)|
+|496|512|u7.7|`weudhprac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+d5_csb0_dual_ee_ce_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/boards/urclockusb/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+d5_csb0_dual/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+d5_csb0_dual_ee_ce_hw.hex)|
 |710|1024|o8.3|`-es-h-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex)|
 
 - **Size:** Bootloader code size including small table at top end

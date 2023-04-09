@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# published under GNU General Public License, version 3 (GPL-3.0)
-# author Stefan Rueger <stefan.rueger@urclocks.com>
-# 01.01.2023
+# Published under GNU General Public License, version 3 (GPL-3.0)
+# Author Stefan Rueger <stefan.rueger@urclocks.com>
+# v 1.3 (first version 01.01.2023)
+# 08.03.2023
 
 # Compile bootloaders for one MCU
 
@@ -13,27 +14,22 @@ cat <<END
 Syntax: $progname [<opt>] <mcu>
 Function: create bootloaders for the 8-bit AVR MCU <mcu> (all lower case)
 Option:
-    -m <dir>  directory in which mcu bootloaders are created (default mcus)
-    -b <dir>  directory in which board bootloaders are created (default boards)
-    -c <dir>  directory in which core bootloaders are created (default cores)
-    -f <fcpu> only create bootloaders for certain F_CPU values, eg, -f auto,16000000,8000000
-    -B <baud> only create bootloaders for certain baud rates, eg, -B auto,115200,38400
-    -d        dry run: show which bootloaders would be created
+    -m <dir>  Directory in which mcu bootloaders are created (default mcus)
+    -b <dir>  Directory in which board bootloaders are created (default boards)
+    -c <dir>  Directory in which core bootloaders are created (default cores)
+    -f <fcpu> Only create bootloaders for a F_CPU subset, eg, -f auto,16000000,8000000
+    -B <baud> Only create bootloaders for a baud rate subset, eg, -B auto,115200,38400
+    -d        Dry run: show which bootloaders would be created
+    -g <proj> Github project (default urboot.hex) for links in README.md
 END
 }
 
 shopt -s extglob
 
 # Maximum allowed UART/SWIO baud rate quantisation errors in ppm (22000 is 2.2%)
-declare -A maxioerror
-# External oscillators are relatively precise, can afford high quantisation error
-maxioerror[x]=22000
-# Space Fcpu for internal oscillators by 1%, so want quantisation error < 0.5%
-maxioerror[i]=4999
-
-declare -A ftypedir
-ftypedir[x]=external_oscillator/fcpu
-ftypedir[i]=internal_oscillator/fcpu
+# External oscillators are relatively precise, can afford higher quantisation error
+maxexterror=22000
+maxinterror=4999
 
 run=1
 mcu_bls=mcus
@@ -41,9 +37,9 @@ board_bls=boards
 core_bls=cores
 fcpulist=""
 baudlist=""
-here=$(pwd)
+project=urboot.hex
 
-while getopts ":dm:b:c:f:B:" opt; do
+while getopts ":dm:b:c:f:B:g:" opt; do
   case ${opt} in
     m) mcu_bls=$OPTARG
         ;;
@@ -56,6 +52,8 @@ while getopts ":dm:b:c:f:B:" opt; do
     B) baudlist=$OPTARG
         ;;
     d) run=0
+        ;;
+    g) project=$OPTARG
         ;;
     --) shift;
         break
@@ -88,19 +86,14 @@ source ur_avrintel
 
 setarray(){ declare -n a=$1; local IFS=$2 -; set -f; a=($3); }
 
+
 ####
 # Set out for which targets, F_CPUs, baud rates and I/O lines (for SW I/O) to compile
-#
+
 
 ####
-# Baud rate and F_CPU combinations
-#
-
-# Map F_CPU to baud rates: compile for these combinations
-# Many are redundant: eg, 16 MHz @ 115200 baud is the same as 8 MHz @ 57600 baud
-declare -A baud
-
 # Popular external Fcpus
+#
 fcpus=(24000000 22118400 20000000 18432000 16000000 14745600 12000000 11059200 10000000 9216000 \
   8000000 7372800 6000000 5529600 5000000 4608000 4000000 3686400 3000000 2764800 2500000 2304000 \
   2000000 1843200 1500000 1382400 1000000 921600 500000 460800 250000 230400 125000)
@@ -109,18 +102,29 @@ fcpus=(24000000 22118400 20000000 18432000 16000000 14745600 12000000 11059200 1
 setarray internalfcpu / "${intfcpus[$mcu]}"
 for ifcpu in ${internalfcpu[@]}; do
   # Adding +4 also generates b/l for Fcpu +/-1%, Fcpu +/- 2%, ... Fcpu +/- 4%
-  if [[ $ifcpu -gt 30000 ]]; then 
+  if [[ $ifcpu -gt 30000 ]]; then
     fcpus+=($ifcpu+4)
   fi
 done
 
-extbauds=1000000/500000/250000/125000/921600/576000/460800/230400
+
+####
+# Map F_CPU to baud rates: compile for these combinations
+# Many are redundant: eg, 16 MHz @ 115200 baud is the same as 8 MHz @ 57600 baud
+#
+declare -A baud
+
 allbauds=115200/76800/57600/38400/28800/19200/14400/9600/7200/4800/2400/1800/1200/600/300
+extbauds=1000000/500000/250000/125000/921600/576000/460800/230400
 
 baud[auto]=auto
 for fcpu in ${fcpus[@]}; do
+  # External oscillators get higher baud rates too
   if [[ $fcpu == *+[0-8] ]]; then baud[$fcpu]=$allbauds; else baud[$fcpu]=$extbauds/$allbauds; fi
 done
+
+# List of considered F_CPUs in descending order
+fcpus=($(printf '%s\n' "${!baud[@]}" | sort -rn))
 
 # Remove computation for F_CPU values not mentioned in -f
 if [[ -n $fcpulist ]]; then
@@ -145,16 +149,40 @@ if [[ -n $baudlist ]]; then
   done
 fi
 
-# List of considered F_CPUs in descending order
-fcpus=($(printf '%s\n' "${!baud[@]}" | sort -rn))
+# echo ${fcpus[@]}
+# for bb in ${!baud[@]}; do
+#   echo $bb ${baud[$bb]}
+# done
+# echo ${!fcpuok[@]}
+
+####
+# Urboot configurations considered
+#
+declare -A config
+
+# Vector bootloaders
+        config[_]="VBL=1                EEPROM=0 CHIP_ERASE=0 URPROTOCOL=1"
+      config[_pr]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=0 URPROTOCOL=1"
+   config[_pr_ce]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=1 URPROTOCOL=1"
+   config[_pr_ee]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=0 URPROTOCOL=1"
+config[_pr_ee_ce]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=1 URPROTOCOL=1"
+
+# Hardware supported bootloaders
+if [[ minbootsz[$mcu] -gt 0 ]]; then
+  if [[ minbootsz[$mcu] -eq 256 ]]; then
+                    config[_hw]="VBL=0 EEPROM=0 CHIP_ERASE=0 URPROTOCOL=1"
+  fi
+              config[_ee_ce_hw]="VBL=0 EEPROM=1 CHIP_ERASE=1 URPROTOCOL=1"
+       config[_ee_ce_hw_stk500]="VBL=0 EEPROM=1 CHIP_ERASE=1 URPROTOCOL=0"
+fi
 
 
 ####
 # Known boards
 #
 
-# At least generate a template bootloader (with placeholder nops)
-board=none:TEMPLATE=1
+# At least generate two bootloaders: no LED and a template bootloader
+board=no-led:BLINK=0/lednop:TEMPLATE=1
 
 # Various boards have the LED on different pins, some low active
 if [[ $mcu == atmega328p ]]; then
@@ -169,6 +197,9 @@ if [[ $mcu == atmega328p ]]; then
   board+=/moteino:LED=AtmelPB1_SFMCS=AtmelPB0_DUAL=1
   board+=/urclockusb:LED=AtmelPD5_SFMCS=AtmelPB0_DUAL=1
   board+=/ursense:LEDPOLARITY=-1_LED=AtmelPD5_SFMCS=AtmelPB0_DUAL=1
+fi
+if [[ $mcu == atmega328pb ]]; then
+  board+=/uno,minicore:LED=AtmelPB5
 fi
 if [[ $mcu == attiny85 ]]; then
   board+=/digispark:LED=AtmelPB1
@@ -207,7 +238,7 @@ fi
 if [[ /atmega1284/atmega644a/atmega324pb/atmega324pa/atmega324p/atmega324a/atmega164p/atmega164a/atmega32/atmega16/atmega8535/ =~ /$mcu/ ]]; then
   board+=/mightycore:LED=AtmelPB0
   board+=/mightycore:LED=AtmelPB7
-elif [[ /atmega328pb/atmega328/atmega168pb/atmega168p/atmega168/atmega88pb/atmega88p/atmega88/atmega48pb/atmega48p/atmega48/atmega8/ =~ /$mcu/ ]]; then
+elif [[ /atmega328/atmega168pb/atmega168p/atmega168/atmega88pb/atmega88p/atmega88/atmega48pb/atmega48p/atmega48/atmega8/ =~ /$mcu/ ]]; then
   board+=/minicore:LED=AtmelPB5
 elif [[ /atmega6490p/atmega6490/atmega6450p/atmega6450/atmega3290p/atmega3290/atmega3250p/atmega3250/atmega640/ =~ /$mcu/ ]]; then
   board+=/megacore:LED=AtmelPB7
@@ -219,6 +250,25 @@ elif [[ /attiny13/attiny13a/ =~ /$mcu/ ]]; then
   board+=/microcore:LED=AtmelPB2
 fi
 
+####
+# Board variants and configurations for *this* MCU
+#
+declare -A bcfg
+declare -A bnames
+declare -A bevery=([no-led]=1, [lednop]=1, [dual]=1)
+
+allboards=()
+setarray brd / "$board"
+for bb in ${brd[@]}; do
+  bcfg[$bb]=${bb#*:}
+  [[ ! "${bcfg[$bb]}" == *BLINK=* ]] && bcfg[$bb]+=_BLINK=1
+  bnames[$bb]=${bb%:*}
+  # Unless it's no-op, lednop or dual add board names to list of all boards
+  if [[ -z ${bevery[${bnames[$bb]}]} ]]; then
+    setarray brdlist , "${bnames[$bb]}"
+    allboards+=(${brdlist[@]})
+  fi
+done
 
 # All the I/O specs for *this* MCU
 setarray iospecs \| "${mcuio[$mcu]}"
@@ -227,101 +277,153 @@ setarray iospecs \| "${mcuio[$mcu]}"
 autovar=; [[ /atmega103/at43usb320/at90s2313/at90s2333/at90s4433/at90s4414/at90s8515/at90s4434/at90s8535/ =~ /$mcu/ ]] && autovar=2
 
 ####
-# Put human readable F_CPU into variable fcpunm
-#
-mkfcpunm() {
-  local frq="$1";
+# Set global variables based on $fbase/$df/$ftype/$b
+#  - fcpu ($fbase + df percent)
+#  - fbfilenm (autobaud or sth like j8m0_57k6)
+#  - fbgitdir (path element for sorted display in git, eg, internal_oscillator+1%/+8m000000_hz/++57k2_baud)
+#  - fbcomdir (path element for machine readability, eg, internal_oscillator/8080000_hz/57200_baud)
+
+mkfbvars() {
+  local fbase=$1
+  local df=$2
+  local ftype=$3
+  local b=$4
+
+  fcpu=$(($fbase + $df*$fbase/100))
+
+  local fchr=
+  local fpercent=
+  local ftypedir=
+  if [[ $ftype == i ]]; then
+    fchr=${alphabet[$((8+$df))]}
+    [[ $df -ne 0 ]] && fpercent=$(printf "%+d%%" $df)
+    ftypedir=internal_oscillator
+  elif [[ $ftype == x ]]; then
+    fchr=x
+    ftypedir=external_oscillator
+  fi
+
+  local frq="$fbase";
   while [[ ${#frq} -lt 7 ]]; do frq="0$frq"; done
   frq="${frq::-6}m${frq: -6}"
+  local fcpudirnm=$frq
+  [[ $1 -lt 10000000 ]] && fcpudirnm="+$frq"
+  # Delete trailing zeros except the least one
   frq="${frq%%+(0)}"
   [[ ${frq: -1} == m ]] && frq=${frq}0
-  [[ $1 -lt 10000000 ]] && frq="$2$frq"
-  fcpunm="$frq"
-}
+  local fcpunm="$frq"
 
-####
-# Put human readable baud rate into variable baudnm
-#
-mkbaudnm() {
-  local bd="$1";
+  local bd="$b";
   while [[ ${#bd} -lt 4 ]]; do bd="0$bd"; done
   bd="${bd::-3}k${bd: -3:-2}"
-  while [[ ${#bd} -lt 6 ]]; do bd="$2$bd"; done
-  baudnm="$bd"
+  local baudnm="$bd"
+  while [[ ${#bd} -lt 6 ]]; do bd="+$bd"; done
+  local bauddirnm="$bd"
+
+  if [[ $ftype == a ]]; then
+    fbfilenm=autobaud$autovar
+    fbgitdir=autobaud
+    fbcomdir=autobaud
+  else
+    fbfilenm=$fchr${fcpunm}_$baudnm
+    fbgitdir=$ftypedir$fpercent/${fcpudirnm}_hz/${bauddirnm}_baud
+    fbcomdir=$ftypedir/${fcpu}_hz/${b}_baud
+  fi
+}
+
+
+####
+# Set a global variable ioport for use in file and directory names from make options
+#
+mkioport() {
+  ioport="$1"
+  ioport=${ioport/SWIO=1/_swio}
+  ioport=${ioport/UARTNUM=/_uart}
+  ioport=${ioport/UARTALT=0/}
+  ioport=${ioport/UARTALT=/_alt}
+  ioport=${ioport/RX=AtmelP/_rx}
+  ioport=${ioport/TX=AtmelP/_tx}
+  ioport=${ioport// /}
+  ioport=${ioport,,}
+  ioport=${ioport:1}
 }
 
 ####
 # Construct a global variable filename for the basename of the bootloader
+# Also set global variables shortname, ioport and pinconfig. Example paramters
+#
+# atmega328p x24m0_1000k0 LED=AtmelPB1_BLINK=1 _ee_ce_hw_stk500 'UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1' 1S
 #
 mkfilename() {
-  local cfg=$8
-  [[ "$cfg" == TEMPLATE=1 ]] && cfg=_lednop
-  [[ "$cfg" == TEMPLATE=1_DUAL=1 ]] && cfg=_template_dual
-  cfg=${cfg/LEDPOLARITY=-1_LED=AtmelP/_led-}
-  cfg=${cfg/LED=AtmelP/_led+}
-  cfg=${cfg/_SFMCS=AtmelP/_cs}
-  cfg=${cfg/_DUAL=1/_dual}
-  cfg=${cfg,,}
-  local swio=$9
-  swio=${swio/SWIO=1/_swio}
-  swio=${swio/UARTNUM=/_uart}
-  swio=${swio/UARTALT=0/}
-  swio=${swio/UARTALT=/_alt}
-  swio=${swio/RX=AtmelP/_rx}
-  swio=${swio/TX=AtmelP/_tx}
-  swio=${swio// /}
-  swio="${swio%"${swio##*[![:space:]]}"}"  # Remove trailing whitespace
-  swio=${swio,,}
-  if [[ $2 == auto* ]]; then
-    filename="urboot_$1_autobaud$autovar$swio"
-  else
-    filename="urboot_$1_$2_$3$swio"
-  fi
-  [[ $5 -eq 1 ]] && filename+=_ee
-  # Do not makes LEDs part of filename for FRILLS=0
-  [[ $7 -eq 0 ]] || filename+=$cfg
-  [[ $7 -eq 6 ]] && filename+=_fr
-  [[ $7 -eq 7 ]] && filename+=_fr_ce
-  [[ $6 -eq 0 ]] && filename+=_stk500
-  [[ $4 -eq 0 ]] && filename+=_hw
+  local part=${nickname[$1]}
+  [[ -z $part ]] && part=$1
+
+  # echo "@ $1 $2 $3 $4 '$5' $6"
+
+  pinconfig=$3
+  [[ "$pinconfig" == TEMPLATE=1_BLINK=1 ]] && pinconfig=_lednop
+  [[ "$pinconfig" == BLINK=0 ]] && pinconfig=_no-led
+  pinconfig=${pinconfig/_BLINK=?/}
+  [[ "$pinconfig" == TEMPLATE=1_DUAL=1 ]] && pinconfig=_template_dual
+  pinconfig=${pinconfig/LEDPOLARITY=-1_LED=AtmelP/_led-}
+  pinconfig=${pinconfig/LED=AtmelP/_led+}
+  pinconfig=${pinconfig/_SFMCS=AtmelP/_cs}
+  pinconfig=${pinconfig/_DUAL=1/_dual}
+  pinconfig=${pinconfig,,}
+  pinconfig=${pinconfig:1}
+
+  mkioport "$5"
+
+  filename="urboot_${part}_$6_$2_${ioport}_$pinconfig"
+  [[ "$4" != _ ]] && filename+=$4
+  filename=${filename,,}
+  filename=${filename// /_}     # Sanity, should not be necessary
+
+  shortname=urboot_$1           # Must include the part to enable parallising in mkallbootloaders
+  [[ "$4" != _ ]] && shortname+=$4
 }
+
+declare -A dirwdto
+
+dirwdto[250MS]=watchdog_250_ms
+dirwdto[500MS]=watchdog_0.5_s
+dirwdto[1S]=watchdog_1_s
+dirwdto[2S]=watchdog_2_s
+dirwdto[4S]=watchdog_4_s
+dirwdto[8S]=watchdog_8_s
 
 
 alphabet=({a..z})
 
 declare -A duplicate
-declare -A hexuse
-declare -A hexprotect
-declare -A hexassoc
 declare -A hexdirs
-declare -A topdirs
+declare -A fmtdirs
 declare -A divseen
 declare -A equivalent
 
-[[ $run == 1 ]] && mkdir -p "$mcu_bls/$mcu"
-
 topmdir="$mcu_bls/$mcu"
-topbdir="$board_bls/$mcu"
+topbdir="$board_bls/_Board_/$mcu"
 topcdir="$core_bls/_Core_/$mcu"
 
-for fcpu in ${fcpus[@]}; do
-  ftype=x
-  ndf=0
-  if [[ $fcpu == auto ]]; then
+for fc in ${fcpus[@]}; do
+  if [[ $fc == auto ]]; then
+    ftype=a
     fbase=16000000
-    fcpunm=auto
-  elif [[ $fcpu == *+[0-8] ]]; then
+    ndf=0
+  elif [[ $fc == *+[0-8] ]]; then
      # 9600000+4 means loop F_cpu from F_cpu-4% to F_cpu+4%
     ftype=i
-    fbase=${fcpu%??}
-    maxerr=maxioerror[i]
-    ndf=${fcpu: -1}
+    fbase=${fc%??}
+    ndf=${fc: -1}
+    maxerr=maxinterror
   else
-    fbase=$fcpu
-    maxerr=maxioerror[x]
+    ftype=x
+    fbase=$fc
+    ndf=0
+    maxerr=maxexterror
   fi
 
-  setarray bauds / "${baud[$fcpu]}"
+  setarray bauds / "${baud[$fc]}"
   for b in ${bauds[@]}; do
     if [[ -n $baudlist && -z ${baudok[$b]} ]]; then
       continue
@@ -333,48 +435,31 @@ for fcpu in ${fcpus[@]}; do
     fi
 
     # Limit baud rates to be not smaller than f_cpu/1024
-    if [[ $fcpu != auto && $b -lt $(($fbase/1024)) ]]; then
+    if [[ $fc != auto && $b -lt $(($fbase/1024)) ]]; then
       continue
     fi
 
-    [[ $fcpu != auto ]] && mkfcpunm $fbase +
     for (( df=-$ndf; df<=$ndf; df++ )); do
-      thisfcpu=$(($fbase + $df*$fbase/100))
-
+      mkfbvars $fbase $df $ftype $b
       preamble="$mcu"
       if [[ $b == auto ]]; then
         br=AUTOBAUD=1
-        fchr=""
         preamble="Note that autobaud bootloaders normally can only detect host baud rates = f/8, f/16, ... f/2048 +/- 1.5%, where f=F<sub>CPU</sub>."
         preamble+=" Internal oscillators have a high unknown deviation: baud rates under f/260 are recommended for these."
-        mdir="$topmdir/autobaud"
-        bdir="$topbdir/autobaud"
-        cdir="$topcdir/autobaud"
       else
         br=BAUD_RATE=$b
-        # fcpu characterisation x (external) or j-4 (internal -4%) ... r+4 (internal +4%)
-        fchr=x;
-        if [[ $ftype == i && $df == 0 ]]; then
-          fchr=i
-        elif [[ $ftype == i ]]; then
-          fchr=${alphabet[$((8+$df))]}$(printf "%+d" $df)
-        fi
-        mkbaudnm $b +
-        mdir="$topmdir/${ftypedir[$ftype]}_${fcpunm}$fchr/br_${baudnm}"
-        bdir="$topbdir/${ftypedir[$ftype]}_${fcpunm}$fchr/br_${baudnm}"
-        cdir="$topcdir/${ftypedir[$ftype]}_${fcpunm}$fchr/br_${baudnm}"
         # Can this F_CPU/baud rate combo later be created from an existing one?
-        # Bootloaders are the same (unless -DDEBUG_FREQ is used) if quotient $fbase/$b is the same
-        div=$((100*$fbase/$b))/$fchr
-        if [[ -z ${divseen[$div]} ]]; then
-          divseen[$div]=$fbase/$b/$fchr/
-        else
-          equivalent[$fbase/$b/$fchr/]=${divseen[$div]}
+        # Bootloaders are the same if quotient $fcpu/$b and oscillator type are the same
+        div=$((100*$fcpu/$b))/$ftype
+        if [[ -n ${divseen[$div]} ]]; then
+          # No need to compile a bootloader for this combo, just memorise which one to link to
+          equivalent[$fbase/$df/$ftype/$b]=${divseen[$div]}
           continue
         fi
       fi
 
       for io in "${iospecs[@]}"; do
+        mkioport "$io"; dirport="$ioport"
         thisio="$io"
         if [[ $b == auto ]]; then
           # Autobaud needs UART and must have RX in I/O space: exclude ports H..L
@@ -386,7 +471,7 @@ for fcpu in ${fcpus[@]}; do
           fi
         else
           # Classic or LIN UART experiences too high baud rate error for this F_CPU/baud combo?
-          if [[ ${thisio:0:4} == UART && $(bauderror -am -f$thisfcpu -b$b $mcu) -gt $maxerr ]]; then
+          if [[ ${thisio:0:4} == UART && $(bauderror -am -f$fcpu -b$b $mcu) -gt $maxerr ]]; then
             # Switch to SWIO instead of using the UART
             thisio=${thisio/UARTNUM=?/SWIO=1}
             thisio=${thisio/UARTALT=?/}
@@ -394,124 +479,87 @@ for fcpu in ${fcpus[@]}; do
 
           if [[ ${thisio:0:4} == SWIO ]]; then
             # Is the SWIO baud rate too high or too low?
-            if [[ $(bauderror -sam -f$thisfcpu -b$b $mcu) -gt $maxerr ]]; then
+            if [[ $(bauderror -sam -f$fcpu -b$b $mcu) -gt $maxerr ]]; then
               continue
             fi
             # Also needs RX/TX in I/O space: exclude ports H..L
             if [[ $io =~ [RT]X=AtmelP[H-L] && "${uarttype[$mcu]}" -lt 3 ]]; then
               continue
             fi
-            preamble=$(bauderror -s -v -f$thisfcpu -b$b $mcu)
+            preamble=$(bauderror -s -v -f$fcpu -b$b $mcu)
           else
-            preamble=$(bauderror    -v -f$thisfcpu -b$b $mcu)
+            preamble=$(bauderror    -v -f$fcpu -b$b $mcu)
           fi
         fi
 
-        for ur in 0 1; do
-          # Only generate STK500 bootloaders ($ur = 0) for MCUs that have HW boot sections
-          if [[ $ur -eq 0 && ${minbootsz[$mcu]} -eq 0 ]]; then
-            continue;
-          fi
+        if [[ -z ${divseen[$div]} ]]; then
+          divseen[$div]=$fbase/$df/$ftype/$b
+        fi
 
-          for ee in 0 1; do
-
-            setarray brd / "$board"
-            for bb in ${brd[@]}; do
-              bcfg=${bb#*:}
-              bname=${bb%:*}
-
-              # Do not create STK500 b/loader with dual boot
-              if [[ $ur -eq 0 && $bcfg =~ DUAL ]]; then
-                continue;
-              fi
-
-              for vbl in 0 1; do
-                # Do not generate hardware-supported bootloaders (vbl=0) for MCUs without HW boot sections
-                if [[ $vbl -eq 0 && ${minbootsz[$mcu]} -eq 0 ]]; then
-                  continue;
-                fi
-                # Do not generate vector boot loaders for STK500 protocol
-                if [[ $vbl -eq 1 && $ur -eq 0 ]]; then
-                  continue;
+        for wdto in 1S 2S; do
+          for bb in ${brd[@]}; do
+            for cfg in ${!config[@]}; do
+              extra="AUTOFRILLS=0,6,4,3,2"
+              [[ ${minbootsz[$mcu]} -gt 4096 && ${config[$cfg]} == *VBL=0* ]] && extra+=" PGMWRITEPAGE=0"
+              mkfilename "$mcu" "$fbfilenm" "${bcfg[$bb]}" "$cfg" "$thisio" "$wdto"
+              args="MCU=$mcu "WDTO=$wdto" F_CPU=${fcpu}L $br $thisio ${config[$cfg]} ${bcfg[$bb]//_/ } $extra NAME=$filename"
+              if [[ $run -eq 1 ]]; then
+                { echo make $args; make $args; } >& $filename.out
+                if [[ ! -r $filename.hex ]]; then
+                  echo warning compilation for $filename failed
+                  continue
                 fi
 
-                hexname=()
-                for f in 0 1 6 7; do
-                  if [[ $f -eq 0 && $bname != none ]]; then
-                    continue
-                  fi
-                  if [[ $ee -eq 0 && $f -gt 7 ]]; then
-                    continue;
-                  fi
+                # Subtle but important differences in how directories are named
+                mdir="$topmdir/${dirwdto[$wdto]}/$fbgitdir/$dirport/$pinconfig"
+                mfmt="$topmdir/${dirwdto[$wdto]}/%fbgitdir/$dirport/$pinconfig"
+                bdir="$topbdir/${dirwdto[$wdto]}/$fbgitdir/$dirport/$pinconfig"
+                bfmt="$topbdir/${dirwdto[$wdto]}/%fbgitdir/$dirport/$pinconfig"
+                cdir="$topcdir/${dirwdto[$wdto]}/$fbcomdir/$dirport/$pinconfig"
+                cfmt="$topcdir/${dirwdto[$wdto]}/%fbcomdir/$dirport/$pinconfig"
 
-                  mkfilename $mcu $fcpunm$fchr "$baudnm" $vbl $ee $ur $f "$bcfg" "$thisio"
-                  args="MCU=$mcu F_CPU=${thisfcpu}L $br $thisio VBL=$vbl EEPROM=$ee ${bcfg//_/ } URPROTOCOL=$ur FRILLS=$f MOVETO=$filename"
-                  if [[ $run -eq 1 ]]; then
-                    make $args >& $filename.out
-                    if [[ -r $filename.hex ]]; then
-                      hexname+=("$filename")
-                      hexlsout=($(hexls $filename.hex))
-                      hexuse[$filename]=${hexlsout[1]}
-                      hexprotect[$filename]=${hexlsout[3]:5:1} # p or P
-                    else
-                      echo warning compilation for $filename failed
-                    fi
+                if [[ -z ${hexdirs[$mdir]} ]]; then
+                  mkdir -p "$mdir"
+                  fmtdirs[$mfmt]=1
+                  hexdirs[$mdir]="$preamble"
+                fi
+                mv $filename.{hex,out,elf,lst} "$mdir/"
+                if [[ -n ${bevery[${bnames[$bb]}]} ]]; then
+                  # Make bootloader available under all boards for this MUC
+                  lnlist=(${allboards[@]})
+                else
+                  # Make bootloader only available under aliased boards/cores directories
+                  setarray lnlist , "${bnames[$bb]}"
+                fi
+                for ba in ${lnlist[@]}; do
+                  if [[ $ba/ =~ core/ ]]; then
+                    badir=${cdir/_Core_/$ba}
+                    bafmt=${cfmt/_Core_/$ba}
+                    banam=$shortname
                   else
-                    echo make $args
-                    # echo "$mdir/$filename.hex"
-                    if [[ -n ${duplicate[$filename]} ]]; then
-                      echo duplicate $filename ${duplicate[$filename]}
-                      echo duplicate $filename $args
-                    else
-                      duplicate[$filename]="$args"
-                    fi
+                    badir=${bdir/_Board_/$ba}
+                    bafmt=${bfmt/_Board_/$ba}
+                    banam=$filename
                   fi
+                  if [[ -z ${hexdirs[$badir]} ]]; then
+                    mkdir -p $badir
+                    fmtdirs[$bafmt]=1
+                    hexdirs[$badir]="$preamble"
+                  fi
+                  for ext in hex out elf lst; do
+                    ln -f $mdir/$filename.$ext $badir/$banam.$ext
+                  done
                 done
-                if [[ $run -eq 1 ]]; then
-                  # Delete bootloaders of same size that have fewer features and same protection
-                  for (( i=0; i<${#hexname[@]}-1; i++ )); do
-                    if [[ ${hexuse[${hexname[$i]}]} -ge ${hexuse[${hexname[$i+1]}]} ]]; then
-                      if [[ ${hexprotect[${hexname[$i]}]} == ${hexprotect[${hexname[$i+1]}]} ]]; then
-                        rm "${hexname[$i]}".{lst,elf,hex,out}
-                      fi
-                    fi
-                  done
-                  for hxn in ${hexname[@]}; do
-                    if [[ -r $hxn.hex ]]; then
-                      hexassoc[$hxn]="$mdir/$hxn"
-                      if [[ -z ${hexdirs[$mdir]} ]]; then
-                        mkdir -p "$mdir"
-                        topdirs[$topmdir]=1
-                        hexdirs[$mdir]="$preamble"
-                      fi
-                      mv $hxn.{hex,out,elf,lst} "$mdir/"
-                      setarray brdali , "$bname"
-                      for ba in ${brdali[@]}; do
-                        if [[ $ba != none && $ba != dual ]]; then
-                          # Make bootloader available under boards/cores directories, too
-                          if [[ $ba/ =~ core/ ]]; then
-                            badir=${cdir/_Core_/$ba}
-                            topdirs[${topcdir/_Core_/$ba}]=1
-                            banam=$hxn
-                          else
-                            badir=${bdir/$mcu/$ba}
-                            topdirs[${topbdir/$mcu/$ba}]=1
-                            banam=${hxn/$mcu/$ba}
-                          fi
-                          if [[ -z ${hexdirs[$badir]} ]]; then
-                            mkdir -p $badir
-                            hexdirs[$badir]="$preamble"
-                          fi
-                          hexassoc[$hxn]+="|$badir/$banam"
-                          for ext in hex out elf lst; do
-                            ln -f $mdir/$hxn.$ext $badir/$banam.$ext
-                          done
-                        fi
-                      done
-                    fi
-                  done
+              else
+                echo make $args
+                # echo "$mdir/$filename.hex"
+                if [[ -n ${duplicate[$filename]} ]]; then
+                  echo duplicate $filename ${duplicate[$filename]}
+                  echo duplicate $filename $args
+                else
+                  duplicate[$filename]="$args"
                 fi
-              done
+              fi
             done
           done
         done
@@ -521,91 +569,63 @@ for fcpu in ${fcpus[@]}; do
 done
 
 if [[ $run -eq 1 ]]; then
-  # Remove all non _ee bootloaders that have the same usage as the _ee ones and the same protection
-  todel=()
-  for hxn in "${!hexassoc[@]}"; do
-    if [[ $hxn == *_ee_* ]]; then
-      hxnoee=${hxn//_ee/}
-      if [[ -n ${hexassoc[$hxnoee]} ]]; then
-        if [[ ${hexuse[$hxn]} -le ${hexuse[$hxnoee]} ]]; then
-          if [[ ${hexprotect[$hxn]} == ${hexprotect[$hxnoee]} ]]; then
-            setarray torm \| "${hexassoc[$hxnoee]}"
-            for tormfn in ${torm[@]}; do
-              rm $tormfn.{hex,lst,elf,out}
-            done
-            todel+=($hxnoee)
-          fi
-        fi
-      fi
-    fi
-  done
-  for torm in ${todel[@]}; do
-    unset hexassoc[$torm]
-  done
-
-  # Remove all vector bootloaders that have the same usage as hw supported ones (protection might differ)
-  todel=()
-  for hxhard in "${!hexassoc[@]}"; do
-    if [[ $hxhard == *_hw* ]]; then
-      hxvbl=${hxhard//_hw/}
-      if [[ -n ${hexassoc[$hxvbl]} ]]; then
-        if [[ ${hexuse[$hxhard]} -le ${hexuse[$hxvbl]} ]]; then
-          setarray torm \| "${hexassoc[$hxvbl]}"
-          for tormfn in ${torm[@]}; do
-            rm $tormfn.{hex,lst,elf,out}
-          done
-          todel+=($hxvbl)
-        fi
-      fi
-    fi
-  done
-  for torm in ${todel[@]}; do
-    unset hexassoc[$torm]
-  done
-
   # Copy equivalent bootloaders over from ${equivalent[$combo]} to $combo
   for combo in ${!equivalent[@]}; do
-    # echo Copy $combo from ${equivalent[$combo]}
+    # echo Copy ${equivalent[$combo]} to $combo
     setarray fcpubd / "${equivalent[$combo]}"
-    mkfcpunm ${fcpubd[0]} +
-    mkbaudnm ${fcpubd[1]} +
-    fchr=${fcpubd[2]}
-    ftype=${fchr::1}; [[ $ftype != x ]] && ftype=i
-    chfcpu=$fcpunm
-    chbaud=$baudnm
-    srcdir="${ftypedir[$ftype]}_${fcpunm}$fchr/br_${baudnm}"
+    mkfbvars ${fcpubd[@]}
+    srcfbgitdir=$fbgitdir
+    srcfbcomdir=$fbcomdir
+    srcfbfilenm=$fbfilenm
 
     setarray fcpubd / "$combo"
-    mkfcpunm ${fcpubd[0]} +
-    mkbaudnm ${fcpubd[1]} +
-    dstdir="${ftypedir[$ftype]}_${fcpunm}$fchr/br_${baudnm}"
+    mkfbvars ${fcpubd[@]}
 
-    for dd in  ${!topdirs[@]}; do
-      if [[ -d "$dd/$srcdir" ]]; then
-        if [[ -z ${hexdirs["$dd/$dstdir"]} ]]; then
-          mkdir -p "$dd/$dstdir"
-          hexdirs["$dd/$dstdir"]="${hexdirs[$dd/$srcdir]}"
-          if [[ -z ${hexdirs["$dd/$dstdir"]} ]]; then
-            echo Warning: no preamble for "$dd/$srcdir"
+    for dd in  ${!fmtdirs[@]}; do
+      srcdir=${dd/\%fbgitdir/$srcfbgitdir}
+      srcdir=${srcdir/\%fbcomdir/$srcfbcomdir}
+      dstdir=${dd/\%fbgitdir/$fbgitdir}
+      dstdir=${dstdir/\%fbcomdir/$fbcomdir}
+
+      if [[ -d "$srcdir" ]]; then
+        if [[ -z ${hexdirs["$dstdir"]} ]]; then
+          mkdir -p "$dstdir"
+          hexdirs["$dstdir"]="${hexdirs[$srcdir]}"
+          if [[ -z ${hexdirs["$dstdir"]} ]]; then
+            echo "Warning: no preamble for $srcdir"
           fi
         fi
-        for src in "$dd/$srcdir"/*; do
+        for src in "$srcdir"/*; do
           if [[ -r "$src" ]]; then
-            dst=${src//_$chfcpu/_$fcpunm}
-            dst=${dst//_$chbaud/_$baudnm}
+            fn=${src##*/}
+            dst="$dstdir/${fn/$srcfbfilenm/$fbfilenm}"
             if [[ ! -r "$dst" ]]; then
               ln "$src" "$dst"
             fi
           fi
         done
+#     else   # Can issue false warnings, eg, when autobaud or swio has tx/rx on ports H-L
+#       echo "Warning: source directory $srcdir does not exist"
       fi
     done
   done
 
   # Generate the README.md files
+  tmp=$(mktemp "/dev/shm/$progname.XXXXXX")
+  trap "rm -f $tmp" EXIT
+  here=$(pwd)
+
   for dir in "${!hexdirs[@]}"; do
-    cd "$dir"
-    "$here/hexls" -pre="${hexdirs[$dir]}" -sort -md "https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/$dir" *.hex >README.md
+    cd "$dir"; {
+      "$here/hexls" -pre="${hexdirs[$dir]}" -sort -md "https://raw.githubusercontent.com/stefanrueger/$project/main/$dir" *.hex >$tmp
+      order=($(sed -n "s/.*\[\([^]]*\).hex\].*/\1.out/p" $tmp))
+      cat $tmp
+      echo -e "\n\nNote below that baud rate and F<sub>CPU</sub> may be different from the path name's as long as the quotient F<sub>CPU</sub>/baud rate is the same.\n\n### Make commands\n\`\`\`"
+      grep -h ^make.MCU= ${order[@]}
+      echo -e "\`\`\`\n\n### Avr-gcc commands\n\`\`\`"
+      grep -h avr-gcc ${order[@]}
+      echo -e "\`\`\`\n"
+    } >README.md
     cd "$here"
   done
   hash cmpls 2>/dev/null && cmpls -p $mcu_bls/$mcu | grep \\.hex >>/tmp/equivalent-hex-files.txt
