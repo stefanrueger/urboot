@@ -55,7 +55,7 @@ More detailed information here: [`make` options](https://github.com/stefanrueger
 <p id="pre-compiled"></p>
 
 **Pre-compiled bootloaders.** If compiling bootloaders is not feasible, feel free to try out one of
-the 924,272 *different* pre-compiled bootloaders in the directory tree for [`MCU
+the 1,066,518 *different* pre-compiled bootloaders in the directory tree for [`MCU
 parts`](https://github.com/stefanrueger/urboot.hex/tree/main/mcus/). You can find bootloaders for
 popular boards in a corresponding directory for
 [boards](https://github.com/stefanrueger/urboot.hex/tree/main/boards/), for example, autobaud

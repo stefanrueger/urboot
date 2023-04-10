@@ -29,7 +29,7 @@ shopt -s extglob
 # Maximum allowed UART/SWIO baud rate quantisation errors in ppm (22000 is 2.2%)
 # External oscillators are relatively precise, can afford higher quantisation error
 maxexterror=22000
-maxinterror=4999
+maxinterror=6000
 
 run=1
 mcu_bls=mcus
@@ -101,9 +101,9 @@ fcpus=(24000000 22118400 20000000 18432000 16000000 14745600 12000000 11059200 1
 # Add internal Fcpus
 setarray internalfcpu / "${intfcpus[$mcu]}"
 for ifcpu in ${internalfcpu[@]}; do
-  # Adding +4 also generates b/l for Fcpu +/-1%, Fcpu +/- 2%, ... Fcpu +/- 4%
+  # Adding +7 also generates b/l for Fcpu +/-1.25%, Fcpu +/- 2.5%, ... Fcpu +/- 8.75%
   if [[ $ifcpu -gt 30000 ]]; then
-    fcpus+=($ifcpu+4)
+    fcpus+=($ifcpu+7)
   fi
 done
 
@@ -278,10 +278,10 @@ autovar=; [[ /atmega103/at43usb320/at90s2313/at90s2333/at90s4433/at90s4414/at90s
 
 ####
 # Set global variables based on $fbase/$df/$ftype/$b
-#  - fcpu ($fbase + df percent)
+#  - fcpu ($fbase + df*1.25 percent)
 #  - fbfilenm (autobaud or sth like j8m0_57k6)
-#  - fbgitdir (path element for sorted display in git, eg, internal_oscillator+1%/+8m000000_hz/++57k2_baud)
-#  - fbcomdir (path element for machine readability, eg, internal_oscillator/8080000_hz/57200_baud)
+#  - fbgitdir (path element for sorted display in git, eg, internal_oscillator_j+1.25%/+8m000000_hz/++57k2_baud)
+#  - fbcomdir (path element for machine readability, eg, internal_oscillator/8100000_hz/57200_baud)
 
 mkfbvars() {
   local fbase=$1
@@ -289,14 +289,17 @@ mkfbvars() {
   local ftype=$3
   local b=$4
 
-  fcpu=$(($fbase + $df*$fbase/100))
+  fcpu=$(($fbase + $df*125*$fbase/10000))
 
   local fchr=
   local fpercent=
   local ftypedir=
   if [[ $ftype == i ]]; then
     fchr=${alphabet[$((8+$df))]}
-    [[ $df -ne 0 ]] && fpercent=$(printf "%+d%%" $df)
+    if [[ $df -ne 0 ]]; then
+      xp=$(($df*125)); xp=${xp::-2}.${xp: -2}
+      fpercent=$(printf "%+3.2f%%" $xp)
+    fi
     ftypedir=internal_oscillator
   elif [[ $ftype == x ]]; then
     fchr=x
@@ -326,7 +329,7 @@ mkfbvars() {
     fbcomdir=autobaud
   else
     fbfilenm=$fchr${fcpunm}_$baudnm
-    fbgitdir=$ftypedir$fpercent/${fcpudirnm}_hz/${bauddirnm}_baud
+    fbgitdir=${ftypedir}_$fchr$fpercent/${fcpudirnm}_hz/${bauddirnm}_baud
     fbcomdir=$ftypedir/${fcpu}_hz/${b}_baud
   fi
 }
@@ -411,7 +414,7 @@ for fc in ${fcpus[@]}; do
     fbase=16000000
     ndf=0
   elif [[ $fc == *+[0-8] ]]; then
-     # 9600000+4 means loop F_cpu from F_cpu-4% to F_cpu+4%
+     # 9600000+7 means loop F_cpu from F_cpu-8.75% to F_cpu+8.75%
     ftype=i
     fbase=${fc%??}
     ndf=${fc: -1}
@@ -429,8 +432,10 @@ for fc in ${fcpus[@]}; do
       continue
     fi
 
-    # Ensure br < Fcpu/100 for all internal oscillator Fcpu variations
-    if [[ $ftype == i && $b -ge $(($fbase*(1-$ndf/100)/100)) ]]; then
+    # Ensure SWIO quantisation error can be under maxinterr ppm, ie, 0.5/cycles < maxinterr ppm.
+    # Using cycles = fcpu/br requires that for all internal oscillator Fcpu variations must hold
+    # br < Fcpu*maxinterror/500000
+    if [[ $ftype == i && $b -ge $((($fbase-$ndf*125*$fbase/10000)*$maxinterror/500000)) ]]; then
       continue
     fi
 

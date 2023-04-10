@@ -370,7 +370,7 @@ if(!$check) {
     print("|:-:|:-:|:-:|:-:|:--|\n");
   }
   for my $line (@rows) {
-    $line->[4] = sprintf("[%s](%s/%s)", $line->[4], $md, $line->[4]) if defined($md) && $md ne "";
+    $line->[4] = sprintf("[%s](%s/%s)", $line->[4], forurl($md), forurl($line->[4])) if defined($md) && $md ne "";
     printf("$l%d$c%d$c%s$c$t%s$t$c%s$l\n", @{$line});
   }
   if(defined($md) && @rows) {
@@ -400,4 +400,11 @@ sub getinteger {
   $n = 0 if !looks_like_number $n;
 
   return floor($n);
+}
+
+sub forurl {
+  local $_ = shift;
+  s/%/%25/g;
+  s/\+/%2B/g;
+  return $_;
 }
