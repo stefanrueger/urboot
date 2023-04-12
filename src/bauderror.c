@@ -130,9 +130,9 @@ long swio_cpb(Uart_info *up, int val) {
   if(!is_xmega)
     return 6L*val + 18+9;       // Classic MCU with 22-bit PC
   if(!!up->pc_22bit)
-    return 6L*val + 12+10;      // XMEGA with 16-bit PC
+    return 6L*val + 12+9;       // XMEGA with 16-bit PC
 
-  return 6L*val + 16+10;        // XMEGA with 22-bit PC
+  return 6L*val + 16+9;         // XMEGA with 22-bit PC
 }
 
 // Number of delay loop iterations given the cycles per bit
@@ -144,9 +144,9 @@ int swio_b_value(Uart_info *up, int cpb, int b_off) {
   if(!is_xmega)
     return (cpb-18-9+b_off+60)/6-10;  // Classic MCU with 22-bit PC
   if(!!up->pc_22bit)
-    return (cpb-12-10+b_off+60)/6-10; // XMEGA with 16-bit PC
+    return (cpb-12-9+b_off+60)/6-10;  // XMEGA with 16-bit PC
 
-  return (cpb-16-10+b_off+60)/6-10;   // XMEGA with 22-bit PC
+  return (cpb-16-9+b_off+60)/6-10;    // XMEGA with 22-bit PC
 }
 
 
@@ -268,7 +268,7 @@ int main(int argc, char **argv) {
     int b_cpb = swio_cpb(up, b_value);
     int b_extra = cpb > 600? 0: cpb - b_cpb;
 
-    if(b_value > 255)
+    if(b_value > 256)           // Sic(!) 256 is still OK
       errstr = "baud rate too slow for SWIO";
     else if(b_value < 0)
      errstr = "baud rate too fast for SWIO";

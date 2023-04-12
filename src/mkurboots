@@ -101,9 +101,9 @@ fcpus=(24000000 22118400 20000000 18432000 16000000 14745600 12000000 11059200 1
 # Add internal Fcpus
 setarray internalfcpu / "${intfcpus[$mcu]}"
 for ifcpu in ${internalfcpu[@]}; do
-  # Adding +7 also generates b/l for Fcpu +/-1.25%, Fcpu +/- 2.5%, ... Fcpu +/- 8.75%
+  # Adding +8 also generates b/l for Fcpu +/-1.25%, Fcpu +/- 2.5%, ... Fcpu +/- 10.00%
   if [[ $ifcpu -gt 30000 ]]; then
-    fcpus+=($ifcpu+7)
+    fcpus+=($ifcpu+8)
   fi
 done
 
@@ -414,7 +414,7 @@ for fc in ${fcpus[@]}; do
     fbase=16000000
     ndf=0
   elif [[ $fc == *+[0-8] ]]; then
-     # 9600000+7 means loop F_cpu from F_cpu-8.75% to F_cpu+8.75%
+     # 9600000+8 means loop F_cpu from F_cpu-10% to F_cpu+10% in steps of 1.25%
     ftype=i
     fbase=${fc%??}
     ndf=${fc: -1}

@@ -1187,29 +1187,31 @@ void bitDelay();
  * timings. I list the number of clock cycles for 1 tx/rx bit delay for parameter b = SWIO_B_VALUE
  * below for tx and rx routines:
  *
- * clock cycles/bit  | tx       | rx       |
- * ----------------------------------------+
- * mega 16-bit PC    | 6b+14+9  | 6b+14+ 9 | baseline
- * mega 22-bit PC    | 6b+18+9  | 6b+18+ 9 | rcall/ret 1 clock longer (x2 each)
- * xmega 16-bit PC   | 6b+12+8  | 6b+12+10 | rcall 1 clock shorter, tx sbi/cbi less, rx sbic more
- * xmega 22-bit PC   | 6b+16+8  | 6b+16+10 | as above but +4 clock because of longer rcall/ret
- * reduced core tiny | 6b+16+8  | 6b+16+ 9 | rcall longer, sbi/cbi shorter (tx)
- * ----------------------------------------+
+ * clock cycles/bit  | tx       | rx      |
+ * ---------------------------------------+
+ * mega 16-bit PC    | 6b+14+9  | 6b+14+8 | baseline
+ * mega 22-bit PC    | 6b+18+9  | 6b+18+8 | rcall/ret 1 clock longer (twice each)
+ * xmega 16-bit PC   | 6b+12+8  | 6b+12+9 | rcall 1 clock shorter, tx sbi/cbi less, rx sbic more
+ * xmega 22-bit PC   | 6b+16+8  | 6b+16+9 | as above but +4 clock because of longer rcall/ret
+ * reduced core tiny | 6b+16+8  | 6b+16+8 | rcall longer, sbi/cbi shorter (tx)
+ * ---------------------------------------+
  *
  * Timings for getch/putch code below are taken from Atmel's Instruction Set Manual
- * 0856J-AVR-07/2014. The required clock cycles per rx/tx bit are F_CPU/BAUD_RATE. I am inserting
- * nop (1 cycle) or rjmp .+0 (2 cycles) in the delay/putch/getch routines, if the baud rate error
- * warrants it. At 115200 baud and 16 MHz CPU frequency, the SWIO_B_VALUE is b=19, and there are
- * 137 clock cycles per bit for the mega 16-bit PC architecture. We need 16 MHz/115200 baud = 138.9
- * clock cycles. One extra clock cycle amounts to a slowdown of the baud rate to the tune of 0.73%.
- * That is significant as one needs to control the baud rate to about 2.5%, which amounts to a
- * drift of a quarter of a bit width for a single byte.
+ * 0856J-AVR-07/2014. The required clock cycles per rx/tx bit are F_CPU/BAUD_RATE. The code
+ * inserts nop (1 cycle) or rjmp .+0 (2 cycles) in the delay/putch/getch routines, if the baud
+ * rate error warrants it to a) ensure tx and tx have the same timing and b) that the timing of
+ * SWIO is as close as possible to the timing required by F_CPU/BAUD_RATE, so the max SWIO error
+ * is |0.5/(F_CPU/BAUD_RATE)|. At 115200 baud and 16 MHz CPU frequency, the SWIO_B_VALUE is
+ * b=19, and there are 137 clock cycles per bit for the mega 16-bit PC architecture. We need 16
+ * MHz/115200 baud = 138.9 clock cycles. One extra clock cycle amounts to a slowdown of the baud
+ * rate to the tune of 0.73%. That is significant as one needs to control the baud rate to about
+ * 2.5%, which amounts to a drift of a quarter of a bit width for a single byte.
  */
 
 // Cycles per bit
 #define CPB ((F_CPU+BAUD_RATE/2)/BAUD_RATE)
 
-// The bitDelay() function has a granularity of 6 cycles - want around 1% accuracy
+// The bitDelay() function has a granularity of 6 cycles - want around 0.5% accuracy
 #if CPB > 600
 #define B_OFF                 3 // To centre error (max error is +/- 3 cycles)
 #define B_EXTRA               0 // No further correction (3/600+ cycles < 0.5% error)
@@ -1220,33 +1222,38 @@ void bitDelay();
 
 #ifndef SWIO_B_VALUE
 #if IS_REDUCED_CORE_TINY        // Actually unsupported for bootloaders
+#define SWIO_B_VALUE ((CPB-16-8+B_OFF+60)/6-10)
+#define CPB_B(b) (6*(b)+16+9)
+#define SWIO_B_DLYTX          0 // Delay tx timing so it's same as rx timing?
+#define SWIO_B_DLYRX          0 // Delay rx timing so it's same as tx timing?
+
+#elif IS_XMEGA && FLASHabove128k
 #define SWIO_B_VALUE ((CPB-16-9+B_OFF+60)/6-10)
 #define CPB_B(b) (6*(b)+16+9)
-#define SWIO_B_DLYTX          1 // Delay tx timing so it's same as rx timing
-
-#elif IS_XMEGA && defined(EIND)
-#define SWIO_B_VALUE ((CPB-16-10+B_OFF+60)/6-10)
-#define CPB_B(b) (6*(b)+16+10)
-#define SWIO_B_DLYTX          2
+#define SWIO_B_DLYTX          1
+#define SWIO_B_DLYRX          0
 
 #elif IS_XMEGA
-#define SWIO_B_VALUE ((CPB-12-10+B_OFF+60)/6-10)
-#define CPB_B(b) (6*(b)+12+10)
-#define SWIO_B_DLYTX          2
+#define SWIO_B_VALUE ((CPB-12-9+B_OFF+60)/6-10)
+#define CPB_B(b) (6*(b)+12+9)
+#define SWIO_B_DLYTX          1
+#define SWIO_B_DLYRX          0
 
-#elif defined(EIND)
+#elif FLASHabove128k
 #define SWIO_B_VALUE ((CPB-18-9+B_OFF+60)/6-10)
 #define CPB_B(b) (6*(b)+18+9)
 #define SWIO_B_DLYTX          0
+#define SWIO_B_DLYRX          1
 
 #else
 #define SWIO_B_VALUE ((CPB-14-9+B_OFF+60)/6-10)
 #define CPB_B(b) (6*(b)+14+9)
 #define SWIO_B_DLYTX          0
+#define SWIO_B_DLYRX          1
 #endif
 #endif // SWIO_B_VALUE
 
-#if SWIO_B_VALUE > 255
+#if SWIO_B_VALUE > 256          // Sic! 256 is still OK
 #error Baud rate too slow for SWIO
 #elif SWIO_B_VALUE < 0
 #error Baud rate too fast for SWIO
@@ -2329,10 +2336,8 @@ void putch(char chr) {
     "2: sbi %[TXPort],%[TXBit]\n" // Clear carry puts line high
     "   nop\n"
     "3: rcall bitDelay\n"
-#if   CPB < 400 && SWIO_B_DLYTX == 1 // Add 1-2 cycles to adjust getch() if improvement > 0.25%
+#if SWIO_B_DLYTX == 1           // Add 1 cycle to adjust timing to be same as getch()
     "   nop\n"
-#elif CPB < 800 && SWIO_B_DLYTX == 2
-    "   rjmp .+0\n"
 #endif
     "   lsr %[chr]\n"           // Push lsb into carry, on empty byte carry is clear (stop bit)
     "   dec %[bitcnt]\n"
@@ -2348,8 +2353,8 @@ void putch(char chr) {
 #endif
     "   rcall halfBitDelay\n"
     "halfBitDelay: "
-    "   ldi r25,%[bvalue]\n"
 #if SWIO_B_VALUE > 0
+    "   ldi r25,%[bvalue]\n"
     "1: dec r25\n"
     "   brne 1b\n"
 #endif
@@ -2358,7 +2363,7 @@ void putch(char chr) {
 #endif
       : "=&d"(bitcount)
       : [bitcnt] "0"(bitcount), [chr] "r"(chr), [TXPort] "I"(_SFR_IO_ADDR(UR_PORT(TX))),
-        [TXBit] "I"(UR_BIT(TX)), [bvalue] "M"(SWIO_B_VALUE)
+        [TXBit] "I"(UR_BIT(TX)), [bvalue] "M"(SWIO_B_VALUE & 0xff)
       : "r25" // Clobbers r25
   );
 #endif
@@ -2394,6 +2399,9 @@ uint8_t getch2(void) {
     "   dec   r18\n"
     "   breq  3f\n"
     "   ror   %[chr]\n"
+#if SWIO_B_DLYRX == 1           // Add 1 cycle so timing is same as putch()
+    "   nop\n"
+#endif
     "   rjmp  2b\n"
     "3:\n"
 #if EXITFE==2                   // Hard exit on frame error

@@ -766,7 +766,7 @@ atmega2560_dv3:
 	$(OBJCOPY) -j .text -j .data -j .version --set-section-flags .version=alloc,load -O ihex $*.elf $@
 	$(OBJDUMP) -h -S $*.elf > $*.lst
 #	@$(SIZE) $*.elf
-#	@echo -- `./hexls $@`
+	@echo -- `./hexls $@`
 	@echo
 
 # Prints baud rate quantisation error for bootloader urboot.c implementation

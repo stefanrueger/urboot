@@ -127,7 +127,7 @@ sub f {
       $feature{'<fcpu'} =~ s/%2/$p2/g;
       $feature{'<fcpu'} =~ s/%3/$p3/g;
       $feature{'<fcpu'} =~ s/%n/$p3/g;
-      my $perc = ord('i')-ord($p1);
+      my $perc = sprintf("%3.2f", (ord('i')-ord($p1))*1.25);
       $feature{'<fcpu'} =~ s/%p/$perc/g;
     }
     if(($p1, $p2, $p3) = $name =~ /_([j-q])([0-9]+)m([0-9]+)_/) {
@@ -135,7 +135,7 @@ sub f {
       $feature{'>fcpu'} =~ s/%1/$p1/g;
       $feature{'>fcpu'} =~ s/%2/$p2/g;
       $feature{'>fcpu'} =~ s/%3/$p3/g;
-      my $perc = ord($p1)-ord('i');
+      my $perc = sprintf("%3.2f", (ord($p1)-ord('i'))*1.25);
       $feature{'>fcpu'} =~ s/%p/$perc/g;
     }
     $legend{'fcpux+'} = 1 if $name =~ /[+_][0-9]+m[0-9]+x[+_]/;
