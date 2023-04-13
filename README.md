@@ -70,11 +70,11 @@ Mega](https://github.com/stefanrueger/urboot.hex/tree/main/boards/moteinomega/at
 and the ATmega2560 [Mega R3
 board](https://github.com/stefanrueger/urboot.hex/tree/main/boards/mega-r3/atmega2560/watchdog_1_s/autobaud/uart0_rxe0_txe1/led+b7/README.md);
 or, eg, some 16 MHz and 115,200 baud bootloaders for the [ATtiny167 based Digispark
-Pro](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark-pro/attiny167/watchdog_1_s/external_oscillator/16m000000_hz/+115k2_baud/uart0_rxa0_txa1/led+b1/README.md),
+Pro](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark-pro/attiny167/watchdog_1_s/external_oscillator_x/16m000000_hz/+115k2_baud/uart0_rxa0_txa1/led+b1/README.md),
 the [ATtiny85 based
-Disgispark](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark/attiny85/watchdog_1_s/external_oscillator/16m000000_hz/+115k2_baud/swio_rxb4_txb3/led+b1/README.md)
+Disgispark](https://github.com/stefanrueger/urboot.hex/tree/main/boards/digispark/attiny85/watchdog_1_s/external_oscillator_x/16m000000_hz/+115k2_baud/swio_rxb4_txb3/led+b1/README.md)
 and the [ATtiny84 based
-Luminet](https://github.com/stefanrueger/urboot.hex/tree/main/boards/luminet/attiny84/watchdog_1_s/external_oscillator/16m000000_hz/+115k2_baud/swio_rxa3_txa2/led+a4/README.md).
+Luminet](https://github.com/stefanrueger/urboot.hex/tree/main/boards/luminet/attiny84/watchdog_1_s/external_oscillator_x/16m000000_hz/+115k2_baud/swio_rxa3_txa2/led+a4/README.md).
 Finally, there are pre-compiled urboot bootloaders for popular Arduino cores in the
 [cores](https://github.com/stefanrueger/urboot.hex/tree/main/cores) directory of the
 [urboot.hex](https://github.com/stefanrueger/urboot.hex) repository.
@@ -177,11 +177,11 @@ for all `F_CPU` and a range of associated baudrates.
 
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|222|224|u7.7|`w-u-jpr--`|[urboot_t2313_1s_x16m0_115k2_uart0_rxd0_txd1_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/watchdog_1_s/external_oscillator/16m000000_hz/+115k2_baud/uart0_rxd0_txd1/lednop/urboot_t2313_1s_x16m0_115k2_uart0_rxd0_txd1_lednop.hex)|
+|222|224|u7.7|`w-u-jpr--`|[urboot_t2313_1s_x16m0_115k2_uart0_rxd0_txd1_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/watchdog_1_s/external_oscillator_x/16m000000_hz/+115k2_baud/uart0_rxd0_txd1/lednop/urboot_t2313_1s_x16m0_115k2_uart0_rxd0_txd1_lednop.hex)|
 |256|256|u7.7|`w-u-jPra-`|[urboot_t2313_1s_autobaud_uart0_rxd0_txd1_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/watchdog_1_s/autobaud/uart0_rxd0_txd1/lednop/urboot_t2313_1s_autobaud_uart0_rxd0_txd1_lednop.hex)|
-|252|256|u7.7|`w-u-jPr--`|[urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/external_oscillator/16m000000_hz/+115k2_baud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5.hex)|
+|252|256|u7.7|`w-u-jPr--`|[urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/external_oscillator_x/16m000000_hz/+115k2_baud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5.hex)|
 |368|384|u7.7|`weu-jPrac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_pr_ee_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_pr_ee_ce.hex)|
-|438|512|u7.7|`wes-hpr-c`|[urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/external_oscillator/16m000000_hz/+115k2_baud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex)|
+|438|512|u7.7|`wes-hpr-c`|[urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/external_oscillator_x/16m000000_hz/+115k2_baud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex)|
 |454|512|u7.7|`wes-hprac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex)|
 |474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
 |496|512|u7.7|`weudhprac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+d5_csb0_dual_ee_ce_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/boards/urclockusb/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+d5_csb0_dual/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+d5_csb0_dual_ee_ce_hw.hex)|
