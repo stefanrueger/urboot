@@ -615,7 +615,7 @@ if [[ $run -eq 1 ]]; then
     done
   done
 
-  # Generate the README.md files
+  # Check .hex files and generate README.md files
   tmp=$(mktemp "/dev/shm/$progname.XXXXXX")
   trap "rm -f $tmp" EXIT
   here=$(pwd)
@@ -631,6 +631,7 @@ if [[ $run -eq 1 ]]; then
       grep -h avr-gcc ${order[@]}
       echo -e "\`\`\`\n"
     } >README.md
+    echo $dir $("$here/hexls" -c *.hex) >>/tmp/hex-check.txt
     cd "$here"
   done
   hash cmpls 2>/dev/null && cmpls -p $mcu_bls/$mcu | grep \\.hex >>/tmp/equivalent-hex-files.txt
