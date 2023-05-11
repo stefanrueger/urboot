@@ -380,7 +380,7 @@ version:
 # 224 bytes
 #
 attiny2313_min:
-	$(MAKE) $(MK_OPTS) MCU=attiny2313 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=0 VBL_VECT_NUM=EEPROM_READY_vect_num NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny2313 URPROTOCOL=1 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3 VBL_VECT_NUM=EEPROM_READY_vect_num NAME=$@
 
 
 ##
@@ -391,10 +391,10 @@ attiny2313_min:
 # 256 bytes == 2 pages (no EEPROM support, needs to be programmed with avrdude -c urclock)
 #
 atmega328p_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=4  NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p URPROTOCOL=1 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 atmega328p_amin:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=3 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 ####
 # 384 bytes == 3 pages (needs to be programmed with avrdude -c urclock)
@@ -483,7 +483,7 @@ timeduino_cs8_dur urclock_cs8_dur moteino_cs8_dur:
 # With gcc v4.8.1 DUAL=1 still fits in 640 bytes (5 pages)
 #
 atmega328p_dv2:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p DUAL=1 VBL=2 FRILLS=4 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p DUAL=1 VBL=2 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 ##
 # With gcc v4.8.1 DUAL=1 still fits in 768 bytes (6 pages)
@@ -493,10 +493,10 @@ atmega328p_dv3:
 
 
 atmega16a_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega16a URPROTOCOL=1 EEPROM=0 VBL=0 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega16a URPROTOCOL=1 EEPROM=0 VBL=0 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 atmega163_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega162 URPROTOCOL=1 EEPROM=0 VBL=0 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega162 URPROTOCOL=1 EEPROM=0 VBL=0 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 
 ##
@@ -507,7 +507,7 @@ atmega163_min:
 # 256 bytes == 2 pages (no EEPROM support, needs to be programmed with avrdude -c urclock)
 #
 atmega168_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega168 URPROTOCOL=1 EEPROM=0 VBL=0 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega168 URPROTOCOL=1 EEPROM=0 VBL=0 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 pro_8mhz_ur lilypad_ur:
 	$(MAKE) $(MK_OPTS) MCU=atmega168 F_CPU=8000000L URPROTOCOL=1 SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 FRILLS=7 NAME=$@
@@ -537,7 +537,7 @@ pro_16mhz diecimila:
 #
 # 256 bytes
 attiny85_min:
-	$(MAKE) $(MK_OPTS) MCU=attiny85 SWIO=1 TX=AtmelPB3 RX=AtmelPB4 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=4 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny85 SWIO=1 TX=AtmelPB3 RX=AtmelPB4 URPROTOCOL=1 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 # 384 bytes
 attiny85_ur digispark:
@@ -554,7 +554,7 @@ attiny85_ur digispark:
 
 # 256 bytes
 attiny167_min:
-	$(MAKE) $(MK_OPTS) MCU=attiny167 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=4 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny167 URPROTOCOL=1 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 # 384 bytes
 attiny167_ur:
@@ -574,7 +574,7 @@ digisparkpro:
 # Luminet is a 1 MHz clocked board (capable of 9600 baud)
 #
 attiny84_min:
-	$(MAKE) $(MK_OPTS) MCU=attiny84 URPROTOCOL=1 SWIO=1 TX=AtmelPA2 RX=AtmelPA3 EEPROM=0 VBL=1 FRILLS=4 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny84 URPROTOCOL=1 SWIO=1 TX=AtmelPA2 RX=AtmelPA3 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 
 # LED=AtmelPA4
@@ -589,13 +589,13 @@ luminet_baud9600_ur luminet_baud9600:
 # 256 bytes == 2 pages (no EEPROM support, needs to be programmed with avrdude -c urclock)
 #
 atmega8_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega8 URPROTOCOL=1 EEPROM=0 VBL=0 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega8 URPROTOCOL=1 EEPROM=0 VBL=0 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 ##
 # 320 bytes == 5 pages
 #
 atmega8_ur:
-	$(MAKE) $(MK_OPTS) MCU=atmega8 URPROTOCOL=1 VBL=1 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega8 URPROTOCOL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 atmega8:
 	$(MAKE) $(MK_OPTS) MCU=atmega8 FRILLS=7 NAME=$@
@@ -608,13 +608,13 @@ atmega8:
 # 256 bytes == 4 pages (no EEPROM support, needs to be programmed with avrdude -c urclock)
 #
 atmega88_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega88 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega88 URPROTOCOL=1 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 ##
 # 320 bytes == 5 pages (no EEPROM support, needs to be programmed with avrdude -c urclock)
 #
 atmega88_ur:
-	$(MAKE) $(MK_OPTS) MCU=atmega88 URPROTOCOL=1 VBL=1 FRILLS=4 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega88 URPROTOCOL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 ##
 # 512 bytes
@@ -630,7 +630,7 @@ atmega88:
 # 256 bytes == 2 pages (no EEPROM support, needs to be programmed with avrdude -c urclock)
 #
 atmega32_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega32 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega32 URPROTOCOL=1 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 
 atmega32_ur:
@@ -647,69 +647,69 @@ atmega32:
 # 256 bytes == 1 page (no EEPROM support, needs to be programmed with avrdude -c urclock)
 #
 atmega1284p_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=3 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p URPROTOCOL=1 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 # 512 bytes
 atmega1284p_ur:
 	$(MAKE) $(MK_OPTS) MCU=atmega1284p URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
 
 atmega1284p_dur:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p URPROTOCOL=1 DUAL=1 VBL=1 FRILLS=3 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p URPROTOCOL=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 atmega1284p_v2:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p VBL=2 FRILLS=5 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p VBL=2 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 # Named devices below can all be derived from above template bootloader
 bobuino mighty1284:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPB7 VBL=2 FRILLS=5 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPB7 VBL=2 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 wildfire:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPB5 VBL=2 FRILLS=5 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPB5 VBL=2 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 wildfirev2:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p BAUD_RATE=1000000 LED=AtmelPB7 VBL=2 FRILLS=5 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p BAUD_RATE=1000000 LED=AtmelPB7 VBL=2 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 moteinomega:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPD7 VBL=2 FRILLS=5 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPD7 VBL=2 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 urclockmega:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPC7 VBL=2 FRILLS=5 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPC7 VBL=2 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 timeduinomega: # obsolete
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPD5 VBL=2 FRILLS=5 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPD5 VBL=2 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 # 768 bytes for dual boot
 atmega1284p_dv3:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p DUAL=1 VBL=3 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p DUAL=1 VBL=3 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 # Below can be derived from template bootloader
 moteinomega_cs23_d:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p SFMCS=ArduinoPin23 LED=AtmelPD7 DUAL=1 VBL=3 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p SFMCS=ArduinoPin23 LED=AtmelPD7 DUAL=1 VBL=3 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 urclockmega_cs3_d:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p SFMCS=ArduinoPin3 LED=AtmelPC7 LEDPOLARITY=-1 DUAL=1 VBL=3 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p SFMCS=ArduinoPin3 LED=AtmelPC7 LEDPOLARITY=-1 DUAL=1 VBL=3 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 timeduinomega_cs3_d: # obsolete
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p SFMCS=ArduinoPin3 LED=AtmelPD5 LEDPOLARITY=-1 DUAL=1 VBL=3 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p SFMCS=ArduinoPin3 LED=AtmelPD5 LEDPOLARITY=-1 DUAL=1 VBL=3 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 
 # 256 bytes
 atmega644p_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega644p URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega644p URPROTOCOL=1 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 # 512 bytes
 atmega644p_ur:
 	$(MAKE) $(MK_OPTS) MCU=atmega644p URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
 
 atmega644p_dur:
-	$(MAKE) $(MK_OPTS) MCU=atmega644p URPROTOCOL=1 DUAL=1 VBL=1 FRILLS=5 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega644p URPROTOCOL=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 atmega644p_v3:
-	$(MAKE) $(MK_OPTS) MCU=atmega644p VBL=3 FRILLS=3 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega644p VBL=3 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 # Can be derived
 sanguino:
-	$(MAKE) $(MK_OPTS) MCU=atmega644p LED=AtmelPB0 VBL=3 FRILLS=3 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega644p LED=AtmelPB0 VBL=3 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 # 768 bytes
 atmega644p_dv3:
@@ -724,40 +724,40 @@ atmega644p_dv3:
 
 # 256 bytes
 atmega1280_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega1280 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=3 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1280 URPROTOCOL=1 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 # 512 bytes
 atmega1280_ur:
 	$(MAKE) $(MK_OPTS) MCU=atmega1280 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
 
 atmega1280_dur:
-	$(MAKE) $(MK_OPTS) MCU=atmega1280 URPROTOCOL=1 DUAL=1 VBL=1 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1280 URPROTOCOL=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 atmega1280_v2:
-	$(MAKE) $(MK_OPTS) MCU=atmega1280 VBL=2 FRILLS=3 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1280 VBL=2 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 # 768 bytes = 3 pages
 atmega1280_dv3:
-	$(MAKE) $(MK_OPTS) MCU=atmega1280 DUAL=1 VBL=3 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1280 DUAL=1 VBL=3 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 
 # 256 bytes
 atmega2560_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega2560 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=3 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega2560 URPROTOCOL=1 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 # 512 bytes
 atmega2560_ur:
 	$(MAKE) $(MK_OPTS) MCU=atmega2560 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
 
 atmega2560_dur:
-	$(MAKE) $(MK_OPTS) MCU=atmega2560 URPROTOCOL=1 DUAL=1 VBL=1 FRILLS=6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega2560 URPROTOCOL=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 # 768 bytes
 atmega2560_v3:
 	$(MAKE) $(MK_OPTS) MCU=atmega2560 VBL=3 FRILLS=7 NAME=$@
 
 atmega2560_dv3:
-	$(MAKE) $(MK_OPTS) MCU=atmega2560 DUAL=1 VBL=3 FRILLS=5 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega2560 DUAL=1 VBL=3 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
 #----------
 
