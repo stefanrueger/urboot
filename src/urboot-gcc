@@ -146,7 +146,7 @@ my %uP = (
   'attiny13' =>        [0x1E, 0x90, 0x07,  25, 0x00050,       0, 0x00400, 0x020,  0,      0,       0, 0x0040,  10],
   'attiny13a' =>       [0x1E, 0x90, 0x07,  25, 0x00050,       0, 0x00400, 0x020,  0,      0,       0, 0x0040,  10],
   'attiny15' =>        [0x1E, 0x90, 0x06,   1, 0x80000,       0, 0x00400, 0x001,  0,      0,       0, 0x0040,   9],
-  'attiny22' =>        [0x1E, 0x91, 0x06,   2,       0,       0, 0x00800,    -1,  0,      0,      -1,     -1,   3],
+  'attiny22' =>        [0x1E, 0x91, 0x06,   2,       0,       0, 0x00800, 0x001,  0,      0,       0, 0x0080,   3],
   'attiny24' =>        [0x1E, 0x91, 0x0B,  25, 0x00050,       0, 0x00800, 0x020,  0,      0,       0, 0x0080,  17],
   'attiny24a' =>       [0x1E, 0x91, 0x0B,  25, 0x00050,       0, 0x00800, 0x020,  0,      0,       0, 0x0080,  17],
   'attiny25' =>        [0x1E, 0x91, 0x08,  25, 0x00050,       0, 0x00800, 0x020,  0,      0,       0, 0x0080,  15],
@@ -226,7 +226,6 @@ my %uP = (
   'atmega164a' =>      [0x1E, 0x94, 0x0F,   5, 0x10274,       0, 0x04000, 0x080,  4, 0x0100,       0, 0x0200,  31],
   'atmega164p' =>      [0x1E, 0x94, 0x0A,   5, 0x10274,       0, 0x04000, 0x080,  4, 0x0100,       0, 0x0200,  31],
   'atmega164pa' =>     [0x1E, 0x94, 0x0A,   5, 0x10274,       0, 0x04000, 0x080,  4, 0x0100,       0, 0x0200,  31],
-  'atmega324pb' =>     [0x1E, 0x95, 0x17,   5, 0x10274,       0, 0x08000, 0x080,  4, 0x0200,       0, 0x0400,  51],
   'atmega165' =>       [0x1E, 0x94, 0x07,   5, 0x10274,       0, 0x04000, 0x080,  4, 0x0100,       0, 0x0200,  22],
   'atmega165a' =>      [0x1E, 0x94, 0x10,   5, 0x10274,       0, 0x04000, 0x080,  4, 0x0100,       0, 0x0200,  22],
   'atmega165p' =>      [0x1E, 0x94, 0x07,   5, 0x10274,       0, 0x04000, 0x080,  4, 0x0100,       0, 0x0200,  22],
@@ -245,6 +244,7 @@ my %uP = (
   'atmega324a' =>      [0x1E, 0x95, 0x15,   5, 0x10274,       0, 0x08000, 0x080,  4, 0x0200,       0, 0x0400,  31],
   'atmega324p' =>      [0x1E, 0x95, 0x08,   5, 0x10274,       0, 0x08000, 0x080,  4, 0x0200,       0, 0x0400,  31],
   'atmega324pa' =>     [0x1E, 0x95, 0x11,   5, 0x10274,       0, 0x08000, 0x080,  4, 0x0200,       0, 0x0400,  31],
+  'atmega324pb' =>     [0x1E, 0x95, 0x17,   5, 0x10274,       0, 0x08000, 0x080,  4, 0x0200,       0, 0x0400,  51],
   'atmega325' =>       [0x1E, 0x95, 0x05,   5, 0x10274,       0, 0x08000, 0x080,  4, 0x0200,       0, 0x0400,  22],
   'atmega325a' =>      [0x1E, 0x95, 0x05,   5, 0x10274,       0, 0x08000, 0x080,  4, 0x0200,       0, 0x0400,  22],
   'atmega325p' =>      [0x1E, 0x95, 0x0D,   5, 0x10274,       0, 0x08000, 0x080,  4, 0x0200,       0, 0x0400,  22],
@@ -318,7 +318,7 @@ my %uP = (
   'at90usb1286' =>     [0x1E, 0x97, 0x82,  51, 0x183f4,       0, 0x20000, 0x100,  4, 0x0400,       0, 0x1000,  38],
   'at90usb1287' =>     [0x1E, 0x97, 0x82,  51, 0x183f4,       0, 0x20000, 0x100,  4, 0x0400,       0, 0x1000,  38],
   'at90s2313' =>       [0x1E, 0x91, 0x01,   2,       0,       0, 0x00800, 0x001,  0,      0,       0, 0x0080,  11],
-  'at90s2323' =>       [0x1E, 0x91, 0x02,   2,       0,       0, 0x00800,    -1,  0,      0,      -1,     -1,   3],
+  'at90s2323' =>       [0x1E, 0x91, 0x02,   2,       0,       0, 0x00800, 0x001,  0,      0,       0, 0x0080,   3],
   'at90s2333' =>       [0x1E, 0x91, 0x05,   2,       0,       0, 0x00800, 0x001,  0,      0,       0, 0x0080,  14],
   'at90s2343' =>       [0x1E, 0x91, 0x03,   2,       0,       0, 0x00800, 0x001,  0,      0,       0, 0x0080,   3],
   'at90s4414' =>       [0x1E, 0x92, 0x01,   2,       0,       0, 0x01000, 0x001,  0,      0,       0, 0x0100,  13],
@@ -467,7 +467,7 @@ for my $reason (keys %unsupported) {
 
 die "$progname: mcu architecture $mcu unknown; use one of ". join(", ", keys %uP)."\n" if !exists $uP{lc $mcu};
 
-my @autofrills;
+my (@autofrills, $bestautofrill);
 if( 0 < (grep { /-DAUTOFRILLS=/ } @ARGV) && 0 < (grep { /-DFRILLS=/ } @ARGV)) {
   push @warns, "$progname: ignoring AUTOFRILLS as FRILLS was explicitly set\n";
 } elsif((my $autofr) = grep { /-DAUTOFRILLS=/ } @ARGV) {
@@ -486,6 +486,7 @@ use constant {
   VERSIZE => 3,                 # Size of version section
   HWBL => 4,                    # Whether mcu has boot section
   UUBYTES => 5,                 # Number of unused bytes
+  BOOTSZ => 6,                  # Size of bootloader
 };
 
 my (@placement, $nowparams, @injectparams, $runs, @lastcmd, $lasterr, $addavailable, $converged, $fri);
@@ -559,6 +560,7 @@ do {
             @lastcmd = map{ /^-DFRILLS=/? "-DFRILLS=$frills": $_ } @lastcmd;
             $lasterr = $err;
             $bestfrills = $frills;
+            $bestautofrill = $frills;
           } else {
             # print "no luck (FRILLS=$frills)\n";
             unlink "_$elf" if -r "_$elf";
@@ -572,6 +574,22 @@ do {
     $addavailable = 1;
   }
 } while(--$runs && (!$converged || $addavailable >= 0));
+
+if(defined $bestautofrill) { # Recompute number of unused bytes and rjmp to pagewrite
+  @lastcmd = map { /^-D_urboot_AVAILABLE=/? "-D_urboot_AVAILABLE=0": $_ } @lastcmd;
+  compile(@lastcmd);
+  my ($pgmwriteoffset, $unused) = getpgmwriteoffset($elf);
+  @lastcmd = map { /^-D_urboot_AVAILABLE=/? "-D_urboot_AVAILABLE=$unused": $_ } @lastcmd;
+  my ($olap, $ex, $err) = compile(@lastcmd);
+
+  ($pgmwriteoffset, $unused) = getpgmwriteoffset($elf);
+  my $rjmpop = rjmpopcode($pgmwriteoffset, $nowparams->[BOOTSZ]);
+  if($rjmpop != $nowparams->[RJMPOP]) {
+    @lastcmd =  map{ /^-DRJMPWP=/? sprintf("-DRJMPWP=0x%4x", $rjmpop): $_ } @lastcmd;
+    ($olap, $ex, $err) = compile(@lastcmd);
+  }
+  $lasterr = $err;
+}
 
 print @warns;
 print join(' ', @lastcmd)."\n$lasterr";
@@ -599,8 +617,8 @@ sub compile {
 
 # Getplacement($mcu, $elf)
 #
-# Returns [start addr of bootloader, start addr of version section, rjmp opcode,
-#    size of version section, whether mcu has boot section, number of unused bytes]
+# Returns [start addr of bootloader, start addr of version section, rjmp opcode, size of
+#   version section, whether mcu has boot section, number of unused bytes, bootloader size]
 #
 
 sub getplacement {
@@ -649,11 +667,9 @@ sub getplacement {
   $bootstart = $flashsz - $bootsz;
 
 fake:
-  my $rjmpwp = ((defined($pgmwriteoffset)? $pgmwriteoffset: $bootsz-4)-$bootsz+2)/2;
-  # If jump (# of words) is out of reach put return opcode 0x9508 here
-  my $rjmpop = $rjmpwp < -2048 || $rjmpwp > 2047? 0x9508: 0xc000 | ($rjmpwp & 0xfff);
+  my $rjmpop = rjmpopcode($pgmwriteoffset, $bootsz);
 
-  return [$bootstart, $bootstart+$bootsz-$vsize, $rjmpop, $vsize, $hasboot, $unused];
+  return [$bootstart, $bootstart+$bootsz-$vsize, $rjmpop, $vsize, $hasboot, $unused, $bootsz];
 }
 
 # Return the size of the executable elf file
@@ -764,4 +780,12 @@ sub getnum {
   my $v = shift;
   $v =~ tr/.//d;
   return $v;
+}
+
+# rjmp opcode to page write routine given page write offset from main and bootloader size
+sub rjmpopcode {
+  my ($off, $bootsz) = @_;
+  $off = ($off-$bootsz+2)/2 if defined $off;
+  # If offset not defined or jump (# of words) is out of reach use ret opcode 0x9508
+  return !defined($off) || $off < -2048 || $off > 2047? 0x9508: 0xc000 | ($off & 0xfff);
 }
