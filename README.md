@@ -37,7 +37,7 @@ and limitations [here](https://github.com/stefanrueger/urboot/blob/main/docs/bac
 
 **Compiling an urboot bootloader.** The small sizes of `urboot` bootloaders depend on many a trick
 of the trade, most of which only work with the avr-gcc toolchain used for compilation. It turns out
-that two older avr-toolchains, version 4.8.1 or 5.4.0, produce pretty tight code. Linux binaries of
+that two older avr-toolchains, version 4.8.1 and 5.4.0, produce pretty tight code. Linux binaries of
 these are located in the `src/avr-toolchain` directory. This project uses helper programs in perl:
 an avr-gcc wrapper `urboot-gcc` and `hexls` that shows stats of the produced `.hex` files. So, all
 things considered, compiling this project is easiest on Linux with perl installed (and some
@@ -45,7 +45,7 @@ required perl libraries, too; install them with `cpan`). All going well `make al
 `.hex`, `.elf` and `.lst` files of a number of bootloaders. The created .hex files should coincide
 with the corresponding ones in the directory
 [`src/all`](https://github.com/stefanrueger/urboot/tree/main/src/all). Once all these hurdles are
-taken, it is pretty easy to create own bootloaders with commands such as
+taken, it is easy to create own bootloaders with commands such as
 ```
  $ make MCU=atmega328p F_CPU=16000000L BAUD_RATE=115200 EEPROM=1 URPROTOCOL=1 \
    LED=AtmelPB1 SFMCS=AtmelPB0 DUAL=1 FRILLS=7 NAME=moteino-dual
