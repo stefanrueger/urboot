@@ -10,7 +10,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.0
- * 11.04.2023
+ * 11.05.2023
  *
  */
 
@@ -916,6 +916,17 @@
 #define C_UCSZn1              2
 #define C_UCSZn0              1
 #define C_UCPOLn              0
+
+#elif defined(__AVR_ATmega32HVE2__)
+
+#define UR_UARTTYPE UR_UARTTYPE_UNKNOWN
+#define UR_NUMUARTS           0
+
+#define ISR_LIN0_TC     _uv(14)
+#define ISR_LIN0_ERR    _uv(15)
+
+#define RXD0           AtmelPB1
+#define TXD0           AtmelPB3
 
 #elif defined(__AVR_ATmega32U6__)
 

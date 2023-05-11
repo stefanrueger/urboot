@@ -9,7 +9,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.1
- * 11.04.2023
+ * 11.05.2023
  *
  */
 
@@ -275,6 +275,10 @@
 #elif defined(__AVR_ATmega32M1__)
 #define RAMSTART 0x0100
 #define RAMSIZE  0x0800
+
+#elif defined(__AVR_ATmega32HVE2__)
+#define RAMSTART     -1
+#define RAMSIZE      -1
 
 #elif defined(__AVR_ATmega32U2__)
 #define RAMSTART 0x0100

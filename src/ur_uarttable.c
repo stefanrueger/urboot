@@ -10,7 +10,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.1
- * 11.04.2023
+ * 11.05.2023
  *
  */
 
@@ -84,6 +84,7 @@ Uart_info Uart_table[] = {
   { "ATmega32HVBrevB", 0, 0, 0, 0, 0 },
   { "ATmega32C1", 1, 2, 0, 1, 0 },
   { "ATmega32M1", 1, 2, 0, 1, 0 },
+  { "ATmega32HVE2", 0, 0, 0, 0, 0 },
   { "ATmega32U2", 1, 1, 1, 1, 0 },
   { "ATmega32U4", 1, 1, 1, 1, 0 },
   { "ATmega32U6", 1, 1, 1, 1, 0 },

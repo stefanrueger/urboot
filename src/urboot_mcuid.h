@@ -9,7 +9,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.2
- * 11.04.2023
+ * 11.05.2023
  *
  */
 
@@ -99,6 +99,7 @@
 #define id_atmega32hvbrevb  61u
 #define id_atmega32c1       62u
 #define id_atmega32m1       63u
+#define id_atmega32hve2    379u
 #define id_atmega32u2       64u
 #define id_atmega32u4       65u
 #define id_atmega32u6       66u
@@ -415,7 +416,9 @@
 #define id_avr128da64      370u
 #define id_avr128db64      371u
 
+
 // Suggested vector bootloader interrupt: first unused vector or slot just above vector table
+
 #define vbu_attiny4          10
 #define vbu_attiny5          11
 #define vbu_attiny9          10
@@ -452,10 +455,12 @@
 #define vbu_attiny461        19
 #define vbu_attiny461a       19
 #define vbu_attiny828        26
+#define vbu_attiny828r       26
 #define vbu_attiny841        30
 #define vbu_attiny861        19
 #define vbu_attiny861a       19
 #define vbu_attiny1634       28
+#define vbu_attiny1634r      28
 #define vbu_attiny2313       19
 #define vbu_attiny2313a      21
 #define vbu_attiny4313       21
@@ -478,6 +483,7 @@
 #define vbu_atmega32hvbrevb  29
 #define vbu_atmega32c1       31
 #define vbu_atmega32m1       31
+#define vbu_atmega32hve2     25
 #define vbu_atmega32u2       29
 #define vbu_atmega32u4        5
 #define vbu_atmega32u6       38
@@ -587,6 +593,7 @@
 #define vbu_at90pwm81        20
 #define vbu_at90usb82        29
 #define vbu_at90scr100       24
+#define vbu_at90scr100h      24
 #define vbu_at90can128       37
 #define vbu_at90pwm161       20
 #define vbu_at90usb162       29
@@ -635,6 +642,9 @@
 #define vbu_ata8510          42
 #define vbu_ata8515          42
 #define vbu_ata664251        20
+#define vbu_lgt8f88p         26
+#define vbu_lgt8f168p        26
+#define vbu_lgt8f328p        26
 #define vbu_atxmega8e5       43
 #define vbu_atxmega16a4      36
 #define vbu_atxmega16a4u     36
@@ -659,6 +669,7 @@
 #define vbu_atxmega64a4u     36
 #define vbu_atxmega64d4       6
 #define vbu_atxmega128a1    102
+#define vbu_atxmega128a1revd 102
 #define vbu_atxmega128a1u   102
 #define vbu_atxmega128b1      8
 #define vbu_atxmega128a3     75

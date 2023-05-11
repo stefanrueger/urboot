@@ -11,7 +11,7 @@
 # Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
 #
 # v 1.0
-# 11.04.2023
+# 11.05.2023
 #
 
 ####
@@ -58,6 +58,7 @@ minbootsz[atmega32hvb]=512
 minbootsz[atmega32hvbrevb]=512
 minbootsz[atmega32c1]=512
 minbootsz[atmega32m1]=512
+minbootsz[atmega32hve2]=512
 minbootsz[atmega32u2]=512
 minbootsz[atmega32u4]=512
 minbootsz[atmega32u6]=512
@@ -692,6 +693,7 @@ mcuio[atmega32hvb]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[atmega32hvbrevb]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[atmega32c1]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
 mcuio[atmega32m1]="UARTNUM=0 RX=AtmelPD4 TX=AtmelPD3"
+mcuio[atmega32hve2]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[atmega32u2]="UARTNUM=0 RX=AtmelPD2 TX=AtmelPD3"
 mcuio[atmega32u4]="UARTNUM=0 RX=AtmelPD2 TX=AtmelPD3"
 mcuio[atmega32u6]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
@@ -1072,6 +1074,7 @@ intfcpus[atmega32hvb]=8000000/1000000
 intfcpus[atmega32hvbrevb]=1000000
 intfcpus[atmega32c1]=8000000/1000000
 intfcpus[atmega32m1]=8000000/1000000
+intfcpus[atmega32hve2]=8000000/1000000
 intfcpus[atmega32u2]=8000000/1000000
 intfcpus[atmega32u4]=8000000/1000000
 intfcpus[atmega32u6]=8000000/1000000
@@ -1452,6 +1455,7 @@ nickname[atmega32hvb]=m32hvb
 nickname[atmega32hvbrevb]=m32hvbrevb
 nickname[atmega32c1]=m32c1
 nickname[atmega32m1]=m32m1
+nickname[atmega32hve2]=atmega32hve2
 nickname[atmega32u2]=m32u2
 nickname[atmega32u4]=m32u4
 nickname[atmega32u6]=m32u6

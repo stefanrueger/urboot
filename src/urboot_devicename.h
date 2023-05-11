@@ -9,7 +9,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.1
- * 11.04.2023
+ * 11.05.2023
  *
  */
 
@@ -210,6 +210,9 @@
 
 #elif defined(__AVR_ATmega32M1__)
 #define __AVR_DEVICE_NAME__ atmega32m1
+
+#elif defined(__AVR_ATmega32HVE2__)
+#define __AVR_DEVICE_NAME__ atmega32hve2
 
 #elif defined(__AVR_ATmega32U2__)
 #define __AVR_DEVICE_NAME__ atmega32u2

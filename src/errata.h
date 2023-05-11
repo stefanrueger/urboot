@@ -4,8 +4,8 @@
  * published under GNU General Public License, version 3 (GPL-3.0)
  * author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v1.3
- * 26.03.2022
+ * v1.4
+ * 11.05.2023
  *
  * Different avr-libc versions have had different errors in the past. My preference is still
  * avr-gcc v 4.8.1 owing to the tight code it produces, so need to tend to past (and current)
@@ -68,7 +68,7 @@
 
 #elif defined(__AVR_ATmega165__)
 #undef  SIGNATURE_2
-#define SIGNATURE_2 0x10
+#define SIGNATURE_2 0x07
 
 #elif defined(__AVR_ATmega165A__)
 #undef  SIGNATURE_2
