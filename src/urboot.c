@@ -1968,7 +1968,7 @@ int main(void) {
 
 // Start of bootloader
 
-  // Global label marks watchdog location, so urloader can change the 500 ms default externally
+  // Mark location of WDTO setting, so urloader can change the 500 ms default externally
   asm volatile(".global watchdog_setting\nwatchdog_setting:\n\t" :::);
   watchdogConfig(WATCHDOG_TIMEOUT(WDTO));
 
@@ -2057,6 +2057,7 @@ int main(void) {
 #elif defined(UBRRnH) && BAUD_SETTING > 255
     UBRRnH = BAUD_SETTING>>8;
 #endif
+    asm volatile(".global ldi_baud\nldi_baud:\n\t" :::); // Mark location of baud setting
     UBRRnL = BAUD_SETTING & 0xff;
 #endif
 #if UART2X
@@ -2079,6 +2080,7 @@ int main(void) {
       " ldi r27, hi8(%[brrl_val])\n"
       " std Z+%[brrh_off], r27\n"
 #endif
+    ".global ldi_baud\nldi_baud:" // Mark location of baud setting
       " ldi r27, lo8(%[brrl_val])\n"
       " std Z+%[brrl_off], r27\n"
 #endif
@@ -2124,6 +2126,7 @@ int main(void) {
   asm volatile(
     " ldi r30, lo8(%[base])\n" // Load Z for st Z+offset, r27
     " ldi r31, hi8(%[base])\n"
+    ".global ldi_linlbt\nldi_linlbt:" // Mark location of LINLBT setting
     " ldi r27, %[btr_val]\n"
     " std Z+%[btr_off], r27\n"
 #if AUTOBAUD
@@ -2131,6 +2134,7 @@ int main(void) {
     " std Z+%[brrl_off], r27\n"
     AUTO_DRAIN
 #else
+    ".global ldi_linbaud\nldi_linbaud:" // Mark location of LIN baud setting
     " ldi r27, %[brrl_val]\n"
     " std Z+%[brrl_off], r27\n"
 #endif
@@ -2331,6 +2335,7 @@ void putch(char chr) {
     "   com %[chr]\n"           // One's complement
     "   sec\n"                  // Set carry (for start bit)
     "1: brcc 2f\n"
+    ".global cbi_tx\ncbi_tx:"   // Mark location of cbi tx opcode
     "   cbi %[TXPort],%[TXBit]\n" // Set carry puts line low
     "   rjmp 3f\n"
     "2: sbi %[TXPort],%[TXBit]\n" // Clear carry puts line high
@@ -2345,6 +2350,9 @@ void putch(char chr) {
     "   ret\n"
 
   "bitDelay: \n"
+#if B_EXTRA == 1 || B_EXTRA == 2
+    ".global swio_extra\nswio_extra:" // Mark location of SWIO extra delay
+#endif
 #if B_EXTRA & 1
     "   nop\n"
 #endif
@@ -2354,6 +2362,7 @@ void putch(char chr) {
     "   rcall halfBitDelay\n"
     "halfBitDelay: "
 #if SWIO_B_VALUE > 0
+    ".global ldi_bvalue\nldi_bvalue:" // Mark location of ldi SWIO_B_VALUE
     "   ldi r25,%[bvalue]\n"
     "1: dec r25\n"
     "   brne 1b\n"
@@ -2389,6 +2398,7 @@ uint8_t getch2(void) {
 #if SWIO
   asm volatile(
     "   ldi   r18, 9\n"         // 8 bit + 1 stop bit
+    ".global sbic_rx\nsbic_rx:" // Mark location of sbic rx opcode
     "1: sbic  %[RXPin],%[RXBit]\n" // Wait for falling edge of start bit
     "   rjmp  1b\n"
     "   rcall halfBitDelay\n"   // Get to middle of start bit
