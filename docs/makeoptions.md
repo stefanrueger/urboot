@@ -412,7 +412,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    `ur/libraries/urboot` library):
 
    ```
-   #if FLASHEND > 0xFFFFul
+   #if FLASHEND > 0xFFFFUL
      typedef const uint_farptr_t progmem_t;
    #else
      typedef const void *progmem_t;
@@ -423,19 +423,21 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
     * Copy a single page from SRAM to page-aligned PROGMEM utilising smr's urboot
     *  - Takes ca 8.7 ms on an 16 MHz ATmega328p
     *  - Remember to flush serial buffers before calling
-    *  - The bootloader may alter sram if it has reset protection and the user writes to Page 0
-   */
+    *  - The bootloader alters the first bytes of where sram points to if it has
+    *    reset protection and Page 0 is overwritten
+    *  - See https://gcc.gnu.org/onlinedocs/gcc/AVR-Options.html re EIND, RAMPZ
+    */
    void urbootPageWrite(void *sram, progmem_t pgm) {
      cli();
-   #ifdef EIND                     // Set correct memory segment for indirect jumps on large devices
+   #if FLASHEND > 0x1FFFFUL        // Set the correct memory segment for indirect jump
      EIND = ((FLASHEND+1UL-4UL)/2) >> 16;
    #endif
-     // Calls the bootloader routine
+     // Call the bootloader routine pgm_write_page(sram, pgm)
      ((void (*)(void *sram, progmem_t pgm))((FLASHEND+1UL-4UL)/2))(sram, pgm);
-   #ifdef RAMPZ // See https://gcc.gnu.org/onlinedocs/gcc-9.2.0/gcc/AVR-Options.html
+   #if FLASHEND > 0xFFFFUL
      RAMPZ = 0;
    #endif
-   #ifdef EIND // See above
+   #if FLASHEND > 0x1FFFFUL
      EIND = 0;
    #endif
      sei();
