@@ -16,16 +16,19 @@
 |256|256|u7.7|`w-u-jPr--`|[attiny167_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny167_min.hex)|
 |314|320|u7.7|`weu-jPr--`|[atmega8_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega8_ur.hex)|
 |318|320|u7.7|`weu-jPr--`|[atmega88_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega88_ur.hex)|
+|318|320|u7.7|`weu-jPra-`|[atmega88_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega88_aur.hex)|
+|320|320|u7.7|`weu-jPra-`|[atmega8_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega8_aur.hex)|
 |348|384|u7.7|`weu-jPr-c`|[atmega32_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega32_ur.hex)|
 |348|384|u7.7|`weu-jPr-c`|[attiny167_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny167_ur.hex)|
 |348|384|u7.7|`weu-jPr-c`|[digisparkpro.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/digisparkpro.hex)|
-|348|384|u7.7|`weu-jPr-c`|[pro_20mhz_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/pro_20mhz_ur.hex)|
 |352|384|u7.7|`weu-jPr-c`|[atmega328p_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_ur.hex)|
-|352|384|u7.7|`weu-jPr-c`|[pro_16mhz_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/pro_16mhz_ur.hex)|
+|364|384|u7.7|`weu-jPrac`|[atmega32_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega32_aur.hex)|
+|364|384|u7.7|`weu-jPrac`|[attiny167_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny167_aur.hex)|
 |368|384|u7.7|`weu-jPr-c`|[atmega328p_ur_testing.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_ur_testing.hex)|
-|368|384|u7.7|`weu-jPrac`|[atmega328p_autobaud_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_autobaud_ur.hex)|
-|368|384|u7.7|`weu-jPrac`|[promini_led13_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/promini_led13_ur.hex)|
-|368|384|u7.7|`weu-jPrac`|[promini_led9_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/promini_led9_ur.hex)|
+|368|384|u7.7|`weu-jPrac`|[atmega328p_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_aur.hex)|
+|368|384|u7.7|`weu-jPrac`|[pro_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/pro_aur.hex)|
+|368|384|u7.7|`weu-jPrac`|[promini_led13_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/promini_led13_aur.hex)|
+|368|384|u7.7|`weu-jPrac`|[promini_led9_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/promini_led9_aur.hex)|
 |374|384|u7.7|`weu-jPr-c`|[atmega328p_8125khz_swio_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_8125khz_swio_ur.hex)|
 |376|384|u7.7|`weu-jPr-c`|[atmega328p_8000khz_swio_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_8000khz_swio_ur.hex)|
 |376|384|u7.7|`weu-jPr-c`|[attiny85_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny85_ur.hex)|
@@ -34,8 +37,14 @@
 |376|384|u7.7|`weu-jPr-c`|[pro_8mhz_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/pro_8mhz_ur.hex)|
 |378|384|u7.7|`weu-jPr-c`|[atmega328p_7875khz_swio_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_7875khz_swio_ur.hex)|
 |378|384|u7.7|`weu-jPr-c`|[luminet_baud9600_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/luminet_baud9600_ur.hex)|
+|344|512|u7.7|`weu-jPr-c`|[atmega644p_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega644p_ur.hex)|
+|360|512|u7.7|`weu-jPrac`|[atmega644p_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega644p_aur.hex)|
 |380|512|u7.7|`weu-jPr-c`|[atmega1280_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_ur.hex)|
+|380|512|u7.7|`weu-jPr-c`|[atmega1284p_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_ur.hex)|
 |380|512|u7.7|`weu-jPr-c`|[atmega2560_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_ur.hex)|
+|396|512|u7.7|`weu-jPrac`|[atmega1280_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_aur.hex)|
+|396|512|u7.7|`weu-jPrac`|[atmega1284p_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_aur.hex)|
+|396|512|u7.7|`weu-jPrac`|[atmega2560_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_aur.hex)|
 |426|512|u7.7|`wes-hpr-c`|[atmega8.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega8.hex)|
 |428|512|u7.7|`wes-hpr-c`|[atmega32.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega32.hex)|
 |434|512|u7.7|`wes-hpr-c`|[pro_20mhz.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/pro_20mhz.hex)|
@@ -58,12 +67,14 @@
 |480|512|u7.7|`weudhpr-c`|[urclock_cs8_dur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/urclock_cs8_dur.hex)|
 |488|512|u7.7|`weudhpr-c`|[anarduino_cs5_dur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/anarduino_cs5_dur.hex)|
 |488|512|u7.7|`weudhpr-c`|[atmega328p_dur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_dur.hex)|
-|500|512|u7.7|`wes-vpr--`|[atmega1284p_v2.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_v2.hex)|
 |504|512|u7.7|`weudhprac`|[atmega328p_adur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_adur.hex)|
-|508|512|u7.7|`weudjPrac`|[attiny167_dur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny167_dur.hex)|
+|508|512|u7.7|`weudjPr--`|[atmega1284p_dur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_dur.hex)|
+|508|512|u7.7|`weudjPrac`|[attiny167_adur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny167_adur.hex)|
 |510|512|u7.7|`weudjPr--`|[atmega1280_dur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_dur.hex)|
 |510|512|u7.7|`weudjPr--`|[atmega2560_dur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_dur.hex)|
-|640|768|u7.7|`wes-Vpr-c`|[atmega2560_v3.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_v3.hex)|
+|510|512|u7.7|`weudjPra-`|[atmega1284p_adur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_adur.hex)|
+|512|512|u7.7|`weudjPra-`|[atmega1280_adur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_adur.hex)|
+|512|512|u7.7|`weudjPra-`|[atmega2560_adur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_adur.hex)|
 |710|1024|o8.3|`-es-h-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex)|
 
 - **Size:** Bootloader code size including small table at top end
@@ -77,25 +88,22 @@
   + `d` dual boot (over-the-air programming from external SPI flash)
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
-  + `v` vector bootloader: patches the vector table itself during upload but verification fails
-  + `V` vector bootloader: patches the vector table itself during upload, skips verifying the first page
   + `p` bootloader protects itself from being overwritten
   + `P` vector bootloader only: protects itself and reset vector from being overwritten
   + `r` preserves reset flags for the application in the register R2
   + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (recommended for large MCUs)
+  + `.` unable to tell from .hex file whether this feature is present
   + `-` corresponding feature not present
 - **Hex file:** often qualified by the MCU name and/or configuration
-  + `autobaud` detects host baud rate f/8, f/16, f/24, ..., f/2048 (f=F<sub>CPU</sub>)
   + `swio` software I/O (not UART)
   + `led9` toggles an LED on, in this example, Arduino pin 9
   + `cs8` uses Arduino pin 8 as chip select of external SPI flash memory for dual boot
   + `fp9` for debugging the bootloader uses, eg, Arduino pin 9 to swing a signal of low frequency, eg, 50 Hz
-  + `ur` uses urprotocol and requires `avrdude -c urclock` for programming
+  + `ur` uses urprotocol and therefore requires `avrdude -c urclock` for programming
+  + `aur` autobaud and uses urprotocol
   + `dur` dual boot and uses urprotocol
- + `adur` autobaud, dual boot and uses urprotocol
-  + `v2` vector bootloader that patches application itself
-  + `v3` vector bootloader that patches application itself and skips verifying the first page
+  + `adur` autobaud, dual boot and uses urprotocol
   + `min` most feature-rich bootloader for smallest achievable flash usage (implies `ur`)
 
 Note that the bootloaders with a part name, eg, `atmega8_ur.hex` are usually template bootloaders:

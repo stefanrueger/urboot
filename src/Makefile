@@ -330,13 +330,13 @@ min: attiny2313_min atmega1280_min atmega1284p_min atmega168_min atmega2560_min 
   atmega644p_min atmega8_min atmega88_min attiny167_min attiny84_min attiny85_min
 	./hexls -sort
 
-all: attiny2313_min atmega168_min atmega2560_min atmega32_min \
+all: attiny2313_min atmega168_min atmega2560_min atmega1280_min atmega1284p_min atmega32_min \
   atmega644p_min atmega8_min atmega88_min attiny84_min \
   atmega328p_min \
   atmega328p_amin \
   atmega328p \
   atmega328p_ur \
-  atmega328p_autobaud_ur \
+  atmega328p_aur \
   atmega328p_ur_testing \
   atmega328p_dur \
   atmega328p_adur \
@@ -347,24 +347,25 @@ all: attiny2313_min atmega168_min atmega2560_min atmega32_min \
   urclock urclock_cs8_dur \
   timeduino timeduino_cs8_dur  \
   jeenode \
-  promini_led13_ur promini_led9_ur promini_led13 promini_led9  \
+  promini_led13_aur promini_led9_aur promini_led13 promini_led9  \
   moteino moteino_cs8_dur \
   anarduino anarduino_cs5_dur \
   \
   diecimila pro_16mhz pro_20mhz pro_8mhz \
-  pro_16mhz_ur pro_20mhz_ur pro_8mhz_ur \
+  pro_aur pro_8mhz_ur \
   \
-  atmega1284p_min \
-  atmega1284p_v2 \
+  atmega644p_ur atmega644p_aur \
+  atmega1284p_ur atmega1284p_aur atmega1284p_dur atmega1284p_adur \
+  atmega2560_ur atmega2560_dur atmega2560_aur atmega2560_adur \
+  atmega1280_ur atmega1280_dur atmega1280_aur atmega1280_adur \
   \
-  atmega2560_min atmega2560_ur atmega2560_dur atmega2560_v3 \
-  atmega1280_min atmega1280_ur atmega1280_dur \
-  \
-  atmega8_ur atmega32_ur atmega88_ur \
+  atmega8_ur atmega8_aur \
+  atmega32_ur atmega32_aur \
+  atmega88_ur atmega88_aur \
   atmega8 atmega32 atmega88 \
-  attiny167_min attiny167_ur attiny167_dur digisparkpro \
+  attiny167_min attiny167_ur attiny167_aur attiny167_adur digisparkpro \
   attiny85_min attiny85_ur digispark \
-  lilypad_ur luminet_baud9600_ur
+  attiny84_min lilypad_ur luminet_baud9600_ur
 	./hexls --sort *.hex
 
 # Examples
@@ -399,7 +400,7 @@ atmega328p_amin:
 ####
 # 384 bytes == 3 pages (needs to be programmed with avrdude -c urclock)
 #
-atmega328p_autobaud_ur:
+atmega328p_aur:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
 
 atmega328p_ur:
@@ -446,13 +447,13 @@ ursense:
 anarduino moteino promini_led9:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p LED=AtmelPB1 FRILLS=7 NAME=$@
 
-promini_led9_ur:
+promini_led9_aur:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 VBL=1 LED=AtmelPB1 FRILLS=7 NAME=$@
 
 uno rbbb promini_led13:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p LED=AtmelPB5 FRILLS=7 NAME=$@
 
-promini_led13_ur:
+promini_led13_aur:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 VBL=1 LED=AtmelPB5 FRILLS=7 NAME=$@
 
 atmega328p_led9_50Hz_fp9:
@@ -518,6 +519,9 @@ pro_20mhz_ur:
 pro_16mhz_ur diecimila_ur:
 	$(MAKE) $(MK_OPTS) MCU=atmega168 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
 
+pro_aur diecimila_aur:
+	$(MAKE) $(MK_OPTS) MCU=atmega168 AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
+
 pro_8mhz lilypad:
 	$(MAKE) $(MK_OPTS) MCU=atmega168 F_CPU=8000000L SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 FRILLS=7 NAME=$@
 
@@ -560,11 +564,14 @@ attiny167_min:
 attiny167_ur:
 	$(MAKE) $(MK_OPTS) MCU=attiny167 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
 
+attiny167_aur:
+	$(MAKE) $(MK_OPTS) MCU=attiny167 AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
+
 tiny167debug_50Hz_fp2:
 	$(MAKE) $(MK_OPTS) MCU=attiny167 URPROTOCOL=1 VBL=1 DEBUG_FREQ=50 FREQ_PIN=ArduinoPin2 FRILLS=7 NAME=$@
 
 # 512 bytes
-attiny167_dur:
+attiny167_adur:
 	$(MAKE) $(MK_OPTS) MCU=attiny167 AUTOBAUD=1 URPROTOCOL=1 DUAL=1 VBL=1 FRILLS=7 QEXITERR=0 NAME=$@
 
 digisparkpro:
@@ -578,7 +585,7 @@ attiny84_min:
 
 
 # LED=AtmelPA4
-luminet_baud9600_ur luminet_baud9600:
+luminet_baud9600_ur:
 	$(MAKE) $(MK_OPTS) MCU=attiny84 F_CPU=1000000L BAUD_RATE=9600 URPROTOCOL=1 SWIO=1 TX=AtmelPA2 RX=AtmelPA3 VBL=1 FRILLS=7 NAME=$@
 
 ##
@@ -597,6 +604,12 @@ atmega8_min:
 atmega8_ur:
 	$(MAKE) $(MK_OPTS) MCU=atmega8 URPROTOCOL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
+atmega8_aur:
+	$(MAKE) $(MK_OPTS) MCU=atmega8 AUTOBAUD=1 URPROTOCOL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+
+##
+# 512 bytes
+#
 atmega8:
 	$(MAKE) $(MK_OPTS) MCU=atmega8 FRILLS=7 NAME=$@
 
@@ -616,6 +629,9 @@ atmega88_min:
 atmega88_ur:
 	$(MAKE) $(MK_OPTS) MCU=atmega88 URPROTOCOL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
+atmega88_aur:
+	$(MAKE) $(MK_OPTS) MCU=atmega88 AUTOBAUD=1 URPROTOCOL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+
 ##
 # 512 bytes
 #
@@ -632,9 +648,14 @@ atmega88:
 atmega32_min:
 	$(MAKE) $(MK_OPTS) MCU=atmega32 URPROTOCOL=1 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
-
+##
+# 384 bytes == 3 pages
+#
 atmega32_ur:
 	$(MAKE) $(MK_OPTS) MCU=atmega32 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
+
+atmega32_aur:
+	$(MAKE) $(MK_OPTS) MCU=atmega32 AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
 
 atmega32:
 	$(MAKE) $(MK_OPTS) MCU=atmega32 FRILLS=7 NAME=$@
@@ -655,6 +676,12 @@ atmega1284p_ur:
 
 atmega1284p_dur:
 	$(MAKE) $(MK_OPTS) MCU=atmega1284p URPROTOCOL=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+
+atmega1284p_aur:
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
+
+atmega1284p_adur:
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p AUTOBAUD=1 URPROTOCOL=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 atmega1284p_v2:
 	$(MAKE) $(MK_OPTS) MCU=atmega1284p VBL=2 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
@@ -701,8 +728,14 @@ atmega644p_min:
 atmega644p_ur:
 	$(MAKE) $(MK_OPTS) MCU=atmega644p URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
 
+atmega644p_aur:
+	$(MAKE) $(MK_OPTS) MCU=atmega644p AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
+
 atmega644p_dur:
 	$(MAKE) $(MK_OPTS) MCU=atmega644p URPROTOCOL=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+
+atmega644p_adur:
+	$(MAKE) $(MK_OPTS) MCU=atmega644p AUTOBAUD=1 URPROTOCOL=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 atmega644p_v3:
 	$(MAKE) $(MK_OPTS) MCU=atmega644p VBL=3 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
@@ -733,6 +766,12 @@ atmega1280_ur:
 atmega1280_dur:
 	$(MAKE) $(MK_OPTS) MCU=atmega1280 URPROTOCOL=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
+atmega1280_aur:
+	$(MAKE) $(MK_OPTS) MCU=atmega1280 AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
+
+atmega1280_adur:
+	$(MAKE) $(MK_OPTS) MCU=atmega1280 AUTOBAUD=1 URPROTOCOL=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+
 atmega1280_v2:
 	$(MAKE) $(MK_OPTS) MCU=atmega1280 VBL=2 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
 
@@ -751,6 +790,12 @@ atmega2560_ur:
 
 atmega2560_dur:
 	$(MAKE) $(MK_OPTS) MCU=atmega2560 URPROTOCOL=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+
+atmega2560_aur:
+	$(MAKE) $(MK_OPTS) MCU=atmega2560 AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
+
+atmega2560_adur:
+	$(MAKE) $(MK_OPTS) MCU=atmega2560 AUTOBAUD=1 URPROTOCOL=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
 
 # 768 bytes
 atmega2560_v3:

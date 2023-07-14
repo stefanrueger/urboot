@@ -85,7 +85,8 @@ my %feature = (
   'ee'     => "  + `ee` bootloader supports EEPROM read/write\n",
   'fr'     => "  + `fr` bootloader provides non-essential code (\"frills\") for smoother error handling\n",
   'ce'     => "  + `ce` bootloader provides a chip erase command\n",
-  'ur'     => "  + `ur` uses urprotocol and requires `avrdude -c urclock` for programming\n",
+  'ur'     => "  + `ur` uses urprotocol and therefore requires `avrdude -c urclock` for programming\n",
+  'aur'    => "  + `aur` autobaud and uses urprotocol\n",
   'stk500' => "  + `stk500` uses deprecated STK500v1 protocol to communicate with bootloader\n",
   'vbl'    => "  + `vbl` vector bootloader: set fuses to jump to reset, not the HW boot section\n",
   'hw'     => "  + `hw` hardware supported bootloader: set fuses to jump to the HW boot section, not to addr 0\n",
@@ -94,7 +95,7 @@ my %feature = (
   'fp9'    => "  + `fp9` for debugging the bootloader uses, eg, Arduino pin 9 to swing a signal of low frequency, eg, 50 Hz\n",
   'ddd'    => "  + `d` dual boot\n",
   'dur'    => "  + `dur` dual boot and uses urprotocol\n",
-  'adur'    => " + `adur` autobaud, dual boot and uses urprotocol\n",
+  'adur'   => "  + `adur` autobaud, dual boot and uses urprotocol\n",
   'min'    => "  + `min` most feature-rich bootloader for smallest achievable flash usage (implies `ur`)\n",
 );
 
@@ -188,7 +189,8 @@ sub f {
     $legend{stk500} = 1 if $name =~ /_stk500[_.]/;
     $legend{pr} = 1 if $name =~ /_pr[_.]/;
     $legend{ce} = 1 if $name =~ /_ce[_.]/;
-    $legend{ur} = 1 if $name =~ /[_]ur[_.]/;
+    $legend{ur} = 1 if $name =~ /_ur[_.]/;
+    $legend{aur} = 1 if $name =~ /_aur[_.]/;
     $legend{ddd} = 1 if $name =~ /_d[_.]/;
     $legend{dur} = 1 if $name =~ /_dur[_.]/;
     $legend{adur} = 1 if $name =~ /_adur[_.]/;
@@ -382,7 +384,7 @@ if(!$check) {
      print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p P r a c ? . -));
      print "- **Hex file:** often qualified by the MCU name and/or configuration\n";
      print $feature{$_} for grep { $legend{$_} } (qw(wdto xfcpu ifcpu <fcpu >fcpu fcpux+ fcpui+ fcpupm baud+ auto auto2 swio uart alt rxtx
-       led-b1 led9 ledPB1 lednop no-led csb0 cs8 csPB0 csnop template dual fp9 pr ee ce fr vbl hw ur stk500 ddd dur adur v2 v3 min));
+       led-b1 led9 ledPB1 lednop no-led csb0 cs8 csPB0 csnop template dual fp9 pr ee ce fr vbl hw ur aur dur adur stk500 ddd v2 v3 min));
   }
 }
 
