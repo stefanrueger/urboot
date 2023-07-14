@@ -13,7 +13,7 @@
  * encode and set the upper 4 bit of the register UBRRHI that is shared with UBRR0H.
  *
  * v 1.0
- * 11.05.2023
+ * 15.07.2023
  *
  */
 
@@ -3670,6 +3670,243 @@
 #warning UARTNUM value not recognised
 #endif
 
+#elif defined(__AVR_AVR16EA28__) || defined(__AVR_AVR32EA28__) || defined(__AVR_AVR64EA28__)
+
+#if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
+#define UARTn_base  _uad(0x800)
+#define ISR_UARTn_RXC   _uv(18)
+#define ISR_UARTn_DRE   _uv(19)
+#define ISR_UARTn_TXC   _uv(20)
+
+#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
+#define RXDn           AtmelPA1
+#define TXDn           AtmelPA0
+#define XCKn           AtmelPA2
+#define XDIRn          AtmelPA3
+
+#elif defined(UARTALT) && UARTALT == 1
+#define RXDn           AtmelPA5
+#define TXDn           AtmelPA4
+#define XCKn           AtmelPA6
+#define XDIRn          AtmelPA7
+
+#elif defined(UARTALT) && UARTALT == 2
+#define RXDn           AtmelPA3
+#define TXDn           AtmelPA2
+
+#elif defined(UARTALT) && UARTALT == 3
+#define RXDn           AtmelPD5
+#define TXDn           AtmelPD4
+#define XCKn           AtmelPD6
+#define XDIRn          AtmelPD7
+
+#elif defined(UARTALT) && UARTALT == 4
+#define RXDn           AtmelPC2
+#define TXDn           AtmelPC1
+#define XCKn           AtmelPC3
+#else
+#warning UARTALT value not recognised
+#endif
+
+#elif defined(UARTNUM) && UARTNUM == 1
+#define UARTn_base  _uad(0x820)
+#define ISR_UARTn_RXC   _uv(29)
+#define ISR_UARTn_DRE   _uv(30)
+#define ISR_UARTn_TXC   _uv(31)
+
+#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
+#define RXDn           AtmelPC1
+#define TXDn           AtmelPC0
+#define XCKn           AtmelPC2
+#define XDIRn          AtmelPC3
+
+#elif defined(UARTALT) && UARTALT == 2
+#define RXDn           AtmelPD7
+#define TXDn           AtmelPD6
+#else
+#warning UARTALT value not recognised
+#endif
+
+#elif defined(UARTNUM) && UARTNUM == 2
+#define UARTn_base  _uad(0x840)
+#define ISR_UARTn_RXC   _uv(34)
+#define ISR_UARTn_DRE   _uv(35)
+#define ISR_UARTn_TXC   _uv(36)
+
+#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
+#define RXDn           AtmelPF1
+#define TXDn           AtmelPF0
+#else
+#warning UARTALT value not recognised
+#endif
+#else
+#warning UARTNUM value not recognised
+#endif
+
+#elif defined(__AVR_AVR16EA32__) || defined(__AVR_AVR32EA32__) || defined(__AVR_AVR64EA32__)
+
+#if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
+#define UARTn_base  _uad(0x800)
+#define ISR_UARTn_RXC   _uv(18)
+#define ISR_UARTn_DRE   _uv(19)
+#define ISR_UARTn_TXC   _uv(20)
+
+#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
+#define RXDn           AtmelPA1
+#define TXDn           AtmelPA0
+#define XCKn           AtmelPA2
+#define XDIRn          AtmelPA3
+
+#elif defined(UARTALT) && UARTALT == 1
+#define RXDn           AtmelPA5
+#define TXDn           AtmelPA4
+#define XCKn           AtmelPA6
+#define XDIRn          AtmelPA7
+
+#elif defined(UARTALT) && UARTALT == 2
+#define RXDn           AtmelPA3
+#define TXDn           AtmelPA2
+
+#elif defined(UARTALT) && UARTALT == 3
+#define RXDn           AtmelPD5
+#define TXDn           AtmelPD4
+#define XCKn           AtmelPD6
+#define XDIRn          AtmelPD7
+
+#elif defined(UARTALT) && UARTALT == 4
+#define RXDn           AtmelPC2
+#define TXDn           AtmelPC1
+#define XCKn           AtmelPC3
+#else
+#warning UARTALT value not recognised
+#endif
+
+#elif defined(UARTNUM) && UARTNUM == 1
+#define UARTn_base  _uad(0x820)
+#define ISR_UARTn_RXC   _uv(29)
+#define ISR_UARTn_DRE   _uv(30)
+#define ISR_UARTn_TXC   _uv(31)
+
+#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
+#define RXDn           AtmelPC1
+#define TXDn           AtmelPC0
+#define XCKn           AtmelPC2
+#define XDIRn          AtmelPC3
+
+#elif defined(UARTALT) && UARTALT == 2
+#define RXDn           AtmelPD7
+#define TXDn           AtmelPD6
+#else
+#warning UARTALT value not recognised
+#endif
+
+#elif defined(UARTNUM) && UARTNUM == 2
+#define UARTn_base  _uad(0x840)
+#define ISR_UARTn_RXC   _uv(34)
+#define ISR_UARTn_DRE   _uv(35)
+#define ISR_UARTn_TXC   _uv(36)
+
+#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
+#define RXDn           AtmelPF1
+#define TXDn           AtmelPF0
+#define XCKn           AtmelPF2
+#define XDIRn          AtmelPF3
+
+#elif defined(UARTALT) && UARTALT == 1
+#define RXDn           AtmelPF5
+#define TXDn           AtmelPF4
+#else
+#warning UARTALT value not recognised
+#endif
+#else
+#warning UARTNUM value not recognised
+#endif
+
+#elif defined(__AVR_AVR16EA48__) || defined(__AVR_AVR32EA48__) || defined(__AVR_AVR64EA48__)
+
+#if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
+#define UARTn_base  _uad(0x800)
+#define ISR_UARTn_RXC   _uv(18)
+#define ISR_UARTn_DRE   _uv(19)
+#define ISR_UARTn_TXC   _uv(20)
+
+#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
+#define RXDn           AtmelPA1
+#define TXDn           AtmelPA0
+#define XCKn           AtmelPA2
+#define XDIRn          AtmelPA3
+
+#elif defined(UARTALT) && UARTALT == 1
+#define RXDn           AtmelPA5
+#define TXDn           AtmelPA4
+#define XCKn           AtmelPA6
+#define XDIRn          AtmelPA7
+
+#elif defined(UARTALT) && UARTALT == 2
+#define RXDn           AtmelPA3
+#define TXDn           AtmelPA2
+
+#elif defined(UARTALT) && UARTALT == 3
+#define RXDn           AtmelPD5
+#define TXDn           AtmelPD4
+#define XCKn           AtmelPD6
+#define XDIRn          AtmelPD7
+
+#elif defined(UARTALT) && UARTALT == 4
+#define RXDn           AtmelPC2
+#define TXDn           AtmelPC1
+#define XCKn           AtmelPC3
+#else
+#warning UARTALT value not recognised
+#endif
+
+#elif defined(UARTNUM) && UARTNUM == 1
+#define UARTn_base  _uad(0x820)
+#define ISR_UARTn_RXC   _uv(29)
+#define ISR_UARTn_DRE   _uv(30)
+#define ISR_UARTn_TXC   _uv(31)
+
+#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
+#define RXDn           AtmelPC1
+#define TXDn           AtmelPC0
+#define XCKn           AtmelPC2
+#define XDIRn          AtmelPC3
+
+#elif defined(UARTALT) && UARTALT == 1
+#define RXDn           AtmelPC5
+#define TXDn           AtmelPC4
+#define XCKn           AtmelPC6
+#define XDIRn          AtmelPC7
+
+#elif defined(UARTALT) && UARTALT == 2
+#define RXDn           AtmelPD7
+#define TXDn           AtmelPD6
+#else
+#warning UARTALT value not recognised
+#endif
+
+#elif defined(UARTNUM) && UARTNUM == 2
+#define UARTn_base  _uad(0x840)
+#define ISR_UARTn_RXC   _uv(34)
+#define ISR_UARTn_DRE   _uv(35)
+#define ISR_UARTn_TXC   _uv(36)
+
+#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
+#define RXDn           AtmelPF1
+#define TXDn           AtmelPF0
+#define XCKn           AtmelPF2
+#define XDIRn          AtmelPF3
+
+#elif defined(UARTALT) && UARTALT == 1
+#define RXDn           AtmelPF5
+#define TXDn           AtmelPF4
+#else
+#warning UARTALT value not recognised
+#endif
+#else
+#warning UARTNUM value not recognised
+#endif
+
 #elif defined(__AVR_AVR32DA28__) || defined(__AVR_AVR64DA28__) || defined(__AVR_AVR128DA28__)
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
@@ -4091,243 +4328,6 @@
 #define TXDn           AtmelPE0
 #define XCKn           AtmelPE2
 #define XDIRn          AtmelPE3
-#else
-#warning UARTALT value not recognised
-#endif
-#else
-#warning UARTNUM value not recognised
-#endif
-
-#elif defined(__AVR_AVR64EA28__)
-
-#if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
-#define UARTn_base  _uad(0x800)
-#define ISR_UARTn_RXC   _uv(18)
-#define ISR_UARTn_DRE   _uv(19)
-#define ISR_UARTn_TXC   _uv(20)
-
-#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
-#define RXDn           AtmelPA1
-#define TXDn           AtmelPA0
-#define XCKn           AtmelPA2
-#define XDIRn          AtmelPA3
-
-#elif defined(UARTALT) && UARTALT == 1
-#define RXDn           AtmelPA5
-#define TXDn           AtmelPA4
-#define XCKn           AtmelPA6
-#define XDIRn          AtmelPA7
-
-#elif defined(UARTALT) && UARTALT == 2
-#define RXDn           AtmelPA3
-#define TXDn           AtmelPA2
-
-#elif defined(UARTALT) && UARTALT == 3
-#define RXDn           AtmelPD5
-#define TXDn           AtmelPD4
-#define XCKn           AtmelPD6
-#define XDIRn          AtmelPD7
-
-#elif defined(UARTALT) && UARTALT == 4
-#define RXDn           AtmelPC2
-#define TXDn           AtmelPC1
-#define XCKn           AtmelPC3
-#else
-#warning UARTALT value not recognised
-#endif
-
-#elif defined(UARTNUM) && UARTNUM == 1
-#define UARTn_base  _uad(0x820)
-#define ISR_UARTn_RXC   _uv(29)
-#define ISR_UARTn_DRE   _uv(30)
-#define ISR_UARTn_TXC   _uv(31)
-
-#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
-#define RXDn           AtmelPC1
-#define TXDn           AtmelPC0
-#define XCKn           AtmelPC2
-#define XDIRn          AtmelPC3
-
-#elif defined(UARTALT) && UARTALT == 2
-#define RXDn           AtmelPD7
-#define TXDn           AtmelPD6
-#else
-#warning UARTALT value not recognised
-#endif
-
-#elif defined(UARTNUM) && UARTNUM == 2
-#define UARTn_base  _uad(0x840)
-#define ISR_UARTn_RXC   _uv(34)
-#define ISR_UARTn_DRE   _uv(35)
-#define ISR_UARTn_TXC   _uv(36)
-
-#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
-#define RXDn           AtmelPF1
-#define TXDn           AtmelPF0
-#else
-#warning UARTALT value not recognised
-#endif
-#else
-#warning UARTNUM value not recognised
-#endif
-
-#elif defined(__AVR_AVR64EA32__)
-
-#if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
-#define UARTn_base  _uad(0x800)
-#define ISR_UARTn_RXC   _uv(18)
-#define ISR_UARTn_DRE   _uv(19)
-#define ISR_UARTn_TXC   _uv(20)
-
-#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
-#define RXDn           AtmelPA1
-#define TXDn           AtmelPA0
-#define XCKn           AtmelPA2
-#define XDIRn          AtmelPA3
-
-#elif defined(UARTALT) && UARTALT == 1
-#define RXDn           AtmelPA5
-#define TXDn           AtmelPA4
-#define XCKn           AtmelPA6
-#define XDIRn          AtmelPA7
-
-#elif defined(UARTALT) && UARTALT == 2
-#define RXDn           AtmelPA3
-#define TXDn           AtmelPA2
-
-#elif defined(UARTALT) && UARTALT == 3
-#define RXDn           AtmelPD5
-#define TXDn           AtmelPD4
-#define XCKn           AtmelPD6
-#define XDIRn          AtmelPD7
-
-#elif defined(UARTALT) && UARTALT == 4
-#define RXDn           AtmelPC2
-#define TXDn           AtmelPC1
-#define XCKn           AtmelPC3
-#else
-#warning UARTALT value not recognised
-#endif
-
-#elif defined(UARTNUM) && UARTNUM == 1
-#define UARTn_base  _uad(0x820)
-#define ISR_UARTn_RXC   _uv(29)
-#define ISR_UARTn_DRE   _uv(30)
-#define ISR_UARTn_TXC   _uv(31)
-
-#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
-#define RXDn           AtmelPC1
-#define TXDn           AtmelPC0
-#define XCKn           AtmelPC2
-#define XDIRn          AtmelPC3
-
-#elif defined(UARTALT) && UARTALT == 2
-#define RXDn           AtmelPD7
-#define TXDn           AtmelPD6
-#else
-#warning UARTALT value not recognised
-#endif
-
-#elif defined(UARTNUM) && UARTNUM == 2
-#define UARTn_base  _uad(0x840)
-#define ISR_UARTn_RXC   _uv(34)
-#define ISR_UARTn_DRE   _uv(35)
-#define ISR_UARTn_TXC   _uv(36)
-
-#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
-#define RXDn           AtmelPF1
-#define TXDn           AtmelPF0
-#define XCKn           AtmelPF2
-#define XDIRn          AtmelPF3
-
-#elif defined(UARTALT) && UARTALT == 1
-#define RXDn           AtmelPF5
-#define TXDn           AtmelPF4
-#else
-#warning UARTALT value not recognised
-#endif
-#else
-#warning UARTNUM value not recognised
-#endif
-
-#elif defined(__AVR_AVR64EA48__)
-
-#if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
-#define UARTn_base  _uad(0x800)
-#define ISR_UARTn_RXC   _uv(18)
-#define ISR_UARTn_DRE   _uv(19)
-#define ISR_UARTn_TXC   _uv(20)
-
-#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
-#define RXDn           AtmelPA1
-#define TXDn           AtmelPA0
-#define XCKn           AtmelPA2
-#define XDIRn          AtmelPA3
-
-#elif defined(UARTALT) && UARTALT == 1
-#define RXDn           AtmelPA5
-#define TXDn           AtmelPA4
-#define XCKn           AtmelPA6
-#define XDIRn          AtmelPA7
-
-#elif defined(UARTALT) && UARTALT == 2
-#define RXDn           AtmelPA3
-#define TXDn           AtmelPA2
-
-#elif defined(UARTALT) && UARTALT == 3
-#define RXDn           AtmelPD5
-#define TXDn           AtmelPD4
-#define XCKn           AtmelPD6
-#define XDIRn          AtmelPD7
-
-#elif defined(UARTALT) && UARTALT == 4
-#define RXDn           AtmelPC2
-#define TXDn           AtmelPC1
-#define XCKn           AtmelPC3
-#else
-#warning UARTALT value not recognised
-#endif
-
-#elif defined(UARTNUM) && UARTNUM == 1
-#define UARTn_base  _uad(0x820)
-#define ISR_UARTn_RXC   _uv(29)
-#define ISR_UARTn_DRE   _uv(30)
-#define ISR_UARTn_TXC   _uv(31)
-
-#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
-#define RXDn           AtmelPC1
-#define TXDn           AtmelPC0
-#define XCKn           AtmelPC2
-#define XDIRn          AtmelPC3
-
-#elif defined(UARTALT) && UARTALT == 1
-#define RXDn           AtmelPC5
-#define TXDn           AtmelPC4
-#define XCKn           AtmelPC6
-#define XDIRn          AtmelPC7
-
-#elif defined(UARTALT) && UARTALT == 2
-#define RXDn           AtmelPD7
-#define TXDn           AtmelPD6
-#else
-#warning UARTALT value not recognised
-#endif
-
-#elif defined(UARTNUM) && UARTNUM == 2
-#define UARTn_base  _uad(0x840)
-#define ISR_UARTn_RXC   _uv(34)
-#define ISR_UARTn_DRE   _uv(35)
-#define ISR_UARTn_TXC   _uv(36)
-
-#if !defined(UARTALT) || (defined(UARTALT) && UARTALT == 0)
-#define RXDn           AtmelPF1
-#define TXDn           AtmelPF0
-#define XCKn           AtmelPF2
-#define XDIRn          AtmelPF3
-
-#elif defined(UARTALT) && UARTALT == 1
-#define RXDn           AtmelPF5
-#define TXDn           AtmelPF4
 #else
 #warning UARTALT value not recognised
 #endif

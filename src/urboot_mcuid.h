@@ -9,7 +9,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.2
- * 11.05.2023
+ * 15.07.2023
  *
  */
 
@@ -741,17 +741,23 @@
 #define vbu_avr16dd14        36
 #define vbu_avr16dd20        36
 #define vbu_avr16dd28        36
+#define vbu_avr16ea28        37
 #define vbu_avr16dd32        36
+#define vbu_avr16ea32        37
+#define vbu_avr16ea48        45
 #define vbu_avr32dd14        36
 #define vbu_avr32dd20        36
 #define vbu_avr32da28        41
 #define vbu_avr32db28        42
 #define vbu_avr32dd28        36
+#define vbu_avr32ea28        37
 #define vbu_avr32da32        41
 #define vbu_avr32db32        44
 #define vbu_avr32dd32        36
+#define vbu_avr32ea32        37
 #define vbu_avr32da48        58
 #define vbu_avr32db48        59
+#define vbu_avr32ea48        45
 #define vbu_avr64dd14        36
 #define vbu_avr64dd20        36
 #define vbu_avr64da28        41

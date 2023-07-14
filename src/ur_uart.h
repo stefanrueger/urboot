@@ -10,7 +10,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.0
- * 11.05.2023
+ * 15.07.2023
  *
  */
 
@@ -4402,9 +4402,7 @@
 #define TXPLCTRL_off         13
 #define RXPLCTRL_off         14
 
-#elif defined(__AVR_AVR8EA28__) || defined(__AVR_AVR8EA32__) || defined(__AVR_AVR16EA28__) || \
-  defined(__AVR_AVR16EA32__) || defined(__AVR_AVR16EA48__) || defined(__AVR_AVR32EA28__) || \
-  defined(__AVR_AVR32EA32__) || defined(__AVR_AVR32EA48__)
+#elif defined(__AVR_AVR8EA28__) || defined(__AVR_AVR8EA32__)
 
 #define UR_UARTTYPE UR_UARTTYPE_AVR8X
 #define UR_NUMUARTS           0
@@ -4573,6 +4571,207 @@
 #define XDIR1          AtmelPC3
 #define RXD1_ALT2      AtmelPD7
 #define TXD1_ALT2      AtmelPD6
+
+#define RXDATAL_off           0
+#define RXDATAH_off           1
+#define TXDATAL_off           2
+#define TXDATAH_off           3
+#define STATUS_off            4
+#define CTRLA_off             5
+#define CTRLB_off             6
+#define CTRLC_off             7
+#define BAUD_off              8
+#define CTRLD_off            10
+#define DBGCTRL_off          11
+#define EVCTRL_off           12
+#define TXPLCTRL_off         13
+#define RXPLCTRL_off         14
+
+#elif defined(__AVR_AVR16EA28__) || defined(__AVR_AVR32EA28__) || defined(__AVR_AVR64EA28__)
+
+#define UR_UARTTYPE UR_UARTTYPE_AVR8X
+#define UR_NUMUARTS           3
+
+#define UART0_base  _uad(0x800)
+#define ISR_UART0_RXC   _uv(18)
+#define ISR_UART0_DRE   _uv(19)
+#define ISR_UART0_TXC   _uv(20)
+
+#define RXD0           AtmelPA1
+#define TXD0           AtmelPA0
+#define XCK0           AtmelPA2
+#define XDIR0          AtmelPA3
+#define RXD0_ALT1      AtmelPA5
+#define TXD0_ALT1      AtmelPA4
+#define XCK0_ALT1      AtmelPA6
+#define XDIR0_ALT1     AtmelPA7
+#define RXD0_ALT2      AtmelPA3
+#define TXD0_ALT2      AtmelPA2
+#define RXD0_ALT3      AtmelPD5
+#define TXD0_ALT3      AtmelPD4
+#define XCK0_ALT3      AtmelPD6
+#define XDIR0_ALT3     AtmelPD7
+#define RXD0_ALT4      AtmelPC2
+#define TXD0_ALT4      AtmelPC1
+#define XCK0_ALT4      AtmelPC3
+
+#define UART1_base  _uad(0x820)
+#define ISR_UART1_RXC   _uv(29)
+#define ISR_UART1_DRE   _uv(30)
+#define ISR_UART1_TXC   _uv(31)
+
+#define RXD1           AtmelPC1
+#define TXD1           AtmelPC0
+#define XCK1           AtmelPC2
+#define XDIR1          AtmelPC3
+#define RXD1_ALT2      AtmelPD7
+#define TXD1_ALT2      AtmelPD6
+
+#define UART2_base  _uad(0x840)
+#define ISR_UART2_RXC   _uv(34)
+#define ISR_UART2_DRE   _uv(35)
+#define ISR_UART2_TXC   _uv(36)
+
+#define RXD2           AtmelPF1
+#define TXD2           AtmelPF0
+
+#define RXDATAL_off           0
+#define RXDATAH_off           1
+#define TXDATAL_off           2
+#define TXDATAH_off           3
+#define STATUS_off            4
+#define CTRLA_off             5
+#define CTRLB_off             6
+#define CTRLC_off             7
+#define BAUD_off              8
+#define CTRLD_off            10
+#define DBGCTRL_off          11
+#define EVCTRL_off           12
+#define TXPLCTRL_off         13
+#define RXPLCTRL_off         14
+
+#elif defined(__AVR_AVR16EA32__) || defined(__AVR_AVR32EA32__) || defined(__AVR_AVR64EA32__)
+
+#define UR_UARTTYPE UR_UARTTYPE_AVR8X
+#define UR_NUMUARTS           3
+
+#define UART0_base  _uad(0x800)
+#define ISR_UART0_RXC   _uv(18)
+#define ISR_UART0_DRE   _uv(19)
+#define ISR_UART0_TXC   _uv(20)
+
+#define RXD0           AtmelPA1
+#define TXD0           AtmelPA0
+#define XCK0           AtmelPA2
+#define XDIR0          AtmelPA3
+#define RXD0_ALT1      AtmelPA5
+#define TXD0_ALT1      AtmelPA4
+#define XCK0_ALT1      AtmelPA6
+#define XDIR0_ALT1     AtmelPA7
+#define RXD0_ALT2      AtmelPA3
+#define TXD0_ALT2      AtmelPA2
+#define RXD0_ALT3      AtmelPD5
+#define TXD0_ALT3      AtmelPD4
+#define XCK0_ALT3      AtmelPD6
+#define XDIR0_ALT3     AtmelPD7
+#define RXD0_ALT4      AtmelPC2
+#define TXD0_ALT4      AtmelPC1
+#define XCK0_ALT4      AtmelPC3
+
+#define UART1_base  _uad(0x820)
+#define ISR_UART1_RXC   _uv(29)
+#define ISR_UART1_DRE   _uv(30)
+#define ISR_UART1_TXC   _uv(31)
+
+#define RXD1           AtmelPC1
+#define TXD1           AtmelPC0
+#define XCK1           AtmelPC2
+#define XDIR1          AtmelPC3
+#define RXD1_ALT2      AtmelPD7
+#define TXD1_ALT2      AtmelPD6
+
+#define UART2_base  _uad(0x840)
+#define ISR_UART2_RXC   _uv(34)
+#define ISR_UART2_DRE   _uv(35)
+#define ISR_UART2_TXC   _uv(36)
+
+#define RXD2           AtmelPF1
+#define TXD2           AtmelPF0
+#define XCK2           AtmelPF2
+#define XDIR2          AtmelPF3
+#define RXD2_ALT1      AtmelPF5
+#define TXD2_ALT1      AtmelPF4
+
+#define RXDATAL_off           0
+#define RXDATAH_off           1
+#define TXDATAL_off           2
+#define TXDATAH_off           3
+#define STATUS_off            4
+#define CTRLA_off             5
+#define CTRLB_off             6
+#define CTRLC_off             7
+#define BAUD_off              8
+#define CTRLD_off            10
+#define DBGCTRL_off          11
+#define EVCTRL_off           12
+#define TXPLCTRL_off         13
+#define RXPLCTRL_off         14
+
+#elif defined(__AVR_AVR16EA48__) || defined(__AVR_AVR32EA48__) || defined(__AVR_AVR64EA48__)
+
+#define UR_UARTTYPE UR_UARTTYPE_AVR8X
+#define UR_NUMUARTS           3
+
+#define UART0_base  _uad(0x800)
+#define ISR_UART0_RXC   _uv(18)
+#define ISR_UART0_DRE   _uv(19)
+#define ISR_UART0_TXC   _uv(20)
+
+#define RXD0           AtmelPA1
+#define TXD0           AtmelPA0
+#define XCK0           AtmelPA2
+#define XDIR0          AtmelPA3
+#define RXD0_ALT1      AtmelPA5
+#define TXD0_ALT1      AtmelPA4
+#define XCK0_ALT1      AtmelPA6
+#define XDIR0_ALT1     AtmelPA7
+#define RXD0_ALT2      AtmelPA3
+#define TXD0_ALT2      AtmelPA2
+#define RXD0_ALT3      AtmelPD5
+#define TXD0_ALT3      AtmelPD4
+#define XCK0_ALT3      AtmelPD6
+#define XDIR0_ALT3     AtmelPD7
+#define RXD0_ALT4      AtmelPC2
+#define TXD0_ALT4      AtmelPC1
+#define XCK0_ALT4      AtmelPC3
+
+#define UART1_base  _uad(0x820)
+#define ISR_UART1_RXC   _uv(29)
+#define ISR_UART1_DRE   _uv(30)
+#define ISR_UART1_TXC   _uv(31)
+
+#define RXD1           AtmelPC1
+#define TXD1           AtmelPC0
+#define XCK1           AtmelPC2
+#define XDIR1          AtmelPC3
+#define RXD1_ALT1      AtmelPC5
+#define TXD1_ALT1      AtmelPC4
+#define XCK1_ALT1      AtmelPC6
+#define XDIR1_ALT1     AtmelPC7
+#define RXD1_ALT2      AtmelPD7
+#define TXD1_ALT2      AtmelPD6
+
+#define UART2_base  _uad(0x840)
+#define ISR_UART2_RXC   _uv(34)
+#define ISR_UART2_DRE   _uv(35)
+#define ISR_UART2_TXC   _uv(36)
+
+#define RXD2           AtmelPF1
+#define TXD2           AtmelPF0
+#define XCK2           AtmelPF2
+#define XDIR2          AtmelPF3
+#define RXD2_ALT1      AtmelPF5
+#define TXD2_ALT1      AtmelPF4
 
 #define RXDATAL_off           0
 #define RXDATAH_off           1
@@ -4953,207 +5152,6 @@
 #define TXD4           AtmelPE0
 #define XCK4           AtmelPE2
 #define XDIR4          AtmelPE3
-
-#define RXDATAL_off           0
-#define RXDATAH_off           1
-#define TXDATAL_off           2
-#define TXDATAH_off           3
-#define STATUS_off            4
-#define CTRLA_off             5
-#define CTRLB_off             6
-#define CTRLC_off             7
-#define BAUD_off              8
-#define CTRLD_off            10
-#define DBGCTRL_off          11
-#define EVCTRL_off           12
-#define TXPLCTRL_off         13
-#define RXPLCTRL_off         14
-
-#elif defined(__AVR_AVR64EA28__)
-
-#define UR_UARTTYPE UR_UARTTYPE_AVR8X
-#define UR_NUMUARTS           3
-
-#define UART0_base  _uad(0x800)
-#define ISR_UART0_RXC   _uv(18)
-#define ISR_UART0_DRE   _uv(19)
-#define ISR_UART0_TXC   _uv(20)
-
-#define RXD0           AtmelPA1
-#define TXD0           AtmelPA0
-#define XCK0           AtmelPA2
-#define XDIR0          AtmelPA3
-#define RXD0_ALT1      AtmelPA5
-#define TXD0_ALT1      AtmelPA4
-#define XCK0_ALT1      AtmelPA6
-#define XDIR0_ALT1     AtmelPA7
-#define RXD0_ALT2      AtmelPA3
-#define TXD0_ALT2      AtmelPA2
-#define RXD0_ALT3      AtmelPD5
-#define TXD0_ALT3      AtmelPD4
-#define XCK0_ALT3      AtmelPD6
-#define XDIR0_ALT3     AtmelPD7
-#define RXD0_ALT4      AtmelPC2
-#define TXD0_ALT4      AtmelPC1
-#define XCK0_ALT4      AtmelPC3
-
-#define UART1_base  _uad(0x820)
-#define ISR_UART1_RXC   _uv(29)
-#define ISR_UART1_DRE   _uv(30)
-#define ISR_UART1_TXC   _uv(31)
-
-#define RXD1           AtmelPC1
-#define TXD1           AtmelPC0
-#define XCK1           AtmelPC2
-#define XDIR1          AtmelPC3
-#define RXD1_ALT2      AtmelPD7
-#define TXD1_ALT2      AtmelPD6
-
-#define UART2_base  _uad(0x840)
-#define ISR_UART2_RXC   _uv(34)
-#define ISR_UART2_DRE   _uv(35)
-#define ISR_UART2_TXC   _uv(36)
-
-#define RXD2           AtmelPF1
-#define TXD2           AtmelPF0
-
-#define RXDATAL_off           0
-#define RXDATAH_off           1
-#define TXDATAL_off           2
-#define TXDATAH_off           3
-#define STATUS_off            4
-#define CTRLA_off             5
-#define CTRLB_off             6
-#define CTRLC_off             7
-#define BAUD_off              8
-#define CTRLD_off            10
-#define DBGCTRL_off          11
-#define EVCTRL_off           12
-#define TXPLCTRL_off         13
-#define RXPLCTRL_off         14
-
-#elif defined(__AVR_AVR64EA32__)
-
-#define UR_UARTTYPE UR_UARTTYPE_AVR8X
-#define UR_NUMUARTS           3
-
-#define UART0_base  _uad(0x800)
-#define ISR_UART0_RXC   _uv(18)
-#define ISR_UART0_DRE   _uv(19)
-#define ISR_UART0_TXC   _uv(20)
-
-#define RXD0           AtmelPA1
-#define TXD0           AtmelPA0
-#define XCK0           AtmelPA2
-#define XDIR0          AtmelPA3
-#define RXD0_ALT1      AtmelPA5
-#define TXD0_ALT1      AtmelPA4
-#define XCK0_ALT1      AtmelPA6
-#define XDIR0_ALT1     AtmelPA7
-#define RXD0_ALT2      AtmelPA3
-#define TXD0_ALT2      AtmelPA2
-#define RXD0_ALT3      AtmelPD5
-#define TXD0_ALT3      AtmelPD4
-#define XCK0_ALT3      AtmelPD6
-#define XDIR0_ALT3     AtmelPD7
-#define RXD0_ALT4      AtmelPC2
-#define TXD0_ALT4      AtmelPC1
-#define XCK0_ALT4      AtmelPC3
-
-#define UART1_base  _uad(0x820)
-#define ISR_UART1_RXC   _uv(29)
-#define ISR_UART1_DRE   _uv(30)
-#define ISR_UART1_TXC   _uv(31)
-
-#define RXD1           AtmelPC1
-#define TXD1           AtmelPC0
-#define XCK1           AtmelPC2
-#define XDIR1          AtmelPC3
-#define RXD1_ALT2      AtmelPD7
-#define TXD1_ALT2      AtmelPD6
-
-#define UART2_base  _uad(0x840)
-#define ISR_UART2_RXC   _uv(34)
-#define ISR_UART2_DRE   _uv(35)
-#define ISR_UART2_TXC   _uv(36)
-
-#define RXD2           AtmelPF1
-#define TXD2           AtmelPF0
-#define XCK2           AtmelPF2
-#define XDIR2          AtmelPF3
-#define RXD2_ALT1      AtmelPF5
-#define TXD2_ALT1      AtmelPF4
-
-#define RXDATAL_off           0
-#define RXDATAH_off           1
-#define TXDATAL_off           2
-#define TXDATAH_off           3
-#define STATUS_off            4
-#define CTRLA_off             5
-#define CTRLB_off             6
-#define CTRLC_off             7
-#define BAUD_off              8
-#define CTRLD_off            10
-#define DBGCTRL_off          11
-#define EVCTRL_off           12
-#define TXPLCTRL_off         13
-#define RXPLCTRL_off         14
-
-#elif defined(__AVR_AVR64EA48__)
-
-#define UR_UARTTYPE UR_UARTTYPE_AVR8X
-#define UR_NUMUARTS           3
-
-#define UART0_base  _uad(0x800)
-#define ISR_UART0_RXC   _uv(18)
-#define ISR_UART0_DRE   _uv(19)
-#define ISR_UART0_TXC   _uv(20)
-
-#define RXD0           AtmelPA1
-#define TXD0           AtmelPA0
-#define XCK0           AtmelPA2
-#define XDIR0          AtmelPA3
-#define RXD0_ALT1      AtmelPA5
-#define TXD0_ALT1      AtmelPA4
-#define XCK0_ALT1      AtmelPA6
-#define XDIR0_ALT1     AtmelPA7
-#define RXD0_ALT2      AtmelPA3
-#define TXD0_ALT2      AtmelPA2
-#define RXD0_ALT3      AtmelPD5
-#define TXD0_ALT3      AtmelPD4
-#define XCK0_ALT3      AtmelPD6
-#define XDIR0_ALT3     AtmelPD7
-#define RXD0_ALT4      AtmelPC2
-#define TXD0_ALT4      AtmelPC1
-#define XCK0_ALT4      AtmelPC3
-
-#define UART1_base  _uad(0x820)
-#define ISR_UART1_RXC   _uv(29)
-#define ISR_UART1_DRE   _uv(30)
-#define ISR_UART1_TXC   _uv(31)
-
-#define RXD1           AtmelPC1
-#define TXD1           AtmelPC0
-#define XCK1           AtmelPC2
-#define XDIR1          AtmelPC3
-#define RXD1_ALT1      AtmelPC5
-#define TXD1_ALT1      AtmelPC4
-#define XCK1_ALT1      AtmelPC6
-#define XDIR1_ALT1     AtmelPC7
-#define RXD1_ALT2      AtmelPD7
-#define TXD1_ALT2      AtmelPD6
-
-#define UART2_base  _uad(0x840)
-#define ISR_UART2_RXC   _uv(34)
-#define ISR_UART2_DRE   _uv(35)
-#define ISR_UART2_TXC   _uv(36)
-
-#define RXD2           AtmelPF1
-#define TXD2           AtmelPF0
-#define XCK2           AtmelPF2
-#define XDIR2          AtmelPF3
-#define RXD2_ALT1      AtmelPF5
-#define TXD2_ALT1      AtmelPF4
 
 #define RXDATAL_off           0
 #define RXDATAH_off           1

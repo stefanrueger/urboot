@@ -9,7 +9,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.1
- * 11.05.2023
+ * 15.07.2023
  *
  */
 
@@ -1381,20 +1381,20 @@
 #define RAMSIZE  0x0800
 
 #elif defined(__AVR_AVR16EA28__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x7800
+#define RAMSIZE  0x0800
 
 #elif defined(__AVR_AVR16DD32__)
 #define RAMSTART 0x7800
 #define RAMSIZE  0x0800
 
 #elif defined(__AVR_AVR16EA32__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x7800
+#define RAMSIZE  0x0800
 
 #elif defined(__AVR_AVR16EA48__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x7800
+#define RAMSIZE  0x0800
 
 #elif defined(__AVR_AVR32DD14__)
 #define RAMSTART 0x7000
@@ -1417,8 +1417,8 @@
 #define RAMSIZE  0x1000
 
 #elif defined(__AVR_AVR32EA28__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x7000
+#define RAMSIZE  0x1000
 
 #elif defined(__AVR_AVR32DA32__)
 #define RAMSTART 0x7000
@@ -1433,8 +1433,8 @@
 #define RAMSIZE  0x1000
 
 #elif defined(__AVR_AVR32EA32__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x7000
+#define RAMSIZE  0x1000
 
 #elif defined(__AVR_AVR32DA48__)
 #define RAMSTART 0x7000
@@ -1445,8 +1445,8 @@
 #define RAMSIZE  0x1000
 
 #elif defined(__AVR_AVR32EA48__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x7000
+#define RAMSIZE  0x1000
 
 #elif defined(__AVR_AVR64DD14__)
 #define RAMSTART 0x6000
