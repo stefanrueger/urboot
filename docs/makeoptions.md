@@ -4,7 +4,7 @@ This repository should work out of the box on a typical PC under Linux. Just `cd
 ```
   make atmega328p_autobaud_ur
 ```
-to test whether  compilation works in principle. If successful, a
+to test whether compilation works in principle. If successful, a
 bootloader `atmega328p_autobaud_ur.hex` should have been generated. The
 system needs `perl` installed and quite possibly the following perl
 modules:
@@ -15,11 +15,11 @@ modules:
   Scalar::Util
   Getopt::Long
 ```
-They can normally be installed using `cpan install <module>`. On first run `cpan` may need to be
-configured. Follow the recommendations there; my personal choice for the way cpan installs perl
-modules is via `sudo`, but it should not matter what is chosen.
+They can normally be installed using `cpan install <module>`. On the first run, `cpan` may need
+to be configured. Follow the recommendations there; my personal choice for the way cpan installs
+perl modules is via `sudo`, but it should not matter what is chosen.
 
-Urboot bootloaders have many a configuration option for avr-gcc. With the notable exception of
+Urboot bootloaders have many configuration options for avr-gcc. With the notable exception of
 `-DSTART` and `-DRJMPWP` (which are set by the `avr-gcc` wrapper `urboot-gcc`, see below) almost
 all bootloader generation options can be put on the command line for make without the `-D`. For
 example, issuing the command
@@ -38,14 +38,14 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
 
  - `MCU=<mcu>`
 
-   This selects the AVR part, eg, atmega328p (the default `make` option), for which the bootloader
-   is compiled. The name must be in all lower case.
+   This selects the AVR part, e.g., atmega328p (the default `make` option), for which the bootloader
+   is compiled. The name must be in all lowercase.
 
  - `F_CPU=<num>L`
 
     This option selects the CPU frequency of the destination board in Hertz as a long constant
-    number, eg, `F_CPU=16000000L` for 16 MHz, which is also the default `make` option. Unless the
-    option `AUTOBAUD` is selected, the bootloader code needs to know the CPU frequency as the
+    number, e.g., `F_CPU=16000000L` for 16 MHz, which is also the default `make` option. Unless
+    the option `AUTOBAUD` is selected, the bootloader code needs to know the CPU frequency as the
     serial communication baud rate is derived from it.
 
  - `NAME=<name>`
@@ -55,8 +55,8 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
      + `<name>.elf` is the executable and linkable format file
      + `<name>.lst` is a crude ASCII listing of an assembler file
 
-   In absence of this option `make` invents its own name that may or may not be agreeable. For backward
-   compatibility `MOVETO=<name>` does the same thing.
+   In the absence of this option `make` invents its own name that may or may not be agreeable. For
+   backward compatibility `MOVETO=<name>` does the same thing.
 
 ## Serial communication
 
@@ -67,11 +67,11 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    These three different settings determine how the serial communication is implemented. When the
    MCU has a hardware UART using that will normally create shorter code, and this is the default.
    In case the MCU has more than one UART, then `UARTNUM` specifies which one to use (0, 1, ...).
-   Note that `UARTNUM` always counts from 0, irrespective whether the only UART is actually
+   Note that `UARTNUM` always counts from 0, irrespective of whether the only UART is actually
    called `USART1` or whether the UARTs have a different naming scheme as with the XMEGA UARTs
-   that are named after the port, eg, `USARTC0`. `UARTALT`, if given, specifies an alternative
+   that are named after the port, e.g., `USARTC0`. `UARTALT`, if given, specifies an alternative
    pin assignment for RX/TX. It is usually a small number that aligns with the available
-   alternative assignments lined out in the data sheet.
+   alternative assignments lined out in the datasheet.
 
    If `AUTOBAUD` is set then the generated bootloader will try to initialise the UART with the
    host communication speed that the bootloader augurs from the first byte that is expected from
@@ -121,28 +121,28 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
 
    Notice that the ubiquitous 115,200 baud is actually out of specs for popular 16 MHz MCU builds.
    In practice, tolerances of up to 2.5% may actually work, though that is not recommended. Also
-   signal noise and cable length plays a big role in whether communication is stable. The maximum
+   signal noise and cable length play a big role in whether communication is stable. The maximum
    permitted baud rate of `F_CPU/8` may not always work. In general, lower baud rates are expected
    to work better, at least they will exhibit a lower quantisation error. If the chosen oscillator
    source has an unknown but high deviation from the nominal frequency (as is the case for the
    internal 8 MHz oscillators of a typical MCU) then it is safer to choose a host computer baud
-   rate in the last interval of above table, ie, a baud rate of less than `F_CPU/260`. In the case
-   of an 8 MHz internal oscillator with an autobaud bootloader this would be, eg, 28,800 baud,
+   rate in the last interval of the above table, i.e., a baud rate of less than `F_CPU/260`. In the
+   case of an 8 MHz internal oscillator with an autobaud bootloader this would be, e.g., 28,800 baud,
    though 57,600 baud are likely to work and 115,200 baud might work. External oscillators usually
    have a good tolerance, even a resonator with a 2000 ppm error will only produce an additional
    deviation error of 0.2% in addition to the quantisation error caused by limited baud rate
    division choices for autobaud bootloaders.
 
-   Above set of baud rates is generated by setting `UART2X` to 1, the default when `AUTOBAUD` has
-   been set. Setting `UART2X=0` saves 4 bytes code and has a higher tolerance of 2% error but will
-   restrict available baud rates to half of above baud rates: `F_CPU/16`, `F_CPU/32`, `F_CPU/48`,
+   The above set of baud rates is generated by setting `UART2X` to 1, the default when `AUTOBAUD` has
+   been set. Setting `UART2X=0` saves 4 bytes of code and has a higher tolerance of 2% error but will
+   restrict available baud rates to half of the above baud rates: `F_CPU/16`, `F_CPU/32`, `F_CPU/48`,
    ..., `F_CPU/4096`.
 
    In order for the `AUTOBAUD` feature to work, urboot will need to (and usually does) know the rx
    line of the UART so it can measure the host's baud rate. In addition, the rx line needs to
    reside on a port that is within the bit-addressable bytes of the MCU, which are typically
    located in [0x20, 0x3f]. Therefore UARTs for which the rx pin is located on Port `H` and above
-   are not available for `AUTOBAUD`, eg, UART2 and UART3 of the ATmega2560.
+   are not available for `AUTOBAUD`, e.g., UART2 and UART3 of the ATmega2560.
 
    If `AUTOBAUD` is not set or if it is set to 0, the code automatically selects reasonably good
    settings to match the desired fixed baud rate `BAUD_RATE`. In the absence of `AUTOBAUD` if
@@ -151,7 +151,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    utilise the set of higher baud rates only, setting it to 0 will always utilise the set of lower
    baud rates to match the desired BAUD_RATE.
 
-   Some classic parts, eg the ATmega103, do not have a way to set double UART speed. Setting
+   Some classic parts, e.g. the ATmega103, do not have a way to set double UART speed. Setting
    `UART2X` to 1 has no effect for these, and the set of available `AUTOBAUD` baud rates is as if
    `UART2X` had been set to 0.
 
@@ -162,11 +162,11 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    a consequence, LIN/UARTs can create almost all baud rates well within 1% of quantisation error
    with far fewer blind spots. Urboot bootloaders for these parts make use of that automagically.
    The setting of `UART2X` takes no effect for these parts when working with fixed baud rates.
-   `AUTOBAUD` though works exactly as for the other classic parts, ie, the number of samples will be
+   `AUTOBAUD` though works exactly as for the other classic parts, i.e., the number of samples will be
    either set to 8 or 16 depending on the setting of `UART2X` as described above.
 
    `SWIO=1` creates code for software I/O. That is not only useful for those MCUs that don't have
-   an UART, but also for those combinations of `F_CPU` and `BAUD_RATE` where an UART would create
+   a UART, but also for those combinations of `F_CPU` and `BAUD_RATE` where a UART would create
    too large quantisation errors for the baud rate. It might also be necessary to resort to
    software I/O when the board uses the MCU's rx and tx lines otherwise. The options `RX` and `TX`
    specify which pins are used for software I/O. The syntax is the same as with `LED` and `SFMCS`:
@@ -214,9 +214,9 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    programming and `-c arduino` will not work. Setting `URPROTOCOL=1` saves between 76 and 112
    bytes.
 
-   For historical reasons the default is `URPROTOCOL=0` though that is rarely useful. Once avrdude
-   v7.1 with its urclock programmer is reasonably well distributed, it is likely that
-   `URPROTOCOL=1` will become default. At some point `URPROTOCOL=0` will be withdrawn altogether to
+   For historical reasons the default is `URPROTOCOL=0` though that is rarely useful. Once Avrdude
+   v7.1 with its urclock programmer is reasonably well distributed, it is likely that `URPROTOCOL=1`
+   will become the default. At some point `URPROTOCOL=0` will be withdrawn altogether to
    simplify `urboot.c`.
 
  - `WDTO=<timeout>` (watchdog timeout)
@@ -240,7 +240,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
 
  - `VBL=<0|1|2|3> [VBL_VECT_NUM=<num>]`
 
-   This option is valid for parts that do not have a `UDPI` interface. It determines whether or not
+   This option is valid for parts that do not have a `UPDI` interface. It determines whether or not
    a vector bootloader is generated. The default for this option is `VBL=0` for devices that have
    hardware boot section support.
 
@@ -279,7 +279,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    MCUs with flash memory between more than 8k and 128k inclusively as urboot `VBL=2` or `3` only
    patches the destination address in the missing upper half of the 4-byte `jmp`. This increases
    the size of each sketch by 4 or 2 bytes, respectively. Compiling the bootloader with the option
-   `VBL_VECT_NUM=-1` tells it to use this additional vector (which, eg, would translate to 26 for
+   `VBL_VECT_NUM=-1` tells it to use this additional vector (which, e.g., would translate to 26 for
    the ATmega328P, 35 for the ATmega1284P, 57 for the ATmega2560, 15 for the ATtiny85 and 20 for
    the ATtiny167).
 
@@ -296,7 +296,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    top of the boot section (see below), so that `avrdude -c urclock` can and will apply the patch
    for upload and verification auto-magically.
 
-   If neither avrdude nor external patching of applications fit the workflow, one can alternatively
+   If neither avrdude nor external patching of applications fits the workflow, one can alternatively
    compile a bootloader with `VBL=2` or `3`, so it patches the vectors at the cost of enlarged code
    size. Options `VBL=2` or `3` both create a vector bootloader that copies the reset vector of a
    program during upload into an unused interrupt vector and replaces the reset vector with a jump
@@ -306,9 +306,9 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    table, so a copy of the uploaded vector page is returned. This way, everything except the page
    with the modified vector table is being verified. A serial communication error on the first page
    would still be discovered as the bootloader returns what it has read. Note that verification of
-   the vector page is altered only when immediately done after programming, ie, when using
+   the vector page is altered only when immediately done after programming, i.e., when using
    avrdude's implicit verify option. If the program flash is read in a separate avrdude call then
-   the real contents is returned as it should be. From version 7.5 onwards the `VBL=2` or `3` code
+   the real contents are returned as they should be. From version 7.5 onwards the `VBL=2` or `3` code
    checks whether the reset vector already points to the bootloader, in which case the patch is not
    executed. Consequently, verification of the page at zero is not altered. This is done to allow
    both un-patched and patched applications be uploaded with a vector bootloader when VBL is set to
@@ -358,10 +358,10 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
  - `PROTECTME=<1|0>`
 
    Setting `PROTECTME=1` prevents the bootloader from overwriting itself. This can only in rare
-   circumstances be safely switched off, eg, when no `pgm_write_page()` function is exported, the
+   circumstances be safely switched off, e.g., when no `pgm_write_page()` function is exported, the
    bootloader uses hardware boot section support and the lock bits are set to protect the
    bootloader. As the protection code is only between 4 and 10 bytes and the user might forget
-   protecting the hardware supported boot section through lockbits, this protection can no longer
+   protecting the hardware-supported boot section through lockbits, this protection can no longer
    be switched off from v7.7 onwards.
 
 
@@ -446,7 +446,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
 
 ## Frills
 
-The options below are frills, ie, not really essential for the functionality of the bootloader.
+The options below are frills, i.e., not really essential for the functionality of the bootloader.
 
  - `CHIP_ERASE=<0|1>`
 
@@ -566,7 +566,7 @@ calling `avr-gcc`.
  - `-DSTART=<address>`
 
    There are several places in the code of the bootloader where it needs to know its eventual place
-   in flash memory, eg, for code to protect overwriting the bootloader itself, for patching
+   in flash memory, e.g., for code to protect overwriting the bootloader itself, for patching
    applications in vector bootloaders (see below) and for copying the right amount of external SPI
    flash memory to microprocessor flash in dual boot. Bootloaders normally sit in high flash memory
    (except in AVR parts with `UPDI` interface). The `-DSTART=0x...UL` option informs `urboot.c`
@@ -618,7 +618,7 @@ This is normally not a problem, but when the new size ticks over the boot sectio
 limit, this will trigger a linker error after the second step. To resolve this, urboot-gcc must
 compile and link a third time, this time adding a few bytes of slack to the size. In case you
 requested the export of pgm_write_page() in the bootloader source, urboot-gcc computes the
-appropriate 2-byte rjmp call and places it 4 bytes under the end of the bootloader, ie, at the end
+appropriate 2-byte rjmp call and places it 4 bytes under the end of the bootloader, i.e., at the end
 of flash just before the two version bytes.
 
 In addition to figuring out the correct start address of the bootloader and the correct rjmp to the
@@ -660,7 +660,7 @@ $ hexls --sort -*.hex
 |508|512|u7.7|`weudhprac`|atmega328p_adur.hex|
 
 - **Size:** Bootloader code size including small table at top end
-- **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
+- **Usage:** How many bytes of flash are needed, i.e., HW boot section or a multiple of the page size
 - **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version
 - **Features:**
   + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
@@ -690,7 +690,7 @@ $ hexls --sort -*.hex
    Alternatively, `GCCROOT`, the directories with the binaries of the toolchain, can be specified
    directly; the default is `./avr-toolchain/$(TOOLVER)/bin/`.
 
-   Below a comparison table that has been compiled from different toolchain versions. Urboot is the
+   Below is a comparison table that has been compiled from different toolchain versions. Urboot is the
    one where the `Makefile` automatically selects between the available ones in this repository, and
    with rare exceptions the best choice. Later versions tend to have larger code still.
 
