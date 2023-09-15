@@ -9,7 +9,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.1
- * 15.07.2023
+ * 15.09.2023
  *
  */
 
@@ -1372,7 +1372,15 @@
 #define RAMSTART 0x7800
 #define RAMSIZE  0x0800
 
+#elif defined(__AVR_AVR16EB14__)
+#define RAMSTART 0x7800
+#define RAMSIZE  0x0800
+
 #elif defined(__AVR_AVR16DD20__)
+#define RAMSTART 0x7800
+#define RAMSIZE  0x0800
+
+#elif defined(__AVR_AVR16EB20__)
 #define RAMSTART 0x7800
 #define RAMSIZE  0x0800
 
@@ -1384,11 +1392,19 @@
 #define RAMSTART 0x7800
 #define RAMSIZE  0x0800
 
+#elif defined(__AVR_AVR16EB28__)
+#define RAMSTART 0x7800
+#define RAMSIZE  0x0800
+
 #elif defined(__AVR_AVR16DD32__)
 #define RAMSTART 0x7800
 #define RAMSIZE  0x0800
 
 #elif defined(__AVR_AVR16EA32__)
+#define RAMSTART 0x7800
+#define RAMSIZE  0x0800
+
+#elif defined(__AVR_AVR16EB32__)
 #define RAMSTART 0x7800
 #define RAMSIZE  0x0800
 

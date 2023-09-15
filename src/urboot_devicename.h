@@ -9,7 +9,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.1
- * 15.07.2023
+ * 15.09.2023
  *
  */
 
@@ -1033,8 +1033,14 @@
 #elif defined(__AVR_AVR16DD14__)
 #define __AVR_DEVICE_NAME__ avr16dd14
 
+#elif defined(__AVR_AVR16EB14__)
+#define __AVR_DEVICE_NAME__ avr16eb14
+
 #elif defined(__AVR_AVR16DD20__)
 #define __AVR_DEVICE_NAME__ avr16dd20
+
+#elif defined(__AVR_AVR16EB20__)
+#define __AVR_DEVICE_NAME__ avr16eb20
 
 #elif defined(__AVR_AVR16DD28__)
 #define __AVR_DEVICE_NAME__ avr16dd28
@@ -1042,11 +1048,17 @@
 #elif defined(__AVR_AVR16EA28__)
 #define __AVR_DEVICE_NAME__ avr16ea28
 
+#elif defined(__AVR_AVR16EB28__)
+#define __AVR_DEVICE_NAME__ avr16eb28
+
 #elif defined(__AVR_AVR16DD32__)
 #define __AVR_DEVICE_NAME__ avr16dd32
 
 #elif defined(__AVR_AVR16EA32__)
 #define __AVR_DEVICE_NAME__ avr16ea32
+
+#elif defined(__AVR_AVR16EB32__)
+#define __AVR_DEVICE_NAME__ avr16eb32
 
 #elif defined(__AVR_AVR16EA48__)
 #define __AVR_DEVICE_NAME__ avr16ea48
