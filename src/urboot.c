@@ -34,6 +34,7 @@
  *  - ATmega1284P (UrclockMega, MoteinoMega)
  *  - ATmega2560 (Mega R3)
  *  - ATmega162
+ *  - ATmega32 (MightyCore)
  *  - ATtiny88 (MH Tiny)
  *  - ATtiny85 (Digispark)
  *  - ATtiny167 (Digispark Pro)
