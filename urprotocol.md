@@ -4,7 +4,7 @@ The urprotocol is a variation of the [STK500v1
 protocol](https://ww1.microchip.com/downloads/en/AppNotes/doc2525.pdf) that was once (until ca
 2005) used by Atmel for their STK500 programmers and still today retains popularity for programming
 bootloaders. For example, `avrdude -c arduino` communicates with STK500v1 bootloaders, and `avrdude
--c urclock` with urprotocol bootloaders. The main purpose of urprotocol is to simplify it by
+-c urclock` with urprotocol bootloaders. The main purpose of urprotocol is to simplify STK500v1 by
 removing unnecessary get and set parameter calls, streamlining address and parameter handling, and
 to provide a side-channel information for the MCU id and up to 5 parameter bits. It has a
 backward-compatibility mode, so that urprotocol can cope with traditional STK500v1 bootloaders. As
@@ -26,7 +26,7 @@ optiboot, this has the following disadvantages; it
    addresses for EEPROM though for historic reasons avrdude sends a word address here too; the
    bootloader uses `spm` and `lpm` opcodes that need *byte* addresses and therefore needs to
    multiply the word address by two (4 bytes code); 128 kB flash parts can be  handled, but
-   initialising the necessary `RAMPZ` register is not straightforward (more code bytes gone
+   initialising the necessary `RAMPZ` register is not straightforward (more code bytes gone)
  - Handles addresses that exceed 16-bit words through a separate load extended byte command (of a
    *word* address) that needs managing a *separate* variable in the bootloader, for which `RAMPZ`
    is  typically used; processing this extra command not only costs additional code but also can
