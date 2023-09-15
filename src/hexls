@@ -255,6 +255,7 @@ foreach my $fname (@ARGV) {
   # read intel hex file (see https://en.wikipedia.org/wiki/Intel_HEX)
   open($in, $fname) or die "$progname: cannot open $fname";
   my ($startaddr, $endaddr, $flashsize, $offset, $versionlen) = (0, 0, 0, 0, 0);
+  my $lastdata;
   while(<$in>) {
     # offset address for large devices (up to 1 MB)
     $offset = hex(substr($_,9,4))*16 if /^:02....02/;
@@ -265,8 +266,8 @@ foreach my $fname (@ARGV) {
       # if flashsize was set then the previous section of this appearance was ordinary, set $endaddr
       $endaddr = $flashsize if $flashsize;
       $flashsize = $len+hex(substr($_,3,4))+$offset;
-      # upper two bytes
-      $vers    = hex(substr($_, 7+2*$len, 2).substr($_, 5+2*$len, 2));
+      # upper two bytes: capabilities and version
+      $vers = hex(substr($_, 7+2*$len, 2).substr($_, 5+2*$len, 2));
       # if exists lower three nibbles of rjmp opcode 0xC.... just below version
       $rjmpop =  $len == 2? undef: lc(substr($_, 3+2*$len, 2).substr($_, 1+2*$len, 2));
       $disthex = $len == 2? undef: hex(substr($_, 4+2*$len, 1).substr($_, 1+2*$len, 2));
@@ -279,6 +280,22 @@ foreach my $fname (@ARGV) {
       $startaddr = $addr if $addr < $startaddr;
       $addr += $len;
       $endaddr = $addr if $addr > $endaddr;
+      $lastdata = $_;
+    } elsif(/^:00000001FF/i) {  # EOF record
+      if(!$versionlen && defined $lastdata) { # Hex file without special version record; go back to last data line
+        my $len = hex(substr($lastdata, 1, 2));
+        # Upper two bytes: capabilities and version
+        $vers = hex(substr($lastdata, 7+2*$len, 2).substr($lastdata, 5+2*$len, 2));
+        $flashsize = $len+hex(substr($lastdata,3,4))+$offset if !$flashsize;
+        if(int($vers/256) >= 7*8+7) { # could be urboot
+          $versionlen = 6;
+          $endaddr -= $versionlen;
+          $rjmpop =  lc(substr($lastdata, 3+2*$len, 2).substr($lastdata, 1+2*$len, 2));
+          $disthex = hex(substr($lastdata, 4+2*$len, 1).substr($lastdata, 1+2*$len, 2));
+          # add $len-2 to start of version section to be just after rjmp; 0x9805 is the ret opcode
+          $pgmwriteaddr = $len ==2 || $rjmpop eq '9805'? undef: $offset + hex(substr($lastdata,3,4)) + $len-2 + 2*($disthex-4096);
+        }
+      }
     }
   }
   # print "@@@ $startaddr, $endaddr, $versionlen, $flashsize\n";
