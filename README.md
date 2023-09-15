@@ -139,6 +139,10 @@ bootloader resetting itself through the watchdog timer.
 
 **Trouble shooting.** So, you have selected the right bootloader for your
 board and followed above but programming does not work as expected?
+
+ - Carefully double check all fuse settings for your part; for example, if the bootloader requires
+   hardware support then the bootloader size as given by command line tools or `hexls` will be in
+   *bytes* but the data sheets often specify `BOOTSZ` in *words* (note the factor of 2).
  - Check the logical connections. If using a separate USB/serial converter check whether the
    correct I/O pins are hooked up: The **`RX`** pin that the bootloader was compiled with
    (typically, the `RX` pin of the processor's USART) needs to be connected to the **`TX`** pin
