@@ -143,6 +143,11 @@ board and followed above but programming does not work as expected?
  - Carefully double check all fuse settings for your part; for example, if the bootloader requires
    hardware support then the bootloader size as given by command line tools or `hexls` will be in
    *bytes* but the data sheets often specify `BOOTSZ` in *words* (note the factor of 2).
+ - Check the lock settings for your part; for example, if the bootloader is a vector bootloader
+   then the lock bits should enable to write to everywhere, even the hardware bootloader section.
+   Urboot bootloaders are sometimes smaller than the smallest hardware boot sections and they
+   protect themselves from being overwritten; if the hardware lock for a large hardware
+   boot section is enabled then this space cannot be used for applications.
  - Check the logical connections. If using a separate USB/serial converter check whether the
    correct I/O pins are hooked up: The **`RX`** pin that the bootloader was compiled with
    (typically, the `RX` pin of the processor's USART) needs to be connected to the **`TX`** pin
