@@ -308,7 +308,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    would still be discovered as the bootloader returns what it has read. Note that verification of
    the vector page is altered only when immediately done after programming, ie, when using
    avrdude's implicit verify option. If the program flash is read in a separate avrdude call then
-   the real contents are returned as they should be. From version 7.5 onwards the `VBL=2` or `3` code
+   the real contents is returned as it should be. From version 7.5 onwards the `VBL=2` or `3` code
    checks whether the reset vector already points to the bootloader, in which case the patch is not
    executed. Consequently, verification of the page at zero is not altered. This is done to allow
    both un-patched and patched applications be uploaded with a vector bootloader when VBL is set to
