@@ -528,19 +528,19 @@ The options below are frills, ie, not really essential for the functionality of 
 
 ## Debug options
 
- - `DEBUG_FREQ=<n> [FREQ_PIN=<pin> [FREQ_POLARITY=<1|-1>]] [EXACT_DF=<0|1>]`
+ - `DEBUG_FREQ=<fq> [FREQ_PIN=<pin> [FREQ_POLARITY=<1|-1>]] [EXACT_DF=<0|1>] [DEBUG_CYCLES=<n>]`
 
-   On starting the bootloader it swings a square wave of 5 periods on pin `FREQ_PIN` with a
-   frequency of `n` Hz, where `n` can be a real number. `FREQ_PIN` can be the same as the LED pin,
-   and in fact defaults to the `LED` pin if the latter is defined and the former is not. This
-   option is useful of one wants to measure the frequency `F_CPU` of the MCU on the FREQ_PIN
-   (using another MCU or a scope). This is not meant for production, only for debugging. 50
-   Hz is a good frequency as this delays bootloader comms by only 100 ms. Any lower frequency
-   might be too much delay for synchronisation with avrdude. `FREQ_POLARITY=1` starts the square
-   wave with a high level after reset, and `-1` with a low level after reset. After the 5 periods
-   the signal on `FREQ_PIN` stays low, irrespective of `FREQ_POLARITY`. The duration of one
-   period of the square wave might be too short by up to 5 clock cycles, which is normally of
-   no concern. If precision of this debug square wave is of importance, then `EXACT_DF` can be
+   On starting the bootloader it swings a square wave of `DEBUG_CYCLES` periods (default 5) on pin
+   `FREQ_PIN` with a frequency of `fq` Hz, where `fq` can be a real number. `FREQ_PIN` can be the
+   same as the LED pin, and in fact defaults to the `LED` pin if the latter is defined and the
+   former is not. This option is useful of one wants to measure the frequency `F_CPU` of the MCU
+   on the FREQ_PIN (using another MCU or a scope). This is not meant for production, only for
+   debugging. 50 Hz is a good frequency as this delays bootloader comms by only 100 ms. Any lower
+   frequency might be too much delay for synchronisation with avrdude. `FREQ_POLARITY=1` starts
+   the square wave with a high level after reset, and `-1` with a low level after reset. After the
+   `n` periods the signal on `FREQ_PIN` stays low, irrespective of `FREQ_POLARITY`. The duration
+   of one period of the square wave might be too short by up to 5 clock cycles, which is normally
+   of no concern. If precision of this debug square wave is of importance, then `EXACT_DF` can be
    set to `1`, in which case the quantisation error of one period is less than 1 clock cycle at
    the expense of up to 4 bytes extra code.
 

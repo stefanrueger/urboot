@@ -525,6 +525,10 @@
 
 #endif
 
+#ifndef DEBUG_CYCLES
+#define DEBUG_CYCLES 5
+#endif
+
 #endif // defined(DEBUG_FREQ)
 
 
@@ -2164,7 +2168,7 @@ int main(void) {
 
 #if UB_CANNOT_TOGGLE_PORT
 #define UB_FREQ_PIN_Toggle() (UR_PORT(FREQ_PIN) ^= UR_BV(FREQ_PIN))
-#define UB_DEBUG_OHEAD (6e6/F_CPU)     // Subtract CPU cycles for loop overhead
+#define UB_DEBUG_OHEAD (6e6/F_CPU)     // Subtract 6 CPU cycles for loop overhead
 #else
 #define UB_FREQ_PIN_Toggle() (UR_PIN(FREQ_PIN) |= UR_BV(FREQ_PIN))
 #if IS_XMEGA
@@ -2175,7 +2179,7 @@ int main(void) {
 #endif
 
   UR_DDR(FREQ_PIN) |= UR_BV(FREQ_PIN); // Set FREQ_PIN pin as output
-  uint8_t rn = 5*2;
+  uint8_t rn = 2*DEBUG_CYCLES;
   do {
 #if defined(FREQ_POLARITY) && FREQ_POLARITY < 0
     _debug_freq_us(0.5e6/DEBUG_FREQ - UB_DEBUG_OHEAD);

@@ -222,12 +222,13 @@ LEDPOLARITY_CMD = -DLEDPOLARITY=$(LEDPOLARITY)
 # WHAT := $(WHAT)_pol$(LEDPOLARITY)
 endif
 
-# Start urboot by putting a square wave of DEBUG_FREQ Hz on FREQ_PIN for 5 cycles
+# Start urboot by putting a square wave of DEBUG_FREQ Hz on FREQ_PIN for DEBUG_CYCLES cycles
 ifdef DEBUG_FREQ
 DEBUG_FREQ_CMD = -DDEBUG_FREQ=$(DEBUG_FREQ)
 WHAT := $(WHAT)_$(DEBUG_FREQ)Hz
 endif
 
+# If set debug frequency has granularity of 1 CPU cycle at cost of, eg, inserted nops
 ifdef EXACT_DF
 EXACT_DF_CMD = -DEXACT_DF=$(EXACT_DF)
 ifneq ($(EXACT_DF), 0)
@@ -235,6 +236,13 @@ WHAT := $(WHAT)x
 endif
 endif
 
+# Number of initial blink periods for debugging
+ifdef DEBUG_CYCLES
+DEBUG_CYCLES_CMD = -DDEBUG_CYCLES=$(DEBUG_CYCLES)
+WHAT := $(WHAT)_dc$(DEBUG_CYCLES)
+endif
+
+# Pin for debug square wave
 ifdef FREQ_PIN
 FREQ_PIN_CMD = -DFREQ_PIN=$(FREQ_PIN)
 WHAT := $(WHAT)_fp$(subst Atmel,,$(subst ArduinoPin,,$(FREQ_PIN)))
@@ -319,8 +327,8 @@ COMMON_OPTIONS = $(WDTO_CMD) $(AUTOBAUD_CMD) $(BAUD_RATE_CMD) $(UART2X_CMD) $(LE
   $(EXITFE_CMD) $(QEXITERR_CMD) $(QEXITEND_CMD) $(URPROTOCOL_CMD) $(VERSION_CMD) $(FRILLS_CMD) \
   $(RETSWVERS_CMD) $(VBL_CMD) $(VBL_VECT_NUM_CMD) $(CHIP_ERASE_CMD) $(RESETFLAGS_CMD) $(SWIO_CMD) \
   $(UARTNUM_CMD) $(UARTALT_CMD) $(TX_CMD) $(RX_CMD) $(TESTING_CMD) $(PGMWRITEPAGE_CMD) \
-  $(DEBUG_FREQ_CMD) $(EXACT_DF_CMD) $(FREQ_PIN_CMD) $(FREQ_POLARITY_CMD) $(FLASHWRAPS_CMD) \
-  $(PROTECTRESET_CMD) $(AUTOFRILLS_CMD)
+  $(DEBUG_FREQ_CMD) $(EXACT_DF_CMD) $(DEBUG_CYCLES_CMD) $(FREQ_PIN_CMD) $(FREQ_POLARITY_CMD) \
+  $(FLASHWRAPS_CMD) $(PROTECTRESET_CMD) $(AUTOFRILLS_CMD)
 
 
 bootloader: CFLAGS += $(COMMON_OPTIONS)
@@ -457,7 +465,7 @@ promini_led13_aur:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 VBL=1 LED=AtmelPB5 FRILLS=7 NAME=$@
 
 atmega328p_led9_50Hz_fp9:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p DEBUG_FREQ=50 LED=ArduinoPin9 FRILLS=7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p DEBUG_FREQ=50 DEBUG_CYCLES=5 LED=ArduinoPin9 FRILLS=7 NAME=$@
 
 
 ##
