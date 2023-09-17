@@ -648,7 +648,7 @@ Options:
 
 Example:
 ```
-$ hexls --sort -*.hex
+$ hexls -sort -md *.hex
 ```
 
 |Size|Usage|Version|Features|Hex file|
