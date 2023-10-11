@@ -13,8 +13,8 @@ arduino`.
 
 ## Why a new protocol?
 
-Whilst a skeleton implementation STK500v1 protocol is used in one of the most popular bootloaders,
-optiboot, this has the following disadvantages; it
+Whilst one of the most popular bootloaders, optiboot, uses a subset of the STK500v1 protocol, this
+has the following disadvantages: it
  - Requests SW/HW version from the bootloader, which costs code bytes in the bootloader to decode
    the request send something back with little benefit
  - Humours not-needed get parameter and set parameter requests; when using bootloaders there is no
