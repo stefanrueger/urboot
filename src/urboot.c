@@ -42,6 +42,7 @@
  *  - ATtiny1634
  *  - ATtiny841
  *  - ATtiny13A
+ *  - ATmega128RFA1
  *
  * Unsupported (without ever planning to support them)
  *  - AVRtiny core (ATtiny4, ATtiny5, ATtiny9, ATtiny10, ATtiny20, ATtiny40, ATtiny102, ATtiny104)
@@ -57,7 +58,7 @@
  *   at90pwm316 at90pwm3b at90pwm81 at90scr100 at90usb1286 at90usb1287 at90usb162 at90usb646
  *   at90usb647 at90usb82 ata5272 ata5505 ata5702m322 ata5782 ata5790 ata5790n ata5791 ata5795
  *   ata5831 ata6285 ata6286 ata6289 ata6612c ata6613c ata6614q ata6616c ata6617c ata664251 ata8210
- *   ata8510 atmega128 atmega1280 atmega1281 atmega1284 atmega1284rfr2 atmega128a atmega128rfa1
+ *   ata8510 atmega128 atmega1280 atmega1281 atmega1284 atmega1284rfr2 atmega128a
  *   atmega128rfr2 atmega16 atmega161 atmega163 atmega164a atmega164p atmega164pa atmega165
  *   atmega165a atmega165p atmega165pa atmega168 atmega168a atmega168p atmega168pa atmega168pb
  *   atmega169 atmega169a atmega169p atmega169pa atmega16a atmega16hva atmega16hva2 atmega16hvb
