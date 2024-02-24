@@ -444,6 +444,10 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    }
    ```
 
+   This function and other utility functions are available in
+   `urboot-utils.cpp` in the directory
+   [`urboot-utils`](https://github.com/stefanrueger/urboot/blob/main/urboot-utils)
+
 ## Frills
 
 The options below are frills, ie, not really essential for the functionality of the bootloader.
