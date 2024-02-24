@@ -187,8 +187,8 @@ bootloader was compiled or the location of the bootloader end otherwise. The 6-b
        register R2 before starting the application; from v7.7 onwards this is always the case, and
        Bit 0 indicates whether or not the bootloader offers a chip erase function
   - Two-byte `rjmp` to a `pgm_write_page(ram, flash)` function or a `ret` opcode if not implemented
-  - Number 1..127 of pages that the bootloader occupies
   - Vector number 1..127 for the `r/jmp` to the application if it is a vector bootloader, 0 otherwise
+  - Number 1..127 of pages that the bootloader occupies
 
 If the bootloader does not have read capabilities the user needs to supply necessary information
 such as the bootloader size to the programmer on the command line. In `avrdude` this is via -x
