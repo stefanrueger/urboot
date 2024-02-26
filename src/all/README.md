@@ -22,6 +22,7 @@
 |348|384|u7.7|`weu-jPr-c`|[attiny167_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny167_ur.hex)|
 |348|384|u7.7|`weu-jPr-c`|[digisparkpro.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/digisparkpro.hex)|
 |352|384|u7.7|`weu-jPr-c`|[atmega328p_ur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_ur.hex)|
+|358|384|u7.7|`-eu-jPrac`|[atmega328p_faur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_faur.hex)|
 |364|384|u7.7|`weu-jPrac`|[atmega32_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega32_aur.hex)|
 |364|384|u7.7|`weu-jPrac`|[attiny167_aur.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny167_aur.hex)|
 |368|384|u7.7|`weu-jPr-c`|[atmega328p_ur_testing.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_ur_testing.hex)|

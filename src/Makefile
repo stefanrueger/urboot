@@ -345,6 +345,7 @@ all: attiny2313_min atmega168_min atmega2560_min atmega1280_min atmega1284p_min 
   atmega328p \
   atmega328p_ur \
   atmega328p_aur \
+  atmega328p_faur \
   atmega328p_ur_testing \
   atmega328p_dur \
   atmega328p_adur \
@@ -410,6 +411,9 @@ atmega328p_amin:
 #
 atmega328p_aur:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
+
+atmega328p_faur:
+	$(MAKE) $(MK_OPTS) MCU=atmega328p PGMWRITEPAGE=0 AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
 
 atmega328p_ur:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p URPROTOCOL=1 VBL=1 FRILLS=7 NAME=$@
