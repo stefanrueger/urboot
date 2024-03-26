@@ -50,6 +50,13 @@ taken, it is easy to create own bootloaders with commands such as
  $ make MCU=atmega328p F_CPU=16000000L BAUD_RATE=115200 EEPROM=1 URPROTOCOL=1 \
    LED=AtmelPB1 SFMCS=AtmelPB0 DUAL=1 FRILLS=7 NAME=moteino-dual
 ```
+
+Alternatively, the Dockerfile may be built and used to build binaries on other systems:
+```
+ $ docker run --platform linux/amd64 -v "$(pwd)/src":/src --rm -it $(docker build -q .) \
+   MCU=atmega328p F_CPU=16000000L BAUD_RATE=115200 EEPROM=1 URPROTOCOL=1 \
+   LED=AtmelPB1 SFMCS=AtmelPB0 DUAL=1 FRILLS=7 NAME=moteino-dual
+```
 More detailed information here: [`make` options](https://github.com/stefanrueger/urboot/blob/main/docs/makeoptions.md)
 
 <p id="pre-compiled"></p>
