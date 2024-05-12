@@ -9,7 +9,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.1
- * 15.09.2023
+ * 12.05.2024
  *
  */
 
@@ -1372,6 +1372,10 @@
 #define RAMSTART 0x7800
 #define RAMSIZE  0x0800
 
+#elif defined(__AVR_AVR16DU14__)
+#define RAMSTART 0x7800
+#define RAMSIZE  0x0800
+
 #elif defined(__AVR_AVR16EB14__)
 #define RAMSTART 0x7800
 #define RAMSIZE  0x0800
@@ -1380,11 +1384,19 @@
 #define RAMSTART 0x7800
 #define RAMSIZE  0x0800
 
+#elif defined(__AVR_AVR16DU20__)
+#define RAMSTART 0x7800
+#define RAMSIZE  0x0800
+
 #elif defined(__AVR_AVR16EB20__)
 #define RAMSTART 0x7800
 #define RAMSIZE  0x0800
 
 #elif defined(__AVR_AVR16DD28__)
+#define RAMSTART 0x7800
+#define RAMSIZE  0x0800
+
+#elif defined(__AVR_AVR16DU28__)
 #define RAMSTART 0x7800
 #define RAMSIZE  0x0800
 
@@ -1397,6 +1409,10 @@
 #define RAMSIZE  0x0800
 
 #elif defined(__AVR_AVR16DD32__)
+#define RAMSTART 0x7800
+#define RAMSIZE  0x0800
+
+#elif defined(__AVR_AVR16DU32__)
 #define RAMSTART 0x7800
 #define RAMSIZE  0x0800
 
@@ -1416,7 +1432,15 @@
 #define RAMSTART 0x7000
 #define RAMSIZE  0x1000
 
+#elif defined(__AVR_AVR32DU14__)
+#define RAMSTART 0x7000
+#define RAMSIZE  0x1000
+
 #elif defined(__AVR_AVR32DD20__)
+#define RAMSTART 0x7000
+#define RAMSIZE  0x1000
+
+#elif defined(__AVR_AVR32DU20__)
 #define RAMSTART 0x7000
 #define RAMSIZE  0x1000
 
@@ -1429,6 +1453,10 @@
 #define RAMSIZE  0x1000
 
 #elif defined(__AVR_AVR32DD28__)
+#define RAMSTART 0x7000
+#define RAMSIZE  0x1000
+
+#elif defined(__AVR_AVR32DU28__)
 #define RAMSTART 0x7000
 #define RAMSIZE  0x1000
 
@@ -1445,6 +1473,10 @@
 #define RAMSIZE  0x1000
 
 #elif defined(__AVR_AVR32DD32__)
+#define RAMSTART 0x7000
+#define RAMSIZE  0x1000
+
+#elif defined(__AVR_AVR32DU32__)
 #define RAMSTART 0x7000
 #define RAMSIZE  0x1000
 
@@ -1484,6 +1516,10 @@
 #define RAMSTART 0x6000
 #define RAMSIZE  0x2000
 
+#elif defined(__AVR_AVR64DU28__)
+#define RAMSTART 0x6000
+#define RAMSIZE  0x2000
+
 #elif defined(__AVR_AVR64EA28__)
 #define RAMSTART 0x6800
 #define RAMSIZE  0x1800
@@ -1497,6 +1533,10 @@
 #define RAMSIZE  0x2000
 
 #elif defined(__AVR_AVR64DD32__)
+#define RAMSTART 0x6000
+#define RAMSIZE  0x2000
+
+#elif defined(__AVR_AVR64DU32__)
 #define RAMSTART 0x6000
 #define RAMSIZE  0x2000
 

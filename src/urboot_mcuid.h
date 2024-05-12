@@ -3,13 +3,13 @@
  *
  * urboot_mcuid.h
  *
- * unique device id from avrintel.h
+ * unique device id from libavrdude-avrintel.h
  *
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.2
- * 15.09.2023
+ * 12.05.2024
  *
  */
 
@@ -373,25 +373,33 @@
 #define id_avr8ea28        327u
 #define id_avr8ea32        328u
 #define id_avr16dd14       329u
+#define id_avr16du14       386u
 #define id_avr16eb14       380u
 #define id_avr16dd20       330u
+#define id_avr16du20       387u
 #define id_avr16eb20       381u
 #define id_avr16dd28       331u
+#define id_avr16du28       388u
 #define id_avr16ea28       332u
 #define id_avr16eb28       382u
 #define id_avr16dd32       333u
+#define id_avr16du32       389u
 #define id_avr16ea32       334u
 #define id_avr16eb32       383u
 #define id_avr16ea48       335u
 #define id_avr32dd14       336u
+#define id_avr32du14       390u
 #define id_avr32dd20       337u
+#define id_avr32du20       391u
 #define id_avr32da28       338u
 #define id_avr32db28       339u
 #define id_avr32dd28       340u
+#define id_avr32du28       392u
 #define id_avr32ea28       341u
 #define id_avr32da32       342u
 #define id_avr32db32       343u
 #define id_avr32dd32       344u
+#define id_avr32du32       393u
 #define id_avr32ea32       345u
 #define id_avr32da48       346u
 #define id_avr32db48       347u
@@ -401,10 +409,12 @@
 #define id_avr64da28       351u
 #define id_avr64db28       352u
 #define id_avr64dd28       353u
+#define id_avr64du28       384u
 #define id_avr64ea28       354u
 #define id_avr64da32       355u
 #define id_avr64db32       356u
 #define id_avr64dd32       357u
+#define id_avr64du32       385u
 #define id_avr64ea32       358u
 #define id_avr64da48       359u
 #define id_avr64db48       360u
@@ -743,25 +753,33 @@
 #define vbu_atmega4808       36
 #define vbu_atmega4809       40
 #define vbu_avr16dd14        36
+#define vbu_avr16du14        34
 #define vbu_avr16eb14        31
 #define vbu_avr16dd20        36
+#define vbu_avr16du20        34
 #define vbu_avr16eb20        31
 #define vbu_avr16dd28        36
+#define vbu_avr16du28        34
 #define vbu_avr16ea28        37
 #define vbu_avr16eb28        31
 #define vbu_avr16dd32        36
+#define vbu_avr16du32        34
 #define vbu_avr16ea32        37
 #define vbu_avr16eb32        31
 #define vbu_avr16ea48        45
 #define vbu_avr32dd14        36
+#define vbu_avr32du14        34
 #define vbu_avr32dd20        36
+#define vbu_avr32du20        34
 #define vbu_avr32da28        41
 #define vbu_avr32db28        42
 #define vbu_avr32dd28        36
+#define vbu_avr32du28        34
 #define vbu_avr32ea28        37
 #define vbu_avr32da32        41
 #define vbu_avr32db32        44
 #define vbu_avr32dd32        36
+#define vbu_avr32du32        34
 #define vbu_avr32ea32        37
 #define vbu_avr32da48        58
 #define vbu_avr32db48        59
@@ -771,10 +789,12 @@
 #define vbu_avr64da28        41
 #define vbu_avr64db28        42
 #define vbu_avr64dd28        36
+#define vbu_avr64du28        34
 #define vbu_avr64ea28        37
 #define vbu_avr64da32        41
 #define vbu_avr64db32        44
 #define vbu_avr64dd32        36
+#define vbu_avr64du32        34
 #define vbu_avr64ea32        37
 #define vbu_avr64da48        58
 #define vbu_avr64db48        59

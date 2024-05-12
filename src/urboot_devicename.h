@@ -3,13 +3,13 @@
  *
  * urboot_devicename.h
  *
- * Device name from avrintel.h
+ * Device name from libavrdude-avrintel.h
  *
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.1
- * 15.09.2023
+ * 12.05.2024
  *
  */
 
@@ -1033,17 +1033,26 @@
 #elif defined(__AVR_AVR16DD14__)
 #define __AVR_DEVICE_NAME__ avr16dd14
 
+#elif defined(__AVR_AVR16DU14__)
+#define __AVR_DEVICE_NAME__ avr16du14
+
 #elif defined(__AVR_AVR16EB14__)
 #define __AVR_DEVICE_NAME__ avr16eb14
 
 #elif defined(__AVR_AVR16DD20__)
 #define __AVR_DEVICE_NAME__ avr16dd20
 
+#elif defined(__AVR_AVR16DU20__)
+#define __AVR_DEVICE_NAME__ avr16du20
+
 #elif defined(__AVR_AVR16EB20__)
 #define __AVR_DEVICE_NAME__ avr16eb20
 
 #elif defined(__AVR_AVR16DD28__)
 #define __AVR_DEVICE_NAME__ avr16dd28
+
+#elif defined(__AVR_AVR16DU28__)
+#define __AVR_DEVICE_NAME__ avr16du28
 
 #elif defined(__AVR_AVR16EA28__)
 #define __AVR_DEVICE_NAME__ avr16ea28
@@ -1053,6 +1062,9 @@
 
 #elif defined(__AVR_AVR16DD32__)
 #define __AVR_DEVICE_NAME__ avr16dd32
+
+#elif defined(__AVR_AVR16DU32__)
+#define __AVR_DEVICE_NAME__ avr16du32
 
 #elif defined(__AVR_AVR16EA32__)
 #define __AVR_DEVICE_NAME__ avr16ea32
@@ -1066,8 +1078,14 @@
 #elif defined(__AVR_AVR32DD14__)
 #define __AVR_DEVICE_NAME__ avr32dd14
 
+#elif defined(__AVR_AVR32DU14__)
+#define __AVR_DEVICE_NAME__ avr32du14
+
 #elif defined(__AVR_AVR32DD20__)
 #define __AVR_DEVICE_NAME__ avr32dd20
+
+#elif defined(__AVR_AVR32DU20__)
+#define __AVR_DEVICE_NAME__ avr32du20
 
 #elif defined(__AVR_AVR32DA28__)
 #define __AVR_DEVICE_NAME__ avr32da28
@@ -1077,6 +1095,9 @@
 
 #elif defined(__AVR_AVR32DD28__)
 #define __AVR_DEVICE_NAME__ avr32dd28
+
+#elif defined(__AVR_AVR32DU28__)
+#define __AVR_DEVICE_NAME__ avr32du28
 
 #elif defined(__AVR_AVR32EA28__)
 #define __AVR_DEVICE_NAME__ avr32ea28
@@ -1089,6 +1110,9 @@
 
 #elif defined(__AVR_AVR32DD32__)
 #define __AVR_DEVICE_NAME__ avr32dd32
+
+#elif defined(__AVR_AVR32DU32__)
+#define __AVR_DEVICE_NAME__ avr32du32
 
 #elif defined(__AVR_AVR32EA32__)
 #define __AVR_DEVICE_NAME__ avr32ea32
@@ -1117,6 +1141,9 @@
 #elif defined(__AVR_AVR64DD28__)
 #define __AVR_DEVICE_NAME__ avr64dd28
 
+#elif defined(__AVR_AVR64DU28__)
+#define __AVR_DEVICE_NAME__ avr64du28
+
 #elif defined(__AVR_AVR64EA28__)
 #define __AVR_DEVICE_NAME__ avr64ea28
 
@@ -1128,6 +1155,9 @@
 
 #elif defined(__AVR_AVR64DD32__)
 #define __AVR_DEVICE_NAME__ avr64dd32
+
+#elif defined(__AVR_AVR64DU32__)
+#define __AVR_DEVICE_NAME__ avr64du32
 
 #elif defined(__AVR_AVR64EA32__)
 #define __AVR_DEVICE_NAME__ avr64ea32

@@ -10,7 +10,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.0
- * 15.09.2023
+ * 12.05.2024
  *
  */
 
@@ -4147,7 +4147,7 @@
 #define RXD0_ALT       AtmelPA2
 #define TXD0_ALT       AtmelPA1
 #define XCK0_ALT       AtmelPA3
-#define XDIR0_ALT      AtmelPA7
+#define XDIR0_ALT      AtmelPA4
 
 #define UART1_base  _uad(0x820)
 #define ISR_UART1_RXC   _uv(26)
@@ -4193,7 +4193,7 @@
 #define RXD0_ALT       AtmelPA2
 #define TXD0_ALT       AtmelPA1
 #define XCK0_ALT       AtmelPA3
-#define XDIR0_ALT      AtmelPA7
+#define XDIR0_ALT      AtmelPA4
 
 #define UART1_base  _uad(0x820)
 #define ISR_UART1_RXC   _uv(26)
@@ -4225,9 +4225,41 @@
 #define RXPLCTRL_off         14
 
 #elif defined(__AVR_ATtiny804__) || defined(__AVR_ATtiny806__) || defined(__AVR_ATtiny807__) || \
-  defined(__AVR_ATtiny1604__) || defined(__AVR_ATtiny1606__) || defined(__AVR_ATtiny1607__) || \
-  defined(__AVR_ATtiny1614__) || defined(__AVR_ATtiny1616__) || defined(__AVR_ATtiny1617__) || \
-  defined(__AVR_ATtiny3216__) || defined(__AVR_ATtiny3217__)
+  defined(__AVR_ATtiny1604__) || defined(__AVR_ATtiny1606__) || defined(__AVR_ATtiny1607__)
+
+#define UR_UARTTYPE UR_UARTTYPE_AVR8X
+#define UR_NUMUARTS           1
+
+#define UART0_base  _uad(0x800)
+#define ISR_UART0_RXC   _uv(27)
+#define ISR_UART0_DRE   _uv(28)
+#define ISR_UART0_TXC   _uv(29)
+
+#define RXD0           AtmelPB3
+#define TXD0           AtmelPB2
+#define XCK0           AtmelPB1
+#define XDIR0          AtmelPB0
+#define RXD0_ALT1      AtmelPA2
+#define TXD0_ALT1      AtmelPA1
+#define XCK0_ALT1      AtmelPA3
+#define XDIR0_ALT1     AtmelPA4
+
+#define RXDATAL_off           0
+#define RXDATAH_off           1
+#define TXDATAL_off           2
+#define TXDATAH_off           3
+#define STATUS_off            4
+#define CTRLA_off             5
+#define CTRLB_off             6
+#define CTRLC_off             7
+#define BAUD_off              8
+#define DBGCTRL_off          11
+#define EVCTRL_off           12
+#define TXPLCTRL_off         13
+#define RXPLCTRL_off         14
+
+#elif defined(__AVR_ATtiny1614__) || defined(__AVR_ATtiny1616__) || \
+  defined(__AVR_ATtiny1617__) || defined(__AVR_ATtiny3216__) || defined(__AVR_ATtiny3217__)
 
 #define UR_UARTTYPE UR_UARTTYPE_AVR8X
 #define UR_NUMUARTS           1
@@ -4477,6 +4509,45 @@
 #define TXPLCTRL_off         13
 #define RXPLCTRL_off         14
 
+#elif defined(__AVR_AVR16DU14__) || defined(__AVR_AVR32DU14__)
+
+#define UR_UARTTYPE UR_UARTTYPE_AVR8X
+#define UR_NUMUARTS           2
+
+#define UART0_base  _uad(0x800)
+#define ISR_UART0_RXC   _uv(19)
+#define ISR_UART0_DRE   _uv(20)
+#define ISR_UART0_TXC   _uv(21)
+
+#define RXD0           AtmelPA1
+#define TXD0           AtmelPA0
+#define RXD0_ALT3      AtmelPD5
+#define TXD0_ALT3      AtmelPD4
+#define XCK0_ALT3      AtmelPD6
+#define XDIR0_ALT3     AtmelPD7
+
+#define UART1_base  _uad(0x820)
+#define ISR_UART1_RXC   _uv(26)
+#define ISR_UART1_DRE   _uv(27)
+#define ISR_UART1_TXC   _uv(28)
+
+#define RXDATAL_off           0
+#define RXDATAH_off           1
+#define TXDATAL_off           2
+#define TXDATAH_off           3
+#define STATUS_off            4
+#define CTRLA_off             5
+#define CTRLB_off             6
+#define CTRLC_off             7
+#define BAUD_off              8
+#define CTRLD_off            10
+#define DBGCTRL_off          11
+#define EVCTRL_off           12
+#define TXPLCTRL_off         13
+#define RXPLCTRL_off         14
+#define RXD1_ALT2      AtmelPD7
+#define TXD1_ALT2      AtmelPD6
+
 #elif defined(__AVR_AVR16EB14__)
 
 #define UR_UARTTYPE UR_UARTTYPE_AVR8X
@@ -4567,6 +4638,55 @@
 #define EVCTRL_off           12
 #define TXPLCTRL_off         13
 #define RXPLCTRL_off         14
+
+#elif defined(__AVR_AVR16DU20__) || defined(__AVR_AVR16DU28__) || defined(__AVR_AVR16DU32__) || \
+  defined(__AVR_AVR32DU20__) || defined(__AVR_AVR32DU28__) || defined(__AVR_AVR32DU32__) || \
+  defined(__AVR_AVR64DU28__) || defined(__AVR_AVR64DU32__)
+
+#define UR_UARTTYPE UR_UARTTYPE_AVR8X
+#define UR_NUMUARTS           2
+
+#define UART0_base  _uad(0x800)
+#define ISR_UART0_RXC   _uv(19)
+#define ISR_UART0_DRE   _uv(20)
+#define ISR_UART0_TXC   _uv(21)
+
+#define RXD0           AtmelPA1
+#define TXD0           AtmelPA0
+#define XCK0           AtmelPA2
+#define XDIR0          AtmelPA3
+#define RXD0_ALT1      AtmelPA5
+#define TXD0_ALT1      AtmelPA4
+#define XCK0_ALT1      AtmelPA6
+#define XDIR0_ALT1     AtmelPA7
+#define RXD0_ALT2      AtmelPA3
+#define TXD0_ALT2      AtmelPA2
+#define RXD0_ALT3      AtmelPD5
+#define TXD0_ALT3      AtmelPD4
+#define XCK0_ALT3      AtmelPD6
+#define XDIR0_ALT3     AtmelPD7
+
+#define UART1_base  _uad(0x820)
+#define ISR_UART1_RXC   _uv(26)
+#define ISR_UART1_DRE   _uv(27)
+#define ISR_UART1_TXC   _uv(28)
+
+#define RXDATAL_off           0
+#define RXDATAH_off           1
+#define TXDATAL_off           2
+#define TXDATAH_off           3
+#define STATUS_off            4
+#define CTRLA_off             5
+#define CTRLB_off             6
+#define CTRLC_off             7
+#define BAUD_off              8
+#define CTRLD_off            10
+#define DBGCTRL_off          11
+#define EVCTRL_off           12
+#define TXPLCTRL_off         13
+#define RXPLCTRL_off         14
+#define RXD1_ALT2      AtmelPD7
+#define TXD1_ALT2      AtmelPD6
 
 #elif defined(__AVR_AVR16EB20__) || defined(__AVR_AVR16EB28__) || defined(__AVR_AVR16EB32__)
 
