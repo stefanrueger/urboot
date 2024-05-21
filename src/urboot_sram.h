@@ -9,7 +9,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.1
- * 12.05.2024
+ * 20.05.2024
  *
  */
 
@@ -165,8 +165,8 @@
 #define RAMSIZE  0x0200
 
 #elif defined(__AVR_ATtiny828R__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x0100
+#define RAMSIZE  0x0200
 
 #elif defined(__AVR_ATtiny841__)
 #define RAMSTART 0x0100
@@ -185,8 +185,8 @@
 #define RAMSIZE  0x0400
 
 #elif defined(__AVR_ATtiny1634R__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x0100
+#define RAMSIZE  0x0400
 
 #elif defined(__AVR_ATtiny2313__)
 #define RAMSTART 0x0060
@@ -745,8 +745,8 @@
 #define RAMSIZE  0x1000
 
 #elif defined(__AVR_AT90SCR100H__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x0100
+#define RAMSIZE  0x1000
 
 #elif defined(__AVR_AT90CAN128__)
 #define RAMSTART 0x0100
@@ -961,16 +961,16 @@
 #define RAMSIZE  0x1000
 
 #elif defined(__AVR_LGT8F88P__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x0100
+#define RAMSIZE  0x0400
 
 #elif defined(__AVR_LGT8F168P__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x0100
+#define RAMSIZE  0x0400
 
 #elif defined(__AVR_LGT8F328P__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x0100
+#define RAMSIZE  0x0800
 
 #elif defined(__AVR_ATxmega8E5__)
 #define RAMSTART 0x2000
@@ -1057,8 +1057,8 @@
 #define RAMSIZE  0x1000
 
 #elif defined(__AVR_ATxmega64A4__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x2000
+#define RAMSIZE  0x1000
 
 #elif defined(__AVR_ATxmega64A4U__)
 #define RAMSTART 0x2000
@@ -1073,8 +1073,8 @@
 #define RAMSIZE  0x2000
 
 #elif defined(__AVR_ATxmega128A1revD__) || defined(__AVR_ATxmega128A1REVD__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x2000
+#define RAMSIZE  0x2000
 
 #elif defined(__AVR_ATxmega128A1U__)
 #define RAMSTART 0x2000
@@ -1105,8 +1105,8 @@
 #define RAMSIZE  0x2000
 
 #elif defined(__AVR_ATxmega128A4__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x2000
+#define RAMSIZE  0x2000
 
 #elif defined(__AVR_ATxmega128A4U__)
 #define RAMSTART 0x2000
@@ -1117,8 +1117,8 @@
 #define RAMSIZE  0x2000
 
 #elif defined(__AVR_ATxmega192A1__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x2000
+#define RAMSIZE  0x4000
 
 #elif defined(__AVR_ATxmega192A3__)
 #define RAMSTART 0x2000
@@ -1137,8 +1137,8 @@
 #define RAMSIZE  0x4000
 
 #elif defined(__AVR_ATxmega256A1__)
-#define RAMSTART     -1
-#define RAMSIZE      -1
+#define RAMSTART 0x2000
+#define RAMSIZE  0x4000
 
 #elif defined(__AVR_ATxmega256A3__)
 #define RAMSTART 0x2000

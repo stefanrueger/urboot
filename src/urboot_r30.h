@@ -29,12 +29,12 @@
 // processors with SPM_REG outside the I/O space
 #if defined(__AVR_ATmega64__) || defined(__AVR_ATmega128__) || defined(__AVR_ATmega64A__) || \
     defined(__AVR_ATmega128A__)
-#define ub_oust "sts"
-#define ub_lind "lds"
+#define oust_spm "sts"
+#define inld_spm "lds"
 #define UB_SPM_REG  _SFR_MEM_ADDR(__SPM_REG)
 #else
-#define ub_oust "out"
-#define ub_lind "in"
+#define oust_spm "out"
+#define inld_spm "in"
 #define UB_SPM_REG  _SFR_IO_ADDR(__SPM_REG)
 #endif
 
@@ -43,7 +43,7 @@
     __asm__ __volatile__                         \
     (                                            \
         "movw  r0, %2\n\t"                       \
-        ub_oust " %0, %1\n\t"                    \
+        oust_smp " %0, %1\n\t"                   \
         "spm\n\t"                                \
         SPM_PIPELINE                             \
         "clr  r1\n\t"                            \
@@ -59,7 +59,7 @@
 (__extension__({                                 \
     __asm__ __volatile__                         \
     (                                            \
-        ub_oust " %0, %1\n\t"                    \
+        oust_smp " %0, %1\n\t"                   \
         "spm\n\t"                                \
         SPM_PIPELINE                             \
         :                                        \
@@ -72,7 +72,7 @@
 (__extension__({                                 \
     __asm__ __volatile__                         \
     (                                            \
-        ub_oust " %0, %1\n\t"                    \
+        oust_smp " %0, %1\n\t"                   \
         "spm\n\t"                                \
         SPM_PIPELINE                             \
         :                                        \
@@ -85,7 +85,7 @@
 (__extension__({                                 \
     __asm__ __volatile__                         \
     (                                            \
-        ub_oust " %0, %1\n\t"                    \
+        oust_smp " %0, %1\n\t"                   \
         "spm\n\t"                                \
         SPM_PIPELINE                             \
         :                                        \
@@ -99,7 +99,7 @@
     uint8_t __result;                            \
     __asm__ __volatile__                         \
     (                                            \
-        ub_oust " %1, %2\n\t"                    \
+        oust_smp " %1, %2\n\t"                   \
         "lpm %0, Z\n\t"                          \
         : "=r" (__result)                        \
         : "i" (UB_SPM_REG),                      \
