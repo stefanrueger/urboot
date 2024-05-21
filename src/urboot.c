@@ -1055,15 +1055,12 @@ typedef const void *progmem_t;
 
 /*
  * This bootloader does not accept page_read/page_write commands with more than one SPM_PAGESIZE
- * bytes, even when dealing with EEPROM. The type spm_pagesize_store_t handles variables that store
- * the length of data records. SPM_PAGESIZE == 256 can be handled with 8-bit spm_pagesize_store_t.
- * Avrdude and any self-respecting programmer will specify lengths 1 ... 256 (full page), never 0
- * bytes though. Note the low byte of 256 is zero ans len == 0 works for do { ... } while(--len);
- * loops when len is of type uint8_t. Magic, eh! Only use with these types of loops, though.
+ * bytes, even when dealing with EEPROM. For classic parts SPM_PAGESIZE ist at most 256, which can
+ * be handled with uint8_t. Avrdude and any self-respecting programmer will specify lengths 1 ...
+ * 256 (full page), never 0 bytes though. Note the low byte of 256 is zero, and len == 0 works for
+ * do { ... } while(--len); loops when len is of type uint8_t. Magic, eh! Only use with these
+ * types of loops, though.
  */
-
-typedef uint8_t spm_pagesize_store_t;
-#define getlength() getch()
 
 #if DUAL                        // writebuffer() called twice for dual-boot: load sram addr in func
 void writebuffer_ramstart();
@@ -1323,7 +1320,7 @@ static void sfm_read_page() {
   uint8_t *bufp = ramstart;
 
   // Cast avoids compiler warning when SPM_PAGESIZE == 256 and type is uint8_t
-  spm_pagesize_store_t n = (spm_pagesize_store_t) SPM_PAGESIZE;
+  uint8_t n = (uint8_t) SPM_PAGESIZE;
 
   sfm_assert();
   spi_transfer(SFM_C_READ);
@@ -1449,7 +1446,7 @@ startingapp:
 #endif // DUAL
 
 
-static void read_page_fl(spm_pagesize_store_t length) {
+static void read_page_fl(uint8_t length) {
   do {
     uint8_t one;
     // Can use lpm/elpm with address post-increment (elmp also increments RAMPZ)
@@ -1460,7 +1457,7 @@ static void read_page_fl(spm_pagesize_store_t length) {
 
 
 #if EEPROM
-static void read_page_ee(spm_pagesize_store_t length) {
+static void read_page_ee(uint8_t length) {
   do {
     while(EECR & _BV(EEPE))
       continue;
@@ -1472,7 +1469,7 @@ static void read_page_ee(spm_pagesize_store_t length) {
   } while(--length);
 }
 
-static void write_page_ee(spm_pagesize_store_t length) {
+static void write_page_ee(uint8_t length) {
   uint8_t *bufp = ramstart;
   do {
     while(EECR & _BV(EEPE))
@@ -1492,9 +1489,9 @@ static void write_page_ee(spm_pagesize_store_t length) {
 #endif
 
 
-static void write_sram(spm_pagesize_store_t length) { // Write data from host into SRAM
+static void write_sram(uint8_t length) { // Write data from host into SRAM
 #if (RAMSTART & 0xff) == 0 && SPM_PAGESIZE <= 256
-  spm_pagesize_store_t xend = length;
+  uint8_t xend = length;
 
   asm volatile (
     "   ldi   r26, lo8(%[sramp])\n"
@@ -1508,7 +1505,7 @@ static void write_sram(spm_pagesize_store_t length) { // Write data from host in
   );
 #else
 { uint8_t *bufp = ramstart;
-  spm_pagesize_store_t len2 = length;
+  uint8_t len2 = length;
   do {
     *bufp++ = getch();
   } while(--len2);
@@ -1517,8 +1514,8 @@ static void write_sram(spm_pagesize_store_t length) { // Write data from host in
 }
 
 
-static spm_pagesize_store_t __attribute__ ((noinline)) getaddrlength();
-static spm_pagesize_store_t getaddrlength() {
+static uint8_t __attribute__ ((noinline)) getaddrlength();
+static uint8_t getaddrlength() {
   asm volatile(             // Compiler is not great at setting address from next two/three bytes
     "rcall getch\n"
     "mov %A0, r24\n"
@@ -1536,7 +1533,7 @@ static spm_pagesize_store_t getaddrlength() {
     : "r24", "r25", "r18" // Clobbered by getch()
   );
 
-  return getlength();
+  return getch();
 }
 
 
@@ -1898,7 +1895,7 @@ int main(void) {
 
 #if PAGE_ERASE
     } else if(ch == UR_PAGE_ERASE) {
-      spm_pagesize_store_t length = getaddrlength();
+      uint8_t length = getaddrlength();
       get1sync();               // First sync before page_erase which can take long
       ub_page_erase();
 #endif
@@ -1908,7 +1905,7 @@ int main(void) {
            || ch == UR_PROG_PAGE_EE
 #endif
       ) {
-      spm_pagesize_store_t length = getaddrlength();
+      uint8_t length = getaddrlength();
       write_sram(length);
       get1sync();
 #if EEPROM
@@ -1919,13 +1916,13 @@ int main(void) {
         writebuffer(ramstart);
 
     } else if(ch == UR_READ_PAGE_FL) {
-      spm_pagesize_store_t length = getaddrlength();
+      uint8_t length = getaddrlength();
       get1sync();
       read_page_fl(length);
 
 #if EEPROM
     } else if(ch == UR_READ_PAGE_EE) {
-      spm_pagesize_store_t length = getaddrlength();
+      uint8_t length = getaddrlength();
       get1sync();
       read_page_ee(length);
 #else
