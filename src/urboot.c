@@ -295,6 +295,7 @@
 #include "pin_defs.h"           // Definitions for LEDs and some avr name differences
 #include "urboot_wdt.h"         // Don't use <avr/wdt.h> owing to unwanted interrupt overhead
 #include "errata.h"
+#include "urboot_bool.h"        // Provide 8 Booleans in I/O space so compiler uses sbi, cbi, ...
 
 #ifndef UARTNUM                 // Default UART to 0
 #define UARTNUM 0
@@ -1633,9 +1634,9 @@ int main(void) {
   SP = RAMEND;
 #endif
 
-// Caller to set UB_INIT_GPIOR0 if that needs clearing after reset
-#if defined(BOOLEAN_VARIABLE_NEEDED) && defined(UB_INIT_GPIOR0) && UB_INIT_GPIOR0
-  GPIOR0 = 0;
+// Caller to set UB_INIT_BOOL if UB_BOOL needs clearing after reset
+#if defined(UB_INIT_BOOL) && UB_INIT_BOOL && defined(UB_BOOL)
+  UB_BOOL = 0;
 #endif
 
   // Copy reset flags and clear them
