@@ -1492,8 +1492,9 @@ static void write_page_ee(spm_pagesize_store_t length) {
 
 
 static void write_sram(spm_pagesize_store_t length) { // Write data from host into SRAM
-  spm_pagesize_store_t xend = length;
 #if (RAMSTART & 0xff) == 0 && SPM_PAGESIZE <= 256
+  spm_pagesize_store_t xend = length;
+
   asm volatile (
     "   ldi   r26, lo8(%[sramp])\n"
     "   ldi   r27, hi8(%[sramp])\n"
@@ -2126,17 +2127,17 @@ void watchdogConfig(uint8_t x) {
 /*
  * Rather than using the <avr/boot.h> macros I roll my own: it's worth it (saves 16-24 bytes)
  *
- * zaddress  r31:30  global
- * X         r27:26  local pointer (scans through sram)
- * sram      r25:24  argument as input
- * argument  r24     used for calling ub_spm and as temporary register
- * pgm       r23:22  argument if flash <= 64 kB (otherwise high 16 bit of pgm)
- *           r21:20  argument low 16 bit of pgm if flash > 64 kB
- * origRAMPZ r22/r25 third byte of 32 bit pgm argument if flash > 64 kB
- * xloopend  r22     lo8(X) at end of loop (for comparison)
- *           r23     unused
- * origzaddr r19:18  copy of global address in Z
- *           r1      null on return (compiler relies on r1 being 0)
+ * zaddress  r31:30 global
+ * X         r27:26 local pointer (scans through sram)
+ * sram      r25:24 argument as input
+ * argument  r24    used for calling ub_spm and as temporary register
+ * pgm       r23:22 argument if flash <= 64 kB (otherwise high 16 bit of pgm)
+ *           r21:20 argument low 16 bit of pgm if flash > 64 kB
+ * origRAMPZ r22    third byte of 32 bit pgm argument if flash > 64 kB
+ * xloopend  r23    lo8(X) at end of loop (for comparison)
+ * origzaddr r19:18 copy of global address in Z
+ *           r1     null on return (compiler relies on r1 being 0)
+ * tmp       r0
  *
  * The spm command is called 3 times with an address in flash; the erase and write spm call should
  * operate on the same address including RAMPZ to avoid erasing one page and writing to another.
@@ -2148,6 +2149,7 @@ void watchdogConfig(uint8_t x) {
  */
 
 #if PGMWRITEPAGE
+
 void pgm_write_page(void *sram, progmem_t pgm) {
   asm volatile (                // Copy sram to X and pgm to Z
 #if FLASHabove64k
@@ -2181,13 +2183,13 @@ void writebufferX() {
  * it is a mov/ldi, otherwise add low byte of sram to low byte of SPM_PAGESIZE for end condition.
  * The loop is for no more than 256 bytes, so single byte arithmetic is OK.
  */
-#if (SPM_PAGESIZE & 0xff) == 0  // Determine loop end comparison reg r22
-    "mov  r22, r26\n"           // No need to add, just copy low byte of sram address
-#elif !PGMWRITEPAGE && (RAMSTART & 0xff) == 0
-    "ldi  r22, lo8(%[spmsz])\n" // Load length len
+#if (SPM_PAGESIZE & 0xff) == 0  // Determine loop end comparison reg r23
+    "mov  r23, r26\n"           // No need to add, just copy low byte of sram address
+#elif !PGMWRITEPAGE
+    "ldi  r23, %[xend]\n"       // low byte of (X+SPM_PAGE_SIZE)
 #else
-    "ldi  r22, lo8(%[spmsz])\n" // Load page size len
-    "add  r22, r26\n"           // r22 = lo8(len + sram) for loop end comparison with lo8(X)
+    "ldi  r23, lo8(%[spmsz])\n" // Load page size len
+    "add  r23, r26\n"           // r23 = lo8(len + sram) for loop end comparison with lo8(X)
 #endif
 
     "movw r18, r30\n"           // uint16_t copy = zaddress;
@@ -2201,12 +2203,30 @@ void writebufferX() {
     "cpi  r31, hi8(%[start])\n" // zaddress >= START?
 #endif
 #if FLASHabove64k
-    "in   r25, %[rampz]\n"      // Must load RAMPZ: we might not arrive here from pgm_write_page()
+    "in   r22, %[rampz]\n"      // Must load RAMPZ: we might not arrive here from pgm_write_page()
     "ldi  r24, hh8(%[start])\n"
-    "cpc  r25, r24\n"
+    "cpc  r22, r24\n"
 #endif
     "brcc ub_ret\n"             // Return if so
 #endif // PROTECTME
+
+#if VBL && PROTECTRESET && FLASHWRAPS // Store "rjmp START" opcode at addr 0 to protect bootloader
+#if FLASHabove64k
+#if !PROTECTME
+    "in    r22, %[rampz]\n"     // Load RAMPZ
+#endif
+    "cpi   r22, 0\n"            // RAMZ != 0?
+    "brne  not_reset_page\n"
+#endif
+    "adiw  r30, 0\n"            // zaddress != 0?
+    "brne  not_reset_page\n"
+    "ldi   r24, lo8(%[rjmp_bwd_start])\n" // Store rjmp to bootloader at address 0
+    "st    X+, r24\n"
+    "ldi   r24, hi8(%[rjmp_bwd_start])\n"
+    "st    X, r24\n"
+    "sbiw  r26, 1\n"            // Restore X pointer to ram
+"not_reset_page:"
+#endif
 
 #if ERASE_B4_WRITE
 #if FOUR_PAGE_ERASE && 3*SPM_PAGESIZE >= 256
@@ -2224,31 +2244,13 @@ void writebufferX() {
 #endif
   "skip_erase: "
 
-#if VBL && PROTECTRESET && FLASHWRAPS // Store "rjmp START" opcode at addr 0 to protect bootloader
-#if FLASHabove64k
-#if !PROTECTME
-    "in    r25, %[rampz]\n"     // Load RAMPZ
-#endif
-    "cpi   r25, 0\n"            // RAMZ != 0?
-    "brne  not_reset_page\n"
-#endif
-    "adiw  r30, 0\n"            // zaddress != 0?
-    "brne  not_reset_page\n"
-    "ldi   r24, lo8(%[rjmp_bwd_start])\n" // Store rjmp to bootloader at address 0
-    "st    X+, r24\n"
-    "ldi   r24, hi8(%[rjmp_bwd_start])\n"
-    "st    X, r24\n"
-    "sbiw  r26, 1\n"            // Restore X pointer to ram
-"not_reset_page:"
-#endif
-
     "ldi   r24, %[bpfil]\n"     // do { boot_page_fill_r30(*sram++); zaddress+=2; } while(len-=2);
   "1: "
     "ld    r0,  X+\n"
     "ld    r1,  X+\n"           // Data word for spm page fill is in r1:r0
     "rcall ub_spm\n"
     "adiw  r30, 2\n"            // zaddress += 2, RAMPZ stays the same
-    "cpse  r26, r22\n"          // Finished?
+    "cpse  r26, r23\n"          // Finished?
     "rjmp  1b\n"
 
     "movw  r30, r18\n"          // Restore zaddress, so it points at original page again
@@ -2260,11 +2262,11 @@ void writebufferX() {
 #endif                          // Fall through to ub_spm and return
 
   "ub_spm: "
-    ub_oust " %[spmrg], r24\n"
+    oust_spm " %[spmrg], r24\n"
     "spm\n"
     SPM_PIPELINE
   "2: "
-    ub_lind " r0, %[spmrg]\n"   // Poll spm has finished (not needed for fill/clearing RWWSB)
+    inld_spm " r0, %[spmrg]\n"  // Poll spm has finished (not needed for fill/clearing RWWSB)
     "sbrc r0, %[spmen]\n"
     "rjmp 2b\n"
   "ub_ret: "
@@ -2283,11 +2285,12 @@ void writebufferX() {
 #endif
     [start] "n"((uint32_t) START),
     [spmsz] "n"(SPM_PAGESIZE),
+    [xend] "M"(((uint16_t) ramstart + SPM_PAGESIZE) & 0xff),
 #if FOUR_PAGE_ERASE
     [psz3] "n"(3*SPM_PAGESIZE),
 #endif
     [sramp] "n"(ramstart),
     [rjmp_bwd_start] "n"(RJMP_BWD_START)
-  : "r0", "r27", "r26", "r25", "r24", "r22", "r19", "r18"
+  : "r0", "r27", "r26", "r24", "r23", "r22", "r19", "r18"
   );
 }
