@@ -314,6 +314,7 @@
 #define MINORVER (VERSION & 7)  // Max 7
 
 
+
 /*
  * Different flash memory size categories:
  *  -   8k or less: no jmp, only rjmp, small device
@@ -342,14 +343,14 @@
 #define DUAL                  0
 #endif
 
-// Vector bootloaders
-#define VBL_NONE              0 // Regular bootloader for an MCU with boot section support
-#define VBL_JUMP              1 // Bootloader jumps to the application via an interrupt vector
-#define VBL_PATCH             2 // When uploading patch reset and designated interrupt vector
-#define VBL_VERIFY            3 // Patch during upload and ignore verify attempts of vector table
+#ifndef VBL // Vector bootloader
+#define VBL                   0
+#endif
 
-#ifndef VBL
-#define VBL            VBL_NONE
+#if VBL > 1
+#warning v8.0+ no longer caters for VBL 2 and 3, setting VBL to 1
+#undef VBL
+#define VBL 1
 #endif
 
 #if defined(SFMCS) || defined(LED)
@@ -413,7 +414,7 @@
 
 
 #ifndef PROTECTRESET
-#if defined(_urboot_AVAILABLE) && VBL == 1
+#if defined(_urboot_AVAILABLE) && VBL
 #if FLASHabove64k && _urboot_AVAILABLE >= 18
 #define PROTECTRESET          1
 #define _urboot_AVAILABLE_r1 (_urboot_AVAILABLE - 18)
@@ -424,7 +425,7 @@
 #define PROTECTRESET          0
 #define _urboot_AVAILABLE_r1 _urboot_AVAILABLE
 #endif
-#else  // !(defined(_urboot_AVAILABLE) && VBL == 1)
+#else  // !(defined(_urboot_AVAILABLE) && VBL)
 #define PROTECTRESET          0
 #endif
 #endif // PROTECTRESET
@@ -782,11 +783,21 @@
 
 /*
  * Dedicated interrupt vector for VBL to store the jump to the application
- *  - set custom VBL_VECT_NUM in Makefile using vector name (or number)
- *  - defaults to SPM_READY_vect_num or, if that does not exist, to EE_READY_vect_num, if that does
- *    not exist either, the first unused vector in the table is taken or the table expanded
- *  - if num is -1 it refers to the additional vbl interrupt vector; uploaded sketches need to have
- *    created that slot (see comment in VBL section above how to do that for all your sketches)
+ *
+ *  - Set custom VBL_VECT_NUM in Makefile using vector name (or number)
+ *
+ *  - Defaults to SPM_READY_vect_num or, if that does not exist, to EE_READY_vect_num. If that
+ *    does not exist either, the first unused vector in the table is taken or, failing that, the
+ *    vector table is assumed to be expanded by one slot and that extra slot is taken
+ *
+ *  - If num is -1 it refers to the additional vbl interrupt vector; uploaded sketches need to
+ *    have increased the vector table by one slot. This can be done in the Arduino IDE through
+ *    adding the following to the end of the hardware/arduino/avr/cores/arduino/main.cpp source
+ *    that will then automatically be included into every application:
+ *
+ *    // Additional vector in ISR vector table used by the urboot bootloader
+ *    uint8_t __attribute__((used)) __attribute__((section(".vectors")))
+ *    _vbl_jmp_to_application[FLASHEND+1UL > 8192? 4: 2] = {0x0C, 0x94};
  */
 
 #define VBL_VECT_additional (_VECTORS_SIZE/(FLASHin8k? 2: 4))
@@ -801,7 +812,7 @@
 
 #else // !defined(VBL_VECT_NUM)
 
-#if VBL == VBL_NONE
+#if !VBL
 #define VBL_VECT_NUM 0
 #elif         defined(SPMR_vect_num)
 #define VBL_VECT_NUM (SPMR_vect_num)
@@ -1014,32 +1025,6 @@ register uint16_t zaddress asm("r30");
 #if FLASHabove128k
 #define extaddr GPIOR1          // Only used for ATmega2560/2561 and similar, should be in IO area
 #endif
-
-
-#if VBL >= VBL_VERIFY
-/*
- * Use GPIOR0/TWBR for Booleans so that compiler can utilise shorter sbi, cbi, sbic, ... opcodes.
- * These booleans are only set in parts of the bootloader that exit with a watchdog timer reset, so
- * GPIOR0/TWBR will be set to 0 after that WDT reset.
- */
-typedef struct {
-  uint8_t b0:1; uint8_t b1:1; uint8_t b2:1; uint8_t b3:1;
-  uint8_t b4:1; uint8_t b5:1; uint8_t b6:1; uint8_t b7:1;
-} bools_t;
-
-#if !defined(GPIOR0) && defined(TWBR)
-#define GPIOR0 TWBR             // ATmega8/16/32/64/128
-#endif
-
-#if !defined(GPIOR0) && VBL >= VBL_VERIFY // eg, ATmega161
-#error Cannot handle VBL level on this device
-#endif
-
-#if VBL >= VBL_VERIFY
-#define modverify (((volatile bools_t *)_SFR_MEM_ADDR(GPIOR0))->b0)
-#endif
-
-#endif // VBL >= VBL_VERIFY
 
 
 #if !defined(RAMSIZE) && defined(RAMSTART) && defined(RAMEND)
@@ -1303,26 +1288,6 @@ static void chip_erase() {
 // Vector bootloader support
 #if VBL
 
-#if VBL >= VBL_VERIFY
-/*
- * The I/O buffer for a single memory page of SPM_PROGSIZE bytes is located at RAMSTART. That's
- * what rambuf points to. In order to be able to return the original values of the manipulated
- * reset and vbl interrupt vectors for verify, they need to be copies them somewhere. Rather than
- * allocating space behind the I/O buffer for the two variables, rather than using valuable
- * registers and rather than using less orthodox space as in TCNT1, OCR0A or similar, I allocate a
- * full second memory page, and copy the complete memory page once as opposed to carrying out two
- * delicate variable copies for rstVectOrig and appVectOrig. This uses the least number of code
- * words. Although smaller MCUs don't have a lot of SRAM (some as small as 128 bytes, eg, ATtiny24)
- * their SPM_PAGESIZES tend to be correspondingly small (32 bytes for the ATtiny24), so that you
- * can still hold these two SPM_PAGESIZE areas and have sufficient SRAM for the stack (should any
- * be used in the bootloader) on the other end.
- *
- */
-#define VectorTableCopy ((uint8_t *)RAMSTART+SPM_PAGESIZE)
-
-#endif // VBL >= VBL_VERIFY
-
-
 #if FLASHin8k
 typedef uint16_t VBLvect_t;     // AVRs with up to 8k of flash have 2-byte vectors (rjmp)
 #else
@@ -1338,93 +1303,6 @@ typedef uint32_t VBLvect_t;     // Larger AVRs have 4-byte vectors (jmp)
 
 #define appVectOrigLo (((uint16_t *) & appVectOrig)[0])
 #define appVectOrigHi (((uint16_t *) & appVectOrig)[1])
-
-
-#if VBL >= VBL_VERIFY || VBL == VBL_PATCH
-
-// Check VBL_VECT_NUM vector is on the first page (patching and verifying code assume that)
-#if VBL_VECT_NUM >= SPM_PAGESIZE/(FLASHin8k? 2: 4)
-#error VBL_VECT_NUM vector not in the same page as reset: use a smaller VBL_VECT_NUM=...
-#endif
-
-/*
- * Vector bootloader patch code for the vector table during upload
- *
- * This needs to be executed unless the sketch has already been patched externally before. Set a
- * bit so that any subsequent read of the vector table is treated as verification attempt, which in
- * turn returns a copy of the vector page before modification. This patch code is also deployed
- * when uploading a sketch from external SPI flash memory (but only when VBL is 2 or 3).
- *
- * One challenge is that the gcc compiler generates rjmps for large devices if the application
- * start is reachable through a forward rjmp, ie, less than or equal to address 4096. One would
- * expect, however, that the bootloader start address is not reachable through a forward rjmp from
- * the reset position. I make the assumption here (tested with the avr-gcc 7.4.0 toolchain) that
- * gcc does not issue a backward rjmp from zero to reach high memory positions on large devices,
- * though that would work owing to the wrap-around of zero to FLASHEND when going backwards. So,
- * when trying to figure out whether the incoming sketch has already been patched on a large
- * device, I assume that I only need to check whether the opcode at reset is an absolute jmp to the
- * bootloader as relative rjmps would not be generated by the compiler to reach the bootloader.
- *
- * Another challenge is to recalculate rjmp opcodes efficiently when they are moved from the reset
- * vector to the vector that jumps to the application. The rjmp opcode is 0xCjjj with signed 0xjjj
- * relative jump distance in words. On small devices, simply subtracting VBL_VECT_NUM from the old
- * reset rjmp opcode does the trick to get the new opcode; this is correct even when rather than
- * jumping backwards in 8k flash the new rjmp now needs to jump forward to reach its destination.
- * Only when the original jump from reset was to a target between the reset vector and the save
- * vector within the interrupt vector table would the subtraction produce a carry that eats into
- * the 0xCjjj opcode structure. It is a reasonable assumption, though, that the compiler will not
- * have populated the vector table with anything other than jump opcodes (rjmp or jmp). On larger
- * devices (> 8k flash) the simplest way to adjust the rjmp opcode is to subtract 2*VBL_VECT_NUM,
- * as each vector has two words.
- *
- */
-
-#if VBL >= VBL_VERIFY
-#define setmodverify() (modverify = 1)
-#else
-#define setmodverify()
-#endif
-
-
-#if FLASHin8k                   // AVR with 2-byte interrupt vectors uses rjmp
-
-void vbl_patch() {
-  // Normally, RJMP_FWD is the same as RJMP_BWD and compiler optimises redundant chech away
-  if(rstVectOrig != RJMP_FWD_START && rstVectOrig != RJMP_BWD_START) { // Don't patch again
-    appVectOrig = rstVectOrig - VBL_VECT_NUM;
-    rstVectOrig = RJMP_FWD_START;
-    setmodverify();
-  }
-}
-
-#else                           // AVR with 4-byte interrupt
-
-void vbl_patch() {
-#if FLASHabove128k
-  if(rstVectOrig != JMP_START && rstVectOrigLo != RJMP_BWD_START) { //} Don't patch if already done
-    // Copy full 4-byte reset jmp instruction to the vbl interrupt vector slot on large MCUs
-    appVectOrig = rstVectOrig;
-#else
-  /*
-   * If rjmp to app was used, then rstVectorHi will be 0x0000 and comparison triggers as
-   * JMP_START>>16 is START, which cannot be 0
-   */
-  if(rstVectOrigHi != (JMP_START>>16)) {
-    // Assume jmp: first two bytes of jmp opcode should still be 0x940C, no need to copy these
-    appVectOrigHi = rstVectOrigHi;
-#endif
-    // If it was an rjmp, though, copy over the adjusted 2-byte rjmp opcode
-    if(isRjmp(resethi8))
-      appVectOrigLo = rstVectOrigLo - 2*VBL_VECT_NUM;
-
-    rstVectOrig = JMP_START;
-    setmodverify();
-  }
-}
-#endif // FLASHin8k
-
-#endif // VBL >= VBL_VERIFY || VBL == VBL_PATCH
-
 
 // Location of the saved reset vector in bytes
 #define appstart_vec_loc (VBL_VECT_NUM*sizeof(VBLvect_t))
@@ -1538,10 +1416,6 @@ static void dual_boot() {
 #endif
               !isRjmp(resethi8) )
               goto startingapp; // No AVR program in SPI flash: directly start the application
-
-#if VBL == VBL_PATCH || VBL == VBL_VERIFY
-             vbl_patch();
-#endif
           }
 
         writebuffer((uint16_t *) rambuf); // Returns with original zaddress/RAMPZ intact
@@ -1600,22 +1474,12 @@ startingapp:
 
 
 static void read_page_fl(spm_pagesize_store_t length) {
-#if VBL >= VBL_VERIFY // Read from copy of first vector page
-        uint8_t *bufp = VectorTableCopy;
-#endif
         do {
             uint8_t one;
             // Can use lpm/elpm with address post-increment (elmp also increments RAMPZ)
             asm volatile(LPM_OP " %0,Z+\n": "=r"(one), "=&r"(zaddress): "1"(zaddress));
-#if VBL >= VBL_VERIFY // Undo patch in vector page so verify passes
-          if(modverify)
-            one = *bufp++;
-#endif
             putch(one);
         } while(--length);
-#if VBL >= VBL_VERIFY
-        modverify = 0;
-#endif
 }
 
 
@@ -1660,26 +1524,7 @@ static void write_page_ee(spm_pagesize_store_t length) {
 
 
 static void write_page_fl() {
-#if VBL >= VBL_VERIFY || VBL == VBL_PATCH
-        // Live-patch the reset vector page so bootloader runs first
-#if FLASHabove64k                    // Only patch page 0, and not the page at 0x10000 :)
-        if(RAMPZ==0)
-#endif
-        if(zaddress == 0) {     // Page 0?
-#if VBL >= VBL_VERIFY
-          // Copy save vectors for later flash verify - copy full mem page to save PROGMEM
-          spm_pagesize_store_t n = (spm_pagesize_store_t) SPM_PAGESIZE;
-          uint8_t *q = VectorTableCopy;
-          uint8_t *p = rambuf;
-          do {
-            *q++ = *p++;
-          } while(--n);
-#endif
-          vbl_patch();
-        }
-#endif // VBL >= VBL_VERIFY || VBL == VBL_PATCH
-
-        writebuffer((uint16_t *) rambuf);
+  writebuffer((uint16_t *) rambuf);
 }
 
 
@@ -1766,25 +1611,25 @@ static void leave_progmode() {
 
 #define UR_AUTOBAUD         128 // Bootloader has autobaud detection (v7.7+)
 #define UR_EEPROM            64 // EEPROM read/write support
-#define UR_xxx               32 // New feature for v8.0
+#define UR_xxx               32 // New feature for v8.0+
 #define UR_DUAL              16 // Dual boot
-#define UR_VBLMASK           12 // Vector bootloader bits
-#define UR_VBLPATCHVERIFY    12 // Patch reset/interrupt vectors and show original ones on verify
-#define UR_VBLPATCH           8 // Patch reset/interrupt vectors only (expect an error on verify)
-#define UR_VBL                4 // Merely start application via interrupt vector instead of reset
+#define UR_VBLMASK           12 // Mask for two vector bootloader bits
+#define UR_VBLPATCHVERIFY    12 // No longer used in v8.0+
+#define UR_VBLPATCH           8 // No longer used in v8.0+
+#define UR_VBLJUMP            4 // Start application via interrupt vector instead of reset
 #define UR_NO_VBL             0 // Not a vector bootloader, must set fuses to HW bootloader support
 #define UR_PROTECTRESET       2 // Bootloader enforces reset vector points to bootloader (v7.7+)
 #define UR_HAS_CE             1 // Bootloader has Chip Erase (v7.7+)
 
 #define UR_AFLAG  (AUTOBAUD? UR_AUTOBAUD: 0)
 #define UR_EFLAG  (EEPROM? UR_EEPROM: 0)
-#define UR_xFLAG  // New flag for v8.0
+#define UR_xFLAG  // New flag for v8.0+
 #define UR_DFLAG  (DUAL? UR_DUAL: 0)
-#define UR_VFLAGS ((VBL  & 3) * UR_VBL)
-#define UR_QFLAG  (PROTECTRESET && VBL==1? UR_PROTECTRESET: 0)
+#define UR_VFLAGS ((VBL & 3) * (UR_VBLMASK & -UR_VBLMASK)) // Shift VBL into mask position
+#define UR_PFLAG  (PROTECTRESET && VBL? UR_PROTECTRESET: 0)
 #define UR_CFLAG  (CHIP_ERASE? UR_HAS_CE: 0)
 
-#define UR_TYPE (UR_AFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_QFLAG | UR_CFLAG)
+#define UR_TYPE (UR_AFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_PFLAG | UR_CFLAG)
 
 /*
  * Version section just under FLASHEND has 6 bytes (4 bytes in versions 7.2 to 7.4)
@@ -1826,10 +1671,9 @@ int main(void) {
   SP = RAMEND;
 #endif
 
-#if VBL>=VBL_VERIFY // GPIOR0 (and TWBR) probably zero after reset
-#if defined(UB_INIT_GPIOR0) && UB_INIT_GPIOR0
-  GPIOR0 = 0;                   // But who wants to read all 184 atmel data sheets to verify this?
-#endif
+// Caller to set UB_INIT_GPIOR0 if that needs clearing after reset
+#if defined(BOOLEAN_VARIABLE_NEEDED) && defined(UB_INIT_GPIOR0) && UB_INIT_GPIOR0
+  GPIOR0 = 0;
 #endif
 
   // Copy reset flags and clear them
