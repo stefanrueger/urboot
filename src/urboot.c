@@ -1490,27 +1490,26 @@ static void write_page_ee(uint8_t length) {
 
 
 static void write_sram(uint8_t length) { // Write data from host into SRAM
-#if (RAMSTART & 0xff) == 0 && SPM_PAGESIZE <= 256
   uint8_t xend = length;
 
   asm volatile (
     "   ldi   r26, lo8(%[sramp])\n"
     "   ldi   r27, hi8(%[sramp])\n"
-    "1: rcall getch\n"
+#if RAMSTART & 0xff
+    "   add   %[xend], r26\n"
+#endif
+    "1: rcall getch\n"          // Add to clobbered list all that getch() changes
     "   st    X+, r24\n"
     "   cpse  %[xend], r26\n"
     "   rjmp  1b\n"
+#if RAMSTART & 0xff             // Tell gcc that xend will be changed
+   : [xend] "=r"(xend)
+   : [sramp] "n"(ramstart), "0" (xend)
+#else
    :: [sramp] "n"(ramstart), [xend] "r"(xend)
+#endif
    : "r26", "r27", "r24", "r25", "r18" // r18 and r24:25 are clobbered by getch()
   );
-#else
-{ uint8_t *bufp = ramstart;
-  uint8_t len2 = length;
-  do {
-    *bufp++ = getch();
-  } while(--len2);
-}
-#endif
 }
 
 
