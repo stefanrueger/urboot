@@ -1,11 +1,11 @@
 /*
- * Urboot bootloader for 8-bit AVR microprocessors
+ * Urboot bootloader for classic 8-bit AVR microprocessors
  *
  * published under GNU General Public License, version 3 (GPL-3.0)
  * author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v7.7
- * 29.12.2022 (first version published in July 2016)
+ * v8.0
+ * 25.05.2024 (first version published in July 2016)
  *
  * Feature-rich bootloader that is fast and small
  *  - Tight code: most bootloaders fit into
@@ -51,7 +51,9 @@
  *    AT90S2343, AT90S4414, AT90S4433, AT90S4434, AT90S8515, AT90C8534, AT90S8535)
  *  - AVR3 core without movw instructions (ATmega103, AT43USB320, AT43USB355, AT76C711)
  *
- * Currently unsupported: ATxmega devices, newer avr8x devices
+ * Unsupported (without planning to support them within this source code file)
+ *  - ATxmega devices and newer AVR-DA/DB/DD/DU/EA/EB ... devices: these require different I/O
+ *    code, different flash write code, different GPIO handling for LEDs & attached SPM memory
  *
  * Compiles but entirely untested for the following -mmcu=... options
  *   at90can128 at90can32 at90can64 at90pwm1 at90pwm161 at90pwm2 at90pwm216 at90pwm2b at90pwm3
@@ -305,7 +307,6 @@
 #include "ur_uart.h"            // Unified register and bit names for various UART types
 #include "ur_uartnum.h"         // Generic UARTn names depending on UARTNUM/UARTALT
 
-
 #ifndef VERSION
 #define VERSION            0100 // v8.0 in octal, as minor version is in 3 least significant bits
 #endif
@@ -314,14 +315,16 @@
 #define MINORVER (VERSION & 7)  // Max 7
 
 
+#if SPM_PAGESIZE > 256          // Not applicable for classic parts, but check just in case
+#error urboot.c cannot handle flash page sizes > 256
+#endif
 
 /*
  * Different flash memory size categories:
  *  -   8k or less: no jmp, only rjmp, small device
  *  -  64k or less: no need for RAMPZ, plain sailing, use lmp/smp
- *  - 128k or less: needs RAMPZ for elpm/spm, jmp targets; STK500 word addresses fit in 16-bit
+ *  - 128k or less: needs RAMPZ for elpm/spm, jmp targets
  *  - more than 128k: needs RAMPZ for elpm/spm, EIND for indirect jumps, jmp targets exceed 16-bit
- *                    also needs extention for STK500 v1 protocol
  *  - more than 4M: low 16 bit of jmp opcode no longer 0x940c (currently only a theoretical issue)
  */
 
@@ -333,7 +336,7 @@
 #define FLASHabove128k (FLASHEND  >  0x1fffful)
 #define FLASHabove4M   (FLASHEND  > 0x3ffffful)
 
-// Defaults to 1 iff flash size is power of 2
+// Set to 1 iff flash size is power of 2 (All classic parts except ATmega406 with its 40 kB flash)
 #ifndef FLASHWRAPS
 #define FLASHWRAPS (!(FLASHEND & (FLASHEND+1UL)))
 #endif
@@ -412,6 +415,11 @@
 #undef  PROTECTME               // From v7.7 enforce bootloader self-protection
 #define PROTECTME             1
 
+#if defined(PROTECTRESET) && PROTECTRESET && !FLASHWRAPS && VBL
+#undef  PROTECTRESET
+#define PROTECTRESET          0
+#warning Cannot generate code to protect reset vector when flash is not a power of two
+#endif
 
 #ifndef PROTECTRESET
 #if defined(_urboot_AVAILABLE) && VBL
@@ -443,16 +451,17 @@
 #endif
 
 #ifndef PAGE_ERASE
-#define PAGE_ERASE 0
+#define PAGE_ERASE            0
 #endif
+
+// Some parts can only erase 4 pages at a time
+#define FOUR_PAGE_ERASE (defined(__AVR_ATtiny441__) || defined(__AVR_ATtiny841__) || \
+  defined(__AVR_ATtiny1634__) || defined(__AVR_ATtiny1634R__))
 
 #ifndef CHIP_ERASE
 #define CHIP_ERASE (FRILLS >= 7)
 #endif
 
-#ifndef RETSWVERS
-#define RETSWVERS (FRILLS >= 6)
-#endif
 #ifndef QEXITEND
 #define QEXITEND  (FRILLS >= 5)
 #endif
@@ -470,10 +479,8 @@
 #define AUTOBAUD              0
 #endif
 
-// Some parts can only erase 4 pages at a time
-#define FOUR_PAGE_ERASE (defined(__AVR_ATtiny441__) || defined(__AVR_ATtiny841__) || \
-  defined(__AVR_ATtiny1634__) || defined(__AVR_ATtiny1634R__))
-
+// Flash needs erasing before writing if write page function exported or there is no CE
+#define ERASE_B4_WRITE (PGMWRITEPAGE || !CHIP_ERASE)
 
 #if defined(DEBUG_FREQ)
 // Set LED pin as default if no frequency pin defined
@@ -932,12 +939,6 @@
 #define STK_OK         STK_OK_C // Possibly redefined further below
 #define CRC_EOP            0x20
 
-// STK500 parameter definitions
-
-#define Parm_STK_HW_VER    0x80
-#define Parm_STK_SW_MAJOR  0x81
-#define Parm_STK_SW_MINOR  0x82
-
 
 // Redefine STK_INSYNC and STK_OK so they inform avrdude about MCU type and 5 bit urboot features
 
@@ -952,7 +953,7 @@
 
 #define UB_READ_FLASH         4u // Urboot always can read flash
 
-#if !PGMWRITEPAGE && CHIP_ERASE  // No page erase during flash STK_PROG_PAGE
+#if !ERASE_B4_WRITE              // No page erase during flash STK_PROG_PAGE
 #define UB_FLASH_LL_NOR       8u // Flash programming with STK_PROG_PAGE looks like NAND memory
 #else
 #define UB_FLASH_LL_NOR       0u // Uploader needs to read flash first for sub-page modifications
@@ -983,7 +984,7 @@
 // TMP_OK is in [0, 255] and different from TMP_INSYNC
 #define TMP_OK     ((TMP_OK1 < TMP_INSYNC)? TMP_OK1: TMP_OK1+1)
 
-// Indistinguishable from STK500 protocol? map to 255/254
+// Indistinguishable from STK500 protocol? Map to 255/254
 #if TMP_INSYNC == STK_INSYNC_C && TMP_OK == STK_OK_C
 #define STK_INSYNC 255
 #define STK_OK     254
@@ -997,13 +998,11 @@
  * Global variables and where they are stored
  *
  * For small code size it's useful to have a handful of global variables. The most important
- * variable that deals with addresses for lpm and spm opcodes to read and write flash is the 16-bit
- * zaddress. It is stored permanently in the Z register pair r31:r30 throughout. This is
+ * variable that deals with addresses for lpm and spm opcodes to read and write flash is the
+ * 16-bit zaddress. It is stored permanently in the Z register pair r31:r30 throughout. This is
  * complemented by RAMPZ on larger devices. Where a Boolean variable is needed the code uses bits
- * from GPIOR0, which results in shorter opcodes (in and out rather than lds and sts). We also need
- * a global variable, extaddr, to keep a copy of the extended avrdude load address for those larger
- * devices, so RAMPZ can be set appropriately. Extaddr is placed into GPIOR1 for similar reasons.
- * SRAM is only needed for copies of page buffers read, written or verified.
+ * from GPIOR0 or a similar, which results in shorter opcodes (sbi, cbi etc). SRAM is only needed
+ * for a single copies of flash/eeprom page buffers for writing (max SPM_PAGESIZE bytes).
  *
  * register uint16_t zaddress asm("r30");
  *
@@ -1022,31 +1021,26 @@
 
 register uint16_t zaddress asm("r30");
 
-#if FLASHabove128k
-#define extaddr GPIOR1          // Only used for ATmega2560/2561 and similar, should be in IO area
-#endif
-
 
 #if !defined(RAMSIZE) && defined(RAMSTART) && defined(RAMEND)
 #define RAMSIZE ((RAMEND)-(RAMSTART)+1)
 #endif
 
-#if !defined(RAMSTART) || !defined(RAMSIZE)
+#if !defined(RAMSTART) || !defined(RAMSIZE) || RAMSTART < 0 || RAMSIZE < 0
 #error need to know RAMSTART and either RAMSIZE or RAMEND
 #endif
 
 /*
- * Contrary to normal C programs these global variables are *not* initialised, as we drop the zero
- * init code, saving PROGMEM. We use a buffer at RAMSTART that contains two pages of flash memory:
+ * Contrary to normal C programs global variables are *not* initialised, as we drop the
+ * initialisation code, saving PROGMEM. Urboot only needs one flash page worth of SRAM:
  *
- * uint8_t rambuf[2*SPM_PAGESIZE];
+ * uint8_t ramstart[SPM_PAGESIZE];
  */
 
-
-#define rambuf ((uint8_t *)(RAMSTART))
+#define ramstart ((uint8_t *) RAMSTART)
 
 // Hi byte of low word or opcode at reset position (is 0xCX for rjmp and 0x94 for jmp)
-#define resethi8 rambuf[1]
+#define resethi8 ramstart[1]
 #define isRjmp(op16hi) (((op16hi) & 0xF0) == 0xC0)
 
 
@@ -1058,35 +1052,21 @@ typedef const uint_farptr_t progmem_t;
 typedef const void *progmem_t;
 #endif
 
-
 /*
  * This bootloader does not accept page_read/page_write commands with more than one SPM_PAGESIZE
  * bytes, even when dealing with EEPROM. The type spm_pagesize_store_t handles variables that store
  * the length of data records. SPM_PAGESIZE == 256 can be handled with 8-bit spm_pagesize_store_t.
  * Avrdude and any self-respecting programmer will specify lengths 1 ... 256 (full page), never 0
- * bytes though. Although the low byte of 256 is zero, length == 0 works for do { ... }
- * while(--length); loops when length is of type uint8_t. Magic, eh! Only use with these types of
- * loops, though.
+ * bytes though. Note the low byte of 256 is zero ans len == 0 works for do { ... } while(--len);
+ * loops when len is of type uint8_t. Magic, eh! Only use with these types of loops, though.
  */
 
-#if SPM_PAGESIZE > 256          // Sic! See above comment for SPM_PAGESIZE == 256
-typedef uint16_t spm_pagesize_store_t;
-// Length is big endian
-#define getlength() ({ spm_pagesize_store_t length = (spm_pagesize_store_t) (getch()<<8); \
-  length |= getch(); length; })
-void writebuffer(uint16_t *sram);
-
-#define ub_page_erase() ({ urboot_page_erase_r30(); boot_spm_busy_wait(); })
-
-// Todo: test SPM_PAGESIZE > 256 branch: it's C code for pgm_write_page() and writebuffer(sram)
-
-#else
 typedef uint8_t spm_pagesize_store_t;
 #define getlength() getch()
 
-#if DUAL                        //  writebuffer called twice for dual-boot: load sram addr in func
-void writebufferRS();
-#define writebuffer(sram) writebufferRS()
+#if DUAL                        // writebuffer() called twice for dual-boot: load sram addr in func
+void writebuffer_ramstart();
+#define writebuffer(sram) writebuffer_ramstart()
 
 #else
 
@@ -1099,23 +1079,19 @@ void writebufferX();
   ); \
   writebufferX(); \
 })
-
 #endif
 
 void ub_spm(uint8_t cmd);
 #define ub_page_erase() ub_spm(__BOOT_PAGE_ERASE)
 
-#endif // SPM_PAGESIZE > 256
-
 
 // Number of program pages below the boot section
 #define SPM_NUMPAGES  (START/SPM_PAGESIZE)
 
-// Does this fit into a byte?
-#if SPM_NUMPAGES > 256
+#if SPM_NUMPAGES > 256          // Needs more than one byte
 typedef uint16_t spm_pages_index_t;
 #else
-typedef uint8_t spm_pages_index_t; // Can handle SPM_NUMPAGES==256
+typedef uint8_t spm_pages_index_t; // Can handle SPM_NUMPAGES==256 with do { ... } while(--len);
 #endif
 
 
@@ -1239,7 +1215,7 @@ void bitDelay();
 
 #if CHIP_ERASE
 
-#if FOUR_PAGE_ERASE
+#if FOUR_PAGE_ERASE             // CE_SIZE <= 256 (parts with 4-page erase have small page sizes)
 #define CE_SIZE (4*SPM_PAGESIZE)
 #else
 #define CE_SIZE SPM_PAGESIZE
@@ -1294,8 +1270,8 @@ typedef uint16_t VBLvect_t;     // AVRs with up to 8k of flash have 2-byte vecto
 typedef uint32_t VBLvect_t;     // Larger AVRs have 4-byte vectors (jmp)
 #endif
 
-#define rstVectOrig (((VBLvect_t *)(RAMSTART))[0])
-#define appVectOrig (((VBLvect_t *)(RAMSTART))[VBL_VECT_NUM])
+#define rstVectOrig (((VBLvect_t *) ramstart)[0])
+#define appVectOrig (((VBLvect_t *) ramstart)[VBL_VECT_NUM])
 
 // The corresponding low/hi words of the interrupt vectors
 #define rstVectOrigLo (((uint16_t *) & rstVectOrig)[0])
@@ -1343,7 +1319,7 @@ uint8_t __attribute__ ((noinline)) spi_transfer(uint8_t data) {
  */
 
 static void sfm_read_page() {
-  uint8_t *bufp = rambuf;
+  uint8_t *bufp = ramstart;
 
   // Cast avoids compiler warning when SPM_PAGESIZE == 256 and type is uint8_t
   spm_pagesize_store_t n = (spm_pagesize_store_t) SPM_PAGESIZE;
@@ -1376,97 +1352,96 @@ static void sfm_read_page() {
 #endif
 
 static void dual_boot() {
-      /*
-       * Define relevant SPI pins as outputs - CS must be output for SPI to work in master mode.
-       * Pullup CS to deactivate any attached device (eg, RFM module) and pullup the chip select CS
-       * for the external memory. Also pullup CIPO, just so you read all 1's when there is no
-       * external SPI flash installed. There is a slight code saving when CS is on the same port as
-       * SFMCS of the SPI interface. The code makes the reasonable(?) assumption that the lines for
-       * SPI are all on the same port.
-       */
+ /*
+  * Define relevant SPI pins as outputs - CS must be output for SPI to work in master mode. Pull
+  * up CS to deactivate any attached device (eg, RFM module); pull up the chip select CS for the
+  * external memory; and pull up CIPO, so a stream of 1's is seen without an external SPI flash.
+  * There is a slight code saving when CS is on the same port as SFMCS of the SPI interface. The
+  * code makes the reasonable(?) assumption that the lines for SPI are all on the same port.
+  */
 
 #if SAME_PORT_SFMCS_CS
-      UR_PORT(AtmelCS) = UR_BV(SFMCS) | UR_BV(AtmelCS) | UR_BV(AtmelCIPO);
-      UR_DDR(AtmelCS)  = UR_BV(SFMCS) | UR_BV(AtmelCS) | UR_BV(AtmelCOPI) | UR_BV(AtmelSCK);
+  UR_PORT(AtmelCS) = UR_BV(SFMCS) | UR_BV(AtmelCS) | UR_BV(AtmelCIPO);
+  UR_DDR(AtmelCS)  = UR_BV(SFMCS) | UR_BV(AtmelCS) | UR_BV(AtmelCOPI) | UR_BV(AtmelSCK);
 #else
-      UR_PORT(AtmelCS) = UR_BV(AtmelCS) | UR_BV(AtmelCIPO);
-      UR_DDR(AtmelCS) = UR_BV(AtmelCS) | UR_BV(AtmelCOPI) | UR_BV(AtmelSCK);
-      sfm_release();
-      sfm_setupcs();
+  UR_PORT(AtmelCS) = UR_BV(AtmelCS) | UR_BV(AtmelCIPO);
+  UR_DDR(AtmelCS) = UR_BV(AtmelCS) | UR_BV(AtmelCOPI) | UR_BV(AtmelSCK);
+  sfm_release();
+  sfm_setupcs();
 #endif
 
-      SPCR = _BV(MSTR) | _BV(SPE);      // Init SPI: Master, F_CPU/4, MSBFIRST, SPI_MODE0
+  SPCR = _BV(MSTR) | _BV(SPE);  // Init SPI: Master, F_CPU/4, MSBFIRST, SPI_MODE0
 
-      zaddress = 0;             // RAMPZ will be 0 here
-      spm_pages_index_t numpages = (spm_pages_index_t) SPM_NUMPAGES;
-      do {
-        // Read in a full memory page from external flash
-        sfm_read_page();
+  zaddress = 0;                 // RAMPZ will be 0 here
+  spm_pages_index_t numpages = (spm_pages_index_t) SPM_NUMPAGES;
+  do {
+    // Read in a full memory page from external flash
+    sfm_read_page();
 
 #if FLASHabove64k
-        if(RAMPZ == 0)
+    if(RAMPZ == 0)
 #endif
-          if(zaddress == 0) {
-            // On first (vector) page check whether reset vector is an rjmp or jmp instruction
-            if(
+      if(zaddress == 0) {
+        // On first (vector) page check whether reset vector is an rjmp or jmp instruction
+        if(
 #if FLASHabove4M                // jmp for an MCU with more than 4M flash (should be so lucky :)
-              (resethi8 >> 1) != (0x94U >> 1) &&
+          (resethi8 >> 1) != (0x94U >> 1) &&
 #elif FLASHabove8k              // Otherwise jmp opcode has 0x94 as high byte
-              resethi8 != 0x94U &&
+          resethi8 != 0x94U &&
 #endif
-              !isRjmp(resethi8) )
-              goto startingapp; // No AVR program in SPI flash: directly start the application
-          }
+          !isRjmp(resethi8) )
+          goto startingapp;     // No AVR program in SPI flash: directly start the application
+      }
 
-        writebuffer((uint16_t *) rambuf); // Returns with original zaddress/RAMPZ intact
-        inczaddresspage();
-      } while(--numpages);
+    writebuffer((uint16_t *) ramstart); // Returns with original zaddress/RAMPZ intact
+    inczaddresspage();
+  } while(--numpages);
 
 #ifdef DUAL_NO_SECTOR_ERASE     // Minimal clearup when desperate for code space
 
 #if FLASHabove64k               // Only zap RAMPZ after burning program, then start the app
-      RAMPZ = 0;
+  RAMPZ = 0;
 #endif
 
 #else                           // Much better: erase first 4 kB and reboot via WDT reset
-      sfm_assert();
-      spi_transfer(SFM_C_WREN);
-      sfm_release();
-      sfm_assert();
+  sfm_assert();
+  spi_transfer(SFM_C_WREN);
+  sfm_release();
+  sfm_assert();
 #if 0
-      spi_transfer(SFM_C_SE4k);
-      spi_transfer(0);
-      spi_transfer(0);
-      spi_transfer(0);
+  spi_transfer(SFM_C_SE4k);
+  spi_transfer(0);
+  spi_transfer(0);
+  spi_transfer(0);
 #else
-      asm volatile(             // Looks a bit convoluted, but saves 4 bytes
-        "   ldi r16,4\n"        // R16 is a call-saved register: spi_transfer() won't change it
-        "   ldi r24,%[secmd]\n" // Sector erase command for first spi_transfer()
-        "1: rcall spi_transfer\n"
-        "   ldi r24,0\n"        // Next three calls are spi_transfer(0)
-        "   subi r16,1\n"
-        "   brne 1b\n"
-        :: [secmd] "M"(SFM_C_SE4k) : "r0", "r24", "r16"
-      );
+  asm volatile(                 // Looks a bit convoluted, but saves 4 bytes
+    "   ldi r16,4\n"            // R16 is a call-saved register: spi_transfer() won't change it
+    "   ldi r24,%[secmd]\n"     // Sector erase command for first spi_transfer()
+    "1: rcall spi_transfer\n"
+    "   ldi r24,0\n"            // Next three calls are spi_transfer(0)
+    "   subi r16,1\n"
+    "   brne 1b\n"
+    :: [secmd] "M"(SFM_C_SE4k) : "r0", "r24", "r16"
+  );
 #endif
-      sfm_release();
+  sfm_release();
 
-      // Let sector erase finish before reset - 1 s should be ample
-      watchdogConfig(WATCHDOG_1S);
-      bootexit();               // Deleted the first 4 kB sector on the SPI flash: reset via WDT
+  // Let sector erase finish before reset - 1 s should be ample
+  watchdogConfig(WATCHDOG_1S);
+  bootexit();                   // Deleted the first 4 kB sector on the SPI flash: reset via WDT
 
 #endif // DUAL_NO_SECTOR_ERASE
 
 startingapp:
-      // Crude initialisation before starting the app (WDT reset would result in an endless loop)
-      SPCR = 0;                 // Always switch off SPI
+  // Crude initialisation before starting the app (WDT reset would result in an endless loop)
+  SPCR = 0;                     // Always switch off SPI
 
 #ifndef DUAL_NO_SPI_RESET
-      UR_DDR(AtmelCS) = 0;
-      UR_PORT(AtmelCS) = 0;
+  UR_DDR(AtmelCS) = 0;
+  UR_PORT(AtmelCS) = 0;
 #if !SAME_PORT_SFMCS_CS
-      sfm_resetddr();
-      sfm_resetport();
+  sfm_resetddr();
+  sfm_resetport();
 #endif
 #endif // DUAL_NO_SPI_RESET
 }
@@ -1474,84 +1449,70 @@ startingapp:
 
 
 static void read_page_fl(spm_pagesize_store_t length) {
-        do {
-            uint8_t one;
-            // Can use lpm/elpm with address post-increment (elmp also increments RAMPZ)
-            asm volatile(LPM_OP " %0,Z+\n": "=r"(one), "=&r"(zaddress): "1"(zaddress));
-            putch(one);
-        } while(--length);
+  do {
+    uint8_t one;
+    // Can use lpm/elpm with address post-increment (elmp also increments RAMPZ)
+    asm volatile(LPM_OP " %0,Z+\n": "=r"(one), "=r"(zaddress): "1"(zaddress));
+    putch(one);
+  } while(--length);
 }
 
 
 #if EEPROM
 static void read_page_ee(spm_pagesize_store_t length) {
-        do {
-          while(EECR & _BV(EEPE))
-            continue;
-          set_eear(zaddress);
-          EECR |= _BV(EERE);    // Start EEPROM read
-          putch(EEDR);
-          // zaddress++;        // Compiler makes a pig's ear of simple increment - use short code
-          asm volatile("adiw %0, 1\n" : "=&r" (zaddress) : "0"(zaddress));
-        } while(--length);
+  do {
+    while(EECR & _BV(EEPE))
+      continue;
+    set_eear(zaddress);
+    EECR |= _BV(EERE);          // Start EEPROM read
+    putch(EEDR);
+    // zaddress++;              // Compiler makes a pig's ear of simple increment - use short code
+    asm volatile("adiw %0, 1\n" : "=r" (zaddress) : "0"(zaddress));
+  } while(--length);
 }
 
 static void write_page_ee(spm_pagesize_store_t length) {
-        uint8_t *bufp = rambuf;
-        do {
-          while(EECR & _BV(EEPE))
-            continue;
+  uint8_t *bufp = ramstart;
+  do {
+    while(EECR & _BV(EEPE))
+      continue;
 #if defined(EEPM1) && defined(EEPM0)
-          EECR = 0;             // Erase and write in one (atomic) operation
+    EECR = 0;             // Erase and write in one (atomic) operation
 #endif
-          set_eear(zaddress);
-          EEDR = *bufp++;
-          EECR |= _BV(EEMPE);   // EEPROM master write enable
-          EECR |= _BV(EEPE);    // EEPROM write enable
-          // zaddress++;
-          asm volatile("adiw %0, 1\n" : "=&r" (zaddress) : "0"(zaddress));
-        } while(--length);
+    set_eear(zaddress);
+    EEDR = *bufp++;
+    EECR |= _BV(EEMPE);   // EEPROM master write enable
+    EECR |= _BV(EEPE);    // EEPROM write enable
+    // zaddress++;
+    asm volatile("adiw %0, 1\n" : "=r" (zaddress) : "0"(zaddress));
+  } while(--length);
 }
 
 #endif
 
-#define exitnotF(memtype) \
-  asm volatile( \
-    "cpi %[dest], 0x46\n" /* memtype == 'F'? */ \
-    BRNEQEXIT \
-    :: [dest] "d"(memtype) \
-  )
 
-
-static void write_page_fl() {
-  writebuffer((uint16_t *) rambuf);
-}
-
-
-static void write_sram(spm_pagesize_store_t length) {
-        // Write data from PC data into SRAM
+static void write_sram(spm_pagesize_store_t length) { // Write data from host into SRAM
+  spm_pagesize_store_t xend = length;
 #if (RAMSTART & 0xff) == 0 && SPM_PAGESIZE <= 256
-        asm volatile (
-          "   ldi   r26, 0\n"   // Low byte of RAMSTART must be 0 to enable cpse below
-          "   ldi   r27, %[RAMSTARThi]\n"
-          "1: rcall getch\n"    // Add to clobbered list all that getch() changes
-          "   st    X+, r24\n"
-          "   cpse  %[length],r26\n" // 1 byte comparison to length works even when it's 256
-          "   rjmp  1b\n"
-         : : [RAMSTARThi] "M"(RAMSTART/0x100), [length] "r"(length)
-         : "r26", "r27", "r24", "r25", "r18" // r18 and r24:25 are clobbered by getch()
-        );
+  asm volatile (
+    "   ldi   r26, lo8(%[sramp])\n"
+    "   ldi   r27, hi8(%[sramp])\n"
+    "1: rcall getch\n"
+    "   st    X+, r24\n"
+    "   cpse  %[xend], r26\n"
+    "   rjmp  1b\n"
+   :: [sramp] "n"(ramstart), [xend] "r"(xend)
+   : "r26", "r27", "r24", "r25", "r18" // r18 and r24:25 are clobbered by getch()
+  );
 #else
-      { uint8_t *bufp = rambuf;
-        spm_pagesize_store_t len2 = length;
-        do {
-          *bufp++ = getch();
-        } while(--len2);
-      }
+{ uint8_t *bufp = ramstart;
+  spm_pagesize_store_t len2 = length;
+  do {
+    *bufp++ = getch();
+  } while(--len2);
+}
 #endif
 }
-
-
 
 
 static spm_pagesize_store_t __attribute__ ((noinline)) getaddrlength();
@@ -1568,7 +1529,7 @@ static spm_pagesize_store_t getaddrlength() {
     : "=r"(zaddress)
     :
 #if FLASHabove64k
-      [rampz] "I"(_SFR_IO_ADDR(RAMPZ))
+    [rampz] "I"(_SFR_IO_ADDR(RAMPZ))
 #endif // FLASHabove64k
     : "r24", "r25", "r18" // Clobbered by getch()
   );
@@ -1579,9 +1540,9 @@ static spm_pagesize_store_t getaddrlength() {
 
 #if QEXITEND
 static void leave_progmode() {
-      // Shorten watchdog timeout to start application pretty soon
-      watchdogConfig(WATCHDOG_16MS);
-      get1sync();
+  // Shorten watchdog timeout to start application pretty soon
+  watchdogConfig(WATCHDOG_16MS);
+  get1sync();
 }
 #endif
 
@@ -1653,7 +1614,7 @@ unsigned const int __attribute__ ((section(".version"))) urboot_version[] = {
 
 
 
-// Normal app start: jump to reset vector or dedicated VBL vector, reminding compiler mcusr needed
+// Normal app start: jump to reset vector or dedicated VBL vector (remind compiler mcusr is needed)
 #if FLASHin8k || FLASHWRAPS
 #define jmpToAppOpcode() asm("rjmp urboot_version+%0\n" :: \
   "n"(sizeof urboot_version+appstart_vec_loc), "r"(mcusr))
@@ -1684,7 +1645,7 @@ int main(void) {
   // Unless there was an external reset jump to application
 #if !DUAL && !(defined(__AVR_ERRATA_SKIP_JMP_CALL__) && __AVR_ERRATA_SKIP_JMP_CALL__ && \
   !FLASHin8k && !FLASHWRAPS)
-  // Skip next instruction if EXTRF set (compier doesn't know length of asm is one instruction)
+  // Skip next instruction if EXTRF set (compiler doesn't know length of asm is one instruction)
   asm volatile("sbrs %[ms], %[extrf]\n" :: [ms] "r"(mcusr), [extrf] "I"(EXTRF));
     jmpToAppOpcode();
 #else
@@ -1936,7 +1897,7 @@ int main(void) {
 #if PAGE_ERASE
     } else if(ch == UR_PAGE_ERASE) {
       spm_pagesize_store_t length = getaddrlength();
-      get1sync();               // First sync before chip_erase which can take long
+      get1sync();               // First sync before page_erase which can take long
       ub_page_erase();
 #endif
 
@@ -1953,7 +1914,7 @@ int main(void) {
         write_page_ee(length);
       else
 #endif
-        write_page_fl();
+        writebuffer(ramstart);
 
     } else if(ch == UR_READ_PAGE_FL) {
       spm_pagesize_store_t length = getaddrlength();
@@ -2041,7 +2002,7 @@ void putch(char chr) {
 #if B_EXTRA == 4 || B_EXTRA == 5
     "   rjmp .+0\n"
 #endif
-      : "=&d"(bitcount)
+      : "=d"(bitcount)
       : [bitcnt] "0"(bitcount), [chr] "r"(chr), [TXPort] "I"(_SFR_IO_ADDR(UR_PORT(TX))),
         [TXBit] "I"(UR_BIT(TX)), [bvalue] "M"(SWIO_B_VALUE & 0xff)
       : "r25" // Clobbers r25
@@ -2050,7 +2011,7 @@ void putch(char chr) {
 }
 
 
-uint8_t getch(void) { // }
+uint8_t getch(void) {
   uint8_t chr;
 
   led_on();
@@ -2162,104 +2123,20 @@ void watchdogConfig(uint8_t x) {
 }
 
 
-#if SPM_PAGESIZE > 256 // Sic! 256 is treated as one byte, argument len is 0, and we use assembler
-
-#if PGMWRITEPAGE
-/*
- * void pgm_write_page(void *sram, progmem_t pgm)
- *
- * Burn one memory page to page-aligned address pgm
- *
- * This is a prefix part of the internally needed writebuffer() function to export a function that
- * can be called by the application code from outside the bootloader. Sram is already the right
- * argument in the right place for writebuffer(uint16_t *sram).
- */
-
-void pgm_write_page(void *sram, progmem_t pgm) {
-  asm volatile (
-#if FLASHabove64k
-    "out %[rampz],%C[pgm]\n"    // RAMPZ = pgm>>16;
-#endif
-    "movw %[zaddr],%A[pgm]\n"   // zaddress = pgm & 0xffff
-      : [zaddr] "=&r"(zaddress)
-      : [pgm]   "r"(pgm)
-#if FLASHabove64k
-      , [rampz] "I"(_SFR_IO_ADDR(RAMPZ))
-#endif
-  );
-  writebuffer(sram);
-}
-
-#endif
-
-/*
- * writebuffer() burns a page from SRAM into PROGMEM at location address
- *
- * 16 bit address is fine for writebuffer because the SPM opcode in the urboot_page_*_r30() macros
- * uses RAMPZ, which has been kept up to date.
- *
- * C code here is for large devices and serves as reference for assembler below
- */
-void writebuffer(uint16_t *sram) {
-  spm_pagesize_store_t len = SPM_PAGESIZE;
-  uint16_t origzaddr = zaddress;
-
-#if PROTECTME                   // Must avoid RAMPZ/Z >= START (RAMPZ/Z == START-1 is OK to write
-#if FLASHabove64k               // because writebuffer only changes the page zaddress points into)
-  uint8_t rampz = RAMPZ;
-  if(rampz > (uint8_t)(START>>16) || (rampz == (uint8_t)(START>>16) && zaddress >= (START&0xffff)))
-    return;
-#if VBL && FLASHWRAPS
-  if(rampz == 0 && zaddress == 0)
-    *sram = RJMP_BWD_START;
-#endif
-#else
-  if(zaddress >= START)
-    return;
-#if VBL && FLASHWRAPS
-  if(zaddress == 0)
-    *sram = RJMP_BWD_START;
-#endif
-#endif
-#endif
-
-#if PGMWRITEPAGE || !CHIP_ERASE // Page erase needed for pgm_write_page() or if CE not implemented
-#if FOUR_PAGE_ERASE
-  if(!(zaddress & (3*SPM_PAGESIZE)))
-#endif
-    ub_page_erase();
-#endif
-
-  // Copy data from SRAM buffer into the flash write buffer (RAMPZ and hi bits of zaddress ignored)
-  do {
-    urboot_page_fill_r30(*sram++);
-    zaddress += 2;
-  } while(len -= 2);
-
-  zaddress = origzaddr;
-  // Actually write the buffer to flash and wait for it to finish
-  urboot_page_write_r30();
-  boot_spm_busy_wait();
-
-#if defined(RWWSRE)
-  urboot_rww_enable_r30();        // Re-enable read access to flash
-#endif
-}
-
-#else // SPM_PAGESIZE > 256
-
 /*
  * Rather than using the <avr/boot.h> macros I roll my own: it's worth it (saves 16-24 bytes)
  *
- * zaddress  r31:30 global
- * X         r27:26 local pointer
- * sram      r25:24 pointer argument as input, r24 also used for calling ub_spm, r25 as temp var
- *           r23    unused
- * len       r22    1 byte len (0 if SPM_PAGESIZE is 256)
- *           r21    unused
- *           r20    unused
- * origzaddr r19:18 copy of Z
- * tmp       r0
+ * zaddress  r31:30  global
+ * X         r27:26  local pointer (scans through sram)
+ * sram      r25:24  argument as input
+ * argument  r24     used for calling ub_spm and as temporary register
+ * pgm       r23:22  argument if flash <= 64 kB (otherwise high 16 bit of pgm)
+ *           r21:20  argument low 16 bit of pgm if flash > 64 kB
+ * origRAMPZ r22/r25 third byte of 32 bit pgm argument if flash > 64 kB
+ * xloopend  r22     lo8(X) at end of loop (for comparison)
+ *           r23     unused
+ * origzaddr r19:18  copy of global address in Z
+ *           r1      null on return (compiler relies on r1 being 0)
  *
  * The spm command is called 3 times with an address in flash; the erase and write spm call should
  * operate on the same address including RAMPZ to avoid erasing one page and writing to another.
@@ -2272,18 +2149,18 @@ void writebuffer(uint16_t *sram) {
 
 #if PGMWRITEPAGE
 void pgm_write_page(void *sram, progmem_t pgm) {
-  asm volatile (                // ) }
+  asm volatile (                // Copy sram to X and pgm to Z
 #if FLASHabove64k
     "out  %[rampz], r22\n"      // RAMPZ = pgm>>16;
-    "movw r30, r20\n"           // zaddress = pgm & 0xffff
+    "movw r30, r20\n"           // zaddress = pgm & 0xffff, r21:20 is free now
 #else
     "movw r30, r22\n"           // zaddress = pgm (pgm is a 2-byte pointer)
 #endif
-    "movw r26, r24\n"           // X = sram, now r25 and r24 are free
+    "movw r26, r24\n"           // X = sram, r25:24 is free now
 
 #if DUAL
     "rjmp writebufferX\n"
- "writebufferRS: \n"
+ "writebuffer_ramstart: \n"     // Load X from ramstart, then write buffer to flash
     "ldi   r26, lo8(%[sramp])\n"
     "ldi   r27, hi8(%[sramp])\n"
 #endif
@@ -2293,24 +2170,24 @@ void pgm_write_page(void *sram, progmem_t pgm) {
 #else // !PGMWRITEPAGE
 
 void writebufferX() {
-  asm volatile (
+  asm volatile (                // ) }
 #endif // PGMWRITEPAGE
-
 
 /*
  * Compute low byte of the sram address at end of loop that reads SPM_PAGESIZE bytes, so we can
  * compare with cpse. If either
  *   - the low byte of SPM_PAGESIZE is zero or
- *   - the sram address is always RAMSTART (ie, no PGMWRITEPAGE) and the low byte of RAMSTART is 0
- * it is only a move, otherwise add low byte of sram to low byte of SPM_PAGESIZE for end condition
+ *   - no PGMWRITEPAGE (then the sram address is the constant ramstart)
+ * it is a mov/ldi, otherwise add low byte of sram to low byte of SPM_PAGESIZE for end condition.
+ * The loop is for no more than 256 bytes, so single byte arithmetic is OK.
  */
-#if (SPM_PAGESIZE & 0xff) == 0
+#if (SPM_PAGESIZE & 0xff) == 0  // Determine loop end comparison reg r22
     "mov  r22, r26\n"           // No need to add, just copy low byte of sram address
 #elif !PGMWRITEPAGE && (RAMSTART & 0xff) == 0
     "ldi  r22, lo8(%[spmsz])\n" // Load length len
-#else                           // SPM_PAGESIZE is 256, ie len == 0
-    "ldi  r22, lo8(%[spmsz])\n" // Load length len
-    "add  r22, r26\n"           // len += sram & 0xff (for cpse comparison at end of len/2 loop)
+#else
+    "ldi  r22, lo8(%[spmsz])\n" // Load page size len
+    "add  r22, r26\n"           // r22 = lo8(len + sram) for loop end comparison with lo8(X)
 #endif
 
     "movw r18, r30\n"           // uint16_t copy = zaddress;
@@ -2324,51 +2201,57 @@ void writebufferX() {
     "cpi  r31, hi8(%[start])\n" // zaddress >= START?
 #endif
 #if FLASHabove64k
-    "in   r25, %[rampz]\n"      // Load RAMPZ
+    "in   r25, %[rampz]\n"      // Must load RAMPZ: we might not arrive here from pgm_write_page()
     "ldi  r24, hh8(%[start])\n"
     "cpc  r25, r24\n"
 #endif
     "brcc ub_ret\n"             // Return if so
-#endif
-#if PGMWRITEPAGE || !CHIP_ERASE // Page erase is needed for pgm_write_page() or CE not implemented
-#if FOUR_PAGE_ERASE && SPM_PAGESIZE > 64
-    "ldi   r24, hi8(%[spm3])\n" // if(!(zaddress & 3*SPM_PAGESIZE))
+#endif // PROTECTME
+
+#if ERASE_B4_WRITE
+#if FOUR_PAGE_ERASE && 3*SPM_PAGESIZE >= 256
+    "ldi   r24, hi8(%[psz3])\n" // if(!(zaddress & 3*SPM_PAGESIZE))
     "and   r24, r31\n"          //   ub_page_erase();
-    "brne  no_erase\n"
+    "brne  skip_erase\n"
 #endif
-#if FOUR_PAGE_ERASE
-    "ldi   r24, lo8(%[spm3])\n"
+#if FOUR_PAGE_ERASE && (3*SPM_PAGESIZE & 0xff)
+    "ldi   r24, lo8(%[psz3])\n"
     "and   r24, r30\n"
-    "brne  no_erase\n"
+    "brne  skip_erase\n"
 #endif
     "ldi   r24, %[bpera]\n"     // boot_page_erase_r30(); boot_spm_busy_wait();
     "rcall ub_spm\n"
-"no_erase:"
 #endif
+  "skip_erase: "
+
 #if VBL && PROTECTRESET && FLASHWRAPS // Store "rjmp START" opcode at addr 0 to protect bootloader
 #if FLASHabove64k
+#if !PROTECTME
+    "in    r25, %[rampz]\n"     // Load RAMPZ
+#endif
     "cpi   r25, 0\n"            // RAMZ != 0?
-    "brne   do_fill\n"
+    "brne  not_reset_page\n"
 #endif
     "adiw  r30, 0\n"            // zaddress != 0?
-    "brne  do_fill\n"
+    "brne  not_reset_page\n"
     "ldi   r24, lo8(%[rjmp_bwd_start])\n" // Store rjmp to bootloader at address 0
     "st    X+, r24\n"
     "ldi   r24, hi8(%[rjmp_bwd_start])\n"
     "st    X, r24\n"
-    "sbiw  r26, 1\n"
-"do_fill:"
+    "sbiw  r26, 1\n"            // Restore X pointer to ram
+"not_reset_page:"
 #endif
+
     "ldi   r24, %[bpfil]\n"     // do { boot_page_fill_r30(*sram++); zaddress+=2; } while(len-=2);
   "1: "
     "ld    r0,  X+\n"
     "ld    r1,  X+\n"           // Data word for spm page fill is in r1:r0
     "rcall ub_spm\n"
-    "adiw  r30, 2\n"            // zaddress += 2
+    "adiw  r30, 2\n"            // zaddress += 2, RAMPZ stays the same
     "cpse  r26, r22\n"          // Finished?
     "rjmp  1b\n"
 
-    "movw  r30, r18\n"          // zaddress = original value, so we point again to original page
+    "movw  r30, r18\n"          // Restore zaddress, so it points at original page again
 
     "ldi   r24, %[bpwri]\n"     // urboot_page_write_r30(); boot_spm_busy_wait();
 #if defined(RWWSRE)
@@ -2380,17 +2263,6 @@ void writebufferX() {
     ub_oust " %[spmrg], r24\n"
     "spm\n"
     SPM_PIPELINE
-// Test mysterious defect in some MCUs that don't seem to take it well to write to NRWW sections
-#if defined(TESTING) && TESTING > 0
-   ".word 0xffff\n"             // Odd number of 0xffff, followwed by a nop (0xffff is invalid but
-   ".word 0xffff\n"             // processed as sbrs r31,7: skip one opcode if bit 7 in R31 is set)
-   ".word 0xffff\n"
-   ".word 0xffff\n"
-   ".word 0xffff\n"
-   ".word 0xffff\n"
-   ".word 0xffff\n"
-   "nop\n"
-#endif
   "2: "
     ub_lind " r0, %[spmrg]\n"   // Poll spm has finished (not needed for fill/clearing RWWSB)
     "sbrc r0, %[spmen]\n"
@@ -2412,12 +2284,10 @@ void writebufferX() {
     [start] "n"((uint32_t) START),
     [spmsz] "n"(SPM_PAGESIZE),
 #if FOUR_PAGE_ERASE
-    [spm3] "n"(3*SPM_PAGESIZE),
+    [psz3] "n"(3*SPM_PAGESIZE),
 #endif
-    [sramp]    "n"(RAMSTART),
+    [sramp] "n"(ramstart),
     [rjmp_bwd_start] "n"(RJMP_BWD_START)
   : "r0", "r27", "r26", "r25", "r24", "r22", "r19", "r18"
   );
 }
-
-#endif
