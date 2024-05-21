@@ -139,11 +139,7 @@
  *
  * Assumptions, limitations, caveats, tips and tricks for *this* bootloader
  *
- *   - The uploading program is assumed to be avrdude with either the arduino or urclock
- *     programmer: call avrdude -c [arduino|urclock] for this. I have not tested other uploaders.
- *     The tightest bootloader code (see URPROTOCOL=1 option below) requires avrdude's urclock
- *     programmer as this forgoes some get/put parameter calls that arduino issues unnecessarily
- *     and uses its own leaner protocol.
+ *   - The uploading program is assumed to be avrdude with the urclock programmer (-c urclock)
  *
  *   - A bootloader with dual-boot support needs to know which port pin is assigned to the chip
  *     select of the SPI flash memory, which pin drives a blinking LED (if wanted), where the tx/rx
@@ -254,6 +250,8 @@
  *
  * Edit History:
  *
+ * May 2024
+ * 8.0 smr: Remove -c arduino compatibility, make URPROTOCOL default (and remove it)
  * Nov 2022
  * 7.7 smr: added autobaud and, for vector bootloaders, reset vector protection
  * Jun 2022
@@ -309,7 +307,7 @@
 
 
 #ifndef VERSION
-#define VERSION             077 // v7.7 in octal, as minor version is in 3 least significant bits
+#define VERSION            0100 // v8.0 in octal, as minor version is in 3 least significant bits
 #endif
 
 #define MAJORVER (VERSION >> 3) // Max 31
@@ -438,10 +436,6 @@
 #endif
 #define expandcat(x,y)     x##y
 #define WATCHDOG_TIMEOUT(x) expandcat(WATCHDOG_,x)
-
-#ifndef URPROTOCOL
-#define URPROTOCOL            0
-#endif
 
 #ifndef FRILLS
 #define FRILLS                0
@@ -934,7 +928,6 @@
 #define Parm_STK_SW_MINOR  0x82
 
 
-#if URPROTOCOL
 // Redefine STK_INSYNC and STK_OK so they inform avrdude about MCU type and 5 bit urboot features
 
 #undef  STK_INSYNC
@@ -967,7 +960,7 @@
 #define UB_FEATURES  (UB_READ_FLASH | UB_FLASH_LL_NOR | UB_CHIP_ERASE)
 #define UB_INFO (UB_FEATURES*UB_N_MCU + UB_MCUID(__AVR_DEVICE_NAME__))
 
-// Reserve one slot for URPROTOCOL=0 case and 256 more to make STK_OK and STK_INSYNC different
+// Reserve one slot for STK500 protocol and 256 more to make STK_OK and STK_INSYNC different
 #if UB_INFO >= 255*256-1
 #error Afraid, cannot work with this MCU/feature combination
 #endif
@@ -979,7 +972,7 @@
 // TMP_OK is in [0, 255] and different from TMP_INSYNC
 #define TMP_OK     ((TMP_OK1 < TMP_INSYNC)? TMP_OK1: TMP_OK1+1)
 
-// Indistinguishable from URPROTOCOL==0 case? map to 255/254
+// Indistinguishable from STK500 protocol? map to 255/254
 #if TMP_INSYNC == STK_INSYNC_C && TMP_OK == STK_OK_C
 #define STK_INSYNC 255
 #define STK_OK     254
@@ -987,9 +980,6 @@
 #define STK_INSYNC TMP_INSYNC
 #define STK_OK     TMP_OK
 #endif
-
-#endif // URPROTOCOL
-
 
 
 /*
@@ -1107,11 +1097,7 @@ void writebuffer(uint16_t *sram);
 
 #else
 typedef uint8_t spm_pagesize_store_t;
-#if URPROTOCOL
 #define getlength() getch()
-#else
-#define getlength() getch2()
-#endif
 
 #if DUAL                        //  writebuffer called twice for dual-boot: load sram addr in func
 void writebufferRS();
@@ -1155,13 +1141,7 @@ int main(void) __attribute__ ((OS_main, section(".init9")));
 void __attribute__ ((noinline)) putch(char);
 uint8_t __attribute__ ((noinline)) getch2(void);
 uint8_t __attribute__ ((noinline)) getch(void);
-
-#if URPROTOCOL
 void  __attribute__ ((noinline)) get1sync();
-#else
-void  __attribute__ ((noinline)) getNsync(uint8_t);
-#define get1sync() getNsync(1)
-#endif
 
 void __attribute__ ((noinline)) watchdogConfig(uint8_t x);
 
@@ -1705,7 +1685,7 @@ static void write_page_fl() {
 
 static void write_sram(spm_pagesize_store_t length) {
         // Write data from PC data into SRAM
-#if (RAMSTART & 0xff) == 0 && SPM_PAGESIZE <= 256 && URPROTOCOL
+#if (RAMSTART & 0xff) == 0 && SPM_PAGESIZE <= 256
         asm volatile (
           "   ldi   r26, 0\n"   // Low byte of RAMSTART must be 0 to enable cpse below
           "   ldi   r27, %[RAMSTARThi]\n"
@@ -1727,31 +1707,7 @@ static void write_sram(spm_pagesize_store_t length) {
 }
 
 
-#if !URPROTOCOL
-static void get_parameter() {
-#if RETSWVERS
-      unsigned char which = getch();
 
-      get1sync();
-      // Send urboot version as SW version (MAJORVER.MINORVER) and MAJORVER for everything else
-      putch(which == Parm_STK_SW_MINOR? MINORVER: MAJORVER);
-#else
-      getNsync(2);
-      putch(MAJORVER);          // Make hardware/software/sub versions all MAJORVER, saves 28 bytes
-#endif
-}
-
-static void read_sign() {
-      // Don't actually read the device sig - return what's in /usr/lib/avr/include/avr/iom<mcu>.h
-      get1sync();
-      putch(SIGNATURE_0);
-      putch(SIGNATURE_1);
-      putch(SIGNATURE_2);
-}
-#endif
-
-
-#if URPROTOCOL
 
 static spm_pagesize_store_t __attribute__ ((noinline)) getaddrlength();
 static spm_pagesize_store_t getaddrlength() {
@@ -1774,68 +1730,6 @@ static spm_pagesize_store_t getaddrlength() {
 
   return getlength();
 }
-
-#else // !URPROTOCOL
-
-static void load_address() {
-      asm volatile(             // Compiler is not great at setting address from next 2/3 bytes
-        "rcall getch\n"
-        "mov %A0, r24\n"
-        "rcall getch\n"
-        "mov %B0, r24\n"
-
-        "add %A0, %A0\n"        // zaddress <<= 1
-        "adc %B0, %B0\n"
-#if FLASHabove64k               // Compute RAMPZ
-#if FLASHabove128k
-        "in  r24, %[ext]\n"
-#else
-        "eor r24, r24\n"
-#endif
-        "adc r24, r24\n"
-        "out %[rampz], r24\n"
-#endif // FLASHabove64k
-
-         : "=r"(zaddress)
-         :
-#if FLASHabove64k
-           [rampz] "I"(_SFR_IO_ADDR(RAMPZ))
-#if FLASHabove128k && !URPROTOCOL
-        ,  [ext] "I"(_SFR_IO_ADDR(extaddr)) // extaddr must be in IO space (eg, if set to GPIOR1)
-#endif
-#endif // FLASHabove64k
-         : "r24", "r25", "r18" // Clobbered by getch()
-      );
-}
-
-#endif
-
-#if !URPROTOCOL
-static void universal() {
-#if FLASHabove128k || CHIP_ERASE
-      uint8_t what0, what1, what2;
-      what0 = getch();
-      what1 = getch();
-      what2 = getch();
-      getch();
-      get1sync();
-#if FLASHabove128k
-      if(what0 == STK_UNIVERSAL_EXT)
-        extaddr = what2;
-      (void) what1;
-#endif
-#if CHIP_ERASE
-      if(what0 == STK_UNIVERSAL_CE0 && what1 == STK_UNIVERSAL_CE1)
-        chip_erase();
-      (void) what2;
-#endif
-#else                           // UNIVERSAL command is ignored otherwise
-      getNsync(5);
-#endif // FLASHabove128k || CHIP_ERASE
-
-      putch(0xff);              // Return value of universal command
-}
-#endif
 
 
 #if QEXITEND
@@ -1870,37 +1764,27 @@ static void leave_progmode() {
  * erase capability, respectively.
  */
 
-#define UR_PGMWRITEPAGE     128 // pgm_write_page() can be called from application at FLASHEND+1-4
 #define UR_AUTOBAUD         128 // Bootloader has autobaud detection (v7.7+)
 #define UR_EEPROM            64 // EEPROM read/write support
-#define UR_URPROTOCOL        32 // Bootloader uses urprotocol that requires avrdude -c urclock
+#define UR_xxx               32 // New feature for v8.0
 #define UR_DUAL              16 // Dual boot
 #define UR_VBLMASK           12 // Vector bootloader bits
 #define UR_VBLPATCHVERIFY    12 // Patch reset/interrupt vectors and show original ones on verify
 #define UR_VBLPATCH           8 // Patch reset/interrupt vectors only (expect an error on verify)
 #define UR_VBL                4 // Merely start application via interrupt vector instead of reset
 #define UR_NO_VBL             0 // Not a vector bootloader, must set fuses to HW bootloader support
-#define UR_PROTECTME          2 // Bootloader safeguards against overwriting itself
 #define UR_PROTECTRESET       2 // Bootloader enforces reset vector points to bootloader (v7.7+)
-#define UR_RESETFLAGS         1 // Load reset flags into register R2 before starting application
 #define UR_HAS_CE             1 // Bootloader has Chip Erase (v7.7+)
 
-#define UR_WFLAG  (PGMWRITEPAGE && RJMPWP != RET_OPCODE? UR_PGMWRITEPAGE: 0)
 #define UR_AFLAG  (AUTOBAUD? UR_AUTOBAUD: 0)
 #define UR_EFLAG  (EEPROM? UR_EEPROM: 0)
-#define UR_UFLAG  (URPROTOCOL? UR_URPROTOCOL: 0)
+#define UR_xFLAG  // New flag for v8.0
 #define UR_DFLAG  (DUAL? UR_DUAL: 0)
 #define UR_VFLAGS ((VBL  & 3) * UR_VBL)
-#define UR_PFLAG  (PROTECTME? UR_PROTECTME: 0)
 #define UR_QFLAG  (PROTECTRESET && VBL==1? UR_PROTECTRESET: 0)
 #define UR_CFLAG  (CHIP_ERASE? UR_HAS_CE: 0)
-#define UR_RFLAG  UR_RESETFLAGS // Always set
 
-#if VERSION >= 077
-#define UR_TYPE (UR_AFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_UFLAG | UR_QFLAG | UR_CFLAG)
-#else
-#define UR_TYPE (UR_WFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_UFLAG | UR_PFLAG | UR_RFLAG)
-#endif
+#define UR_TYPE (UR_AFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_QFLAG | UR_CFLAG)
 
 /*
  * Version section just under FLASHEND has 6 bytes (4 bytes in versions 7.2 to 7.4)
@@ -2199,7 +2083,6 @@ int main(void) {
     if(0) {
 
 
-#if URPROTOCOL
 #if CHIP_ERASE
     } else if(ch == STK_CHIP_ERASE) {
       get1sync();               // First sync before chip_erase which can take long
@@ -2242,68 +2125,6 @@ int main(void) {
     } else if(ch == UR_READ_PAGE_EE || ch == UR_PROG_PAGE_EE) {
       quickbootexit();
 #endif
-
-#else // !URPROTOCOL
-
-    } else if(ch == STK_GET_PARAMETER) {
-      get_parameter();
-
-    } else if(ch == STK_SET_DEVICE) {
-      getNsync(21);             // Ignore
-
-    } else if(ch == STK_SET_DEVICE_EXT) {
-      getNsync(6);              // Ignore
-
-    } else if(ch == STK_READ_SIGN) {
-      read_sign();
-
-    } else if(ch == STK_UNIVERSAL) {
-      universal();
-
-    } else if(ch == STK_LOAD_ADDRESS) {
-      load_address();
-      get1sync();
-
-    } else if(ch == STK_PROG_PAGE) {
-      uint8_t desttype;
-      spm_pagesize_store_t length = getlength();  // number of bytes sent for EEPROM/flash (must be
-      desttype = getch();                         // SPM_PAGESIZE for flash)
-
-#if !EEPROM                     // Without EEPROM support throw error if desttype != 'F'
-      exitnotF(desttype);
-#endif
-
-      write_sram(length);
-
-      // Read command terminator, start reply
-      get1sync();
-
-#if EEPROM
-      if(desttype != 'F')
-        write_page_ee(length);
-      else
-#endif
-        write_page_fl();
-
-    } else if(ch == STK_READ_PAGE) {
-      spm_pagesize_store_t length = getlength();
-      uint8_t srctype =  getch();
-
-
-#if !EEPROM                     // Without EEPROM support throw error if desttype != 'F'
-      exitnotF(srctype);
-#endif
-
-      get1sync();
-
-#if EEPROM
-      if(srctype != 'F')
-        read_page_ee(length);
-      else
-#endif
-        read_page_fl(length);
-
-#endif // URPROTOCOL
 
 
 #if QEXITEND
@@ -2385,17 +2206,7 @@ void putch(char chr) {
 }
 
 
-#if URPROTOCOL                  // No need for getch2()
 uint8_t getch(void) { // }
-#else
-// Read 2 chars and return the last one, also provides the function getch() that returns one char
-uint8_t getch2(void) {
-  asm volatile (
-    "rcall getch\n"
-    "getch:\n"
-  );
-#endif
-
   uint8_t chr;
 
   led_on();
@@ -2481,34 +2292,6 @@ uint8_t getch2(void) {
 }
 
 
-#if !URPROTOCOL
-
-void getNsync(uint8_t count) {
-  uint8_t last;
-
-  do {
-    last = getch();
-  } while(--count);
-
-#if QEXITERR
-  if(last != CRC_EOP) {
-    asm volatile("qexiterr:\n\t" :::);
-    watchdogConfig(WATCHDOG_16MS); // Shorten WD timeout
-    bootexit();
-  }
-#else
-  asm volatile (   // if(last != CRC_EOP) bootexit();
-    "cpi %[last], %[crc_eop]\n"
-    "brne .-2\n"
-    :: [last] "r"(last), [crc_eop] "n"(CRC_EOP)
-  );
-#endif
-
-  putch(STK_INSYNC);
-}
-
-#else
-
 void get1sync() {
   uint8_t last = getch();
 
@@ -2528,7 +2311,6 @@ void get1sync() {
 
   putch(STK_INSYNC);
 }
-#endif
 
 
 void watchdogConfig(uint8_t x) {
