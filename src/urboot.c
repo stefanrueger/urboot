@@ -462,7 +462,13 @@
 #ifndef CHIP_ERASE
 #define CHIP_ERASE (FRILLS >= 7)
 #endif
-
+#ifndef UPDATE_FL
+#if FOUR_PAGE_ERASE
+#define UPDATE_FL             0
+#else
+#define UPDATE_FL (FRILLS >= 6)
+#endif
+#endif // UPDATE_FL
 #ifndef QEXITEND
 #define QEXITEND  (FRILLS >= 5)
 #endif
@@ -478,6 +484,12 @@
 
 #ifndef AUTOBAUD
 #define AUTOBAUD              0
+#endif
+
+#if FOUR_PAGE_ERASE && UPDATE_FL
+#undef UPDATE_FL
+#define UPDATE_FL             0
+#warning Unsetting UPDATE_FL option on FOUR_PAGE_ERASE parts
 #endif
 
 // Flash needs erasing before writing if write page function exported or there is no CE
@@ -1570,7 +1582,7 @@ static void leave_progmode() {
 
 #define UR_AUTOBAUD         128 // Bootloader has autobaud detection (v7.7+)
 #define UR_EEPROM            64 // EEPROM read/write support
-#define UR_xxx               32 // New feature for v8.0+
+#define UR_UPDATE_FL         32 // Check flash page before writing it (from v8.0)
 #define UR_DUAL              16 // Dual boot
 #define UR_VBLMASK           12 // Mask for two vector bootloader bits
 #define UR_VBLPATCHVERIFY    12 // No longer used in v8.0+
@@ -1582,13 +1594,13 @@ static void leave_progmode() {
 
 #define UR_AFLAG  (AUTOBAUD? UR_AUTOBAUD: 0)
 #define UR_EFLAG  (EEPROM? UR_EEPROM: 0)
-#define UR_xFLAG  // New flag for v8.0+
+#define UR_UFLAG  (UPDATE_FL? UR_UPDATE_FL: 0)
 #define UR_DFLAG  (DUAL? UR_DUAL: 0)
 #define UR_VFLAGS ((VBL & 3) * (UR_VBLMASK & -UR_VBLMASK)) // Shift VBL into mask position
 #define UR_PFLAG  (PROTECTRESET && VBL? UR_PROTECTRESET: 0)
 #define UR_CFLAG  (CHIP_ERASE? UR_HAS_CE: 0)
 
-#define UR_TYPE (UR_AFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_PFLAG | UR_CFLAG)
+#define UR_TYPE (UR_AFLAG | UR_EFLAG | UR_UFLAG | UR_DFLAG | UR_VFLAGS | UR_PFLAG | UR_CFLAG)
 
 /*
  * Version section just under FLASHEND has 6 bytes (4 bytes in versions 7.2 to 7.4)
@@ -2130,6 +2142,7 @@ void watchdogConfig(uint8_t x) {
  * argument  r24    used for calling ub_spm and as temporary register
  * pgm       r23:22 argument if flash <= 64 kB (otherwise high 16 bit of pgm)
  *           r21:20 argument low 16 bit of pgm if flash > 64 kB
+ * origsram  r21:20 copy of sram for UPDATE_FL comparison loop
  * origRAMPZ r22    third byte of 32 bit pgm argument if flash > 64 kB
  * xloopend  r23    lo8(X) at end of loop (for comparison)
  * origzaddr r19:18 copy of global address in Z
@@ -2225,6 +2238,40 @@ void writebufferX() {
 "not_reset_page:"
 #endif
 
+#if UPDATE_FL                   // Return if flash page already has desired contents
+    "movw  r20, r26\n"          // origsram = sram
+  "3: "
+    "ld    r0,  X+\n"           // load byte from ram page
+     LPM_OP " r1, Z+\n"         // load byte from PROGMEM, might increment RAMPZ
+#if ERASE_B4_WRITE && defined(UB_BOOL) && !PGMWRITEPAGE
+    "cpse  r0, r1\n"            // Set writepg Boolean if contents differs
+    "sbi %[writepg], 0\n"
+    "and    r1, r0\n"           // Check if new byte from ram would set a bit
+    "cp    r0, r1\n"
+    "brne  need_write\n"        // Yes, must erase and then write
+#else
+    "cp    r0, r1\n"
+    "brne  need_write\n"        // PROGMEM and sram contents differ, must write
+#endif
+    "cpse  r26, r23\n"          // Finished? (cpse leaves SREG unchanged)
+    "rjmp  3b\n"
+
+  "need_write:"                 // SREG's Z bit set if on last cp r0 was same as r1
+    "movw  r30, r18\n"          // restore Z from copy in origzaddr
+#if FLASHabove64k
+    "out  %[rampz], r22\n"      // restore RAMPZ should it have gone over 64 kB boundary
+#endif
+    "movw  r26, r20\n"          // Restore sram
+#if ERASE_B4_WRITE && defined(UB_BOOL) && !PGMWRITEPAGE
+    "sbis %[writepg], 0\n"
+    "rjmp ub_ret\n"             // If writepg is not set can return straight away
+    "cbi %[writepg], 0\n"       // Clear writepg Boolean
+    "breq  skip_erase\n"        // Can skip erase as no bit in page needs setting
+#else
+    "breq  ub_ret\n"            // Return if last two bytes were the same, too
+#endif
+#endif // UPDATE_FL
+
 #if ERASE_B4_WRITE
 #if FOUR_PAGE_ERASE && 3*SPM_PAGESIZE >= 256
     "ldi   r24, hi8(%[psz3])\n" // if(!(zaddress & 3*SPM_PAGESIZE))
@@ -2283,11 +2330,18 @@ void writebufferX() {
     [start] "n"((uint32_t) START),
     [spmsz] "n"(SPM_PAGESIZE),
     [xend] "M"(((uint16_t) ramstart + SPM_PAGESIZE) & 0xff),
+#if ERASE_B4_WRITE && UPDATE_FL && defined(UB_BOOL) && !PGMWRITEPAGE
+    [writepg] "I"(_SFR_IO_ADDR(UB_BOOL)),
+#endif
 #if FOUR_PAGE_ERASE
     [psz3] "n"(3*SPM_PAGESIZE),
 #endif
     [sramp] "n"(ramstart),
     [rjmp_bwd_start] "n"(RJMP_BWD_START)
-  : "r0", "r27", "r26", "r24", "r23", "r22", "r19", "r18"
+  : "r0", "r27", "r26", "r24", "r23", "r22",
+#if UPDATE_FL
+    "r21", "r20",
+#endif
+    "r19", "r18"
   );
 }

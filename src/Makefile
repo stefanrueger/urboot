@@ -87,6 +87,12 @@ CHIP_ERASE_CMD = -DCHIP_ERASE=$(CHIP_ERASE)
 FEAT := $(FEAT)$(subst 0,,$(subst 1,c,$(CHIP_ERASE)))
 endif
 
+# Check flash page before writing it (from v8.0)
+ifdef UPDATE_FL
+UPDATE_FL_CMD = -DUPDATE_FL=$(UPDATE_FL)
+FEAT := $(FEAT)$(subst 0,,$(subst 1,u,$(subst 2,u2,$(subst 3,u3,$(UPDATE_FL)))))
+endif
+
 # FRILLS=x on the command line sets defaults for the "lesser" options (which can be overwritten)
 ifdef FRILLS
 FEAT := $(FEAT)f$(FRILLS)
@@ -300,7 +306,7 @@ SIZE           = $(GCCROOT)avr-size
 COMMON_OPTIONS = $(WDTO_CMD) $(AUTOBAUD_CMD) $(BAUD_RATE_CMD) $(UART2X_CMD) $(LED_CMD) \
   $(LEDPOLARITY_CMD) $(TEMPLATE_CMD) $(BLINK_CMD) $(DUAL_CMD) $(SFMCS_CMD) $(EEPROM_CMD) \
   $(EXITFE_CMD) $(QEXITERR_CMD) $(QEXITEND_CMD) $(VERSION_CMD) $(FRILLS_CMD) \
-  $(VBL_CMD) $(VBL_VECT_NUM_CMD) $(CHIP_ERASE_CMD) $(SWIO_CMD) \
+  $(UPDATE_FL_CMD) $(VBL_CMD) $(VBL_VECT_NUM_CMD) $(CHIP_ERASE_CMD) $(SWIO_CMD) \
   $(UARTNUM_CMD) $(UARTALT_CMD) $(TX_CMD) $(RX_CMD) $(TESTING_CMD) $(PGMWRITEPAGE_CMD) \
   $(DEBUG_FREQ_CMD) $(EXACT_DF_CMD) $(DEBUG_CYCLES_CMD) $(FREQ_PIN_CMD) $(FREQ_POLARITY_CMD) \
   $(FLASHWRAPS_CMD) $(PROTECTRESET_CMD) $(AUTOFRILLS_CMD)
