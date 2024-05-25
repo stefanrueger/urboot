@@ -1472,8 +1472,6 @@ static void read_page_fl(uint8_t length) {
 #if EEPROM
 static void read_page_ee(uint8_t length) {
   do {
-    while(EECR & _BV(EEPE))
-      continue;
     set_eear(zaddress);
     EECR |= _BV(EERE);          // Start EEPROM read
     putch(EEDR);
@@ -1485,17 +1483,14 @@ static void read_page_ee(uint8_t length) {
 static void write_page_ee(uint8_t length) {
   uint8_t *bufp = ramstart;
   do {
-    while(EECR & _BV(EEPE))
-      continue;
-#if defined(EEPM1) && defined(EEPM0)
-    EECR = 0;             // Erase and write in one (atomic) operation
-#endif
     set_eear(zaddress);
     EEDR = *bufp++;
     EECR |= _BV(EEMPE);   // EEPROM master write enable
     EECR |= _BV(EEPE);    // EEPROM write enable
     // zaddress++;
     asm volatile("adiw %0, 1\n" : "=r"(zaddress) : "0"(zaddress));
+    while(EECR & _BV(EEPE))
+      continue;
   } while(--length);
 }
 
