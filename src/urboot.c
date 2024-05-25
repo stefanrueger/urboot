@@ -1012,7 +1012,7 @@
  *
  * For small code size it's useful to have a handful of global variables. The most important
  * variable that deals with addresses for lpm and spm opcodes to read and write flash is the
- * 16-bit zaddress. It is stored permanently in the Z register pair r31:r30 throughout. This is
+ * 16-bit zaddress. It is stored permanently in the Z register pair r31:30 throughout. This is
  * complemented by RAMPZ on larger devices. Where a Boolean variable is needed the code uses bits
  * from GPIOR0 or a similar, which results in shorter opcodes (sbi, cbi etc). SRAM is only needed
  * for a single copies of flash/eeprom page buffers for writing (max SPM_PAGESIZE bytes).
@@ -1058,15 +1058,15 @@ register uint16_t zaddress asm("r30");
 
 
 #if FLASHabove64k
-#define LPM_OP "elpm"
+#define LPM "elpm"
 typedef const uint_farptr_t progmem_t;
 #else
-#define LPM_OP "lpm"
+#define LPM "lpm"
 typedef const void *progmem_t;
 #endif
 
 /*
- * This bootloader does not accept page_read/page_write commands with more than one SPM_PAGESIZE
+ * This bootloader does not accept page_read/page_write commands with more than SPM_PAGESIZE
  * bytes, even when dealing with EEPROM. For classic parts SPM_PAGESIZE ist at most 256, which can
  * be handled with uint8_t. Avrdude and any self-respecting programmer will specify lengths 1 ...
  * 256 (full page), never 0 bytes though. Note the low byte of 256 is zero, and len == 0 works for
@@ -1082,7 +1082,7 @@ void writebuffer_ramstart();
 
 void writebufferX();
 #define writebuffer(sram)  ({ \
-  asm volatile ( \
+  asm volatile( \
   "ldi   r26, lo8(%[sramp])\n" \
   "ldi   r27, hi8(%[sramp])\n" \
   :: [sramp] "n"(sram) \
@@ -1119,7 +1119,6 @@ void __attribute__ ((noinline)) watchdogConfig(uint8_t x);
 // Endless loop leading to a watchdog reset; the equivalent while(1); can produce larger code
 #define bootexit() ({asm("rjmp .-2\n");  __builtin_unreachable (); })
 
-// quickbootexit() tries to use existing code for quick exit, failing that it's bootexit()
 #if QEXITERR
 #define RJMPQEXIT "rjmp qexiterr\n"
 #define BRNEQEXIT "breq .+2\n" \
@@ -1128,6 +1127,8 @@ void __attribute__ ((noinline)) watchdogConfig(uint8_t x);
 #define RJMPQEXIT "rjmp .-2\n"
 #define BRNEQEXIT "brne .-2\n"
 #endif
+
+// quickbootexit() tries to use existing code for quick exit, failing that it's bootexit()
 #define quickbootexit() ({asm(RJMPQEXIT);  __builtin_unreachable (); })
 
 
@@ -1462,7 +1463,7 @@ static void read_page_fl(uint8_t length) {
   do {
     uint8_t one;
     // Can use lpm/elpm with address post-increment (elmp also increments RAMPZ)
-    asm volatile(LPM_OP " %0,Z+\n": "=r"(one), "=r"(zaddress): "1"(zaddress));
+    asm volatile(LPM " %0, Z+\n": "=r"(one), "=r"(zaddress): "1"(zaddress));
     putch(one);
   } while(--length);
 }
@@ -1477,7 +1478,7 @@ static void read_page_ee(uint8_t length) {
     EECR |= _BV(EERE);          // Start EEPROM read
     putch(EEDR);
     // zaddress++;              // Compiler makes a pig's ear of simple increment - use short code
-    asm volatile("adiw %0, 1\n" : "=r" (zaddress) : "0"(zaddress));
+    asm volatile("adiw %0, 1\n" : "=r"(zaddress) : "0"(zaddress));
   } while(--length);
 }
 
@@ -1494,7 +1495,7 @@ static void write_page_ee(uint8_t length) {
     EECR |= _BV(EEMPE);   // EEPROM master write enable
     EECR |= _BV(EEPE);    // EEPROM write enable
     // zaddress++;
-    asm volatile("adiw %0, 1\n" : "=r" (zaddress) : "0"(zaddress));
+    asm volatile("adiw %0, 1\n" : "=r"(zaddress) : "0"(zaddress));
   } while(--length);
 }
 
@@ -1504,7 +1505,7 @@ static void write_page_ee(uint8_t length) {
 static void write_sram(uint8_t length) { // Write data from host into SRAM
   uint8_t xend = length;
 
-  asm volatile (
+  asm volatile(
     "   ldi   r26, lo8(%[sramp])\n"
     "   ldi   r27, hi8(%[sramp])\n"
 #if RAMSTART & 0xff
@@ -1936,9 +1937,6 @@ int main(void) {
       uint8_t length = getaddrlength();
       get1sync();
       read_page_ee(length);
-#else
-    } else if(ch == UR_READ_PAGE_EE || ch == UR_PROG_PAGE_EE) {
-      quickbootexit();
 #endif
 
 
@@ -1947,8 +1945,18 @@ int main(void) {
       leave_progmode();
 #endif
 
-    } else
+    } else {
+#if !EEPROM
+#if QEXITEND
+      if(ch == UR_READ_PAGE_EE || ch == UR_PROG_PAGE_EE)
+        quickbootexit();
+#else
+      while(ch == UR_READ_PAGE_EE || ch == UR_PROG_PAGE_EE)
+        continue;
+#endif
+#endif
       get1sync();               // Covers the rest, eg, STK_ENTER_PROGMODE, STK_GET_SYNC, ...
+    }
 
     putch(STK_OK);
   }
@@ -2047,8 +2055,12 @@ uint8_t getch(void) {
     "   rjmp  2b\n"
     "3:\n"
 #if EXITFE==2                   // Hard exit on frame error
+#if QEXITERR
     "   brcs .+2\n"             // Jump to wdt when OK (carry contains stop bit, set = no FE)
-    RJMPQEXIT                   // Two-byte relative jump (either to quick exit or endless loop)
+    RJMPQEXIT                   // Two-byte relative jump to quick exit
+#else
+    "   brcc .-2\n"             // WDT reset
+#endif
 #elif EXITFE==1                 // Don't reset the watchdog timer on frame error
     "   brcc .+2\n"             // Jump over wdt on frame error (carry is stop bit, clear = FE)
 #endif
@@ -2117,7 +2129,7 @@ void get1sync() {
     bootexit();
   }
 #else
-  asm volatile (   // if(last != CRC_EOP) bootexit();
+  asm volatile(                 // if(last != CRC_EOP) bootexit();
     "cpi %[last], %[crc_eop]\n"
     "brne .-2\n"
     :: [last] "r"(last), [crc_eop] "n"(CRC_EOP)
@@ -2161,7 +2173,7 @@ void watchdogConfig(uint8_t x) {
 #if PGMWRITEPAGE
 
 void pgm_write_page(void *sram, progmem_t pgm) {
-  asm volatile (                // Copy sram to X and pgm to Z
+  asm volatile(                 // Copy sram to X and pgm to Z
 #if FLASHabove64k
     "out  %[rampz], r22\n"      // RAMPZ = pgm>>16;
     "movw r30, r20\n"           // zaddress = pgm & 0xffff, r21:20 is free now
@@ -2181,8 +2193,8 @@ void pgm_write_page(void *sram, progmem_t pgm) {
 
 #else // !PGMWRITEPAGE
 
-void writebufferX() {
-  asm volatile (                // ) }
+void writebufferX() {           // Write buffer from sram at X to PROGMEM at RAMPZ/Z
+  asm volatile(                 // ) }
 #endif // PGMWRITEPAGE
 
 /*
@@ -2203,9 +2215,12 @@ void writebufferX() {
 #endif
 
     "movw r18, r30\n"           // uint16_t copy = zaddress;
+#if FLASHabove64k && (PROTECTME || (VBL && PROTECTRESET))
+    "in   r22, %[rampz]\n"      // Also copy RAMPZ
+#endif
 
 #if PROTECTME
-#if (START & 0xff)
+#if START & 0xff
     "cpi  r30, lo8(%[start])\n" // zaddress >= START?
     "ldi  r24, hi8(%[start])\n"
     "cpc  r31, r24\n"
@@ -2213,18 +2228,14 @@ void writebufferX() {
     "cpi  r31, hi8(%[start])\n" // zaddress >= START?
 #endif
 #if FLASHabove64k
-    "in   r22, %[rampz]\n"      // Must load RAMPZ: we might not arrive here from pgm_write_page()
     "ldi  r24, hh8(%[start])\n"
-    "cpc  r22, r24\n"
+    "cpc  r22, r24\n"           // RAMPZ
 #endif
     "brcc ub_ret\n"             // Return if so
 #endif // PROTECTME
 
 #if VBL && PROTECTRESET && FLASHWRAPS // Store "rjmp START" opcode at addr 0 to protect bootloader
 #if FLASHabove64k
-#if !PROTECTME
-    "in    r22, %[rampz]\n"     // Load RAMPZ
-#endif
     "cpi   r22, 0\n"            // RAMZ != 0?
     "brne  not_reset_page\n"
 #endif
@@ -2241,23 +2252,22 @@ void writebufferX() {
 #if UPDATE_FL                   // Return if flash page already has desired contents
     "movw  r20, r26\n"          // origsram = sram
   "3: "
-    "ld    r0,  X+\n"           // load byte from ram page
-     LPM_OP " r1, Z+\n"         // load byte from PROGMEM, might increment RAMPZ
-#if ERASE_B4_WRITE && defined(UB_BOOL) && !PGMWRITEPAGE
+     LPM " r0, Z+\n"            // Load existing byte from PROGMEM, might increment RAMPZ
+    "ld    r1, X+\n"            // Load new byte from ram page
+#if !ERASE_B4_WRITE
+    "and   r1, r0\n"            // New byte can only delete existing 1's in NOR memory
+#elif ERASE_B4_WRITE && defined(UB_BOOL) && !PGMWRITEPAGE
     "cpse  r0, r1\n"            // Set writepg Boolean if contents differs
     "sbi %[writepg], 0\n"
-    "and    r1, r0\n"           // Check if new byte from ram would set a bit
-    "cp    r0, r1\n"
-    "brne  need_write\n"        // Yes, must erase and then write
-#else
-    "cp    r0, r1\n"
-    "brne  need_write\n"        // PROGMEM and sram contents differ, must write
+    "and   r0, r1\n"            // Check if new byte from ram would set a bit
 #endif
+    "cp    r0, r1\n"
+    "brne  need_write\n"        // sram would change PROGMEM, must write
     "cpse  r26, r23\n"          // Finished? (cpse leaves SREG unchanged)
     "rjmp  3b\n"
 
-  "need_write:"                 // SREG's Z bit set if on last cp r0 was same as r1
-    "movw  r30, r18\n"          // restore Z from copy in origzaddr
+  "need_write:"                 // SREG's Z bit set if above cp r0, r1 found they are the same
+    "movw  r30, r18\n"          // restore Z register from copy in origzaddr
 #if FLASHabove64k
     "out  %[rampz], r22\n"      // restore RAMPZ should it have gone over 64 kB boundary
 #endif
@@ -2338,10 +2348,10 @@ void writebufferX() {
 #endif
     [sramp] "n"(ramstart),
     [rjmp_bwd_start] "n"(RJMP_BWD_START)
-  : "r0", "r27", "r26", "r24", "r23", "r22",
+  : "r31", "r30", "r27", "r26", "r24", "r23", "r22",
 #if UPDATE_FL
     "r21", "r20",
 #endif
-    "r19", "r18"
+    "r19", "r18", "r0"
   );
 }
