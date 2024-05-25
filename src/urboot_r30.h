@@ -29,12 +29,12 @@
 // processors with SPM_REG outside the I/O space
 #if defined(__AVR_ATmega64__) || defined(__AVR_ATmega128__) || defined(__AVR_ATmega64A__) || \
     defined(__AVR_ATmega128A__)
-#define oust_spm "sts"
-#define inld_spm "lds"
+#define oust_spm "sts "
+#define inld_spm "lds "
 #define UB_SPM_REG  _SFR_MEM_ADDR(__SPM_REG)
 #else
-#define oust_spm "out"
-#define inld_spm "in"
+#define oust_spm "out "
+#define inld_spm "in "
 #define UB_SPM_REG  _SFR_IO_ADDR(__SPM_REG)
 #endif
 

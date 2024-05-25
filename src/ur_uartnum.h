@@ -13,7 +13,7 @@
  * encode and set the upper 4 bit of the register UBRRHI that is shared with UBRR0H.
  *
  * v 1.0
- * 20.05.2024
+ * 25.05.2024
  *
  */
 
@@ -34,6 +34,7 @@
 #define UBRRnH     _ureg8(0x0a)
 
 #define UARTn_base   _uad(0x08)
+#define UARTn_addr         0x08
 #define UARTn_size            7
 #define UARTn_IOSPACE         1
 #define UDRn_off              0
@@ -75,6 +76,7 @@
 #define LINERRn    _ureg8(0xcb)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size           11
 #define UARTn_IOSPACE         0
 #define LINDATn_off          10
@@ -112,6 +114,7 @@
 #define UBRRnH     _ureg8(0x82)
 
 #define UARTn_base   _uad(0x80)
+#define UARTn_addr         0x80
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              0
@@ -150,6 +153,7 @@
 #define UBRRnH     _ureg8(0x92)
 
 #define UARTn_base   _uad(0x90)
+#define UARTn_addr         0x90
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              0
@@ -188,6 +192,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -225,6 +230,7 @@
 #define UBRRnH     _ureg8(0x42)
 
 #define UARTn_base   _uad(0x40)
+#define UARTn_addr         0x40
 #define UARTn_size            7
 #define UARTn_IOSPACE         1
 #define UDRn_off              0
@@ -257,6 +263,7 @@
 #define UBRRnH     _ureg8(0x75)
 
 #define UARTn_base   _uad(0x73)
+#define UARTn_addr         0x73
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              0
@@ -293,6 +300,7 @@
 #define UBRRnH     _ureg8(0x22)
 
 #define UARTn_base   _uad(0x22)
+#define UARTn_addr         0x22
 #define UARTn_size           11
 #define UARTn_IOSPACE         1
 #define UDRn_off             10
@@ -327,6 +335,7 @@
 #define UBRRnH     _ureg8(0x40)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -363,6 +372,7 @@
 #define UBRRnH     _ureg8(0xcd)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -401,6 +411,7 @@
 #define UBRRnH     _ureg8(0x40)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -440,6 +451,7 @@
 #define LINERRn    _ureg8(0xcb)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size           11
 #define UARTn_IOSPACE         0
 #define LINDATn_off          10
@@ -477,6 +489,7 @@
 #define UBRRnH     _ureg8(0xcd)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -515,6 +528,7 @@
 #define UBRRnH     _ureg8(0x40)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -550,6 +564,7 @@
 #define UBRRnH     _ureg8(0xcd)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -583,6 +598,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -619,6 +635,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -657,6 +674,7 @@
 #define UBRRnH     _ureg8(0x90)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size          109
 #define UARTn_IOSPACE         0
 #define UDRn_off              3
@@ -687,6 +705,7 @@
 #define UBRRnH     _ureg8(0x98)
 
 #define UARTn_base   _uad(0x98)
+#define UARTn_addr         0x98
 #define UARTn_size            6
 #define UARTn_IOSPACE         0
 #define UDRn_off              4
@@ -725,6 +744,7 @@
 #define LINERRn    _ureg8(0xc3)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size           11
 #define UARTn_IOSPACE         0
 #define LINDATn_off          10
@@ -764,6 +784,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -793,6 +814,7 @@
 #define UBRRnH     _ureg8(0xcd)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -825,6 +847,7 @@
 #define UBRRnL     _ureg8(0x29)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -856,6 +879,7 @@
 #define UBRRnH     _ureg8(0x40)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -882,6 +906,7 @@
 #define UBRRnL     _ureg8(0x20)
 
 #define UARTn_base   _uad(0x20)
+#define UARTn_addr         0x20
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -914,6 +939,7 @@
 #define UBRRnH     _ureg8(0x40)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -943,6 +969,7 @@
 #define UBRRnH     _ureg8(0x5c)
 
 #define UARTn_base   _uad(0x20)
+#define UARTn_addr         0x20
 #define UARTn_size           61
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -975,6 +1002,7 @@
 #define UBRRnL     _ureg8(0x29)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1010,6 +1038,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1040,6 +1069,7 @@
 #define UBRRnH     _ureg8(0xcd)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1083,6 +1113,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1120,6 +1151,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1156,6 +1188,7 @@
 #define UBRRnH     _ureg8(0x40)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1191,6 +1224,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1224,6 +1258,7 @@
 #define UBRRnH     _ureg8(0xcd)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1257,6 +1292,7 @@
 #define UBRRnH     _ureg8(0xd5)
 
 #define UARTn_base   _uad(0xd0)
+#define UARTn_addr         0xd0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1295,6 +1331,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1328,6 +1365,7 @@
 #define UBRRnH     _ureg8(0xcd)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1365,6 +1403,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1395,6 +1434,7 @@
 #define UBRRnH     _ureg8(0xcd)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1425,6 +1465,7 @@
 #define UBRRnH     _ureg8(0xd5)
 
 #define UARTn_base   _uad(0xd0)
+#define UARTn_addr         0xd0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1455,6 +1496,7 @@
 #define UBRRnH     _ureg8(0x135)
 
 #define UARTn_base  _uad(0x130)
+#define UARTn_addr        0x130
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1490,6 +1532,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1525,6 +1568,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1555,6 +1599,7 @@
 #define UBRRnH     _ureg8(0xcd)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1590,6 +1635,7 @@
 #define UBRRnH     _ureg8(0x40)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1624,6 +1670,7 @@
 #define UBRRnH     _ureg8(0x40)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1656,6 +1703,7 @@
 #define UBRRnL     _ureg8(0x29)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1678,6 +1726,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1713,6 +1762,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1743,6 +1793,7 @@
 #define UBRRnH     _ureg8(0xcd)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1779,6 +1830,7 @@
 #define UBRRnH     _ureg8(0xcd)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1814,6 +1866,7 @@
 #define UBRRnH     _ureg8(0xc5)
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1849,6 +1902,7 @@
 #define UBRRnH     _ureg8(0xcd)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1881,6 +1935,7 @@
 #define UBRRnL     _ureg8(0x29)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1912,6 +1967,7 @@
 #define UBRRnH     _ureg8(0x23)
 
 #define UARTn_base   _uad(0x23)
+#define UARTn_addr         0x23
 #define UARTn_size           10
 #define UARTn_IOSPACE         1
 #define UDRn_off              9
@@ -1943,6 +1999,7 @@
 #define UBRRnL     _ureg8(0x29)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1974,6 +2031,7 @@
 #define UBRRnH     _ureg8(0x40)
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1989,6 +2047,7 @@
 #define UBRRnL     _ureg8(0x20)
 
 #define UARTn_base   _uad(0x20)
+#define UARTn_addr         0x20
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -2013,6 +2072,7 @@
 #define LINERRn    _ureg8(0xcb)
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size           11
 #define UARTn_IOSPACE         0
 #define LINDATn_off          10
@@ -2045,6 +2105,7 @@
 #define LINERRn    _ureg8(0x176)
 
 #define UARTn_base  _uad(0x173)
+#define UARTn_addr        0x173
 #define UARTn_size           11
 #define UARTn_IOSPACE         0
 #define LINDATn_off          10
@@ -2073,6 +2134,7 @@
 #define UBRRnH     _ureg8(0x35)
 
 #define UARTn_base   _uad(0x31)
+#define UARTn_addr         0x31
 #define UARTn_size            5
 #define UARTn_IOSPACE         1
 #define UCSRnA_off            0
