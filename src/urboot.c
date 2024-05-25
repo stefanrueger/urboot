@@ -294,6 +294,7 @@
 
 #include "pin_defs.h"           // Definitions for LEDs and some avr name differences
 #include "urboot_wdt.h"         // Don't use <avr/wdt.h> owing to unwanted interrupt overhead
+#include "urboot_sram.h"        // RAM and EEPROM sizes
 #include "errata.h"
 #include "urboot_bool.h"        // Provide 8 Booleans in I/O space so compiler uses sbi, cbi, ...
 
@@ -652,6 +653,67 @@
 #define AUTOBAUD 0
 #endif
 
+
+#if SWIO
+
+#define getch_clobberlist ,"r25","r18"
+
+#else
+
+#define getch_clobberlist
+
+#if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
+
+#define UDATn UDRn
+#define UDATn_off UDRn_off
+#define USRAn UCSRnA
+#define USRAn_off UCSRnA_off
+#define URXOK A_RXCn
+#define URXOK_off A_RXCn_off
+#define URERR A_FEn
+#define URERR_off A_FEn_off
+
+#elif UR_UARTTYPE == UR_UARTTYPE_LIN
+
+#define UDATn LINDATn
+#define UDATn_off LINDATn_off
+#define USRAn LINSIRn
+#define USRAn_off LINSIRn_off
+#define URXOK A_LRXOKn
+#define URXOK_off A_LRXOKn_off
+#define URERR A_LERRn
+#define URERR_off A_LERRn_off
+
+#endif // UR_UARTTYPE
+
+#define UisIOSPACE(reg) (UARTn_addr + reg##_off < 0x3f + __SFR_OFFSET)
+#define UisBITREGS(reg) (UARTn_addr + reg##_off < 0x1f + __SFR_OFFSET)
+
+#define UB_MCUID(name) UB_MCUID_expand(name)
+#define UB_MCUID_expand(name) id_##name
+
+#if UisIOSPACE(UDATn)
+#define inld_udat "in "
+#define oust_udat "out "
+#define UDATnR _SFR_IO_ADDR(UDATn)
+#else
+#define inld_udat "lds "
+#define oust_udat "sts "
+#define UDATnR _SFR_MEM_ADDR(UDATn)
+#endif
+
+#if UisIOSPACE(USRAn)
+#define inld_usra "in "
+#define oust_usra "out "
+#define USRAnR _SFR_IO_ADDR(USRAn)
+#else
+#define inld_usra "lds "
+#define oust_usra "sts "
+#define USRAnR _SFR_MEM_ADDR(USRAn)
+#endif
+
+#endif // !SWIO
+
 #if !AUTOBAUD
 
 // Set the baud rate defaults
@@ -666,7 +728,6 @@
 #define BAUD_RATE         1200L // Good even at 32768 Hz
 #endif
 #endif // !defined(BAUD_RATE)
-
 
 
 #if !SWIO                       // ... and compute baud rate settings for various UART types
@@ -778,6 +839,7 @@
 #endif
 
 #endif // UR_UARTTYPE
+
 #endif // !SWIO
 
 #endif // !AUTOBAUD
@@ -874,6 +936,10 @@
 #endif
 #endif
 #endif // VBL_VECT_NUM
+
+#if !defined(EESIZE) || EESIZE < 0
+#warning Need to know EESIZE to generate bootloader EEPROM code
+#endif
 
 
 #if EEPROM
@@ -1110,7 +1176,6 @@ typedef uint8_t spm_pages_index_t; // Can handle SPM_NUMPAGES==256 with do { ...
 int main(void) __attribute__ ((OS_main, section(".init9")));
 
 void __attribute__ ((noinline)) putch(char);
-uint8_t __attribute__ ((noinline)) getch2(void);
 uint8_t __attribute__ ((noinline)) getch(void);
 void  __attribute__ ((noinline)) get1sync();
 
@@ -1470,6 +1535,7 @@ static void read_page_fl(uint8_t length) {
 
 
 #if EEPROM
+
 static void read_page_ee(uint8_t length) {
   do {
     set_eear(zaddress);
@@ -1479,6 +1545,7 @@ static void read_page_ee(uint8_t length) {
     asm volatile("adiw %0, 1\n" : "=r"(zaddress) : "0"(zaddress));
   } while(--length);
 }
+
 
 static void write_page_ee(uint8_t length) {
   uint8_t *bufp = ramstart;
@@ -1518,7 +1585,7 @@ static void write_sram(uint8_t length) { // Write data from host into SRAM
 #else
    :: [sramp] "n"(ramstart), [xend] "r"(xend)
 #endif
-   : "r26", "r27", "r24", "r25", "r18" // r18 and r24:25 are clobbered by getch()
+   : "r26", "r27", "r24" getch_clobberlist
   );
 }
 
@@ -1541,7 +1608,7 @@ static void write_sram_spm_pagesize(void) { // Also resets X to ramstart at end
      "ldi   r27, hi8(%[sramp])\n"
 #endif
    :: [sramp] "n"(ramstart), [xend] "M"((RAMSTART + SPM_PAGESIZE) & 0xff)
-   : "r26", "r27", "r24", "r25", "r18" // r18 and r24:25 are clobbered by getch()
+   : "r26", "r27", "r24" getch_clobberlist
   );
 }
 
@@ -1563,7 +1630,7 @@ static uint8_t getaddrlength() {
 #if FLASHabove64k
     [rampz] "I"(_SFR_IO_ADDR(RAMPZ))
 #endif // FLASHabove64k
-    : "r24", "r25", "r18" // Clobbered by getch()
+    : "r24" getch_clobberlist
   );
 
   return getch();
@@ -1767,7 +1834,8 @@ int main(void) {
 
 
 #if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
-  if(&UBRRnL - __SFR_OFFSET < (uint8_t *) 0x20) { // Can use out, good
+
+#if UisIOSPACE(UBRRnL)
 #if AUTOBAUD
   asm volatile(
     AUTO_BRL                    // Measure and load the divisor for the baud rate register
@@ -1777,13 +1845,15 @@ int main(void) {
      [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX))
   : "r30", "r31", "r26", "r27"
   );
-#else
+#else // !AUTOBAUD
+
 // The joy of two UARTs sharing the register for the high byte of the baud rate divisor
 #if UARTNUM==1 && (defined(__AVR_ATmega161__) || defined(__AVR_AT94K__)) && BAUD_SETTING > 255
     U_UBRR0H = (BAUD_SETTING>>8) << 4; // Sic! UART0's high BRR serves in its top 4 bit UART1's
 #elif defined(UBRRnH) && BAUD_SETTING > 255
     UBRRnH = BAUD_SETTING>>8;
-#endif
+#endif // AUTOBAUD
+
     asm volatile(".global ldi_baud\nldi_baud:\n\t" :::); // Mark location of baud setting
     UBRRnL = BAUD_SETTING & 0xff;
 #endif
@@ -1794,7 +1864,8 @@ int main(void) {
 #if UB_INIT_UCSRnC && defined(UCSRnC_val)
     UCSRnC = UCSRnC_val;
 #endif
-  } else {
+
+#else
     asm volatile(
       " ldi r30, lo8(%[base])\n" // Load Z for st Z+offset, r27
       " ldi r31, hi8(%[base])\n"
@@ -1841,7 +1912,7 @@ int main(void) {
       [base] "n" ( _SFR_MEM_ADDR(*UARTn_base))
       : "r30", "r31", "r26", "r27"
     );
-  }
+#endif
 
 #elif UR_UARTTYPE == UR_UARTTYPE_LIN
 
@@ -1991,12 +2062,11 @@ void putch(char chr) {
 #if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
   while(!(UCSRnA & _BV(A_UDREn)))
     continue;
-  UDRn = chr;
 #elif UR_UARTTYPE == UR_UARTTYPE_LIN
   while(LINSIRn & _BV(A_LBUSYn))
     continue;
-  LINDATn = chr;
 #endif
+  UDATn = chr;
 #else
   // By and large follows Atmel's AN AVR305
 #if defined(SWIO_STOP_BITS) && SWIO_STOP_BITS > 0
@@ -2058,7 +2128,52 @@ uint8_t getch(void) {
   led_on();
   led_setup();
 
-#if SWIO
+#if !SWIO
+
+  asm volatile(
+
+#if UisBITREGS(USRAn)
+
+  "1: "
+    "sbis %[usran], %[urxok]\n"
+    "rjmp 1b\n"
+
+    // Watchdog reset wdr (possibly skipped when rx error bit is set in uart status reg USRAn)
+#if EXITFE==2
+    "sbic %[usran], %[rxerr]\n" // Skip 2-byte exit code if error bit is clear in uart status register
+    RJMPQEXIT
+#elif EXITFE==1
+    "sbis %[usran], %[rxerr]\n" // Skip wdr if error bit is set in uart status register
+#endif // EXITFE
+    "wdr\n"
+
+# else // ! UisBITREGS(USRAn)
+
+  "1: "
+     inld_usra "%[chr], %[usran]\n"
+    "sbrs %[chr], %[urxok]\n"
+    "rjmp 1b\n"
+
+    // Watchdog reset wdr (possibly skipped when rx error bit is set in uart status reg USRAn)
+#if EXITFE==2
+    "sbrc %[chr], %[rxerr]\n"   // Skip 2-byte exit code if error bit is clear in uart status register
+    RJMPQEXIT
+#elif EXITFE==1
+    "sbrs %[chr], %[rxerr]\n"   // Skip wdr if error bit is set in uart status register
+#endif // EXITFE
+    "wdr\n"
+
+#endif // UisBITREGS(USRAn)
+
+    // Load UART data register
+    inld_udat "%[chr], %[udatn]\n"
+    : [chr] "=r"(chr)
+    : [udatn] "n"(UDATnR),
+      [usran] "n"(USRAnR), [rxerr] "I"(URERR), [urxok] "I"(URXOK)
+  );
+
+#else // SWIO
+
   asm volatile(
     "   ldi   r18, 9\n"         // 8 bit + 1 stop bit
     ".global sbic_rx\nsbic_rx:" // Mark location of sbic rx opcode
@@ -2092,48 +2207,7 @@ uint8_t getch(void) {
       : [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX))
       : "r25", "r18" // r25 is clobbered by bitDelay
   );
-#else // !SWIO
-#if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
-  uint8_t usr;
-  do {
-    usr = UCSRnA;
-  } while(!(usr & _BV(A_RXCn)));
 
-  // Watchdog reset wdr, (possibly skipped when frame error bit A_FEn is set in uart status reg usr)
-  asm volatile(
-#if EXITFE==2
-    "sbrc %[usr], %[fe0]\n"  // Skip 2-byte exit code if bit A_FEn is clear in uart status register
-    RJMPQEXIT
-#elif EXITFE==1
-    "sbrs %[usr], %[fe0]\n"  // Skip wdr if bit A_FEn is set in uart status register
-#endif // EXITFE
-    "wdr\n"
-    :: [usr] "r"(usr), [fe0] "I"(A_FEn)
-  );
-
-  chr = UDRn;
-
-#elif UR_UARTTYPE == UR_UARTTYPE_LIN
-  uint8_t usr;
-  do {
-    usr = LINSIRn;
-  } while(!(usr & _BV(A_LRXOKn)));
-
-  // Watchdog reset wdr, (possibly skipped when rx error bit A_LERRn is set in uart status reg usr)
-  asm volatile(
-#if EXITFE==2
-    "sbrc %[usr], %[lerr]\n"  // Skip 2-byte exit code if bit A_LERRn is clear in uart status register
-    RJMPQEXIT
-#elif EXITFE==1
-    "sbrs %[usr], %[lerr]\n"  // Skip wdr if bit A_LERRn is set in uart status register
-#endif // EXITFE
-    "wdr\n"
-    :: [usr] "r"(usr), [lerr] "I"(A_LERRn)
-  );
-
-  chr = LINDATn;
-
-#endif // UR_UARTTYPEs
 #endif // !SWIO
 
   led_off();
@@ -2301,7 +2375,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
     "ld    r1, X+\n"            // Load new byte from ram page
 #if !ERASE_B4_WRITE
     "and   r1, r0\n"            // New byte can only delete existing 1's in NOR memory
-#elif ERASE_B4_WRITE && defined(UB_BOOL)
+#elif ERASE_B4_WRITE && defined(UB_BOOL) && !PGMWRITEPAGE
     "cpse  r0, r1\n"            // Set writepg Boolean if contents differs
     "sbi %[writepg], 0\n"
     "and   r0, r1\n"            // Check if new byte from ram would set a bit
@@ -2317,7 +2391,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
     "out  %[rampz], r22\n"      // restore RAMPZ should it have gone over 64 kB boundary
 #endif
     "movw  r26, r20\n"          // Restore sram
-#if ERASE_B4_WRITE && defined(UB_BOOL)
+#if ERASE_B4_WRITE && defined(UB_BOOL) && !PGMWRITEPAGE
     "sbis %[writepg], 0\n"
     "rjmp ub_ret\n"             // If writepg is not set can return straight away
     "cbi %[writepg], 0\n"       // Clear writepg Boolean
@@ -2370,7 +2444,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
   "ub_ret: "
     "eor r1, r1\n"              // R1 will also have been destroyed on smp for fill page
   ::
-    [spmrg] "i" (UB_SPM_REG),
+    [spmrg] "n"(UB_SPM_REG),
     [spmen] "M"(__SPM_ENABLE),
     [bpera] "M"(__BOOT_PAGE_ERASE),
     [bpfil] "M"(__BOOT_PAGE_FILL),
@@ -2384,7 +2458,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
     [start] "n"((uint32_t) START),
     [spmsz] "n"(SPM_PAGESIZE),
     [xend] "M"(((uint16_t) ramstart + SPM_PAGESIZE) & 0xff),
-#if ERASE_B4_WRITE && UPDATE_FL && defined(UB_BOOL)
+#if ERASE_B4_WRITE && UPDATE_FL && defined(UB_BOOL) && !PGMWRITEPAGE
     [writepg] "I"(_SFR_IO_ADDR(UB_BOOL)),
 #endif
 #if FOUR_PAGE_ERASE
