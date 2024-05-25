@@ -1080,7 +1080,7 @@ void writebuffer_ramstart();
 
 #else
 
-void writebufferX();
+void writebufferX(void);
 #define writebuffer(sram)  ({ \
   asm volatile( \
   "ldi   r26, lo8(%[sramp])\n" \
@@ -1497,6 +1497,8 @@ static void write_page_ee(uint8_t length) {
 #endif
 
 
+#if EEPROM
+
 static void write_sram(uint8_t length) { // Write data from host into SRAM
   uint8_t xend = length;
 
@@ -1506,7 +1508,7 @@ static void write_sram(uint8_t length) { // Write data from host into SRAM
 #if RAMSTART & 0xff
     "   add   %[xend], r26\n"
 #endif
-    "1: rcall getch\n"          // Add to clobbered list all that getch() changes
+    "1: rcall getch\n"
     "   st    X+, r24\n"
     "   cpse  %[xend], r26\n"
     "   rjmp  1b\n"
@@ -1520,6 +1522,30 @@ static void write_sram(uint8_t length) { // Write data from host into SRAM
   );
 }
 
+#else
+
+static void write_sram_spm_pagesize(void) { // Also resets X to ramstart at end
+  asm volatile(
+     "ldi   r26, lo8(%[sramp])\n"
+     "ldi   r27, hi8(%[sramp])\n"
+  "1: rcall getch\n"
+     "st    X+, r24\n"
+     "cpi   r26, %[xend]\n"
+     "brne  1b\n"
+#if SPM_PAGESIZE == 256
+     "subi  r27, 1\n"           // X = X - 256
+#elif (RAMSTART+SPM_PAGESIZE)/256 == RAMSTART/256
+     "ldi   r26, lo8(%[sramp])\n"
+#else
+     "ldi   r26, lo8(%[sramp])\n"
+     "ldi   r27, hi8(%[sramp])\n"
+#endif
+   :: [sramp] "n"(ramstart), [xend] "M"((RAMSTART + SPM_PAGESIZE) & 0xff)
+   : "r26", "r27", "r24", "r25", "r18" // r18 and r24:25 are clobbered by getch()
+  );
+}
+
+#endif
 
 static uint8_t __attribute__ ((noinline)) getaddrlength();
 static uint8_t getaddrlength() {
@@ -1907,20 +1933,22 @@ int main(void) {
       ub_page_erase();
 #endif
 
-    } else if(ch == UR_PROG_PAGE_FL
 #if EEPROM
-           || ch == UR_PROG_PAGE_EE
-#endif
-      ) {
+    } else if(ch == UR_PROG_PAGE_FL || ch == UR_PROG_PAGE_EE) {
       uint8_t length = getaddrlength();
       write_sram(length);
       get1sync();
-#if EEPROM
       if(ch == UR_PROG_PAGE_EE)
         write_page_ee(length);
       else
-#endif
         writebuffer(ramstart);
+#else
+    } else if(ch == UR_PROG_PAGE_FL) {
+      (void) getaddrlength();
+      write_sram_spm_pagesize();
+      get1sync();
+      writebufferX();
+#endif
 
     } else if(ch == UR_READ_PAGE_FL) {
       uint8_t length = getaddrlength();
@@ -2188,7 +2216,7 @@ void pgm_write_page(void *sram, progmem_t pgm) {
 
 #else // !PGMWRITEPAGE
 
-void writebufferX() {           // Write buffer from sram at X to PROGMEM at RAMPZ/Z
+void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAMPZ/Z
   asm volatile(                 // ) }
 #endif // PGMWRITEPAGE
 
