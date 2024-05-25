@@ -2168,6 +2168,28 @@ void watchdogConfig(uint8_t x) {
 }
 
 
+// Optimise backing up and restoring Z below
+#if !UPDATE_FL && SPM_PAGESIZE == 256 // Neat trick: subtract 256
+#define backupZ
+#define restoreZ "subi r31, 1\n"
+#define clobberZ
+
+#elif !UPDATE_FL && SPM_PAGESIZE <= 32
+#define backupZ
+#define restoreZ "sbiw r30, %[spmsz]\n"
+#define clobberZ
+
+#elif !UPDATE_FL && !DUAL       // Only DUAL requires writebufferX() leaves Z invariant
+#define backupZ
+#define restoreZ "sbiw r30,2\n" // Just get Z back to previous page
+#define clobberZ
+
+#else                           // Either UPDATE_FL or DUAL require full backup/restore
+#define backupZ  "movw r18, r30\n"
+#define restoreZ "movw r30, r18\n"
+#define clobberZ "r19", "r18",
+#endif
+
 /*
  * Rather than using the <avr/boot.h> macros I roll my own: it's worth it (saves 16-24 bytes)
  *
@@ -2180,7 +2202,7 @@ void watchdogConfig(uint8_t x) {
  * origsram  r21:20 copy of sram for UPDATE_FL comparison loop
  * origRAMPZ r22    third byte of 32 bit pgm argument if flash > 64 kB
  * xloopend  r23    lo8(X) at end of loop (for comparison)
- * origzaddr r19:18 copy of global address in Z
+ * origzaddr r19:18 copy of global address in Z (when needed)
  *           r1     null on return (compiler relies on r1 being 0)
  * tmp       r0
  *
@@ -2237,7 +2259,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
     "add  r23, r26\n"           // r23 = lo8(len + sram) for loop end comparison with lo8(X)
 #endif
 
-    "movw r18, r30\n"           // uint16_t copy = zaddress;
+    backupZ
 #if FLASHabove64k && (PROTECTME || (VBL && PROTECTRESET))
     "in   r22, %[rampz]\n"      // Also copy RAMPZ
 #endif
@@ -2279,7 +2301,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
     "ld    r1, X+\n"            // Load new byte from ram page
 #if !ERASE_B4_WRITE
     "and   r1, r0\n"            // New byte can only delete existing 1's in NOR memory
-#elif ERASE_B4_WRITE && defined(UB_BOOL) && !PGMWRITEPAGE
+#elif ERASE_B4_WRITE && defined(UB_BOOL)
     "cpse  r0, r1\n"            // Set writepg Boolean if contents differs
     "sbi %[writepg], 0\n"
     "and   r0, r1\n"            // Check if new byte from ram would set a bit
@@ -2290,12 +2312,12 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
     "rjmp  3b\n"
 
   "need_write:"                 // SREG's Z bit set if above cp r0, r1 found they are the same
-    "movw  r30, r18\n"          // restore Z register from copy in origzaddr
+    restoreZ
 #if FLASHabove64k
     "out  %[rampz], r22\n"      // restore RAMPZ should it have gone over 64 kB boundary
 #endif
     "movw  r26, r20\n"          // Restore sram
-#if ERASE_B4_WRITE && defined(UB_BOOL) && !PGMWRITEPAGE
+#if ERASE_B4_WRITE && defined(UB_BOOL)
     "sbis %[writepg], 0\n"
     "rjmp ub_ret\n"             // If writepg is not set can return straight away
     "cbi %[writepg], 0\n"       // Clear writepg Boolean
@@ -2330,8 +2352,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
     "cpse  r26, r23\n"          // Finished?
     "rjmp  1b\n"
 
-    "movw  r30, r18\n"          // Restore zaddress, so it points at original page again
-
+    restoreZ
     "ldi   r24, %[bpwri]\n"     // urboot_page_write_r30(); boot_spm_busy_wait();
 #if defined(RWWSRE)
     "rcall ub_spm\n"
@@ -2343,8 +2364,8 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
     "spm\n"
     SPM_PIPELINE
   "2: "
-    inld_spm " r0, %[spmrg]\n"  // Poll spm has finished (not needed for fill/clearing RWWSB)
-    "sbrc r0, %[spmen]\n"
+    inld_spm " r1, %[spmrg]\n"  // Poll spm has finished (not needed for fill/clearing RWWSB)
+    "sbrc r1, %[spmen]\n"
     "rjmp 2b\n"
   "ub_ret: "
     "eor r1, r1\n"              // R1 will also have been destroyed on smp for fill page
@@ -2363,7 +2384,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
     [start] "n"((uint32_t) START),
     [spmsz] "n"(SPM_PAGESIZE),
     [xend] "M"(((uint16_t) ramstart + SPM_PAGESIZE) & 0xff),
-#if ERASE_B4_WRITE && UPDATE_FL && defined(UB_BOOL) && !PGMWRITEPAGE
+#if ERASE_B4_WRITE && UPDATE_FL && defined(UB_BOOL)
     [writepg] "I"(_SFR_IO_ADDR(UB_BOOL)),
 #endif
 #if FOUR_PAGE_ERASE
@@ -2375,6 +2396,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
 #if UPDATE_FL
     "r21", "r20",
 #endif
-    "r19", "r18", "r0"
+    clobberZ
+    "r0"
   );
 }
