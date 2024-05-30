@@ -40,8 +40,8 @@
 //                                                       +-\/-+
 //               (PCINT5, !RESET, ADC0, dW, D5=A0) PB5  1|    |8  VCC
 // (PCINT3, XTAL1, CLKI, !OC1B, ADC3, USB+, D3=A3) PB3  2|-   |7  PB2 (D2=A1, SCK, USCK, SCL, ADC1, T0, INT0, PCINT2)
-//  (PCINT4, XTAL2, CLKO, OC1B, ADC2, USB-, D4=A2) PB4  3|~  ~|6  PB1 (D1=LED, CIPO, DO, AIN1, OC0B, OC1A, PCINT1)
-//                                                 GND  4|   -|5  PB0 (D0, COPI, DI, SDA, AIN0, OC0A, !OC1A, AREF, PCINT0
+//  (PCINT4, XTAL2, CLKO, OC1B, ADC2, USB-, D4=A2) PB4  3|~  ~|6  PB1 (D1=LED, POCI, DO, AIN1, OC0B, OC1A, PCINT1)
+//                                                 GND  4|   -|5  PB0 (D0, PICO, DI, SDA, AIN0, OC0A, !OC1A, AREF, PCINT0
 //                                                       +----+
 
 #define NUM_DIGITAL_PINS            6
@@ -50,8 +50,8 @@
 #define analogInputToDigitalPin(p)  ((p) == 0? 5: (p) == 1? 2: (p) == 2? 4: (p) == 3? 3: -1)
 
 static const uint8_t CS   = 3;
-static const uint8_t COPI = 0;
-static const uint8_t CIPO = 1;
+static const uint8_t PICO = 0;
+static const uint8_t POCI = 1;
 static const uint8_t SCK  = 2;
 
 static const uint8_t SDA =  0;

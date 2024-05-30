@@ -15,8 +15,8 @@
 // PCINT10/INT2/AIN0 (D2 ) PB2  3|        |38  PA2 (A2/D26) PCINT2
 // PCINT11/OC0A/AIN1 (D3 ) PB3  4|~       |37  PA3 (A3/D27) PCINT3
 //   PCINT12/OC0B/CS (D4 ) PB4  5|~       |36  PA4 (A4/D28) PCINT4
-// PCINT13/ICP3/COPI (D5 ) PB5  6|        |35  PA5 (A5/D29) PCINT5
-// PCINT14/OC3A/CIPO (D6 ) PB6  7|~*      |34  PA6 (A6/D30) PCINT6
+// PCINT13/ICP3/PICO (D5 ) PB5  6|        |35  PA5 (A5/D29) PCINT5
+// PCINT14/OC3A/POCI (D6 ) PB6  7|~*      |34  PA6 (A6/D30) PCINT6
 //  PCINT15/OC3B/SCK (D7 ) PB7  8|~*      |33  PA7 (A7/D31) PCINT7
 //                         RST  9|        |32  AREF
 //                         VCC 10|        |31  GND
@@ -50,8 +50,8 @@
 #endif
 
 static const uint8_t CS   = 4;
-static const uint8_t COPI = 5;
-static const uint8_t CIPO = 6;
+static const uint8_t PICO = 5;
+static const uint8_t POCI = 6;
 static const uint8_t SCK  = 7;
 
 static const uint8_t SDA = 17;

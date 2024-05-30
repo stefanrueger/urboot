@@ -36,11 +36,11 @@
 //                                                   +--\/--+
 //            (RXLIN, RXD, ADC0, PCINT0, A6=D6) PA0 1|     ~|20 PB0 (D0, PCINT8, OC1AU, DI, SDA)
 //            (TXLIN, TXD, ADC1, PCINT1, A7=D7) PA1 2|     ~|19 PB1 (D1=LED, PCINT9, OC1BU, DO)
-//        (CIPO, DO, OC0A, ADC2, PCINT2, A8=D8) PA2 3|~    ~|18 PB2 (D2, PCINT10, OC1AV, USCK, SCL)
+//        (POCI, DO, OC0A, ADC2, PCINT2, A8=D8) PA2 3|~    ~|18 PB2 (D2, PCINT10, OC1AV, USCK, SCL)
 //            (INT1, ISRC, ADC3, PCINT3, A9=D9) PA3 4|     ~|17 PB3 (D4, USB-, PCINT11, OC1BV)
 //                                             AVCC 5|      |16 GND
 //                                             AGND 6|      |15 VCC
-// (COPI, SDA, DI, ICP1, ADC4, PCINT4, A10=D10) PA4 7|     x|14 PB4 (n/a, PCINT12, OC1AW, XTAL1, CLKI)
+// (PICO, SDA, DI, ICP1, ADC4, PCINT4, A10=D10) PA4 7|     x|14 PB4 (n/a, PCINT12, OC1AW, XTAL1, CLKI)
 //  (SCK, SCL, USCK, T1, ADC5, PCINT5, A11=D11) PA5 8|     x|13 PB5 (n/a, PCINT13, ADC8, OC1BW, XTAL2, CLKO)
 //           (!CS, AIN0, ADC6, PCINT6, A12=D12) PA6 9|     ~|12 PB6 (D3=A3, USB+, PCINT14, ADC9, OC1AX, INT0)
 //     (AREF, XREF, AIN1, ADC7, PCINT7, A5=D5) PA7 10|     ~|11 PB7 (D13=A13=n/a, PCINT15, ADC10, OC1BX, !RESET, dW)
@@ -69,8 +69,8 @@
 #define digitalPinHasPWM(p)         (((p) >= 0 && (p) <= 4) || (p) == 13 || (p) == 8)
 
 static const uint8_t CS   = 12;
-static const uint8_t COPI = 10;
-static const uint8_t CIPO =  8;
+static const uint8_t PICO = 10;
+static const uint8_t POCI =  8;
 static const uint8_t SCK  = 11;
 
 static const uint8_t SDA  =  0;

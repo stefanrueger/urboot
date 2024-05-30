@@ -166,4 +166,27 @@
 
 #endif
 
+// SPI interface not defined in all Compiler versions
+#if defined(__AVR_ATA5702M322__) || defined(__AVR_ATA5782__) || defined(__AVR_ATA5791__) || \
+    defined(__AVR_ATA664251__) || defined(__AVR_ATA8210__) || defined(__AVR_ATA8510__) || \
+    defined(__AVR_ATmega168PB__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324P__) || \
+    defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega48PB__) || \
+    defined(__AVR_ATmega88PB__)
+
+#undef  SPCR
+#undef  SPDR
+#undef  SPSR
+#undef  MSTR
+#undef  SPE
+#undef  SPIF
+
+#define SPCR _SFR_IO8(0x2C)
+#define SPDR _SFR_IO8(0x2E)
+#define SPSR _SFR_IO8(0x2D)
+#define MSTR 4
+#define SPE  6
+#define SPIF 7
+
+#endif
+
 #endif

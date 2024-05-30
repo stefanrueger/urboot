@@ -36,12 +36,24 @@
 #define ArduinoPinA6 ArduinoPin6
 #define ArduinoPinA7 ArduinoPin7
 
+#ifndef AtmelCS
 #define AtmelCS       ArduinoPin7
-#define AtmelCOPI     ArduinoPin6
-#define AtmelCIPO     ArduinoPin5
+#endif
+#ifndef AtmelPICO
+#define AtmelPICO     ArduinoPin6
+#endif
+#ifndef AtmelPOCI
+#define AtmelPOCI     ArduinoPin5
+#endif
+#ifndef AtmelSCK
 #define AtmelSCK      ArduinoPin4
+#endif
 
+#ifndef AtmelSDA
 #define AtmelSDA      ArduinoPin6
+#endif
+#ifndef AtmelSCL
 #define AtmelSCL      ArduinoPin4
+#endif
 
 #endif
