@@ -2242,8 +2242,7 @@ void watchdogConfig(uint8_t x) {
  * operate on the same address including RAMPZ to avoid erasing one page and writing to another.
  * The fill buffer spm call ignores the page the address belongs to but uses the lower bits for
  * position in buffer. The caller can pass to writebuffer() a pointer to /any/ location in the page
- * and the algorithm will write that page (though the contents will be cyclicly rotated if the
- * initial address was not the start of the flash page.
+ * and the algorithm will write that page.
  *
  */
 
@@ -2266,7 +2265,7 @@ void pgm_write_page(void *sram, progmem_t pgm) {
 void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAMPZ:Z
   asm volatile(                 // ) }
 #endif // PGMWRITEPAGE
-
+    andi(r30, lo8(~(SPM_PAGESIZE-1))) // Ensure Z aligns with page boundary
 /*
  * Compute low byte of the sram address at end of loop that reads SPM_PAGESIZE bytes, so we can
  * compare with cpse. If either
