@@ -29,7 +29,7 @@
  *     + Chip erase in bootloader (faster than -c urclock emulation)
  *  - Avrdude (from v7.1 onwards) supports urboot bootloaders with -c urclock
  *
- * Supported and tested
+ * Supported and tested (for v7.7)
  *  - ATmega328P (Urclock, UrSense, UrclockMini, Uno, Duemilanove, Anarduino, Moteino, Jeenode etc)
  *  - ATmega1284P (UrclockMega, MoteinoMega)
  *  - ATmega2560 (Mega R3)
@@ -51,11 +51,11 @@
  *    AT90S2343, AT90S4414, AT90S4433, AT90S4434, AT90S8515, AT90C8534, AT90S8535)
  *  - AVR3 core without movw instructions (ATmega103, AT43USB320, AT43USB355, AT76C711)
  *
- * Unsupported (without planning to support them within this source code file)
+ * Unsupported within this source code file
  *  - ATxmega devices and newer AVR-DA/DB/DD/DU/EA/EB ... devices: these require different I/O
  *    code, different flash write code, different GPIO handling for LEDs & attached SPM memory
  *
- * Compiles but entirely untested for the following -mmcu=... options
+ * Compiles but untested for the following -mmcu=... options
  *   at90can128 at90can32 at90can64 at90pwm1 at90pwm161 at90pwm2 at90pwm216 at90pwm2b at90pwm3
  *   at90pwm316 at90pwm3b at90pwm81 at90scr100 at90usb1286 at90usb1287 at90usb162 at90usb646
  *   at90usb647 at90usb82 ata5272 ata5505 ata5702m322 ata5782 ata5790 ata5790n ata5791 ata5795
@@ -331,6 +331,8 @@
 #if EEPROM && (!defined(EESIZE) || EESIZE < 0)
 #error Need to know EESIZE to generate bootloader EEPROM code
 #endif
+
+
 
 /*
  * Different flash memory size categories:
@@ -1041,7 +1043,7 @@
  * register uint16_t zaddress asm("r30");
  *
  * For flash programming the strategy is to always use a 16 bit address and, if necessary, RAMPZ
- * to deal with larger addresses. The spm opcode uses RAMPZ/Z (Z=r31:30), elmp uses RAMPZ/Z, so
+ * to deal with larger addresses. The spm opcode uses RAMPZ:Z (Z=r31:30), elmp uses RAMPZ:Z, so
  * making the 16-bit address global and putting it in Z=r31:30 makes it "right at home". The only
  * trouble is that this register pair is call-clobbered, ie, is likely to be destroyed by library
  * function calls. Fortunately, this source does not use library calls. For the full application
@@ -1055,17 +1057,25 @@
 
 register uint16_t zaddress asm("r30");
 
+
 /*
  * Contrary to normal C programs global variables are *not* initialised, as we drop the
  * initialisation code, saving PROGMEM. Urboot only needs one flash page worth of SRAM:
  *
- * uint8_t ramstart[SPM_PAGESIZE];
+ * uint8_t rambuffer[SPM_PAGESIZE];
  */
 
-#define ramstart ((uint8_t *) RAMSTART)
+// Place rambuffer at 0x100 boundary if at least 32 bytes left for stack rcalls
+#if (RAMSTART & 0xFF) && ((RAMSTART+255) & ~0xFF) + SPM_PAGESIZE + 30 < RAMSTART+RAMSIZE
+#define RAMBUFFER ((RAMSTART+255) & ~0xFF)
+#else
+#define RAMBUFFER RAMSTART
+#endif
+
+#define rambuffer ((uint8_t *) RAMBUFFER)
 
 // Hi byte of low word or opcode at reset position (is 0xCX for rjmp and 0x94 for jmp)
-#define resethi8 ramstart[1]
+#define resethi8 rambuffer[1]
 #define isRjmp(op16hi) (((op16hi) & 0xF0) == 0xC0)
 
 
@@ -1230,7 +1240,7 @@ void bitDelay();
 
 static void chip_erase() {
   asm volatile(
-    ldi(r30, lo8(%[top]))       // Load Z/RAMPZ with START-CE_SIZE
+    ldi(r30, lo8(%[top]))       // Load RAMPZ:Z with START-CE_SIZE
     ldi(r31, hi8(%[top]))
 #if FLASHabove64k
     ldi(r25, hh8(%[top]))
@@ -1248,7 +1258,7 @@ static void chip_erase() {
 #endif
 #if FLASHabove64k
     "sbc r25, r1\n"
-    out_rampz(r25)             // Decrement Z/RAMPZ by CE_SIZE
+    out_rampz(r25)             // Decrement RAMPZ:Z by CE_SIZE
 #endif
     "brcc 1b\n"
   : "=z"(zaddress)
@@ -1274,32 +1284,14 @@ static void chip_erase() {
 #define RJMP_BWD_START (0xC000 | (((uint16_t)((START-FLASHEND-3UL)/2))&0xFFF))
 
 
-// Vector bootloader support
-#if VBL
-
-#if FLASHin8k
-typedef uint16_t VBLvect_t;     // AVRs with up to 8k of flash have 2-byte vectors (rjmp)
-#else
-typedef uint32_t VBLvect_t;     // Larger AVRs have 4-byte vectors (jmp)
-#endif
-
-#define rstVectOrig (((VBLvect_t *) ramstart)[0])
-#define appVectOrig (((VBLvect_t *) ramstart)[VBL_VECT_NUM])
-
-// The corresponding low/hi words of the interrupt vectors
-#define rstVectOrigLo (((uint16_t *) & rstVectOrig)[0])
-#define rstVectOrigHi (((uint16_t *) & rstVectOrig)[1])
-
-#define appVectOrigLo (((uint16_t *) & appVectOrig)[0])
-#define appVectOrigHi (((uint16_t *) & appVectOrig)[1])
-
-// Location of the saved reset vector in bytes
-#define appstart_vec_loc (VBL_VECT_NUM*sizeof(VBLvect_t))
-
+// Location of the application start vector in bytes
+#if VBL && FLASHin8k
+#define appstart_vec_loc (VBL_VECT_NUM*2)
+#elif VBL
+#define appstart_vec_loc (VBL_VECT_NUM*4)
 #else // !VBL
-
-#define appstart_vec_loc 0      // Jump to reset vector to reach application
-#endif // VBL
+#define appstart_vec_loc 0
+#endif
 
 
 #if DUAL
@@ -1350,21 +1342,21 @@ static void sfm_read_page() {
 
   // Copy one MCU flash page of data from SPI flash memory to SRAM
   asm volatile(
-    ldi(r26, lo8(RAMSTART))     // uint8_t *bufp = ramstart;
-    ldi(r27, hi8(RAMSTART))     // uint8_t n = SPM_PAGESIZE;
+    ldi(r26, lo8(RAMBUFFER))    // uint8_t *bufp = rambuffer;
+    ldi(r27, hi8(RAMBUFFER))    // uint8_t n = SPM_PAGESIZE;
   "1: "
     ldi(r24, 0)                 // do {
     "rcall spi_transfer\n"      //   *bufp++ = spi_transfer(0);
     "st X+, r24\n"              // } while(--n);
-     cpi(r26, lo8(RAMSTART + SPM_PAGESIZE))
+     cpi(r26, lo8(RAMBUFFER + SPM_PAGESIZE))
     "brne 1b\n"
 #if SPM_PAGESIZE == 256
     "subi  r27, 1\n"           // X = X - 256
-#elif (RAMSTART+SPM_PAGESIZE)/256 == RAMSTART/256
-     ldi(r26, lo8(RAMSTART))
+#elif (RAMBUFFER+SPM_PAGESIZE)/256 == RAMBUFFER/256
+     ldi(r26, lo8(RAMBUFFER))
 #else
-     ldi(r26, lo8(RAMSTART))
-     ldi(r27, hi8(RAMSTART))
+     ldi(r26, lo8(RAMBUFFER))
+     ldi(r27, hi8(RAMBUFFER))
 #endif
     ::: getch_clobberlist "r26", "r27", "r24"
   );
@@ -1467,22 +1459,22 @@ startingapp:
 
 #if EEPROM
 
-static void write_sram(uint8_t length) { // Write data from host into SRAM and reload X to RAMSTART
+static void write_sram(uint8_t length) { // Write data from host into SRAM and reload X to RAMBUFFER
   uint8_t xend = length;
 
   asm volatile(
-    ldi(r26, lo8(RAMSTART))
-    ldi(r27, hi8(RAMSTART))
-#if RAMSTART & 0xff
+    ldi(r26, lo8(RAMBUFFER))
+    ldi(r27, hi8(RAMBUFFER))
+#if RAMBUFFER & 0xff
     "add   %[xend], r26\n"
 #endif
   "1: rcall getch\n"
     "st    X+, r24\n"
     "cpse  %[xend], r26\n"
     "rjmp  1b\n"
-    ldi(r26, lo8(RAMSTART))
-    ldi(r27, hi8(RAMSTART))
-#if RAMSTART & 0xff             // Tell gcc that xend will be changed
+    ldi(r26, lo8(RAMBUFFER))
+    ldi(r27, hi8(RAMBUFFER))
+#if RAMBUFFER & 0xff            // Tell gcc that xend will be changed
    : [xend] "=r"(xend) : "0"(xend)
 #else
    :: [xend] "r"(xend)
@@ -1493,21 +1485,21 @@ static void write_sram(uint8_t length) { // Write data from host into SRAM and r
 
 #else
 
-static void write_sram_spm_pagesize(void) { // Also resets X to ramstart at end
+static void write_sram_spm_pagesize(void) { // Also resets X to rambuffer at end
   asm volatile(
-     ldi(r26, lo8(RAMSTART))
-     ldi(r27, hi8(RAMSTART))
+     ldi(r26, lo8(RAMBUFFER))
+     ldi(r27, hi8(RAMBUFFER))
  "1: rcall getch\n"
     "st    X+, r24\n"
-     cpi(r26, lo8(RAMSTART + SPM_PAGESIZE))
+     cpi(r26, lo8(RAMBUFFER + SPM_PAGESIZE))
     "brne  1b\n"
 #if SPM_PAGESIZE == 256
     "subi  r27, 1\n"           // X = X - 256
-#elif (RAMSTART+SPM_PAGESIZE)/256 == RAMSTART/256
-     ldi(r26, lo8(RAMSTART))
+#elif (RAMBUFFER+SPM_PAGESIZE)/256 == RAMBUFFER/256
+     ldi(r26, lo8(RAMBUFFER))
 #else
-     ldi(r26, lo8(RAMSTART))
-     ldi(r27, hi8(RAMSTART))
+     ldi(r26, lo8(RAMBUFFER))
+     ldi(r27, hi8(RAMBUFFER))
 #endif
     ::: getch_clobberlist "r26", "r27", "r24"
   );
@@ -2271,7 +2263,7 @@ void pgm_write_page(void *sram, progmem_t pgm) {
 
 #else // !PGMWRITEPAGE
 
-void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAMPZ/Z
+void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAMPZ:Z
   asm volatile(                 // ) }
 #endif // PGMWRITEPAGE
 
@@ -2279,14 +2271,14 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
  * Compute low byte of the sram address at end of loop that reads SPM_PAGESIZE bytes, so we can
  * compare with cpse. If either
  *   - the low byte of SPM_PAGESIZE is zero or
- *   - no PGMWRITEPAGE (then the sram address is the constant ramstart)
+ *   - no PGMWRITEPAGE (then the sram address is the constant rambuffer)
  * it is a mov/ldi, otherwise add low byte of sram to low byte of SPM_PAGESIZE for end condition.
  * The loop is for no more than 256 bytes, so single byte arithmetic is OK.
  */
 #if (SPM_PAGESIZE & 0xff) == 0  // Determine loop end comparison reg r23
     "mov  r23, r26\n"           // No need to add, just copy low byte of sram address
-#elif !PGMWRITEPAGE             // No page write? This routine is only used for sram=RAMSTART
-     ldi(r23, lo8(RAMSTART + SPM_PAGESIZE))
+#elif !PGMWRITEPAGE             // No page write? This routine is only used for sram=RAMBUFFER
+     ldi(r23, lo8(RAMBUFFER + SPM_PAGESIZE))
 #else
      ldi(r23, lo8(SPM_PAGESIZE))
     "add  r23, r26\n"           // r23 = lo8(len + sram) for loop end comparison with lo8(X)
