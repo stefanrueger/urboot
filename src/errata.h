@@ -58,11 +58,13 @@
 #elif defined(__AVR_ATA664251__)
 #undef  SPM_PAGESIZE
 #undef  FLASHEND
+#undef  RAMEND
 #undef  SIGNATURE_1
 #undef  SIGNATURE_2
 
 #define SPM_PAGESIZE 128
 #define FLASHEND 0x3FFF
+#define RAMEND 0x02FF
 #define SIGNATURE_1 0x94
 #define SIGNATURE_2 0x87
 

@@ -293,7 +293,6 @@
 
 #include "urboot_wdt.h"         // Don't use <avr/wdt.h> owing to unwanted interrupt overhead
 #include "urboot_ioregs.h"      // I/O register definitions; RAM and EEPROM sizes
-#include "urboot_bool.h"        // Provide 8 Booleans in I/O space so compiler uses sbi, cbi, ...
 #include "pin_defs.h"           // Definitions for LEDs and REG names (include after urboot_ioregs.h)
 #include "errata.h"
 
@@ -489,13 +488,18 @@
 #ifndef CHIP_ERASE
 #define CHIP_ERASE (FRILLS >= 7)
 #endif
+
+// Flash needs erasing before writing if write page function exported or there is no CE
+#define ERASE_B4_WRITE (PGMWRITEPAGE || !CHIP_ERASE)
+
 #ifndef UPDATE_FL
 #if FOUR_PAGE_ERASE
 #define UPDATE_FL             0
 #else
-#define UPDATE_FL (FRILLS >= 6)
+#define UPDATE_FL (FRILLS >= 10? 4: FRILLS >= 9? 3: FRILLS >= 8? 2: FRILLS >= 6)
 #endif
 #endif // UPDATE_FL
+
 #ifndef QEXITEND
 #define QEXITEND  (FRILLS >= 5)
 #endif
@@ -518,9 +522,6 @@
 #define UPDATE_FL             0
 #warning Unsetting UPDATE_FL option on FOUR_PAGE_ERASE parts
 #endif
-
-// Flash needs erasing before writing if write page function exported or there is no CE
-#define ERASE_B4_WRITE (PGMWRITEPAGE || !CHIP_ERASE)
 
 #if defined(DEBUG_FREQ)
 // Set LED pin as default if no frequency pin defined
@@ -1080,10 +1081,10 @@ register uint16_t zaddress asm("r30");
 
 
 #if FLASHabove64k
-#define LPM "elpm"
+#define LPM "elpm "
 typedef const uint_farptr_t progmem_t;
 #else
-#define LPM "lpm"
+#define LPM "lpm "
 typedef const void *progmem_t;
 #endif
 
@@ -1246,12 +1247,41 @@ static void chip_erase() {
     ldi(r25, hh8(%[top]))
     out_rampz(r25)
 #endif
-"1: "
+  "1: "
     "wdr\n"                     // Reset WDT as CE can take a long time
+
+#if UPDATE_FL >= 2
+    "movw r18, r30\n"
+#if CE_SIZE == 256              // Determine loop end comparison reg r23
+    "mov  r23, r30\n"
+#else
+     ldi(r23, lo8(CE_SIZE))
+    "add  r23, r30\n"
+#endif
+  "2: "
+    LPM "r22, Z+\n"             // Might increment RAMPZ
+    cpi(r22, 0xff)
+    "brne 3f\n"                 // Leave loop at first non-0xff
+    "cpse r30, r23\n"           // Cpse does not change SREG (and its Z-bit)
+    "rjmp 2b\n"
+  "3: "
+    "movw r30, r18\n"
+#if FLASHabove64k
+    out_rampz(r25)
+#endif
+    "breq 4f\n"                 // Skip page erase if the page was all 0xff
+#endif // UPDATE_FL
+
     ldi(r24, __BOOT_PAGE_ERASE)
     "rcall ub_spm\n"            // Erase page
+#if defined(RWWSRE)
+    "rcall rww_enable\n"
+#endif
+ "4: "
 #if CE_SIZE == 256
     subi(r31, 1)
+#elif CE_SIZE <= 32
+    sbiw(r30, CE_SIZE)
 #else
     subi(r30, CE_SIZE)
     "sbc r31, r1\n"
@@ -1263,10 +1293,14 @@ static void chip_erase() {
     "brcc 1b\n"
   : "=z"(zaddress)
   : [top] "n"((uint32_t) (START-CE_SIZE))
-  : "r24"
+  :
 #if FLASHabove64k
-    , "r25"
+    "r25",
 #endif
+#if UPDATE_FL >= 2
+    "r23", "r22", "r18", "r19",
+#endif
+    "r24"
   );
 }
 
@@ -1618,11 +1652,6 @@ int main(void) {
   SP = RAMEND;
 #endif
 
-// Caller to set UB_INIT_BOOL if UB_BOOL needs clearing after reset
-#if defined(UB_INIT_BOOL) && UB_INIT_BOOL && defined(UB_BOOL)
-  UB_BOOL = 0;
-#endif
-
   // Copy reset flags and clear them
   mcusr = UB_MCUSR;
   UB_MCUSR = 0;
@@ -1701,15 +1730,15 @@ int main(void) {
 #define autobaud(store_brrl) \
    "ldi  r26, 0x7f\n"           /* Initialise X with -0.5 in 8-bit fixed point representation */ \
    "ldi  r27, 0xff\n"           /* Want XH = UBRRnL = F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
- "1:" \
+ "1: " \
    "sbic %[RXPin], %[RXBit]\n"  /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
    "rjmp 1b\n" \
- "2:" \
+ "2: " \
     adiw(r26, auto_inc)         /* Increment r26:27 so that final value of r27 is BRRL divisor */ \
    "sbis %[RXPin], %[RXBit]\n"  /* Loop as long as rx bit is low */ \
    "rjmp 2b\n"                  /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */ \
     store_brrl                  /* Store r27 to BRRL register */ \
- "3:" \
+ "3: " \
    "sbiw r26, 1\n"              /* Drain input: run down X for 25.6 rx bits (256/8 * 4 c/5 c) */ \
    "brne 3b\n"                  /* 4-cycle loop */
 
@@ -1753,7 +1782,7 @@ int main(void) {
     ldi(r24, hi8(%[baud_setting]))
     out_ubrrnh(r24)             // UBRRnH = BAUD_SETTING>>8;
 #endif
- ".global ldi_baud\nldi_baud:"  // Mark location of baud setting
+ ".global ldi_baud\nldi_baud: " // Mark location of baud setting
     ldi(r24, lo8(%[baud_setting]))
     out_ubrrnl(r24)             // UBRRnL = BAUD_SETTING & 0xff;
 #endif // AUTOBAUD
@@ -1771,7 +1800,7 @@ int main(void) {
   ::
 #if !AUTOBAUD
     [baud_setting] "n"(BAUD_SETTING),
-    [shared_setting] "n"((BAUD_SETTING>>8)<<4),
+    [shared_setting] "n"((uint8_t) ((BAUD_SETTING>>8)<<4)),
 #endif
     [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX))
   : "r26", "r27", "r24"
@@ -1790,7 +1819,7 @@ int main(void) {
     "ldi r27, hi8(%[brrl_val])\n"
     "std Z+%[brrh_off], r27\n"
 #endif
-  ".global ldi_baud\nldi_baud:" // Mark location of baud setting
+  ".global ldi_baud\nldi_baud: " // Mark location of baud setting
     "ldi r27, lo8(%[brrl_val])\n"
     "std Z+%[brrl_off], r27\n"
 #endif // AUTOBAUD
@@ -1838,13 +1867,13 @@ int main(void) {
   asm volatile(
     "ldi r30, lo8(%[base])\n"   // Load Z for st Z+offset, r27
     "ldi r31, hi8(%[base])\n"
-  ".global ldi_linlbt\nldi_linlbt:" // Mark location of LINLBT setting
+  ".global ldi_linlbt\nldi_linlbt: " // Mark location of LINLBT setting
     "ldi r27, %[btr_val]\n"
     "std Z+%[btr_off], r27\n"
 #if AUTOBAUD
     autobaud("std Z+%[brrl_off], r27\n")
 #else
-  ".global ldi_linbaud\nldi_linbaud:" // Mark location of LIN baud setting
+  ".global ldi_linbaud\nldi_linbaud: " // Mark location of LIN baud setting
     "ldi r27, %[brrl_val]\n"
     "std Z+%[brrl_off], r27\n"
 #endif
@@ -1960,8 +1989,8 @@ int main(void) {
       uint8_t length = getaddrlength();
       get_sync();
       asm volatile(
-      "1:"
-        LPM " r24, Z+\n"        // do {
+      "1: "
+        LPM  "r24, Z+\n"        // do {
         "rcall putch\n"         //   putch(*zaddress++);
         "subi %[len], 1\n"      // } while(--length);
         "brne 1b\n"
@@ -1975,7 +2004,7 @@ int main(void) {
       uint8_t length = getaddrlength();
       get_sync();
       asm volatile(
-      "1:"
+      "1: "
 #if EESIZE > 256
         out_eearh(r31)
 #endif                          // do {
@@ -2038,9 +2067,9 @@ void putch(char chr) {
     "ldi  r18, 10\n"            // Start bit, 8 data bits, 1 stop bit
     "com  %[chr]\n"             // One's complement
     "sec\n"                     // Set carry (for start bit)
-  "1:"
+  "1: "
     "brcc 2f\n"
-  ".global cbi_tx\ncbi_tx:"     // Mark location of cbi tx opcode
+  ".global cbi_tx\ncbi_tx: "    // Mark location of cbi tx opcode
     "cbi %[TXPort], %[TXBit]\n" // Set carry puts line low
     "rjmp 3f\n"
   "2: "
@@ -2058,7 +2087,7 @@ void putch(char chr) {
 
   "bitDelay: \n"
 #if B_EXTRA == 1 || B_EXTRA == 2
-    ".global swio_extra\nswio_extra:" // Mark location of SWIO extra delay
+    ".global swio_extra\nswio_extra: " // Mark location of SWIO extra delay
 #endif
 #if B_EXTRA & 1
     "nop\n"
@@ -2069,7 +2098,7 @@ void putch(char chr) {
     "rcall halfBitDelay\n"
     "halfBitDelay: "
 #if SWIO_B_VALUE > 0
-    ".global ldi_bvalue\nldi_bvalue:" // Mark location of ldi SWIO_B_VALUE
+    ".global ldi_bvalue\nldi_bvalue: " // Mark location of ldi SWIO_B_VALUE
     "ldi r25, %[bvalue]\n"
   "1: "
     "dec r25\n"
@@ -2132,7 +2161,7 @@ uint8_t getch(void) {
 #else // SWIO
 
     "ldi   r18, 9\n"            // 8 bit + 1 stop bit
-  ".global sbic_rx\nsbic_rx:"   // Mark location of sbic rx opcode
+  ".global sbic_rx\nsbic_rx: "  // Mark location of sbic rx opcode
   "1: "
     "sbic  %[RXPin], %[RXBit]\n" // Wait for falling edge of start bit
     "rjmp  1b\n"
@@ -2201,25 +2230,25 @@ void watchdogConfig(uint8_t x) {
 
 
 // Optimise backing up and restoring Z below
-#if !UPDATE_FL && SPM_PAGESIZE == 256 // Neat trick: subtract 256
+#if SPM_PAGESIZE == 256 // Subtract 256
 #define backupZ
 #define restoreZ "subi r31, 1\n"
 #define clobberZ
 
-#elif !UPDATE_FL && SPM_PAGESIZE <= 32
+#elif SPM_PAGESIZE <= 32
 #define backupZ
 #define restoreZ sbiw(r30, SPM_PAGESIZE)
 #define clobberZ
 
-#elif !UPDATE_FL && !DUAL       // Only DUAL requires writebufferX() leaves Z invariant
-#define backupZ
-#define restoreZ "sbiw r30, 2\n" // Just get Z back to previous page
-#define clobberZ
-
-#else                           // Either UPDATE_FL or DUAL require full backup/restore
+#elif UPDATE_FL || DUAL         // Either requires a full backup/restore
 #define backupZ  "movw r18, r30\n"
 #define restoreZ "movw r30, r18\n"
 #define clobberZ "r19", "r18",
+
+#else
+#define backupZ
+#define restoreZ "sbiw r30, 2\n" // Just get Z back to previous page
+#define clobberZ
 #endif
 
 /*
@@ -2228,13 +2257,15 @@ void watchdogConfig(uint8_t x) {
  * zaddress  r31:30 global
  * X         r27:26 local pointer (scans through sram)
  * sram      r25:24 argument as input
+ *           r25    used as Boolean variable for UPDATE_FL
  * argument  r24    used for calling ub_spm and as temporary register
  * pgm       r23:22 argument if flash <= 64 kB (otherwise high 16 bit of pgm)
  *           r21:20 argument low 16 bit of pgm if flash > 64 kB
- * origsram  r21:20 copy of sram for UPDATE_FL comparison loop
+ *           r20    old byte from PROGMEM (UPDATE_FL only)
+ *           r21    new to-be-written byte from SRAM (UPDATE_FL only)
  * origRAMPZ r22    third byte of 32 bit pgm argument if flash > 64 kB
  * xloopend  r23    lo8(X) at end of loop (for comparison)
- * origzaddr r19:18 copy of global address in Z (when needed)
+ * origzaddr r19:18 copy of global address in Z (when needed, see clobberZ)
  *           r1     null on return (compiler relies on r1 being 0)
  * tmp       r0
  *
@@ -2265,7 +2296,9 @@ void pgm_write_page(void *sram, progmem_t pgm) {
 void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAMPZ:Z
   asm volatile(                 // ) }
 #endif // PGMWRITEPAGE
+
     andi(r30, lo8(~(SPM_PAGESIZE-1))) // Ensure Z aligns with page boundary
+
 /*
  * Compute low byte of the sram address at end of loop that reads SPM_PAGESIZE bytes, so we can
  * compare with cpse. If either
@@ -2274,7 +2307,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
  * it is a mov/ldi, otherwise add low byte of sram to low byte of SPM_PAGESIZE for end condition.
  * The loop is for no more than 256 bytes, so single byte arithmetic is OK.
  */
-#if (SPM_PAGESIZE & 0xff) == 0  // Determine loop end comparison reg r23
+#if SPM_PAGESIZE == 256         // Determine loop end comparison reg r23
     "mov  r23, r26\n"           // No need to add, just copy low byte of sram address
 #elif !PGMWRITEPAGE             // No page write? This routine is only used for sram=RAMBUFFER
      ldi(r23, lo8(RAMBUFFER + SPM_PAGESIZE))
@@ -2315,53 +2348,80 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
     "ldi   r24, hi8(%[rjmp_bwd_start])\n"
     "st    X, r24\n"
     "sbiw  r26, 1\n"            // Restore X pointer to ram
-"not_reset_page:"
+  "not_reset_page: "
 #endif
 
-#if UPDATE_FL                   // Return if flash page already has desired contents
-    "movw  r20, r26\n"          // origsram = sram
+#if UPDATE_FL >= 1              // Return if flash page already has desired contents
+    ldi(r25, 0)                 // Set all Booleans to 0
   "3: "
-     LPM " r0, Z+\n"            // Load existing byte from PROGMEM, might increment RAMPZ
-    "ld    r1, X+\n"            // Load new byte from ram page
+     LPM  "r20, Z+\n"           // Load existing byte from PROGMEM, might increment RAMPZ
+    "ld    r21, X+\n"           // Load new byte from ram page
 #if !ERASE_B4_WRITE
-    "and   r1, r0\n"            // New byte can only delete existing 1's in NOR memory
-#elif ERASE_B4_WRITE && defined(UB_BOOL) && !PGMWRITEPAGE
-    "cpse  r0, r1\n"            // Set writepg Boolean if contents differs
-    "sbi %[writepg], 0\n"
-    "and   r0, r1\n"            // Check if new byte from ram would set a bit
+    "and   r21, r20\n"          // New byte can only delete existing 1's in NOR memory
 #endif
-    "cp    r0, r1\n"
-    "brne  need_write\n"        // sram would change PROGMEM, must write
-    "cpse  r26, r23\n"          // Finished? (cpse leaves SREG unchanged)
+    "cpse  r20, r21\n"          // Does a page write make a difference?
+    "ori r25, 1<<%[differ]\n"
+
+#if ERASE_B4_WRITE && UPDATE_FL >= 4
+    cpi(r21, 0xff)              // Are any of the to-be-written bytes not 0xff?
+    "breq .+2\n"
+    "ori r25, 1<<%[notff]\n"
+#endif
+
+#if ERASE_B4_WRITE && UPDATE_FL >= 3
+    "and   r20, r21\n"          // Check if new byte from ram would set a bit
+    "cpse  r20, r21\n"
+    "ori r25, 1<<%[clearpg]\n"  // If so PROGMEM needs erasing before write
+#endif
+
+    "cpse  r26, r23\n"          // Finished?
     "rjmp  3b\n"
 
-  "need_write:"                 // SREG's Z bit set if above cp r0, r1 found they are the same
     restoreZ
 #if FLASHabove64k
-     out_rampz(r22)             // Restore RAMPZ should it have gone over 64 kB boundary
+    out_rampz(r22)              // Restore RAMPZ should it have gone over 64 kB boundary
 #endif
-    "movw  r26, r20\n"          // Restore sram
-#if ERASE_B4_WRITE && defined(UB_BOOL) && !PGMWRITEPAGE
-    "sbis %[writepg], 0\n"
-    "rjmp ub_ret\n"             // If writepg is not set can return straight away
-    "cbi %[writepg], 0\n"       // Clear writepg Boolean
-    "breq  skip_erase\n"        // Can skip erase as no bit in page needs setting
-#else
-    "breq  ub_ret\n"            // Return if last two bytes were the same, too
+#if SPM_PAGESIZE == 256         // Restore sram
+    "dec r27\n"
+#elif SPM_PAGESIZE <= 32
+    sbiw(r26, SPM_PAGESIZE)
+#elif !PGMWRITEPAGE && (RAMBUFFER+SPM_PAGESIZE)/256 == RAMBUFFER/256
+    ldi(r26, lo8(RAMBUFFER))    // sram was RAMBUFFER if we don't offer pgm_write_page()
+#else                           // Any sram, subtracy SPM_PAGESIZE to go to start
+    subi(r26, SPM_PAGESIZE)
+    "sbc r27, r1\n"
+#endif
+
+    "sbrs r25, %[differ]\n"
+    "rjmp ub_ret\n"             // Return straight away if page write not needed
+
+#if ERASE_B4_WRITE && UPDATE_FL >= 3
+    "sbrs r25, %[clearpg]\n"
+    "rjmp skip_erase\n"         // Can skip erase when no bit in page needs setting
 #endif
 #endif // UPDATE_FL
 
 #if ERASE_B4_WRITE
 #if FOUR_PAGE_ERASE             // 3*SPM_PAGESIZE fits in one byte for those
      ldi(r24, 3*SPM_PAGESIZE)   // if(!(zaddress & 3*SPM_PAGESIZE))
-    "and   r24, r30\n"          //   ub_page_erase();
-    "brne  skip_erase\n"
+    "and  r24, r30\n"           //   ub_page_erase();
+    "brne skip_erase\n"
 #endif
     ldi(r24, __BOOT_PAGE_ERASE)
     "rcall ub_spm\n"
-#endif
-  "skip_erase: "
 
+#if UPDATE_FL >= 4              // All data 0xff? Page just erased no need to write
+#if defined(RWWSRE)
+    "sbrs r25, %[notff]\n"
+    "rjmp rww_enable\n"
+#else
+    "sbrs r25, %[notff]\n"
+    "rjmp ub_ret\n"
+#endif
+#endif // UPDATE_FL >= 4
+#endif // ERASE_B4_WRITE
+
+  "skip_erase: "
      ldi(r24, __BOOT_PAGE_FILL)
   "1: "
     "ld    r0,  X+\n"
@@ -2375,6 +2435,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
     ldi(r24, __BOOT_PAGE_WRITE)
 #if defined(RWWSRE)
     "rcall ub_spm\n"
+  "rww_enable: "
     ldi(r24, __BOOT_RWW_ENABLE)
 #endif                          // Fall through to ub_spm and return
 
@@ -2391,16 +2452,23 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
   "ub_ret: "
     "eor r1, r1\n"              // R1 will also have been destroyed on spm for fill page
   ::
-    [start] "n"((uint32_t) START),
-#if ERASE_B4_WRITE && UPDATE_FL && defined(UB_BOOL) && !PGMWRITEPAGE
-    [writepg] "I"(_SFR_IO_ADDR(UB_BOOL)),
+#if UPDATE_FL
+    [differ] "I"(0),            // Do SRAM and PROGMEM effecively differ? (bit 0 in r25)
+#if ERASE_B4_WRITE
+#if UPDATE_FL >=4
+    [notff] "I"(1),             // Is one of the new bytes in SRAM 0xff?
 #endif
+#if UPDATE_FL >= 3
+    [clearpg] "I"(2),           // Does the page need erasing?
+#endif
+#endif
+#endif
+    [start] "n"((uint32_t) START),
     [rjmp_bwd_start] "n"(RJMP_BWD_START)
-  : "r31", "r30", "r27", "r26", "r24", "r23", "r22",
+  : clobberZ "r31", "r30", "r27", "r26", "r25", "r24", "r23", "r22",
 #if UPDATE_FL
     "r21", "r20",
 #endif
-    clobberZ
     "r0"
   );
 }
