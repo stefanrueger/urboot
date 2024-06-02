@@ -9,13 +9,6 @@ there is. However, consider carefully what you need:
  - **EPROM** access is generally thought of as useful. Applications can read initialisation
    parameters from EEPROM and store results there in the safe knowledge that the bootloader gives
    the user independent access to EEPROM.
- - **Protocol `u` or `s`.** Bootloaders with the `s` bit implement a skeleton STK500 protocol; they
-   can normally also be programmed using `avrdude -c arduino`; the `s` protocol does *not* increase
-   functionality but costs *a lot* of bootloader code space; they are only recommended when no
-   recent version of avrdude with `-c urclock` programmer is available. The general recommendation
-   is to always use bootloaders with the `u` urprotocol bit set. They are the *native* bootloaders
-   for `-c urclock`. Once newer avrdude versions with `-c urclock` are widely available the `s`
-   protocol is likely to be deprecated improving the clarity of the urboot.c source.
  - **Dual boot.** If there is no plan for over-the-air programming, and no external SPI flash on
    your board either, there is little benefit of using a dual-boot bootloader. Whilst they deal
    gracefully with a board that has no external SPI flash memory, they will add a little delay at
@@ -66,6 +59,12 @@ there is. However, consider carefully what you need:
    does not offer chip erase `avrdude -c urclock` erases flash during upload of a new application
    by filling unused flash with 0xff; the extra time needed is hardly noticeable on small devices up
    to 8k flash making chip erase in the bootloader itself undesirable here.
+ - **Update flash** as opposed to write is a useful feature to counter wear of flash by only
+   writing to flash if the desired contents is not already there. Very useful for projects that use
+   extensively the bootloader-provided `pgm_write_page(sram, flash)` routine in application space.
+   Generally, `UPDATE_FL=1` is sufficient, though, if there is still space in the bootloader, why
+   not go full monty with `UPDATE_FL=4`. The last level `4` has diminishing returns in terms of
+   wearing flash out less but that will be the fastest urboot implementation there is.
  - **LED.** The same goes for the six additional code bytes spent for LED toggling. The novelty of
    the bootloader blinking during upload/download wears quickly off, and projects can not normally
    re-purpose the LED line without it being used as output during external reset.
@@ -78,3 +77,9 @@ there is. However, consider carefully what you need:
    of the bootloader, for example that the application is started sooner after upload, or that frame
    errors in the serial communication get the bootloader to exit quickly. It is OK not to have these
    frills, particlarly when it means an extra memory page for *every* application.
+ - Urboot v7.7 and earlier had a choice of **protocol `u` or `s`.** Bootloaders with the `s` bit
+   implemented a skeleton STK500 protocol; they could normally also be programmed using `avrdude
+   -c arduino`; the `s` protocol did *not* increase functionality but costed *a lot* of bootloader
+   code space; they were only recommended when no version of avrdude with `-c urclock` programmer
+   was available. As recent avrdude versions with the necessary urclock programmer are now
+   reasonably widely distributed, urboot v8.0 and above no longer offer the `s` protocol.

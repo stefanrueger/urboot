@@ -14,6 +14,7 @@ modules:
   POSIX
   Scalar::Util
   Getopt::Long
+  Number::Range
 ```
 They can normally be installed using `cpan install <module>`. On the first run, `cpan` may need
 to be configured. Follow the recommendations there; my personal choice for the way cpan installs
@@ -197,27 +198,25 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
 
 ## Main functional features
 
- - `URPROTOCOL=<0|1>`
+ - `URPROTOCOL=<1|0>`
 
-   When set to 0, this option implements a skeleton of the STK500v1 protocol and generates extra
-   code that is needed for avrdude's arduino programmer to work with the bootloader. The generated
-   code at places does not do anything useful except keeping the STK500 v1 protocol going: `avrdude
-   -c arduino` is a full-fledged `stk500v1` programmer, which issues a couple of requests to set
-   the device that are not needed here and wants to read fuses. With `URPROTOCOL=0` the generated
-   code gracefully accepts these requests but ignores them or, worse, returns a value that is just
-   not true: for example, the bootloader pretends the fuses are `0xff`.
+   From urboot v8.0, this option is no longer available and deemed to be switched on.
+
+   When set to 0, this option used to implement a skeleton of the STK500v1 protocol that generated
+   extra code needed for avrdude's arduino programmer to work with the bootloader. The generated
+   code at places did not do anything useful except keeping the STK500 v1 protocol going for the
+   `avrdude -c arduino` programmer, which would issue a couple of requests to set the device that
+   are not needed. With `URPROTOCOL=0` the generated code gracefully accepted these requests but
+   ignored them or, worse, returned a value that just was not true: for example, the so generated
+   bootloader pretended the fuses are `0xff`.
 
    `URPROTOCOL=1` works with a version of avrdude that offers an urclock programmer. The protocol
-   is different to STK500v1, so that an MCU id and a few other features of this bootloader are sent
-   to avrdude. Generally `URPROTOCOL=1` requires the bootloader to do much less work and shifts
-   some of the work to the programmer. In this case, it is needed to run `avrdude -c urclock` for
-   programming and `-c arduino` will not work. Setting `URPROTOCOL=1` saves between 76 and 112
-   bytes.
+   is different to STK500v1, so that an MCU id and a few other features of this bootloader are
+   sent to avrdude. Generally `URPROTOCOL=1` requires the bootloader to do much less work and
+   shifts some of the work to the programmer. As Avrdude v7.1 with its urclock programmer is
+   reasonably well distributed, urboot v8.0+ bootloaders *only* ever use urprotocol. This
+   simplifies `urboot.c` and its maintenance.
 
-   For historical reasons the default is `URPROTOCOL=0` though that is rarely useful. Once Avrdude
-   v7.1 with its urclock programmer is reasonably well distributed, it is likely that `URPROTOCOL=1`
-   will become the default. At some point `URPROTOCOL=0` will be withdrawn altogether to
-   simplify `urboot.c`.
 
  - `WDTO=<timeout>` (watchdog timeout)
 
@@ -242,23 +241,23 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
 
    This option is valid for parts that do not have a `UPDI` interface. It determines whether or not
    a vector bootloader is generated. The default for this option is `VBL=0` for devices that have
-   hardware boot section support.
+   hardware boot section support. As planned, from urboot v8.0 VBL=2 or VBL=3 are no longer
+   available.
 
    `VBL=1` creates a vector bootloader: The AVR interrupt vector table consists of 4-byte `jmp`
    instructions or 2-byte `rjmp` instructions (if the MCU has no more than 8 kB flash it is always
    a `rjmp`). The reset vector is the first in the table, and contains a jump instruction to the
-   start of the application. A vector bootloader (`VBL=1`, `2`, or `3`) is a hook between the reset
-   vector and the application, where the reset vector has been made to point to the bootloader, and
-   the bootloader - once finished - jumps to a dedicated but otherwise unused interrupt vector that
-   has been made to point to the application. This trick provides a bootloader for boards or MCUs
-   without boot section support (think Trinket, Digispark, ATmega48, ...). On MCUs with boot
-   section support one can utilise a vector bootloader, too, by changing the fuses to jump to
-   `0x0000` on external reset. This way the boot section can start at any multiple of
-   `SPM_PAGESIZE` in high flash space, which can considerably reduce the space taken by the
-   bootloader. For example, an ATmega328P system can then use 384 bytes (3 pages) rather than the
-   otherwise minimum 512 bytes boot section. Likewise, those MCUs with 1 kB minimum boot size
-   (ATmega1284P, eg) might save considerably more space that would otherwise needlessly be used for
-   the bootloader.
+   start of the application. A vector bootloader is a hook between the reset vector and the
+   application, where the reset vector has been made to point to the bootloader, and the bootloader
+   - once finished - jumps to a dedicated but otherwise unused interrupt vector that has been made
+   to point to the application. This trick provides a bootloader for boards or MCUs without boot
+   section support (think Trinket, Digispark, ATmega48, ...). On MCUs with boot section support one
+   can utilise a vector bootloader, too, by changing the fuses to jump to `0x0000` on external
+   reset. This way the boot section can start at any multiple of `SPM_PAGESIZE` in high flash
+   space, which can reduce the space taken by the bootloader. For example, an ATmega328P system can
+   then use 384 bytes (3 pages) rather than the otherwise minimum 512 bytes boot section. Likewise,
+   those MCUs with 1 kB minimum boot size (ATmega1284P, eg) might save considerably more space that
+   would otherwise needlessly be used for the bootloader.
 
    By default, a vector bootloader loses one interrupt vector that no program ever can use on that
    device. Urboot chooses a "rare" vector of the target MCU to store a jump instruction to the
@@ -296,30 +295,13 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    top of the boot section (see below), so that `avrdude -c urclock` can and will apply the patch
    for upload and verification auto-magically.
 
-   If neither avrdude nor external patching of applications fits the workflow, one can alternatively
-   compile a bootloader with `VBL=2` or `3`, so it patches the vectors at the cost of enlarged code
-   size. Options `VBL=2` or `3` both create a vector bootloader that copies the reset vector of a
-   program during upload into an unused interrupt vector and replaces the reset vector with a jump
-   to the bootloader. Once the bootloader has modified the uploaded program, `avrdude -c arduino`
-   would notice the changes in the verification step and complain. `VBL=3` creates code that
-   specifically alters verification of the first page at address zero, which contains the vector
-   table, so a copy of the uploaded vector page is returned. This way, everything except the page
-   with the modified vector table is being verified. A serial communication error on the first page
-   would still be discovered as the bootloader returns what it has read. Note that verification of
-   the vector page is altered only when immediately done after programming, ie, when using
-   avrdude's implicit verify option. If the program flash is read in a separate avrdude call then
-   the real contents is returned as it should be. From version 7.5 onwards the `VBL=2` or `3` code
-   checks whether the reset vector already points to the bootloader, in which case the patch is not
-   executed. Consequently, verification of the page at zero is not altered. This is done to allow
-   both un-patched and patched applications be uploaded with a vector bootloader when VBL is set to
-   2 or 3.
 
-   `VBL=1` is recommended over `VBL=2` or `3` as the bootloader code to patch the incoming
-   application on the device makes more assumptions than avrdude's urclock programmer. Once avrdude
-   v7.1 with its urclock programmer is reasonably well distributed, it is likely that options
-   `VBL=2` and `VBL=3` are going to be deprecated as patching the application vectors in *every*
-   bootloader is not a good use of flash if that an be done by the uploader program. Removing these
-   options will simplify the source code `urboot.c`.
+   Earlier urboot versions up to v7.7 could compile a bootloader with `VBL=2` or `3`, so the
+   bootloader itself patches the vectors at the cost of enlarged code size. As avrdude v7.1 with
+   its urclock programmer is now reasonably well distributed, options `VBL=2` and `VBL=3` are no
+   longer relevant as patching the application vectors in *every* bootloader is not a good use of
+   flash if that can be done by the uploader program. Removing these options has simplified the
+   source code `urboot.c`.
 
    Burning a VBL-enabled urboot onto an MCU should in theory also require the jump to boot section
    be burned to the reset vector. The accompanying `urloader` sketch does that.  However, one will
@@ -343,7 +325,6 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    application has just reprogrammed itself: Voila! Useful for those wireless projects that are
    installed where they are kind of hard to get to. The default is `DUAL=0`.
 
-
    The `SFMCS=<AtmelPxx|ArduinoPinX>` option encodes the pin number of the SPI flash memory chip
    select line: either use a constant such as `AtmelPB0` (port B, pin 0) or, eg, `ArduinoPin8`,
    which uses the Arduino Pin numbers that are available for some boards/MCUs.
@@ -362,7 +343,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    bootloader uses hardware boot section support and the lock bits are set to protect the
    bootloader. As the protection code is only between 4 and 10 bytes and the user might forget
    protecting the hardware-supported boot section through lockbits, this protection can no longer
-   be switched off from v7.7 onwards.
+   be switched off from urboot v7.7 onwards.
 
 
  - `PROTECTRESET=<1|0>`
@@ -462,14 +443,40 @@ The options below are frills, ie, not really essential for the functionality of 
    bootloader's chip erase, as it carries the overhead of sending `0xff` bytes over the serial
    interface. Setting this option will cost around 16-38 bytes code.
 
+ - `UPDATE_FL=<0|1|2|3|4>` (skip unnecessary page erases or writes)
+
+    This option is new in urboot v8.0. It allows various degrees of updating flash rather than
+    writing to it unconditionally. Flash memory of AVR microprocessors is physically organised in
+    pages that need erasing (all bytes set to `0xff`) before writing new content to them.  Write
+    and, in particular, erase cycles reduce the endurance of flash memory to the extent that the
+    data sheet only warrants a certain number of them, typically 100,000. `UPDATE_FL=1` adds code
+    to the write page routine that checks first whether flash would be changed by the new page
+    contents and *only* writes to flash if necessary. `UPDATE_FL=2` does the same as `1` and, in
+    addition, compiles  code into the chip erase routine that skips erasing a flash page if it was
+    already all 0xff. `UPDATE_FL=3` does the same as `2` but in addition checks within the write
+    page routine whether, once a flash page needs modifying, it needs erasing first; some content
+    changes only transition selected bits from  `1` to `0` for which a page erase is unnecessary.
+    `UPDATE_FL=4` does the same as `3` but in addition compile in checks for whether the new page
+    is empty, for which after a page erase no further page write is necessary. Note that the extra
+    code for level `2` is only generated if there is a chip erase routine in the bootloader, ie,
+    `CHIP_ERASE=1`. And the extra code in levels `3` and `4` is only generated when the bootloader
+    write page routine normally erases a page before writing it; this is so if the bootloader
+    provides a page erase function for the user, ie, `PGMWRITEPAGE=1`, or if the bootloader has no
+    other means of erasing a chip, ie, `CHIP_ERASE=0`. Level `1` costs roughly 20 bytes code, level
+    `2` another 20 bytes and level `3` and `4` add 10 bytes code each. Of course, a fully kitted
+    out `UPDATE_FL=4` level also makes the bootloader the fastest it can be.
+
+
  - `RETSWVERS=<0|1>` (return correct software version)
 
-   Option `RETSWVERS=1` creates code to tell the avrdude or otherwise programmer truthfully the
-   current software version. The space used for this code is probably not worthwhile. Without it,
-   urboot pretends to be on software version `X.X` and hardware version `X`, where `X` is the major
-   software version (currently 7). `RETSWVERS=0` saves 28 bytes for `URPROTOCOL=0`. With
-   `URPROTOCOL=1` this option has no effect, as the bootloader does not expect, nor respond to,
-   `STK_SW_MAJOR/MINOR` requests.
+   From urboot v8.0 this option has been deprecated as it no longer has an effect.
+
+   Option `RETSWVERS=1` used to create code to tell the avrdude or otherwise programmer truthfully
+   the current software version. The space used for this code was never worthwhile. Without it,
+   urboot pretended to be on software version `X.X` and hardware version `X`, where `X` is the
+   major software version (currently 7). `RETSWVERS=0` used to save 28 bytes for `URPROTOCOL=0`
+   (STK500 compatibility), which is no longer supported in v8.0. With `URPROTOCOL=1` this option
+   had no effect, as the bootloader did not expect, nor respond to, `STK_SW_MAJOR/MINOR` requests.
 
  - `EXITFE=<0|1|2>` (exit on frame errors)
 
@@ -511,12 +518,15 @@ The options below are frills, ie, not really essential for the functionality of 
    options are undefined they will be defined as
    | Option | default |
    | :--    | :-- |
-   |`CHIP_ERASE` | `FRILLS >= 7` |
-   |`RETSWVERS`  | `FRILLS >= 6` |
-   |`QEXITEND`   | `FRILLS >= 5` |
-   |`QEXITERR`   | `FRILLS >= 4` |
-   |`EXITFE`     | `FRILLS >= 3? 2: FRILLS >= 2` |
-   |`BLINK`      | `FRILLS >= 1` |
+   |`UPDATE_FL=4` | `FRILLS >= 10`|
+   |`UPDATE_FL=3` | `FRILLS >= 9` |
+   |`UPDATE_FL=2` | `FRILLS >= 8` |
+   |`CHIP_ERASE`  | `FRILLS >= 7` |
+   |`UPDATE_FL=1` | `FRILLS >= 6` |
+   |`QEXITEND`    | `FRILLS >= 5` |
+   |`QEXITERR`    | `FRILLS >= 4` |
+   |`EXITFE`      | `FRILLS >= 3? 2: FRILLS >= 2` |
+   |`BLINK`       | `FRILLS >= 1` |
 
 
  - `AUTOFRILLS=<level-list>`
@@ -527,7 +537,9 @@ The options below are frills, ie, not really essential for the functionality of 
    For example `AUTOFRILLS=0,7,6,1,2,3,4` first determines the space usage of a bootloader with
    `FRILLS=0` and then figures out which of the other `FRILLS` levels also fit into that space.
    The finally compiled bootloader uses the biggest of these. This option is only seen by
-   the `avr-gcc` wrapper `urboot-gcc` and not passed on to the actual compiler.
+   the `avr-gcc` wrapper `urboot-gcc` and not passed on to the actual compiler. From urboot v8.0
+   the range operator `..` can be used as well: above AUTOFRILLS could have been specified with
+   `0,7,6,1..4`.
 
 
 ## Debug options
