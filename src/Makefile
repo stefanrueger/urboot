@@ -315,11 +315,11 @@ COMMON_OPTIONS = $(WDTO_CMD) $(AUTOBAUD_CMD) $(BAUD_RATE_CMD) $(UART2X_CMD) $(LE
 bootloader: CFLAGS += $(COMMON_OPTIONS)
 bootloader: $(WHAT).hex
 
-min: attiny2313_min atmega1280_min atmega1284p_min atmega168_min atmega2560_min atmega32_min atmega328p_min \
-  atmega644p_min atmega8_min atmega88_min attiny167_min attiny84_min attiny85_min
+min: attiny2313_min attiny2313_emin atmega1280_min atmega1284p_min atmega168_min atmega2560_min atmega32_min \
+  atmega328p_min atmega644p_min atmega8_min atmega88_min attiny167_min attiny84_min attiny85_min
 	./hexls -sort
 
-all: clean attiny2313_min atmega168_min atmega32_min \
+all: clean attiny2313_min attiny2313_emin atmega168_min atmega32_min \
   atmega2560_min atmega1280_min atmega1284p_min \
   atmega644p_min atmega8_min atmega88_min attiny84_min \
   atmega328p_min \
@@ -328,6 +328,7 @@ all: clean attiny2313_min atmega168_min atmega32_min \
   atmega328p_h \
   atmega328p_a \
   atmega328p_fa \
+  atmega328p_swio \
   atmega328p_d \
   atmega328p_ad \
   atmega328p_7875khz_swio \
@@ -367,10 +368,16 @@ version:
 
 
 ####
-# 224 bytes
+# 192 bytes
 #
 attiny2313_min:
-	$(MAKE) $(MK_OPTS) MCU=attiny2313 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3 VBL_VECT_NUM=EEPROM_READY_vect_num NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny2313 EEPROM=0 VBL=1 AUTOFRILLS=0..3 PGMWRITEPAGE=0 VBL_VECT_NUM=EEPROM_READY_vect_num NAME=$@
+
+####
+# 256 bytes with EEPROM support
+#
+attiny2313_emin:
+	$(MAKE) $(MK_OPTS) MCU=attiny2313 EEPROM=1 VBL=1 AUTOFRILLS=0..3 PGMWRITEPAGE=1 VBL_VECT_NUM=EEPROM_READY_vect_num NAME=$@
 
 
 ##
@@ -381,45 +388,48 @@ attiny2313_min:
 # 256 bytes == 2 pages (no EEPROM support)
 #
 atmega328p_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p EEPROM=0 VBL=1 AUTOFRILLS=0..6 NAME=$@
 
 atmega328p_amin:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 EEPROM=0 VBL=1 AUTOFRILLS=0..6 NAME=$@
 
 ####
 # 384 bytes == 3 pages
 #
 atmega328p_a:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 VBL=1 AUTOFRILLS=5..10 NAME=$@
+
+atmega328p_swio:
+	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 VBL=1 SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 AUTOFRILLS=5..10 NAME=$@
 
 atmega328p_fa:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p PGMWRITEPAGE=0 AUTOBAUD=1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p PGMWRITEPAGE=0 AUTOBAUD=1 VBL=1 CHIP_ERASE=1 UPDATE_FL=1 AUTOFRILLS=1..6,8..10 NAME=$@
 
 atmega328p:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 # Bootloaders below can be derived from the single "template"  generic bootloader above
 
 urclock urclockmini timeduino jeenode:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p LED=AtmelPB1 LEDPOLARITY=-1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p LED=AtmelPB1 LEDPOLARITY=-1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 urclockusb:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p LED=AtmelPD5 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p LED=AtmelPD5 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 ursense:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p LED=AtmelPD5 LEDPOLARITY=-1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p LED=AtmelPD5 LEDPOLARITY=-1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 anarduino moteino promini_led9:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p LED=AtmelPB1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p LED=AtmelPB1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 promini_led9_a:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 LED=AtmelPB1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 LED=AtmelPB1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 uno rbbb promini_led13:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p LED=AtmelPB5 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p LED=AtmelPB5 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 promini_led13_a:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 LED=AtmelPB5 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 LED=AtmelPB5 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega328p_led9_50Hz_fp9:
 	$(MAKE) $(MK_OPTS) MCU=atmega328p DEBUG_FREQ=50 DEBUG_CYCLES=5 LED=ArduinoPin9 VBL=1 AUTOFRILLS=6,7 NAME=$@
@@ -434,19 +444,19 @@ atmega328p_led9_50Hz_fp9:
 # cycles at 115200 baud), so in theory should be able to get the error down to 0.44/69.44 = 0.63%.
 #
 atmega328p_7875khz_swio:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p F_CPU=7875000L SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p F_CPU=7875000L SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega328p_8000khz_swio:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p F_CPU=8000000L SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p F_CPU=8000000L SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega328p_8125khz_swio:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p F_CPU=8125000L SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p F_CPU=8125000L SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 ####
 # 512 bytes, hardware-supported bootloader
 #
 atmega328p_h:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 FRILLS=7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 AUTOFRILLS=2,8..10,3 NAME=$@
 
 ##
 # Boards below have external spi flash memory, which we use for over-the-air programming
@@ -456,25 +466,25 @@ atmega328p_h:
 # 512 bytes and DUAL=1
 #
 atmega328p_d:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p DUAL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p DUAL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega328p_ad:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 DUAL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 DUAL=1 AUTOFRILLS=5..10 NAME=$@
 
 # These bootloaders can be derived from the version above
 anarduino_cs5_ad:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 SFMCS=ArduinoPin5 LED=AtmelPB1 DUAL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 SFMCS=ArduinoPin5 LED=AtmelPB1 DUAL=1 AUTOFRILLS=5..10 NAME=$@
 
 timeduino_cs8_ad urclock_cs8_ad moteino_cs8_ad:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 SFMCS=ArduinoPin8 LED=AtmelPB1 DUAL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 SFMCS=ArduinoPin8 LED=AtmelPB1 DUAL=1 AUTOFRILLS=5..10 NAME=$@
 
 
 
 atmega16a_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega16a EEPROM=0 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega16a EEPROM=0 AUTOFRILLS=0..10 NAME=$@
 
 atmega163_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega162 EEPROM=0 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega162 EEPROM=0 AUTOFRILLS=0..10 NAME=$@
 
 
 ##
@@ -485,19 +495,19 @@ atmega163_min:
 # 256 bytes == 2 pages (no EEPROM support)
 #
 atmega168_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega168 EEPROM=0 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega168 EEPROM=0 AUTOFRILLS=0..10 NAME=$@
 
 pro_8mhz lilypad:
-	$(MAKE) $(MK_OPTS) MCU=atmega168 F_CPU=8000000L SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega168 F_CPU=8000000L SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 pro_20mhz:
-	$(MAKE) $(MK_OPTS) MCU=atmega168 F_CPU=20000000L VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega168 F_CPU=20000000L VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 pro_16mhz diecimila:
-	$(MAKE) $(MK_OPTS) MCU=atmega168 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega168 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 pro_a diecimila_a:
-	$(MAKE) $(MK_OPTS) MCU=atmega168 AUTOBAUD=1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega168 AUTOBAUD=1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 ##
 # Yet other platforms (the digisparkpro documentation isn't great, so pin numbering may be
@@ -509,11 +519,11 @@ pro_a diecimila_a:
 #
 # 256 bytes
 attiny85_min:
-	$(MAKE) $(MK_OPTS) MCU=attiny85 SWIO=1 TX=AtmelPB3 RX=AtmelPB4 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny85 SWIO=1 TX=AtmelPB3 RX=AtmelPB4 EEPROM=0 VBL=1 AUTOFRILLS=0..5 NAME=$@
 
 # 384 bytes
 attiny85 digispark:
-	$(MAKE) $(MK_OPTS) MCU=attiny85 SWIO=1 TX=AtmelPB3 RX=AtmelPB4 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny85 SWIO=1 TX=AtmelPB3 RX=AtmelPB4 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 # ATtiny85 unable to produce dual boot bootloader owing to lack of SPI interface
 
@@ -523,35 +533,35 @@ attiny85 digispark:
 
 # 256 bytes
 attiny167_min:
-	$(MAKE) $(MK_OPTS) MCU=attiny167 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny167 EEPROM=0 VBL=1 AUTOFRILLS=0..5 NAME=$@
 
 # 384 bytes
 attiny167:
-	$(MAKE) $(MK_OPTS) MCU=attiny167 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny167 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 attiny167_a:
-	$(MAKE) $(MK_OPTS) MCU=attiny167 AUTOBAUD=1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny167 AUTOBAUD=1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 tiny167debug_50Hz_fp2:
-	$(MAKE) $(MK_OPTS) MCU=attiny167 VBL=1 DEBUG_FREQ=50 FREQ_PIN=ArduinoPin2 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny167 VBL=1 DEBUG_FREQ=50 FREQ_PIN=ArduinoPin2 AUTOFRILLS=5..10 NAME=$@
 
 # 512 bytes
 attiny167_ad:
-	$(MAKE) $(MK_OPTS) MCU=attiny167 AUTOBAUD=1 DUAL=1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny167 AUTOBAUD=1 DUAL=1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 digisparkpro:
-	$(MAKE) $(MK_OPTS) MCU=attiny167 VBL=1 LED=AtmelPB1 AUTOFRILLS=5,6,7 WDTO=4S NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny167 VBL=1 LED=AtmelPB1 AUTOFRILLS=5..10 WDTO=4S NAME=$@
 
 ##
 # Luminet is a 1 MHz clocked board (capable of 9600 baud)
 #
 attiny84_min:
-	$(MAKE) $(MK_OPTS) MCU=attiny84 SWIO=1 TX=AtmelPA2 RX=AtmelPA3 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny84 SWIO=1 TX=AtmelPA2 RX=AtmelPA3 EEPROM=0 VBL=1 AUTOFRILLS=0..5 NAME=$@
 
 
 # LED=AtmelPA4
 luminet_baud9600:
-	$(MAKE) $(MK_OPTS) MCU=attiny84 F_CPU=1000000L BAUD_RATE=9600 SWIO=1 TX=AtmelPA2 RX=AtmelPA3 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=attiny84 F_CPU=1000000L BAUD_RATE=9600 SWIO=1 TX=AtmelPA2 RX=AtmelPA3 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 ##
 # ATmega8
@@ -561,16 +571,16 @@ luminet_baud9600:
 # 256 bytes == 2 pages (no EEPROM support)
 #
 atmega8_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega8 EEPROM=0 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega8 EEPROM=0 AUTOFRILLS=0..5 NAME=$@
 
 ##
 # 320 bytes == 5 pages
 #
 atmega8:
-	$(MAKE) $(MK_OPTS) MCU=atmega8 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega8 VBL=1 AUTOFRILLS=0..5 NAME=$@
 
 atmega8_a:
-	$(MAKE) $(MK_OPTS) MCU=atmega8 AUTOBAUD=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega8 AUTOBAUD=1 VBL=1 AUTOFRILLS=0..5 NAME=$@
 
 ##
 # 512 bytes, hardware-supported bootloader
@@ -586,16 +596,16 @@ atmega8_h:
 # 256 bytes == 4 pages (no EEPROM support)
 #
 atmega88_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega88 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega88 EEPROM=0 VBL=1 AUTOFRILLS=0..5 NAME=$@
 
 ##
 # 320 bytes == 5 pages (no EEPROM support)
 #
 atmega88:
-	$(MAKE) $(MK_OPTS) MCU=atmega88 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega88 VBL=1 AUTOFRILLS=0..5 NAME=$@
 
 atmega88_a:
-	$(MAKE) $(MK_OPTS) MCU=atmega88 AUTOBAUD=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega88 AUTOBAUD=1 VBL=1 AUTOFRILLS=0..5 NAME=$@
 
 ##
 # 512 bytes, hardware-supported bootloader
@@ -611,16 +621,16 @@ atmega88_h:
 # 256 bytes == 2 pages (no EEPROM support)
 #
 atmega32_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega32 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega32 EEPROM=0 VBL=1 AUTOFRILLS=0..5 NAME=$@
 
 ##
 # 384 bytes == 3 pages
 #
 atmega32:
-	$(MAKE) $(MK_OPTS) MCU=atmega32 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega32 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega32_a:
-	$(MAKE) $(MK_OPTS) MCU=atmega32 AUTOBAUD=1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega32 AUTOBAUD=1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 ##
 # 512 bytes, hardware-supported bootloader
@@ -636,71 +646,71 @@ atmega32_h:
 # 256 bytes == 1 page (no EEPROM support)
 #
 atmega1284p_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p EEPROM=0 VBL=1 AUTOFRILLS=0..5 NAME=$@
 
 # 512 bytes
 atmega1284p:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega1284p_d:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p DUAL=1 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 atmega1284p_a:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p AUTOBAUD=1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p AUTOBAUD=1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega1284p_ad:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p AUTOBAUD=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p AUTOBAUD=1 DUAL=1 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 # Named devices below can all be derived from above template bootloader
 bobuino mighty1284:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPB7 VBL=1 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPB7 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 wildfire:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPB5 VBL=1 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPB5 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 wildfirev2:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p BAUD_RATE=1000000 LED=AtmelPB7 VBL=1 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p BAUD_RATE=1000000 LED=AtmelPB7 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 moteinomega:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPD7 VBL=1 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPD7 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 urclockmega:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPC7 VBL=1 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPC7 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 timeduinomega: # obsolete
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPD5 VBL=1 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p LED=AtmelPD5 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 # Below can be derived from template bootloader
 moteinomega_cs23_d:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p SFMCS=ArduinoPin23 LED=AtmelPD7 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p SFMCS=ArduinoPin23 LED=AtmelPD7 DUAL=1 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 urclockmega_cs3_d:
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p SFMCS=ArduinoPin3 LED=AtmelPC7 LEDPOLARITY=-1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p SFMCS=ArduinoPin3 LED=AtmelPC7 LEDPOLARITY=-1 DUAL=1 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 timeduinomega_cs3_d: # obsolete
-	$(MAKE) $(MK_OPTS) MCU=atmega1284p SFMCS=ArduinoPin3 LED=AtmelPD5 LEDPOLARITY=-1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1284p SFMCS=ArduinoPin3 LED=AtmelPD5 LEDPOLARITY=-1 DUAL=1 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 
 # 256 bytes
 atmega644p_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega644p EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega644p EEPROM=0 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 # 512 bytes
 atmega644p:
-	$(MAKE) $(MK_OPTS) MCU=atmega644p VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega644p VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega644p_a:
-	$(MAKE) $(MK_OPTS) MCU=atmega644p AUTOBAUD=1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega644p AUTOBAUD=1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega644p_d:
-	$(MAKE) $(MK_OPTS) MCU=atmega644p DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega644p DUAL=1 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 atmega644p_ad:
-	$(MAKE) $(MK_OPTS) MCU=atmega644p AUTOBAUD=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega644p AUTOBAUD=1 DUAL=1 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 # Can be derived
 sanguino:
-	$(MAKE) $(MK_OPTS) MCU=atmega644p LED=AtmelPB0 VBL=1 AUTOFRILLS=0,1,2,3,4,5,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega644p LED=AtmelPB0 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 ##
 # MEGA1280/2560 boards
@@ -709,37 +719,37 @@ sanguino:
 
 # 256 bytes
 atmega1280_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega1280 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1280 EEPROM=0 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 # 512 bytes
 atmega1280:
-	$(MAKE) $(MK_OPTS) MCU=atmega1280 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1280 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega1280_d:
-	$(MAKE) $(MK_OPTS) MCU=atmega1280 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1280 DUAL=1 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 atmega1280_a:
-	$(MAKE) $(MK_OPTS) MCU=atmega1280 AUTOBAUD=1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1280 AUTOBAUD=1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega1280_ad:
-	$(MAKE) $(MK_OPTS) MCU=atmega1280 AUTOBAUD=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega1280 AUTOBAUD=1 DUAL=1 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 # 256 bytes
 atmega2560_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega2560 EEPROM=0 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega2560 EEPROM=0 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 # 512 bytes
 atmega2560:
-	$(MAKE) $(MK_OPTS) MCU=atmega2560 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega2560 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega2560_d:
-	$(MAKE) $(MK_OPTS) MCU=atmega2560 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega2560 DUAL=1 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 atmega2560_a:
-	$(MAKE) $(MK_OPTS) MCU=atmega2560 AUTOBAUD=1 VBL=1 AUTOFRILLS=5,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega2560 AUTOBAUD=1 VBL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega2560_ad:
-	$(MAKE) $(MK_OPTS) MCU=atmega2560 AUTOBAUD=1 DUAL=1 VBL=1 AUTOFRILLS=0,1,2,3,4,6,7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega2560 AUTOBAUD=1 DUAL=1 VBL=1 AUTOFRILLS=0..10 NAME=$@
 
 #----------
 
