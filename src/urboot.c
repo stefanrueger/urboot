@@ -679,9 +679,11 @@
 
 
 #if SWIO
-#define getch_clobberlist , "r25", "r18"
+#define getch_clobberlist "r25", "r18",
+#define putch_clobberlist "r25", "r18",
 #else
 #define getch_clobberlist
+#define putch_clobberlist "r25",
 #define UisIOSPACE(reg) (UARTn_addr + reg##_off < 0x3f + __SFR_OFFSET)
 #endif // !SWIO
 
@@ -909,15 +911,6 @@
 #endif // VBL_VECT_NUM
 
 
-#if defined(EEAR_addr) && EESIZE > 256
-#define set_eear(addr) (* (uint16_t *) EEAR_addr = addr)
-#elif defined(EEAR_addr)
-#define set_eear(addr) (* (uint8_t *) EEAR_addr = addr)
-#elif EESIZE > 0
-#error no EEARdef
-#endif
-
-
 // Watchdog settings
 #define WATCHDOG_OFF    (0)
 
@@ -1093,25 +1086,10 @@ typedef const void *progmem_t;
  * types of loops, though.
  */
 
-#if DUAL                        // writebuffer() called twice for dual-boot: use function
-void writebuffer_ramstart();
-
-#else
-
 void writebufferX(void);
-#define writebuffer_ramstart()  ({ \
-  asm volatile( \
-   ldi(r26, lo8(RAMSTART)) \
-   ldi(r27, hi8(RAMSTART)) \
-  ::: \
-  ); \
-  writebufferX(); \
-})
-#endif
 
 void ub_spm(uint8_t cmd);
 #define ub_page_erase() ub_spm(__BOOT_PAGE_ERASE)
-
 
 // Number of program pages below the boot section
 #define SPM_NUMPAGES  (START/SPM_PAGESIZE)
@@ -1129,7 +1107,7 @@ int main(void) __attribute__ ((OS_main, section(".init9")));
 
 void __attribute__ ((noinline)) putch(char);
 uint8_t __attribute__ ((noinline)) getch(void);
-void  __attribute__ ((noinline)) get1sync();
+void  __attribute__ ((noinline)) get_sync(void);
 
 void __attribute__ ((noinline)) watchdogConfig(uint8_t x);
 
@@ -1138,11 +1116,8 @@ void __attribute__ ((noinline)) watchdogConfig(uint8_t x);
 
 #if QEXITERR
 #define RJMPQEXIT "rjmp qexiterr\n"
-#define BRNEQEXIT "breq .+2\n" \
-                  "rjmp qexiterr\n"
 #else
 #define RJMPQEXIT "rjmp .-2\n"
-#define BRNEQEXIT "brne .-2\n"
 #endif
 
 // quickbootexit() tries to use existing code for quick exit, failing that it's bootexit()
@@ -1254,25 +1229,35 @@ void bitDelay();
 #endif
 
 static void chip_erase() {
-  // Erase flash from top to bottom to protect reset vector in case of power loss
-  zaddress = (uint16_t) START;
+  asm volatile(
+    ldi(r30, lo8(%[top]))       // Load Z/RAMPZ with START-CE_SIZE
+    ldi(r31, hi8(%[top]))
 #if FLASHabove64k
-  RAMPZ = START>>16;
+    ldi(r25, hh8(%[top]))
+    out_rampz(r25)
 #endif
-
-  do {
+"1: "
+    "wdr\n"                     // Reset WDT as CE can take a long time
+    ldi(r24, __BOOT_PAGE_ERASE)
+    "rcall ub_spm\n"            // Erase page
+#if CE_SIZE == 256
+    subi(r31, 1)
+#else
+    subi(r30, CE_SIZE)
+    "sbc r31, r1\n"
+#endif
 #if FLASHabove64k
-    if(!zaddress)
-      RAMPZ--;
+    "sbc r25, r1\n"
+    out_rampz(r25)             // Decrement Z/RAMPZ by CE_SIZE
 #endif
-    zaddress -= CE_SIZE;
-    wdt_reset();
-    ub_page_erase();
-  } while(zaddress
+    "brcc 1b\n"
+  : "=z"(zaddress)
+  : [top] "n"((uint32_t) (START-CE_SIZE))
+  : "r24"
 #if FLASHabove64k
-     || RAMPZ
+    , "r25"
 #endif
-     );
+  );
 }
 
 #endif // CHIP_ERASE
@@ -1352,11 +1337,6 @@ static uint8_t spi_transfer(uint8_t data) {
  */
 
 static void sfm_read_page() {
-  uint8_t *bufp = ramstart;
-
-  // Cast avoids compiler warning when SPM_PAGESIZE == 256 and type is uint8_t
-  uint8_t n = (uint8_t) SPM_PAGESIZE;
-
   sfm_assert();
   spi_transfer(SFM_C_READ);
   // 24 bit address
@@ -1367,10 +1347,28 @@ static void sfm_read_page() {
 #endif
   spi_transfer(zaddress >> 8);
   spi_transfer(zaddress);
-  // One memory page of data
-  do {
-    *bufp++ = spi_transfer(0);
-  } while(--n);
+
+  // Copy one MCU flash page of data from SPI flash memory to SRAM
+  asm volatile(
+    ldi(r26, lo8(RAMSTART))     // uint8_t *bufp = ramstart;
+    ldi(r27, hi8(RAMSTART))     // uint8_t n = SPM_PAGESIZE;
+  "1: "
+    ldi(r24, 0)                 // do {
+    "rcall spi_transfer\n"      //   *bufp++ = spi_transfer(0);
+    "st X+, r24\n"              // } while(--n);
+     cpi(r26, lo8(RAMSTART + SPM_PAGESIZE))
+    "brne 1b\n"
+#if SPM_PAGESIZE == 256
+    "subi  r27, 1\n"           // X = X - 256
+#elif (RAMSTART+SPM_PAGESIZE)/256 == RAMSTART/256
+     ldi(r26, lo8(RAMSTART))
+#else
+     ldi(r26, lo8(RAMSTART))
+     ldi(r27, hi8(RAMSTART))
+#endif
+    ::: getch_clobberlist "r26", "r27", "r24"
+  );
+
   sfm_release();
 }
 #endif
@@ -1426,7 +1424,7 @@ static void dual_boot() {
           goto startingapp;     // No AVR program in SPI flash: directly start the application
       }
 
-    writebuffer_ramstart();     // Returns with original zaddress/RAMPZ intact
+    writebufferX();             // Returns with original zaddress/RAMPZ intact
     inczaddresspage();
   } while(--numpages);
 
@@ -1467,50 +1465,9 @@ startingapp:
 }
 #endif // DUAL
 
-
-static void read_page_fl(uint8_t length) {
-  do {
-    uint8_t one;
-    // Can use lpm/elpm with address post-increment (elmp also increments RAMPZ)
-    asm volatile(LPM " %0, Z+\n": "=r"(one), "=r"(zaddress): "1"(zaddress));
-    putch(one);
-  } while(--length);
-}
-
-
 #if EEPROM
 
-static void read_page_ee(uint8_t length) {
-  do {
-    set_eear(zaddress);
-    EECR |= _BV(EERE);          // Start EEPROM read
-    putch(EEDR);
-    // zaddress++;              // Compiler makes a pig's ear of simple increment - use short code
-    asm volatile("adiw %0, 1\n" : "=r"(zaddress) : "0"(zaddress));
-  } while(--length);
-}
-
-
-static void write_page_ee(uint8_t length) {
-  uint8_t *bufp = ramstart;
-  do {
-    set_eear(zaddress);
-    EEDR = *bufp++;
-    EECR |= _BV(EEMPE);   // EEPROM master write enable
-    EECR |= _BV(EEPE);    // EEPROM write enable
-    // zaddress++;
-    asm volatile("adiw %0, 1\n" : "=r"(zaddress) : "0"(zaddress));
-    while(EECR & _BV(EEPE))
-      continue;
-  } while(--length);
-}
-
-#endif
-
-
-#if EEPROM
-
-static void write_sram(uint8_t length) { // Write data from host into SRAM
+static void write_sram(uint8_t length) { // Write data from host into SRAM and reload X to RAMSTART
   uint8_t xend = length;
 
   asm volatile(
@@ -1523,12 +1480,14 @@ static void write_sram(uint8_t length) { // Write data from host into SRAM
     "st    X+, r24\n"
     "cpse  %[xend], r26\n"
     "rjmp  1b\n"
+    ldi(r26, lo8(RAMSTART))
+    ldi(r27, hi8(RAMSTART))
 #if RAMSTART & 0xff             // Tell gcc that xend will be changed
    : [xend] "=r"(xend) : "0"(xend)
 #else
    :: [xend] "r"(xend)
 #endif
-   : "r26", "r27", "r24" getch_clobberlist
+   : getch_clobberlist "r26", "r27", "r24"
   );
 }
 
@@ -1550,13 +1509,12 @@ static void write_sram_spm_pagesize(void) { // Also resets X to ramstart at end
      ldi(r26, lo8(RAMSTART))
      ldi(r27, hi8(RAMSTART))
 #endif
-    ::: "r26", "r27", "r24" getch_clobberlist
+    ::: getch_clobberlist "r26", "r27", "r24"
   );
 }
 
 #endif
 
-static uint8_t __attribute__ ((noinline)) getaddrlength();
 static uint8_t getaddrlength() {
   asm volatile(             // Compiler is not great at setting address from next two/three bytes
     "rcall getch\n"
@@ -1567,7 +1525,7 @@ static uint8_t getaddrlength() {
     "rcall getch\n"
     out_rampz(r24)
 #endif
-    : "=r"(zaddress) :: "r24" getch_clobberlist
+    : "=r"(zaddress) :: getch_clobberlist "r24"
   );
 
   return getch();
@@ -1578,7 +1536,7 @@ static uint8_t getaddrlength() {
 static void leave_progmode() {
   // Shorten watchdog timeout to start application pretty soon
   watchdogConfig(WATCHDOG_16MS);
-  get1sync();
+  get_sync();
 }
 #endif
 
@@ -1956,14 +1914,14 @@ int main(void) {
 
 #if CHIP_ERASE
     } else if(ch == STK_CHIP_ERASE) {
-      get1sync();               // First sync before chip_erase which can take long
+      get_sync();               // First sync before chip_erase which can take long
       chip_erase();
 #endif
 
 #if PAGE_ERASE
     } else if(ch == UR_PAGE_ERASE) {
-      uint8_t length = getaddrlength();
-      get1sync();               // First sync before page_erase which can take long
+      (void) getaddrlength();
+      get_sync();               // First sync before page_erase which can take long
       ub_page_erase();
 #endif
 
@@ -1971,29 +1929,76 @@ int main(void) {
     } else if(ch == UR_PROG_PAGE_FL || ch == UR_PROG_PAGE_EE) {
       uint8_t length = getaddrlength();
       write_sram(length);
-      get1sync();
-      if(ch == UR_PROG_PAGE_EE)
-        write_page_ee(length);
-      else
-        writebuffer_ramstart();
+      get_sync();
+      if(ch == UR_PROG_PAGE_EE) { asm volatile(
+      "1: "
+#if EESIZE > 256
+        out_eearh(r31)
+#endif                          // do {
+        out_eearl(r30)          //   EEAR = zaddress;
+        "ld  r24, X+\n"         //   EEDR = *bufp++;
+        out_eedr(r24)            //
+        "sbi %[eecr], %[eempe]\n" // EECR |= _BV(EEMPE); // EEPROM master write enable
+        "sbi %[eecr], %[eepe]\n"  // EECR |= _BV(EEPE);  // EEPROM write enable
+        "adiw r30, 1\n"         //   zaddress++;
+      "2: "
+        sbxc_eecr(xx, EEPE)     //   while(EECR & _BV(EEPE))
+        "rjmp 2b\n"             //     continue;
+        "subi %[len], 1\n"
+        "brne 1b\n"             // } while(--length);
+      : /*
+         * No need to tell gcc that length or zaddress is changed; they
+         * won't be needed and the compiler doesn't know what they are.
+         */
+      : [len] "d"(length), "z"(zaddress),
+        [eecr] "I"(_SFR_IO_ADDR(EECR)), [eempe] "I"(EEMPE), [eepe] "I"(EEPE)
+      : "r24", "r26", "r27");
+      } else {
+        writebufferX();
+      }
 #else
     } else if(ch == UR_PROG_PAGE_FL) {
       (void) getaddrlength();
       write_sram_spm_pagesize();
-      get1sync();
+      get_sync();
       writebufferX();
 #endif
 
     } else if(ch == UR_READ_PAGE_FL) {
       uint8_t length = getaddrlength();
-      get1sync();
-      read_page_fl(length);
+      get_sync();
+      asm volatile(
+      "1:"
+        LPM " r24, Z+\n"        // do {
+        "rcall putch\n"         //   putch(*zaddress++);
+        "subi %[len], 1\n"      // } while(--length);
+        "brne 1b\n"
+      : // Again, don't tell gcc length has changed
+      : [len] "d"(length), "z"(zaddress)
+      : putch_clobberlist "r24"
+      );
 
 #if EEPROM
     } else if(ch == UR_READ_PAGE_EE) {
       uint8_t length = getaddrlength();
-      get1sync();
-      read_page_ee(length);
+      get_sync();
+      asm volatile(
+      "1:"
+#if EESIZE > 256
+        out_eearh(r31)
+#endif                          // do {
+        out_eearl(r30)          //   EEAR = zaddress;
+        "sbi %[eecr], %[eere]\n" //  EECR |= _BV(EERE); // Start EEPROM read
+        in_eedr(r24)            //   putch(EEDR);
+        "rcall putch\n"         //
+        "adiw r30, 1\n"         //   zaddress++;
+        "subi %[len], 1\n"      // } while(--length);
+        "brne 1b\n"
+      : // Don't tell gcc length has changed
+      : [len] "d"(length), "z"(zaddress),
+        [eecr] "I"(_SFR_IO_ADDR(EECR)), [eere] "I"(EERE)
+      : putch_clobberlist "r24"
+      );
 #endif
 
 
@@ -2012,7 +2017,7 @@ int main(void) {
         continue;
 #endif
 #endif
-      get1sync();               // Covers the rest, eg, STK_ENTER_PROGMODE, STK_GET_SYNC, ...
+      get_sync();               // Covers the rest, eg, STK_ENTER_PROGMODE, STK_GET_SYNC, ...
     }
 
     putch(STK_OK);
@@ -2021,24 +2026,25 @@ int main(void) {
 
 
 void putch(char chr) {
+  asm volatile(
 #if !SWIO
 
+  "1: "
 #if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
-  while(!(UCSRnA & _BV(A_UDREn)))
-    continue;
-  UDRn = chr;
+    sbxs_ucsrna(r25, A_UDREn)   // while(!(UCSRnA & _BV(A_UDREn)))
+    "rjmp 1b\n"                 //   continue;
+    out_udrn(%[chr])            // UDRn = chr;
 #elif UR_UARTTYPE == UR_UARTTYPE_LIN
-  while(LINSIRn & _BV(A_LBUSYn))
-    continue;
-  LINDATn = chr;
+    sbxc_linsirn(r25, A_LBUSYn) // while(LINSIRn & _BV(A_LBUSYn))
+    "rjmp 1b\n"                 //   continue;
+    out_lindatn(%[chr])         // LINDATn = chr;
 #endif
+  :: [chr] "r"(chr) : "r25"
 
 #else
   // By and large follows Atmel's AN AVR305
-  uint8_t bitcount=10;          // Start bit, 8 data bits, 1 stop bit
-
-  asm volatile(
-    "com %[chr]\n"              // One's complement
+    "ldi  r18, 10\n"            // Start bit, 8 data bits, 1 stop bit
+    "com  %[chr]\n"             // One's complement
     "sec\n"                     // Set carry (for start bit)
   "1:"
     "brcc 2f\n"
@@ -2048,12 +2054,13 @@ void putch(char chr) {
   "2: "
     "sbi %[TXPort], %[TXBit]\n" // Clear carry puts line high
     "nop\n"
-    "3: rcall bitDelay\n"
+  "3: "
+    "rcall bitDelay\n"
 #if SWIO_B_DLYTX == 1           // Add 1 cycle to adjust timing to be same as getch()
     "nop\n"
 #endif
     "lsr %[chr]\n"              // Push lsb into carry, on empty byte carry is clear (stop bit)
-    "dec %[bitcnt]\n"
+    "dec r18\n"
     "brne 1b\n"
     "ret\n"
 
@@ -2079,12 +2086,12 @@ void putch(char chr) {
 #if B_EXTRA == 4 || B_EXTRA == 5
     "rjmp .+0\n"
 #endif
-  : "=d"(bitcount)
-  : [bitcnt] "0"(bitcount), [chr] "r"(chr), [TXPort] "I"(_SFR_IO_ADDR(UR_PORT(TX))),
+  ::
+    [chr] "r"(chr), [TXPort] "I"(_SFR_IO_ADDR(UR_PORT(TX))),
     [TXBit] "I"(UR_BIT(TX)), [bvalue] "M"(SWIO_B_VALUE & 0xff)
-  : "r25" // Clobbers r25
-  );
+  : "r18", "r25"
 #endif
+  );
 }
 
 
@@ -2094,9 +2101,8 @@ uint8_t getch(void) {
   led_on();
   led_setup();
 
-#if !SWIO
-
   asm volatile(
+#if !SWIO
 
 #if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
   "1: "
@@ -2129,13 +2135,10 @@ uint8_t getch(void) {
     in_lindatn(%[chr])          // Load UART data register
 
 #endif // UR_UARTTYPE
-
     : [chr] "=r"(chr)
-  );
 
 #else // SWIO
 
-  asm volatile(
     "ldi   r18, 9\n"            // 8 bit + 1 stop bit
   ".global sbic_rx\nsbic_rx:"   // Mark location of sbic rx opcode
   "1: "
@@ -2169,9 +2172,9 @@ uint8_t getch(void) {
   : [chr] "=r"(chr)
   : [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX))
   : "r25", "r18" // r25 is clobbered by bitDelay
-  );
 
 #endif // !SWIO
+  );
 
   led_off();
 
@@ -2179,7 +2182,7 @@ uint8_t getch(void) {
 }
 
 
-void get1sync() {
+void get_sync(void) {
   uint8_t last = getch();
 
 #if QEXITERR
@@ -2263,13 +2266,6 @@ void pgm_write_page(void *sram, progmem_t pgm) {
     "movw r30, r22\n"           // zaddress = pgm (pgm is a 2-byte pointer)
 #endif
     "movw r26, r24\n"           // X = sram, r25:24 is free now
-
-#if DUAL
-    "rjmp writebufferX\n"
- "writebuffer_ramstart: \n"     // Load X from ramstart, then write buffer to flash
-    ldi(r26, lo8(RAMSTART))
-    ldi(r27, hi8(RAMSTART))
-#endif
                                 // Fall through to void writebufferX()
   "writebufferX:\n"
 

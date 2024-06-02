@@ -319,7 +319,8 @@ min: attiny2313_min atmega1280_min atmega1284p_min atmega168_min atmega2560_min 
   atmega644p_min atmega8_min atmega88_min attiny167_min attiny84_min attiny85_min
 	./hexls -sort
 
-all: attiny2313_min atmega168_min atmega2560_min atmega1280_min atmega1284p_min atmega32_min \
+all: clean attiny2313_min atmega168_min atmega32_min \
+  atmega2560_min atmega1280_min atmega1284p_min \
   atmega644p_min atmega8_min atmega88_min attiny84_min \
   atmega328p_min \
   atmega328p_amin \
