@@ -5,7 +5,7 @@
  * author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v8.0
- * 31.05.2024 (first version published in July 2016)
+ * 03.05.2024 (first version published in July 2016)
  *
  * Feature-rich bootloader that is fast and small
  *  - Tight code: most bootloaders fit into
@@ -28,6 +28,10 @@
  *     + Automatic host baud rate detection
  *     + Chip erase in bootloader (faster than -c urclock emulation)
  *  - Avrdude (from v7.1 onwards) supports urboot bootloaders with -c urclock
+ *
+ * Supported and tested (for v8.0)
+ *  - ATmega328P (Urclock, UrSense, UrclockMini, Uno, Duemilanove, Anarduino, Moteino, Jeenode etc)
+ *  - ATmega1284P (UrclockMega, MoteinoMega)
  *
  * Supported and tested (for v7.7)
  *  - ATmega328P (Urclock, UrSense, UrclockMini, Uno, Duemilanove, Anarduino, Moteino, Jeenode etc)
