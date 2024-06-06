@@ -90,7 +90,7 @@ endif
 # Check flash page before writing it (from v8.0)
 ifdef UPDATE_FL
 UPDATE_FL_CMD = -DUPDATE_FL=$(UPDATE_FL)
-FEAT := $(FEAT)$(subst 0,,$(subst 1,u,$(subst 2,u2,$(subst 3,u3,$(UPDATE_FL)))))
+FEAT := $(FEAT)$(subst 0,,$(subst 1,u,$(subst 2,u2,$(subst 3,u3,$(subst 4,u4,$(UPDATE_FL))))))
 endif
 
 # FRILLS=x on the command line sets defaults for the "lesser" options (which can be overwritten)

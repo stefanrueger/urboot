@@ -5,7 +5,7 @@
  * author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v8.0
- * 03.05.2024 (first version published in July 2016)
+ * 06.06.2024 (first version published in July 2016)
  *
  * Feature-rich bootloader that is fast and small
  *  - Tight code: most bootloaders fit into
@@ -32,8 +32,11 @@
  * Supported and tested (for v8.0)
  *  - ATmega328P (Urclock, UrSense, UrclockMini, Uno, Duemilanove, Anarduino, Moteino, Jeenode etc)
  *  - ATmega1284P (UrclockMega, MoteinoMega)
+ *  - ATmega2560 (Mega R3)
+ *  - ATtiny85 (Digispark)
+ *  - ATtiny167 (Digispark Pro)
  *
- * Supported and tested (for v7.7)
+ * Tested (for v7.7)
  *  - ATmega328P (Urclock, UrSense, UrclockMini, Uno, Duemilanove, Anarduino, Moteino, Jeenode etc)
  *  - ATmega1284P (UrclockMega, MoteinoMega)
  *  - ATmega2560 (Mega R3)
