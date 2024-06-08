@@ -48,6 +48,10 @@ AUTOBAUD ?= 0
 VBL ?= 0
 WDTO = 1S
 
+# Toolchain 7.3.0 seems to be a sweet spot for tight code
+TOOLVER ?= 7.3.0
+GCCROOT ?= ./avr-toolchain/$(TOOLVER)/bin/
+
 # Provide pgm_write_page(sram, flash) function
 ifdef PGMWRITEPAGE
 PGMWRITEPAGE_CMD = -DPGMWRITEPAGE=$(PGMWRITEPAGE)
@@ -263,17 +267,13 @@ WHAT := $(WHAT)_otf
 endif
 endif
 
-# EEPROM compiles much neater with 5.4.0
-ifeq (1, $(EEPROM))
-override TOOLVER := 5.4.0
-override GCCROOT = ./avr-toolchain/$(TOOLVER)/bin/
-endif
-
 # Toolchain 4.8.1 does not know some MCUs, bump to 5.4.0
 ifdef MCU
+ifeq (/$(TOOLVER)/, /4.8.1/)
 ifeq (/$(MCU)/, $(findstring /$(MCU)/, /ata5702m322/ata5782/ata5791/ata5831/ata8210/ata8510/atmega168pb/atmega328pb/atmega48pb/atmega88pb/atmega324pb/))
 override TOOLVER := 5.4.0
 override GCCROOT = ./avr-toolchain/$(TOOLVER)/bin/
+endif
 endif
 endif
 
@@ -293,9 +293,6 @@ else
   endif
 endif
 
-# Older avr-gcc versions such as 4.8.1 or 5.4.0 produce tighter code
-TOOLVER ?= 4.8.1
-GCCROOT ?= ./avr-toolchain/$(TOOLVER)/bin/
 MK_OPTS  = TOOLVER=$(TOOLVER) GCCROOT=$(GCCROOT)
 
 URBOOTGCC= ./urboot-gcc -toolchain=$(TOOLVER)

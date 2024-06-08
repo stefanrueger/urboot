@@ -415,7 +415,8 @@
 #endif
 
 #if !defined(SPDR) || !defined(SPSR) || !defined(SPCR) || \
-    !defined(SPIF) || !defined(MSTR) || !defined(SPE)
+    !defined(SPIF) || !defined(MSTR) || !defined(SPE) || \
+    !defined(AtmelCS) || !defined(AtmelPOCI) || !defined(AtmelPICO)
 // Might be as simple as renaming registers... but then the part might not have SPI
 #warning SPI communication not implemented for this MCU, switching off DUAL
 #undef  DUAL

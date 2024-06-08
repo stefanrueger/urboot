@@ -173,7 +173,7 @@
     defined(__AVR_ATA664251__) || defined(__AVR_ATA8210__) || defined(__AVR_ATA8510__) || \
     defined(__AVR_ATmega168PB__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324P__) || \
     defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega48PB__) || \
-    defined(__AVR_ATmega88PB__)
+    defined(__AVR_ATmega88PB__) || defined(__AVR_ATmega164PA__) || defined(__AVR_ATmega328PB__)
 
 #undef  SPCR
 #undef  SPDR
@@ -189,6 +189,16 @@
 #define SPE  6
 #define SPIF 7
 
+#endif
+
+#if defined(__AVR_ATmega328PB__) || defined(__AVR_ATmega324PB__)
+#undef  SPM_PAGESIZE
+#define SPM_PAGESIZE 128
+#endif
+
+#if defined(__AVR_ATmega161__)
+#undef  WDRF
+#define WDRF 3
 #endif
 
 #endif
