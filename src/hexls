@@ -313,7 +313,7 @@ foreach my $fname (@ARGV) {
     $ver = sprintf("u%d.%d", int($vers/(8*256)), ($vers/256)&7);
     $fea = f((defined($rjmpop) && substr($rjmpop, 0, 1) eq 'c')? 'w': '-');
     $fea .= f($vers & UR_EEPROM? 'e': '-');
-    $fea .= f($vers & UR_UPDATE_FL? 'U': 'u');
+    $fea .= f($vers & UR_UPDATE_FL? 'U': '-');
     $fea .= f($vers & UR_DUAL? 'd': '-');
     $flags = ($vers/UR_VBL) & 3;
     $fea .= f($flags==3? 'V': $flags==2? 'v': $flags? 'j': 'h'); # V = VBL, patch & verify, v = VBL, patch only, j = VBL, jump only, h = hw boot support
