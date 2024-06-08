@@ -1,27 +1,27 @@
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|190|192|u8.0|`--u-jpr--`|[attiny2313_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny2313_min.hex)|
-|232|256|u8.0|`w-u-hpr--`|[atmega8_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega8_min.hex)|
-|244|256|u8.0|`w-u-hpr--`|[atmega168_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega168_min.hex)|
-|246|256|u8.0|`w-u-jPr--`|[atmega328p_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_min.hex)|
-|246|256|u8.0|`w-u-jPr--`|[atmega32_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega32_min.hex)|
-|246|256|u8.0|`w-u-jPr--`|[atmega88_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega88_min.hex)|
-|254|256|u8.0|`w-u-jPr--`|[atmega1280_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_min.hex)|
-|254|256|u8.0|`w-u-jPr--`|[atmega1284p_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_min.hex)|
-|254|256|u8.0|`w-u-jPr--`|[atmega2560_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_min.hex)|
-|254|256|u8.0|`w-u-jPr--`|[attiny167_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny167_min.hex)|
-|254|256|u8.0|`w-u-jPr--`|[attiny84_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny84_min.hex)|
-|254|256|u8.0|`w-u-jPr--`|[attiny85_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny85_min.hex)|
-|256|256|u8.0|`w-u-jPr--`|[atmega644p_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega644p_min.hex)|
-|256|256|u8.0|`w-u-jPra-`|[atmega328p_amin.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_amin.hex)|
-|256|256|u8.0|`weu-jpr--`|[attiny2313_emin.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny2313_emin.hex)|
-|304|320|u8.0|`weu-jPr--`|[atmega8.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega8.hex)|
-|316|320|u8.0|`weu-jPr--`|[atmega88.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega88.hex)|
-|318|320|u8.0|`weu-jPra-`|[atmega88_a.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega88_a.hex)|
-|318|320|u8.0|`weu-jpr--`|[attiny85.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny85.hex)|
-|318|320|u8.0|`weu-jpr--`|[digispark.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/digispark.hex)|
-|320|320|u8.0|`weu-jPra-`|[atmega8_a.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega8_a.hex)|
-|320|320|u8.0|`weu-jpr--`|[luminet_baud9600.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/luminet_baud9600.hex)|
+|190|192|u8.0|`----jpr--`|[attiny2313_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny2313_min.hex)|
+|230|256|u8.0|`w---hpr--`|[atmega8_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega8_min.hex)|
+|242|256|u8.0|`w---hpr--`|[atmega168_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega168_min.hex)|
+|244|256|u8.0|`w---jPr--`|[atmega32_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega32_min.hex)|
+|252|256|u8.0|`w---jPr--`|[attiny167_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny167_min.hex)|
+|254|256|u8.0|`w---jPr--`|[atmega1280_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_min.hex)|
+|254|256|u8.0|`w---jPr--`|[atmega1284p_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_min.hex)|
+|254|256|u8.0|`w---jPr--`|[atmega2560_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_min.hex)|
+|254|256|u8.0|`w---jPr--`|[atmega644p_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega644p_min.hex)|
+|254|256|u8.0|`w---jPr--`|[attiny84_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny84_min.hex)|
+|254|256|u8.0|`w---jPr--`|[attiny85_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny85_min.hex)|
+|256|256|u8.0|`w---jPr--`|[atmega328p_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_min.hex)|
+|256|256|u8.0|`w---jPr--`|[atmega88_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega88_min.hex)|
+|256|256|u8.0|`w---jPra-`|[atmega328p_amin.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_amin.hex)|
+|256|256|u8.0|`we--jpr--`|[attiny2313_emin.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny2313_emin.hex)|
+|304|320|u8.0|`we--jPr--`|[atmega8.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega8.hex)|
+|316|320|u8.0|`we--jPr--`|[atmega88.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega88.hex)|
+|318|320|u8.0|`we--jPra-`|[atmega88_a.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega88_a.hex)|
+|318|320|u8.0|`we--jpr--`|[attiny85.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny85.hex)|
+|318|320|u8.0|`we--jpr--`|[digispark.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/digispark.hex)|
+|320|320|u8.0|`we--jPra-`|[atmega8_a.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega8_a.hex)|
+|320|320|u8.0|`we--jpr--`|[luminet_baud9600.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/luminet_baud9600.hex)|
 |364|384|u8.0|`weU-jPr--`|[atmega328p_8125khz_swio.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_8125khz_swio.hex)|
 |366|384|u8.0|`weU-jPr--`|[atmega328p_8000khz_swio.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_8000khz_swio.hex)|
 |366|384|u8.0|`weU-jPr--`|[atmega328p_swio.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_swio.hex)|
@@ -62,17 +62,17 @@
 |438|512|u8.0|`weU-jPrac`|[atmega1284p_a.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_a.hex)|
 |438|512|u8.0|`weU-jPrac`|[atmega2560_a.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_a.hex)|
 |474|512|o8.3|`-.s-.-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
-|490|512|u8.0|`weudjPr--`|[atmega1284p_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_d.hex)|
-|492|512|u8.0|`weudjPr--`|[atmega1280_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_d.hex)|
-|492|512|u8.0|`weudjPr--`|[atmega2560_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_d.hex)|
+|490|512|u8.0|`we-djPr--`|[atmega1284p_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_d.hex)|
+|492|512|u8.0|`we-djPr--`|[atmega1280_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_d.hex)|
+|492|512|u8.0|`we-djPr--`|[atmega2560_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_d.hex)|
 |496|512|u8.0|`weUdhpr-c`|[atmega328p_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_d.hex)|
 |496|512|u8.0|`weUdjPra-`|[attiny167_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny167_ad.hex)|
 |504|512|u8.0|`weUdhprac`|[moteino_cs8_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/moteino_cs8_ad.hex)|
 |504|512|u8.0|`weUdhprac`|[timeduino_cs8_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/timeduino_cs8_ad.hex)|
 |504|512|u8.0|`weUdhprac`|[urclock_cs8_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/urclock_cs8_ad.hex)|
-|506|512|u8.0|`weudjPra-`|[atmega1284p_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_ad.hex)|
-|508|512|u8.0|`weudjPra-`|[atmega1280_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_ad.hex)|
-|508|512|u8.0|`weudjPra-`|[atmega2560_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_ad.hex)|
+|506|512|u8.0|`we-djPra-`|[atmega1284p_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_ad.hex)|
+|508|512|u8.0|`we-djPra-`|[atmega1280_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_ad.hex)|
+|508|512|u8.0|`we-djPra-`|[atmega2560_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_ad.hex)|
 |512|512|u8.0|`weUdhprac`|[anarduino_cs5_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/anarduino_cs5_ad.hex)|
 |512|512|u8.0|`weUdhprac`|[atmega328p_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_ad.hex)|
 |710|1024|o8.3|`-.s-.-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex)|
@@ -84,7 +84,6 @@
   + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
   + `U` checks whether flash pages need writing before doing so
-  + `u` uses urprotocol (default from v8.0)
   + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
   + `d` dual boot (over-the-air programming from external SPI flash)
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
@@ -101,8 +100,9 @@
   + `led9` toggles an LED on, in this example, Arduino pin 9
   + `cs8` uses Arduino pin 8 as chip select of external SPI flash memory for dual boot
   + `fp9` for debugging the bootloader uses, eg, Arduino pin 9 to swing a signal of low frequency, eg, 50 Hz
+  + `ur` uses urprotocol and therefore requires `avrdude -c urclock` for programming
   + `d` dual boot
-  + `min` most feature-rich bootloader for smallest achievable flash usage
+  + `min` most feature-rich bootloader for smallest achievable flash usage (implies `ur`)
 
 Note that the bootloaders with a part name, eg, `atmega8_a.hex` are usually template bootloaders:
 instead of the opcodes for toggling specific LEDs or pulling a specific CS line for external SPI
