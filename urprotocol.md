@@ -168,12 +168,13 @@ bootloader was compiled or the location of the bootloader end otherwise. The 6-b
 (top to bottom):
   - Version number: one byte, minor version 0..7 in three lsb, major version 0..31 in the 5 msb
   - Capabilities byte detailing the following properties
-     + Bit 7, if set in versions up to v7.6 indicates `pgm_write_page(sram, flash)` can be called
-       from application at `FLASHEND+1-4`; from v7.7 Bit 7 indicates that the bootloader selects
+     + Bit 7, if set in versions up to u7.6 indicates `pgm_write_page(sram, flash)` can be called
+       from application at `FLASHEND+1-4`; from u7.7 Bit 7 indicates that the bootloader selects
        the baud rate automatically depending on the host baud rate; whether or not
        `pgm_write_page(sram, flash)` is available can still be seen from the `rjmp` entry below
      + Bit 6, if set, indicates EEPROM read/write support
-     + Bit 5, if set, indicates urprotocol use that requires `avrdude -c urclock`
+     + Bit 5, if set in versions up to u7.7, indicates use of urprotocol; from u8.0 onwards
+       this bit indicates that flash is read before writing skipping unnecessary writes
      + Bit 4, if set, indicates the bootloader supports dual boot from external SPI flash
      + Bits 3 and 2 indicate whether or not the bootloader is a vector bootloader
        | Bit 3 | Bit 2 | Bootloader ...|
@@ -183,8 +184,8 @@ bootloader was compiled or the location of the bootloader end otherwise. The 6-b
        | 1 | 0 | ... is a vbl that patches reset/interrupt vectors itself (expect an error on verify) |
        | 1 | 1 | ... is a vbl that patches reset/interrupt vectors *and* shows original ones on verify |
      + Bit 1, if set, indicates bootloader safeguards against overwriting itself
-     + Bit 0, if set in versions up to v7.6, indicates bootloader will load reset flags into
-       register R2 before starting the application; from v7.7 onwards this is always the case, and
+     + Bit 0, if set in versions up to u7.6, indicates bootloader will load reset flags into
+       register R2 before starting the application; from u7.7 onwards this is always the case, and
        Bit 0 indicates whether or not the bootloader offers a chip erase function
   - Two-byte `rjmp` to a `pgm_write_page(ram, flash)` function or a `ret` opcode if not implemented
   - Vector number 1..127 for the `r/jmp` to the application if it is a vector bootloader, 0 otherwise

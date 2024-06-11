@@ -14,7 +14,7 @@ hardware or protocol error occurred during burning/verification or when the boot
 task successfully. Watchdog timeout resets the MCU just like an external reset. When the bootloader
 is entered under this condition, though, it then normally jumps directly to the application.
 However, when the bootloader was compiled with dual-boot support, it first checks external SPI
-flash memory to see it contains a new sketch, in which case a copy of it is burned from external
+flash memory to see if it contains a new sketch, in which case a copy of it is burned from external
 memory onto internal flash. The idea is that the application sketch could have been written to
 receive a new version via a radio and have placed it onto the external SPI flash memory before
 issuing a WDT reset. Hence, this dual-boot property is also called over the air programming,
@@ -67,30 +67,27 @@ actual app is started. Here some choices for the first decision:
   - The bootloader sets the TX line of the UART or the designated TX pin of the software serial
     communication to output after every reset. If the bootloader is compiled to blink an LED, to
     output a square wave for debugging or to communicate via SPI with external memory for dual
-    programming, there will be other lines that are set to output shortly after each reset. Not
-    all projects can deal gracefully with these short flares of output activity on some of the
-    pins. If you use a bootloader for production settings it is best to carefully consider the
+    programming, there will be other lines that are set to output shortly after each reset. Not all
+    projects can deal gracefully with these short flares of output activity on some of the pins. If
+    you use a bootloader for production settings it is best practice to carefully consider the
     hardware implications on the circuit.
 
   - As with all bootloaders they work best when the host has a way to reset the board, which is
-    typically done via DTR/RTS lines of the host's serial port. Avrdude -c [arduino|urclock]
-    does this automatically. The board needs to have hardware to facilitate the DTR/RTS
-    connection for reset. Most boards do. If not, sometimes running a small dedicated reset
-    program on the host just before running avrdude helps. This reset program somehow needs to
-    pull the board's reset line low for a short time; on a Raspberry Pi external GPIO pins can
-    be used for that. If that is not possible either, then setting the watchdog timeout to a
-    long time (see the WDTO option below) may be helpful, so one can manually reset the board
-    before calling avrdude. The default for the timeout is 500 ms, but only with the urclock
-    programmer can small timeouts down to 256 ms be reliably utilised.
+    typically done via DTR/RTS lines of the host's serial port. Avrdude -c [arduino|urclock] does
+    this automatically. The board needs to have hardware to facilitate the DTR/RTS connection for
+    reset. Most boards do. If not, sometimes running a small dedicated reset program on the host
+    just before running avrdude helps. This reset program somehow needs to pull the board's reset
+    line low for a short time; on a Raspberry Pi external GPIO pins can be used for that. If that
+    is not possible either, then setting the watchdog timeout to a long time (see the WDTO option
+    below) may be helpful, so one can manually reset the board before calling avrdude. The default
+    for the timeout is 1 s when using `make`, but the urclock programmer can utilise timeouts down
+    to 256 ms. When compiling directly using the `urboot-gcc` wrapper the default timeout is 512 ms.
 
 
 ## Assumptions, limitations, caveats, tips and tricks for *this* bootloader
 
-  - The uploading program is assumed to be avrdude with either the arduino or urclock
-    programmer: call avrdude -c [arduino|urclock] for this. I have not tested other uploaders.
-    The tightest bootloader code (see URPROTOCOL=1 option below) requires avrdude's urclock
-    programmer as this forgoes some get/put parameter calls that arduino issues unnecessarily
-    and uses its own leaner protocol.
+  - The uploading program is assumed to be AVRDUDE with the urclock programmer: use `avrdude -c
+    urclock`
 
   - A bootloader with dual-boot support needs to know which port pin is assigned to the chip
     select of the SPI flash memory, which pin drives a blinking LED (if wanted), where the tx/rx
@@ -122,7 +119,7 @@ actual app is started. Here some choices for the first decision:
       + Vector table of the MCU, and therefore the reset vector, resides at address zero
       + Compiler puts either a jmp or an rjmp at address zero
       + Compiler does not zap/shorten the vector table if no or few interrupts are used
-      + Compiler does not utilise unused interrupt vectors to place code there
+      + Compiler does not utilise unused interrupt vectors to place code/data there
 
     This should be the case with all regular sketches produced by avr-gcc. Vector bootloaders are
     also useful for devices with boot section support to allow them to use less space than the
@@ -131,7 +128,7 @@ actual app is started. Here some choices for the first decision:
     protection bits in the lock byte actually allow code be written into the bootloader section
     with SPM instructions. Otherwise the extra space in the boot section that is freed by smaller
     vector bootloaders cannot be used. The urloader sketch sets fuses and lock bits appropriately
-    when burning a vector bootloader onto your board. More on VBLs below.
+    when burning a vector bootloader onto your board.
 
   - The code makes several assumptions that reduce the code size (eg, no interrupts can occur, the `USART`
     character size register defaults to 8N1). They are true after a hardware reset, but will not
