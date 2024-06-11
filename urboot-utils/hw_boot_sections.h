@@ -10,7 +10,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.0
- * 14.02.2024
+ * 02.06.2024
  *
  */
 
@@ -82,17 +82,18 @@ HW_BLSTART0, which can be
 #define HW_BLSTART0      0x9dff
 
 #elif defined(__AVR_ATmega32__) || defined(__AVR_ATmega32A__) || defined(__AVR_ATmega32HVB__) || \
-  defined(__AVR_ATmega32HVBrevB__) || defined(__AVR_ATmega32C1__) || \
-  defined(__AVR_ATmega32M1__) || defined(__AVR_ATmega32HVE2__) || defined(__AVR_ATmega32U2__) || \
-  defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega32U6__) || defined(__AVR_ATmega323__) || \
-  defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324P__) || defined(__AVR_ATmega324PA__) || \
-  defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega325__) || defined(__AVR_ATmega325A__) || \
-  defined(__AVR_ATmega325P__) || defined(__AVR_ATmega325PA__) || defined(__AVR_ATmega328__) || \
-  defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328PB__) || defined(__AVR_ATmega329__) || \
-  defined(__AVR_ATmega329A__) || defined(__AVR_ATmega329P__) || defined(__AVR_ATmega329PA__) || \
-  defined(__AVR_ATmega3250__) || defined(__AVR_ATmega3250A__) || defined(__AVR_ATmega3250P__) || \
-  defined(__AVR_ATmega3250PA__) || defined(__AVR_ATmega3290__) || defined(__AVR_ATmega3290A__) || \
-  defined(__AVR_ATmega3290P__) || defined(__AVR_ATmega3290PA__) || defined(__AVR_ATA6614Q__)
+  defined(__AVR_ATmega32HVBrevB__) || defined(__AVR_ATmega32HVBREVB__) || \
+  defined(__AVR_ATmega32C1__) || defined(__AVR_ATmega32M1__) || defined(__AVR_ATmega32HVE2__) || \
+  defined(__AVR_ATmega32U2__) || defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega32U6__) || \
+  defined(__AVR_ATmega323__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324P__) || \
+  defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega324PB__) || defined(__AVR_ATmega325__) || \
+  defined(__AVR_ATmega325A__) || defined(__AVR_ATmega325P__) || defined(__AVR_ATmega325PA__) || \
+  defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328PB__) || \
+  defined(__AVR_ATmega329__) || defined(__AVR_ATmega329A__) || defined(__AVR_ATmega329P__) || \
+  defined(__AVR_ATmega329PA__) || defined(__AVR_ATmega3250__) || defined(__AVR_ATmega3250A__) || \
+  defined(__AVR_ATmega3250P__) || defined(__AVR_ATmega3250PA__) || defined(__AVR_ATmega3290__) || \
+  defined(__AVR_ATmega3290A__) || defined(__AVR_ATmega3290P__) || \
+  defined(__AVR_ATmega3290PA__) || defined(__AVR_ATA6614Q__)
 
 #define HW_N_BOOT_SECTIONS    4
 #define HW_MIN_BOOTSIZE     512
@@ -117,7 +118,8 @@ HW_BLSTART0, which can be
 #define HW_MIN_BOOTSIZE     256
 #define HW_BLSTART0      0x3eff
 
-#elif defined(__AVR_ATmega16HVB__) || defined(__AVR_ATmega16HVBrevB__) || \
+#elif defined(__AVR_ATmega16HVB__) || \
+  defined(__AVR_ATmega16HVBrevB__) || defined(__AVR_ATmega16HVBREVB__) || \
   defined(__AVR_ATmega16M1__) || defined(__AVR_ATmega16U2__) || defined(__AVR_ATmega16U4__) || \
   defined(__AVR_AT90USB162__) || defined(__AVR_AT90PWM216__) || defined(__AVR_AT90PWM316__)
 
@@ -164,7 +166,8 @@ HW_BLSTART0, which can be
 #define HW_MIN_BOOTSIZE    8192
 #define HW_BLSTART0     0x2ffff
 
-#elif defined(__AVR_ATxmega128A1__) || defined(__AVR_ATxmega128A1revD__) || \
+#elif defined(__AVR_ATxmega128A1__) || \
+  defined(__AVR_ATxmega128A1revD__) || defined(__AVR_ATxmega128A1REVD__) || \
   defined(__AVR_ATxmega128A1U__) || defined(__AVR_ATxmega128B1__) || \
   defined(__AVR_ATxmega128A3__) || defined(__AVR_ATxmega128A3U__) || \
   defined(__AVR_ATxmega128B3__) || defined(__AVR_ATxmega128C3__) || \
@@ -232,22 +235,25 @@ HW_BLSTART0, which can be
 #define HW_BLSTART0      0x17ff
 
 #elif defined(__AVR_AVR8EA28__) || defined(__AVR_AVR8EA32__) || defined(__AVR_AVR16DD14__) || \
-  defined(__AVR_AVR16EB14__) || defined(__AVR_AVR16DD20__) || defined(__AVR_AVR16EB20__) || \
-  defined(__AVR_AVR16DD28__) || defined(__AVR_AVR16EA28__) || defined(__AVR_AVR16EB28__) || \
-  defined(__AVR_AVR16DD32__) || defined(__AVR_AVR16EA32__) || defined(__AVR_AVR16EB32__) || \
-  defined(__AVR_AVR16EA48__) || defined(__AVR_AVR32DD14__) || defined(__AVR_AVR32DD20__) || \
+  defined(__AVR_AVR16DU14__) || defined(__AVR_AVR16EB14__) || defined(__AVR_AVR16DD20__) || \
+  defined(__AVR_AVR16DU20__) || defined(__AVR_AVR16EB20__) || defined(__AVR_AVR16DD28__) || \
+  defined(__AVR_AVR16DU28__) || defined(__AVR_AVR16EA28__) || defined(__AVR_AVR16EB28__) || \
+  defined(__AVR_AVR16DD32__) || defined(__AVR_AVR16DU32__) || defined(__AVR_AVR16EA32__) || \
+  defined(__AVR_AVR16EB32__) || defined(__AVR_AVR16EA48__) || defined(__AVR_AVR32DD14__) || \
+  defined(__AVR_AVR32DU14__) || defined(__AVR_AVR32DD20__) || defined(__AVR_AVR32DU20__) || \
   defined(__AVR_AVR32DA28__) || defined(__AVR_AVR32DB28__) || defined(__AVR_AVR32DD28__) || \
-  defined(__AVR_AVR32EA28__) || defined(__AVR_AVR32DA32__) || defined(__AVR_AVR32DB32__) || \
-  defined(__AVR_AVR32DD32__) || defined(__AVR_AVR32EA32__) || defined(__AVR_AVR32DA48__) || \
-  defined(__AVR_AVR32DB48__) || defined(__AVR_AVR32EA48__) || defined(__AVR_AVR64DD14__) || \
-  defined(__AVR_AVR64DD20__) || defined(__AVR_AVR64DA28__) || defined(__AVR_AVR64DB28__) || \
-  defined(__AVR_AVR64DD28__) || defined(__AVR_AVR64DU28__) || defined(__AVR_AVR64EA28__) || \
-  defined(__AVR_AVR64DA32__) || defined(__AVR_AVR64DB32__) || defined(__AVR_AVR64DD32__) || \
-  defined(__AVR_AVR64DU32__) || defined(__AVR_AVR64EA32__) || defined(__AVR_AVR64DA48__) || \
-  defined(__AVR_AVR64DB48__) || defined(__AVR_AVR64EA48__) || defined(__AVR_AVR64DA64__) || \
-  defined(__AVR_AVR64DB64__) || defined(__AVR_AVR128DA28__) || defined(__AVR_AVR128DB28__) || \
-  defined(__AVR_AVR128DA32__) || defined(__AVR_AVR128DB32__) || defined(__AVR_AVR128DA48__) || \
-  defined(__AVR_AVR128DB48__) || defined(__AVR_AVR128DA64__) || defined(__AVR_AVR128DB64__)
+  defined(__AVR_AVR32DU28__) || defined(__AVR_AVR32EA28__) || defined(__AVR_AVR32DA32__) || \
+  defined(__AVR_AVR32DB32__) || defined(__AVR_AVR32DD32__) || defined(__AVR_AVR32DU32__) || \
+  defined(__AVR_AVR32EA32__) || defined(__AVR_AVR32DA48__) || defined(__AVR_AVR32DB48__) || \
+  defined(__AVR_AVR32EA48__) || defined(__AVR_AVR64DD14__) || defined(__AVR_AVR64DD20__) || \
+  defined(__AVR_AVR64DA28__) || defined(__AVR_AVR64DB28__) || defined(__AVR_AVR64DD28__) || \
+  defined(__AVR_AVR64DU28__) || defined(__AVR_AVR64EA28__) || defined(__AVR_AVR64DA32__) || \
+  defined(__AVR_AVR64DB32__) || defined(__AVR_AVR64DD32__) || defined(__AVR_AVR64DU32__) || \
+  defined(__AVR_AVR64EA32__) || defined(__AVR_AVR64DA48__) || defined(__AVR_AVR64DB48__) || \
+  defined(__AVR_AVR64EA48__) || defined(__AVR_AVR64DA64__) || defined(__AVR_AVR64DB64__) || \
+  defined(__AVR_AVR128DA28__) || defined(__AVR_AVR128DB28__) || defined(__AVR_AVR128DA32__) || \
+  defined(__AVR_AVR128DB32__) || defined(__AVR_AVR128DA48__) || defined(__AVR_AVR128DB48__) || \
+  defined(__AVR_AVR128DA64__) || defined(__AVR_AVR128DB64__)
 
 #define HW_N_BOOT_SECTIONS    1
 #define HW_MIN_BOOTSIZE     512

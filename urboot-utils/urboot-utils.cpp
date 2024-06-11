@@ -55,8 +55,11 @@ void urbootPutVersion(char *buf, uint16_t ver, uint16_t rjmpwp) {
     buf += strlen(buf);
     *buf++ = (hi < 077 && (type & UR_PGMWRITEPAGE)) || (hi >= 077 && rjmpwp != ub_ret_opcode)? 'w': '-';
     *buf++ = type & UR_EEPROM? 'e': '-';
-    if(hi >= 076) {             // From urboot version 7.6 URPROTOCOL has its own bit
-      *buf++ = type & UR_URPROTOCOL? 'u': 's';
+    if(hi >= 076) {
+      if(hi > 077)
+        *buf++ = type & UR_UPDATE_FL? 'U': '-';
+      else
+        *buf++ = type & UR_URPROTOCOL? 'u': 's';
       *buf++ = type & UR_DUAL? 'd': '-';
     } else {
       *buf++ = '-';             // Dummy bit
@@ -64,7 +67,7 @@ void urbootPutVersion(char *buf, uint16_t ver, uint16_t rjmpwp) {
       // D = Dual boot with SE & SPI restoration, d = dual boot with SE, f = dual boot only
       *buf++ = flags==3? 'D': flags==2? 'd': flags? 'f': '-';
     }
-    flags = (type/UR_VBL) & 3;
+    flags = (type/(UR_VBLMASK & -UR_VBLMASK)) & (hi > 077? 1: 3); // Only use 1 bit for v8.0+
     // V = VBL, patch & verify, v = VBL, patch only, j = VBL, jump only
     *buf++ = flags==3? 'V': flags==2? 'v': flags? 'j': 'h';
     *buf++ = hi < 077? (type & UR_PROTECTME? 'p': '-'): (type & UR_PROTECTME? 'P': 'p');
@@ -113,13 +116,15 @@ void urbootPrintCapabilitiesLong(uint16_t ver, uint16_t rjmpwp) {
       printf_q(" w pgm_write_page() can be called from sketch at FLASHEND+1-4\n");
     if(type & UR_EEPROM)
       printf_q(" e EEPROM read/write support\n");
-    if(hi >= 076) {             // From urboot version 7.6 URPROTOCOL has its own bit
-      if(type & UR_URPROTOCOL)
-        printf_q(" u uses own protocol and requires avrdude -c urclock\n");
+    if(hi >= 076) {
+      if(hi <= 077 && !(type & UR_URPROTOCOL))
+        printf_q(" s obsolete STK500 protocol\n");
+      if(hi > 077 && (type & UR_UPDATE_FL))
+        printf_q(" U checks need to write flash pages\n");
     }
     if(type & UR_DUAL)
       printf_q(" d dual boot\n");
-    switch(type & UR_VBLMASK) {
+    switch(type & (hi > 077? UR_VBL: UR_VBLMASK)) {
     case UR_VBLPATCHVERIFY: printf_q(" V%S%Sand pretends original vectors on verify\n", vbl, aup); break;
     case UR_VBLPATCH: printf_q(" v%S%Sonly (expect an error on verify)\n", vbl, aup); break;
     case UR_VBL: printf_q(" j%Ssketch starts via interrupt vector instead of reset (must be patched externally)\n", vbl); break;
