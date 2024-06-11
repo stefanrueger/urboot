@@ -4,7 +4,7 @@
  * published under GNU General Public License, version 3 (GPL-3.0)
  * author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v8.0
+ * u8.0
  * 06.06.2024 (first version published in July 2016)
  *
  * Feature-rich bootloader that is fast and small
@@ -29,16 +29,26 @@
  *     + Chip erase in bootloader (faster than -c urclock emulation)
  *  - Avrdude (from v7.1 onwards) supports urboot bootloaders with -c urclock
  *
- * Supported and tested (for v8.0)
+ * Supported and tested (for u8.0)
  *  - ATmega328P (Urclock, UrSense, UrclockMini, Uno, Duemilanove, Anarduino, Moteino, Jeenode etc)
- *  - ATmega1284P (UrclockMega, MoteinoMega)
+ *  - ATmega1284P (UrclockMega, MoteinoMega, MightyCore)
  *  - ATmega2560 (Mega R3)
  *  - ATtiny85 (Digispark)
  *  - ATtiny167 (Digispark Pro)
+ *  - ATmega16 (MightyCore)
+ *  - ATmega64 (MightyCore)
+ *  - ATmega8535 (MightyCore)
+ *  - ATmega2561
+ *  - ATmega324P
+ *  - ATmega165P
+ *  - AT90CAN128
+ *  - ATtiny1634 (4-page erase)
+ *  - ATtiny841 (4-page erase)
+ *  - ATtiny4313
  *
- * Tested (for v7.7)
+ * Tested (for u7.7)
  *  - ATmega328P (Urclock, UrSense, UrclockMini, Uno, Duemilanove, Anarduino, Moteino, Jeenode etc)
- *  - ATmega1284P (UrclockMega, MoteinoMega)
+ *  - ATmega1284P (UrclockMega, MoteinoMega, MightyCore)
  *  - ATmega2560 (Mega R3)
  *  - ATmega162
  *  - ATmega32 (MightyCore)
@@ -46,8 +56,8 @@
  *  - ATtiny85 (Digispark)
  *  - ATtiny167 (Digispark Pro)
  *  - ATtiny2313
- *  - ATtiny1634
- *  - ATtiny841
+ *  - ATtiny1634 (4-page erase)
+ *  - ATtiny841 (4-page erase)
  *  - ATtiny13A
  *  - ATmega128RFA1
  *
@@ -63,27 +73,26 @@
  *    code, different flash write code, different GPIO handling for LEDs & attached SPM memory
  *
  * Compiles but untested for the following -mmcu=... options
- *   at90can128 at90can32 at90can64 at90pwm1 at90pwm161 at90pwm2 at90pwm216 at90pwm2b at90pwm3
- *   at90pwm316 at90pwm3b at90pwm81 at90scr100 at90usb1286 at90usb1287 at90usb162 at90usb646
- *   at90usb647 at90usb82 ata5272 ata5505 ata5702m322 ata5782 ata5790 ata5790n ata5791 ata5795
- *   ata5831 ata6285 ata6286 ata6289 ata6612c ata6613c ata6614q ata6616c ata6617c ata664251 ata8210
- *   ata8510 atmega128 atmega1280 atmega1281 atmega1284 atmega1284rfr2 atmega128a
- *   atmega128rfr2 atmega16 atmega161 atmega163 atmega164a atmega164p atmega164pa atmega165
- *   atmega165a atmega165p atmega165pa atmega168 atmega168a atmega168p atmega168pa atmega168pb
- *   atmega169 atmega169a atmega169p atmega169pa atmega16a atmega16hva atmega16hva2 atmega16hvb
- *   atmega16hvbrevb atmega16m1 atmega16u2 atmega16u4 atmega2561 atmega2564rfr2 atmega256rfr2
- *   atmega323 atmega324a atmega324p atmega324pa atmega324pb atmega325 atmega3250
- *   atmega3250a atmega3250p atmega3250pa atmega325a atmega325p atmega325pa atmega328 atmega328pb
- *   atmega329 atmega3290 atmega3290a atmega3290p atmega3290pa atmega329a atmega329p atmega329pa
- *   atmega32a atmega32c1 atmega32hvb atmega32hvbrevb atmega32m1 atmega32u2 atmega32u4 atmega32u6
- *   atmega406 atmega48 atmega48a atmega48p atmega48pa atmega48pb atmega64 atmega640 atmega644
+ *   at90can32 at90can64 at90pwm1 at90pwm161 at90pwm2 at90pwm216 at90pwm2b at90pwm3 at90pwm316
+ *   at90pwm3b at90pwm81 at90scr100 at90usb1286 at90usb1287 at90usb162 at90usb646 at90usb647
+ *   at90usb82 ata5272 ata5505 ata5702m322 ata5782 ata5790 ata5790n ata5791 ata5795 ata5831 ata6285
+ *   ata6286 ata6289 ata6612c ata6613c ata6614q ata6616c ata6617c ata664251 ata8210 ata8510
+ *   atmega128 atmega1280 atmega1281 atmega1284 atmega1284rfr2 atmega128a atmega128rfr2 atmega161
+ *   atmega163 atmega164a atmega164p atmega164pa atmega165 atmega165a atmega165pa atmega168
+ *   atmega168a atmega168p atmega168pa atmega168pb atmega169 atmega169a atmega169p atmega169pa
+ *   atmega16a atmega16hva atmega16hva2 atmega16hvb atmega16hvbrevb atmega16m1 atmega16u2
+ *   atmega16u4 atmega2564rfr2 atmega256rfr2 atmega323 atmega324a atmega324pa atmega324pb atmega325
+ *   atmega3250 atmega3250a atmega3250p atmega3250pa atmega325a atmega325p atmega325pa atmega328
+ *   atmega328pb atmega329 atmega3290 atmega3290a atmega3290p atmega3290pa atmega329a atmega329p
+ *   atmega329pa atmega32a atmega32c1 atmega32hvb atmega32hvbrevb atmega32m1 atmega32u2 atmega32u4
+ *   atmega32u6 atmega406 atmega48 atmega48a atmega48p atmega48pa atmega48pb atmega640 atmega644
  *   atmega644a atmega644p atmega644pa atmega644rfr2 atmega645 atmega6450 atmega6450a atmega6450p
  *   atmega645a atmega645p atmega649 atmega6490 atmega6490a atmega6490p atmega649a atmega649p
  *   atmega64a atmega64c1 atmega64hve atmega64hve2 atmega64m1 atmega64rfr2 atmega8 atmega8515
- *   atmega8535 atmega88 atmega88a atmega88p atmega88pa atmega88pb atmega8a atmega8hva atmega8u2
- *   attiny13 attiny2313a attiny24 attiny24a attiny25 attiny261 attiny261a attiny4313 attiny43u
- *   attiny44 attiny441 attiny44a attiny45 attiny461 attiny461a attiny48 attiny828 attiny84
- *   attiny84a attiny861 attiny861a
+ *   atmega88 atmega88a atmega88p atmega88pa atmega88pb atmega8a atmega8hva atmega8u2 attiny13
+ *   attiny2313a attiny24 attiny24a attiny25 attiny261 attiny261a attiny43u attiny44 attiny441
+ *   attiny44a attiny45 attiny461 attiny461a attiny48 attiny828 attiny84 attiny84a attiny861
+ *   attiny861a
  *
  * How the bootloader works
  *
@@ -285,7 +294,7 @@
  * Jun 2016
  * 7.0 smr: reviewed Bill Westfield's code; rewrote it reducing its size; introduced fine-grained
  *     compile time options to better control the size of bootloader; made vector bootloaders work;
- *     introduced dual boot, auto-increment (removed in v7.5), pgm_write_page()
+ *     introduced dual boot, auto-increment (removed in u7.5), pgm_write_page()
  */
 
 
@@ -315,7 +324,7 @@
 #include "ur_uartnum.h"         // Generic UARTn names depending on UARTNUM/UARTALT
 
 #ifndef VERSION
-#define VERSION            0100 // v8.0 in octal, as minor version is in 3 least significant bits
+#define VERSION            0100 // u8.0 in octal, as minor version is in 3 least significant bits
 #endif
 
 #define MAJORVER (VERSION >> 3) // Max 31
@@ -372,7 +381,7 @@
 #endif
 
 #if VBL > 1
-#warning v8.0+ no longer caters for VBL 2 and 3, setting VBL to 1
+#warning u8.0+ no longer caters for VBL 2 and 3, setting VBL to 1
 #undef VBL
 #define VBL 1
 #endif
@@ -447,7 +456,7 @@
 #define RJMPWP       RET_OPCODE
 #endif
 
-#undef  PROTECTME               // From v7.7 enforce bootloader self-protection
+#undef  PROTECTME               // From u7.7 enforce bootloader self-protection
 #define PROTECTME             1
 
 #if defined(PROTECTRESET) && PROTECTRESET && !FLASHWRAPS && VBL
@@ -1580,8 +1589,8 @@ static void leave_progmode() {
 /*
  * Urboot layout of top six bytes
  *
- * FLASHEND-5: numblpags, only from v7.5: 1 byte number 1..127 of bootloader flash pages
- * FLASHEND-4: vblvecnum, only from v7.5: 1 byte vector number 1..127 for vector bootloader
+ * FLASHEND-5: numblpags, only from u7.5: 1 byte number 1..127 of bootloader flash pages
+ * FLASHEND-4: vblvecnum, only from u7.5: 1 byte vector number 1..127 for vector bootloader
  * FLASHEND-3: 2 byte rjmp opcode to bootloader pgm_write_page(sram, flash) or ret opcode
  * FLASHEND-1: capability byte of bootloader
  * FLASHEND-0: version number of bootloader: 5 msb = major version, 3 lsb = minor version
@@ -1590,25 +1599,25 @@ static void leave_progmode() {
 /*
  * Capability byte of bootloader from version 7.2 onwards
  *
- * The PGMWRITEPAGE bit has been redundant from v7.5 as one can tell presence of the page write
- * routine by checking the rjmp opcode against the ret opcode. From v7.7 this bit has been
- * allocated for autobaud detection. Similarly, from v7.7 the PROTECTME option has been forced to
- * 1, and the RESETFLAGS presevation has been on from at least v7.6. These two bits have also been
- * reallocated in v7.7 to represent even stronger protection (bootloader and reset vector) and chip
+ * The PGMWRITEPAGE bit has been redundant from u7.5 as one can tell presence of the page write
+ * routine by checking the rjmp opcode against the ret opcode. From u7.7 this bit has been
+ * allocated for autobaud detection. Similarly, from u7.7 the PROTECTME option has been forced to
+ * 1, and the RESETFLAGS presevation has been on from at least u7.6. These two bits have also been
+ * reallocated in u7.7 to represent even stronger protection (bootloader and reset vector) and chip
  * erase capability, respectively.
  */
 
-#define UR_AUTOBAUD         128 // Bootloader has autobaud detection (v7.7+)
+#define UR_AUTOBAUD         128 // Bootloader has autobaud detection (u7.7+)
 #define UR_EEPROM            64 // EEPROM read/write support
-#define UR_UPDATE_FL         32 // Check flash page before writing it (from v8.0)
+#define UR_UPDATE_FL         32 // Check flash page before writing it (from u8.0)
 #define UR_DUAL              16 // Dual boot
 #define UR_VBLMASK           12 // Mask for two vector bootloader bits
-#define UR_VBLPATCHVERIFY    12 // No longer used in v8.0+
-#define UR_VBLPATCH           8 // No longer used in v8.0+
+#define UR_VBLPATCHVERIFY    12 // No longer used in u8.0+
+#define UR_VBLPATCH           8 // No longer used in u8.0+
 #define UR_VBLJUMP            4 // Start application via interrupt vector instead of reset
 #define UR_NO_VBL             0 // Not a vector bootloader, must set fuses to HW bootloader support
-#define UR_PROTECTRESET       2 // Bootloader enforces reset vector points to bootloader (v7.7+)
-#define UR_HAS_CE             1 // Bootloader has Chip Erase (v7.7+)
+#define UR_PROTECTRESET       2 // Bootloader enforces reset vector points to bootloader (u7.7+)
+#define UR_HAS_CE             1 // Bootloader has Chip Erase (u7.7+)
 
 #define UR_AFLAG  (AUTOBAUD? UR_AUTOBAUD: 0)
 #define UR_EFLAG  (EEPROM? UR_EEPROM: 0)

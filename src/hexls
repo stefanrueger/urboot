@@ -38,7 +38,7 @@ my ($version, $check, $srt, $usage, $md, $mcu, $pre, $l, $c, $t, $title, $in, $d
 my %feature = (
   'w'      => "  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`\n",
   'e'      => "  + `e` EEPROM read/write support\n",
-  'u'      => "  + `u` uses urprotocol (default from v8.0)\n",
+  'u'      => "  + `u` uses urprotocol (default from u8.0)\n",
   'U'      => "  + `U` checks whether flash pages need writing before doing so\n",
   's'      => "  + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work\n",
   'd'      => "  + `d` dual boot (over-the-air programming from external SPI flash)\n",
@@ -227,10 +227,10 @@ $t = defined($md)? "`": "";
 
 use constant {
   UR_PGMWRITEPAGE   => 128, # pgm_write_page() subroutine that can be called from application at FLASHEND+1-4
-  UR_AUTOBAUD       => 128, # Bootloader has autobaud detection (v7.7+)
+  UR_AUTOBAUD       => 128, # Bootloader has autobaud detection (u7.7+)
   UR_EEPROM         =>  64, # EEPROM read/write support
-  UR_URPROTOCOL     =>  32, # uses urprotocol requiring avrdude -c urclock (up to v7.7)
-  UR_UPDATE_FL      =>  32, # checks whether flash page needs writing (from v8.0)
+  UR_URPROTOCOL     =>  32, # uses urprotocol requiring avrdude -c urclock (up to u7.7)
+  UR_UPDATE_FL      =>  32, # checks whether flash page needs writing (from u8.0)
   UR_DUAL           =>  16, # dual boot
   UR_VBLMASK        =>  12, # vector bootloader bits (point reset vector to bootloader and some interrupt vector to application)
   UR_VBLPATCHVERIFY =>  12, # patches reset/interrupt vectors and pretends original vectors on verify
@@ -238,8 +238,8 @@ use constant {
   UR_VBL            =>   4, # merely starts application through interrupt vector instead of reset (vectors must be patched externally)
   UR_NO_VBL         =>   0, # no vector bootloader support
   UR_PROTECTME      =>   2, # bootloader safeguards against overwriting itself
-  UR_RESETFLAGS     =>   1, # load reset flags into register R2 before jumping to the application (up to v7.6)
-  UR_HAS_CE         =>   1, # Bootloader has Chip Erase (v7.7+)
+  UR_RESETFLAGS     =>   1, # load reset flags into register R2 before jumping to the application (up to u7.6)
+  UR_HAS_CE         =>   1, # Bootloader has Chip Erase (u7.7+)
 };
 
 # default to all *.hex files if no argument given

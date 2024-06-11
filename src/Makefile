@@ -91,7 +91,7 @@ CHIP_ERASE_CMD = -DCHIP_ERASE=$(CHIP_ERASE)
 FEAT := $(FEAT)$(subst 0,,$(subst 1,c,$(CHIP_ERASE)))
 endif
 
-# Check flash page before writing it (from v8.0)
+# Check flash page before writing it (from u8.0)
 ifdef UPDATE_FL
 UPDATE_FL_CMD = -DUPDATE_FL=$(UPDATE_FL)
 FEAT := $(FEAT)$(subst 0,,$(subst 1,u,$(subst 2,u2,$(subst 3,u3,$(subst 4,u4,$(UPDATE_FL))))))
