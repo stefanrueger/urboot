@@ -6,6 +6,6 @@ RUN apt-get update \
 
 WORKDIR /src
 
-RUN PERL_MM_USE_DEFAULT=1 cpan -T install File::Basename Capture::Tiny POSIX Scalar::Util Getopt::Long
+RUN PERL_MM_USE_DEFAULT=1 cpan -T install File::Basename Capture::Tiny POSIX Scalar::Util Getopt::Long Number::Range
 
 ENTRYPOINT ["/usr/bin/make"]
