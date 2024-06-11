@@ -100,9 +100,7 @@
   + `led9` toggles an LED on, in this example, Arduino pin 9
   + `cs8` uses Arduino pin 8 as chip select of external SPI flash memory for dual boot
   + `fp9` for debugging the bootloader uses, eg, Arduino pin 9 to swing a signal of low frequency, eg, 50 Hz
-  + `ur` uses urprotocol and therefore requires `avrdude -c urclock` for programming
-  + `d` dual boot
-  + `min` most feature-rich bootloader for smallest achievable flash usage (implies `ur`)
+  + `min` most feature-rich bootloader for smallest achievable flash usage
 
 Note that the bootloaders with a part name, eg, `atmega8_a.hex` are usually template bootloaders:
 instead of the opcodes for toggling specific LEDs or pulling a specific CS line for external SPI

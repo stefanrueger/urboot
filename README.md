@@ -3,7 +3,7 @@
 [urprotocol](https://github.com/stefanrueger/urboot/blob/main/urprotocol.md)**
 
  - Tight code: most bootloaders fit into
-     + 256 bytes albeit without EEPROM read/write support
+     + 256 bytes albeit normally without EEPROM read/write support
      + 384 bytes with EEPROM read/write support
      + 512 bytes with dual-boot, EEPROM read/write support and Chip Erase capability
  - Highly modular feature set:
@@ -48,15 +48,13 @@ with the corresponding ones in the directory
 [`src/all`](https://github.com/stefanrueger/urboot/tree/main/src/all). Once all these hurdles are
 taken, it is easy to create own bootloaders with commands such as
 ```
- $ make MCU=atmega328p F_CPU=16000000L BAUD_RATE=115200 EEPROM=1 \
-   LED=AtmelPB1 SFMCS=AtmelPB0 DUAL=1 FRILLS=7 NAME=moteino-dual
+ $ make MCU=atmega328p AUTOBAUD=1 VBL=1 AUTOFRILLS=5..10 NAME=atmega328p_a
 ```
 
 Alternatively, the Dockerfile may be built and used to build binaries on other systems:
 ```
  $ docker run --platform linux/amd64 -v "$(pwd)/src":/src --rm -it $(docker build -q .) \
-   MCU=atmega328p F_CPU=16000000L BAUD_RATE=115200 EEPROM=1 \
-   LED=AtmelPB1 SFMCS=AtmelPB0 DUAL=1 FRILLS=7 NAME=moteino-dual
+   MCU=atmega328p AUTOBAUD=1 VBL=1 AUTOFRILLS=5..10 NAME=atmega328p_a
 ```
 More detailed information here: [`make` options](https://github.com/stefanrueger/urboot/blob/main/docs/makeoptions.md)
 
@@ -105,10 +103,9 @@ If the part does *not* have hardware support for bootloaders (eg,
 `ATtiny167`), then this is all that is needed. However, if your part *has*
 hardware support for bootloaders (eg, `ATmega328p`), then ***particular
 attention*** is needed as to whether the bootloader
- - Is a vector bootloader **(`j`, `v` or `V`),** in which case the fuses need to be programmed so
-   that on reset the MCU jumps to the reset vector at address 0. The lock bits should not preclude
-   writing to any of the boot sections (otherwise the space freed up by vector bootloaders cannot
-   be used).
+ - Is a vector bootloader **(`j`),** in which case the fuses need to be programmed so that on reset
+   the MCU jumps to the reset vector at address 0. Ensure the lock bits do not preclude writing to
+   any of the boot sections (otherwise the space freed up by vector bootloaders cannot be used).
  - Assumes hardware support **(`h`)** and sits in a dedicated HW boot section, in which case the
    fuses need to be set to ensure that on reset the MCU jumps to the correct bootloader start;
    the boot section size fuse bits need to match the actual bootloader size (consult the data sheet
@@ -116,16 +113,16 @@ attention*** is needed as to whether the bootloader
 
 | Bootloader | `FUSE_BOOTRST` | `FUSE_BOOTSZ` | Lock bits for boot section |
 | --: | --: | --: | --: |
-| `j`, `v`, `V` | Reset to memory start | Don't care | Read/write to everywhere|
-| `h` | Reset to boot section | Match with usage (in words) | Protect boot section |
+| `j` | Reset to memory start | Don't care | Read/write to everywhere|
+| `h` | Reset to boot section | Match with usage in **words** | Protect boot section |
 
-Strictly speaking vector bootloaders also need a `jmp` or `rjmp` from the reset vector
-at address 0 to the bootloader. However, if the chip was erased before putting the bootloader
-on, then this is not necessary: Erased words read `0xffff`, and although this is not an official
-opcode, it behaves as `sbrs r31,7` (skip one instruction if bit 7 in R31 is set). A reset to
-address 0 on an otherwise erased flash will therefore eventually run into the start of the
-bootloader. Uploading the first application with `avrdude -c urclock` will then set the reset
-vector correctly to jump to the bootloader.
+Strictly speaking vector bootloaders also need a `jmp` or `rjmp` from the reset vector at address 0
+to the bootloader. However, if the chip was erased before putting the bootloader on, then this is
+not necessary: Erased words read `0xffff`, and although not an official opcode, behave as `sbrs
+r31,7` (skip one instruction if bit 7 in R31 is set). A reset to address 0 on an otherwise erased
+flash will therefore eventually run into the start of the bootloader. Uploading the first
+application with `avrdude -c urclock` will set the reset vector correctly to jump to the
+bootloader.
 
 Some parts also need the `SELFPRGEN` fuse set allowing the vital `spm` opcode (store to program
 memory) to be executed without which bootloaders cannot write to flash.
@@ -140,8 +137,11 @@ host/laptop/PC (without a physical programmer), eg, through
 
 Voila!
 
-**Fun fact.** `avrdude -c urclock` can keep bootloaders in terminal mode `-t` without the
-bootloader resetting itself through the watchdog timer.
+**Fun facts.** `avrdude -c urclock` can keep bootloaders in terminal mode `-t` without the
+bootloader resetting itself through the watchdog timer. `avrdude -c urclock` keeps metadata of the
+uploaded program, which are displayed with `avrdude -c urclock -xshowall`. Urboot bootloaders tell
+avrdude *exactly* which part they were compiled for; hence, `-c urclock` is the *only* programmer
+for which the part does not need specifying via `-p`.
 
 <p id="trouble-shooting"></p>
 
@@ -175,8 +175,8 @@ board and followed above but programming does not work as expected?
    one second).
  - Ensure neither the actual F_CPU nor the used baud rate deviates by more than 1%
     + Does the bootloader match the actual F_CPU frequency? Check the crystal on the board and/or
-      the board documentation. Has the `CKDIV8` fuse been programmed? In that case the MCU runs
-      slower by a factor of 8.
+      the board documentation. Has the `CKDIV8` fuse been programmed? Then the MCU runs slower by a
+      factor of 8.
     + Does the `avrdude` baud rate match the bootloader's? Try an eighth of the nominal bootloader
       baud rate in case `CKDIV8` is programmed. Autobaud bootloaders only recognise 256 different
       baud rates: F_CPU/8n where n is 1..256; is the used baud rate close to an auto-detectable one?
