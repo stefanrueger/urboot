@@ -36,8 +36,8 @@
 #endif
 
 static const uint8_t CS   = 10;
-static const uint8_t COPI = 11;
-static const uint8_t CIPO = 12;
+static const uint8_t PICO = 11;
+static const uint8_t POCI = 12;
 static const uint8_t SCK  = 13;
 
 static const uint8_t SDA = 18;

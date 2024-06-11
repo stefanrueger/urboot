@@ -1,11 +1,11 @@
 /*
- * Urboot bootloader for 8-bit AVR microprocessors
+ * Urboot bootloader for classic 8-bit AVR microprocessors
  *
  * published under GNU General Public License, version 3 (GPL-3.0)
  * author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v7.7
- * 29.12.2022 (first version published in July 2016)
+ * u8.0
+ * 06.06.2024 (first version published in July 2016)
  *
  * Feature-rich bootloader that is fast and small
  *  - Tight code: most bootloaders fit into
@@ -29,9 +29,27 @@
  *     + Chip erase in bootloader (faster than -c urclock emulation)
  *  - Avrdude (from v7.1 onwards) supports urboot bootloaders with -c urclock
  *
- * Supported and tested
+ * Supported and tested (for u8.0)
  *  - ATmega328P (Urclock, UrSense, UrclockMini, Uno, Duemilanove, Anarduino, Moteino, Jeenode etc)
- *  - ATmega1284P (UrclockMega, MoteinoMega)
+ *  - ATmega168PB
+ *  - ATmega1284P (UrclockMega, MoteinoMega, MightyCore)
+ *  - ATmega2560 (Mega R3)
+ *  - ATtiny85 (Digispark)
+ *  - ATtiny167 (Digispark Pro)
+ *  - ATmega16 (MightyCore)
+ *  - ATmega64 (MightyCore)
+ *  - ATmega8535 (MightyCore)
+ *  - ATmega2561
+ *  - ATmega324P
+ *  - ATmega165P
+ *  - AT90CAN128
+ *  - ATtiny1634 (4-page erase)
+ *  - ATtiny841 (4-page erase)
+ *  - ATtiny4313
+ *
+ * Tested (for u7.7)
+ *  - ATmega328P (Urclock, UrSense, UrclockMini, Uno, Duemilanove, Anarduino, Moteino, Jeenode etc)
+ *  - ATmega1284P (UrclockMega, MoteinoMega, MightyCore)
  *  - ATmega2560 (Mega R3)
  *  - ATmega162
  *  - ATmega32 (MightyCore)
@@ -39,8 +57,8 @@
  *  - ATtiny85 (Digispark)
  *  - ATtiny167 (Digispark Pro)
  *  - ATtiny2313
- *  - ATtiny1634
- *  - ATtiny841
+ *  - ATtiny1634 (4-page erase)
+ *  - ATtiny841 (4-page erase)
  *  - ATtiny13A
  *  - ATmega128RFA1
  *
@@ -51,30 +69,30 @@
  *    AT90S2343, AT90S4414, AT90S4433, AT90S4434, AT90S8515, AT90C8534, AT90S8535)
  *  - AVR3 core without movw instructions (ATmega103, AT43USB320, AT43USB355, AT76C711)
  *
- * Currently unsupported: ATxmega devices, newer avr8x devices
+ * Unsupported within this source code file
+ *  - ATxmega devices and newer AVR-DA/DB/DD/DU/EA/EB ... devices: these require different I/O
+ *    code, different flash write code, different GPIO handling for LEDs & attached SPM memory
  *
- * Compiles but entirely untested for the following -mmcu=... options
- *   at90can128 at90can32 at90can64 at90pwm1 at90pwm161 at90pwm2 at90pwm216 at90pwm2b at90pwm3
- *   at90pwm316 at90pwm3b at90pwm81 at90scr100 at90usb1286 at90usb1287 at90usb162 at90usb646
- *   at90usb647 at90usb82 ata5272 ata5505 ata5702m322 ata5782 ata5790 ata5790n ata5791 ata5795
- *   ata5831 ata6285 ata6286 ata6289 ata6612c ata6613c ata6614q ata6616c ata6617c ata664251 ata8210
- *   ata8510 atmega128 atmega1280 atmega1281 atmega1284 atmega1284rfr2 atmega128a
- *   atmega128rfr2 atmega16 atmega161 atmega163 atmega164a atmega164p atmega164pa atmega165
- *   atmega165a atmega165p atmega165pa atmega168 atmega168a atmega168p atmega168pa atmega168pb
- *   atmega169 atmega169a atmega169p atmega169pa atmega16a atmega16hva atmega16hva2 atmega16hvb
- *   atmega16hvbrevb atmega16m1 atmega16u2 atmega16u4 atmega2561 atmega2564rfr2 atmega256rfr2
- *   atmega323 atmega324a atmega324p atmega324pa atmega324pb atmega325 atmega3250
+ * Compiles but untested for the following -mmcu=... options
+ *   at90can32 at90can64 at90pwm1 at90pwm161 at90pwm2 at90pwm216 at90pwm2b at90pwm3 at90pwm316
+ *   at90pwm3b at90pwm81 at90scr100 at90usb1286 at90usb1287 at90usb162 at90usb646 at90usb647
+ *   at90usb82 ata5272 ata5505 ata5702m322 ata5782 ata5790 ata5790n ata5791 ata5795 ata5831 ata6285
+ *   ata6286 ata6289 ata6612c ata6613c ata6614q ata6616c ata6617c ata664251 ata8210 ata8510
+ *   atmega128 atmega1280 atmega1281 atmega1284 atmega1284rfr2 atmega128a atmega128rfr2 atmega161
+ *   atmega163 atmega164a atmega164p atmega164pa atmega165 atmega165a atmega165pa atmega168
+ *   atmega168a atmega168p atmega168pa atmega169 atmega169a atmega169p atmega169pa atmega16a
+ *   atmega16hva atmega16hva2 atmega16hvb atmega16hvbrevb atmega16m1 atmega16u2 atmega16u4
+ *   atmega2564rfr2 atmega256rfr2 atmega323 atmega324a atmega324pa atmega324pb atmega325 atmega3250
  *   atmega3250a atmega3250p atmega3250pa atmega325a atmega325p atmega325pa atmega328 atmega328pb
  *   atmega329 atmega3290 atmega3290a atmega3290p atmega3290pa atmega329a atmega329p atmega329pa
  *   atmega32a atmega32c1 atmega32hvb atmega32hvbrevb atmega32m1 atmega32u2 atmega32u4 atmega32u6
- *   atmega406 atmega48 atmega48a atmega48p atmega48pa atmega48pb atmega64 atmega640 atmega644
- *   atmega644a atmega644p atmega644pa atmega644rfr2 atmega645 atmega6450 atmega6450a atmega6450p
- *   atmega645a atmega645p atmega649 atmega6490 atmega6490a atmega6490p atmega649a atmega649p
- *   atmega64a atmega64c1 atmega64hve atmega64hve2 atmega64m1 atmega64rfr2 atmega8 atmega8515
- *   atmega8535 atmega88 atmega88a atmega88p atmega88pa atmega88pb atmega8a atmega8hva atmega8u2
- *   attiny13 attiny2313a attiny24 attiny24a attiny25 attiny261 attiny261a attiny4313 attiny43u
- *   attiny44 attiny441 attiny44a attiny45 attiny461 attiny461a attiny48 attiny828 attiny84
- *   attiny84a attiny861 attiny861a
+ *   atmega406 atmega48 atmega48a atmega48p atmega48pa atmega48pb atmega640 atmega644 atmega644a
+ *   atmega644p atmega644pa atmega644rfr2 atmega645 atmega6450 atmega6450a atmega6450p atmega645a
+ *   atmega645p atmega649 atmega6490 atmega6490a atmega6490p atmega649a atmega649p atmega64a
+ *   atmega64c1 atmega64hve atmega64hve2 atmega64m1 atmega64rfr2 atmega8 atmega8515 atmega88
+ *   atmega88a atmega88p atmega88pa atmega88pb atmega8a atmega8hva atmega8u2 attiny13 attiny2313a
+ *   attiny24 attiny24a attiny25 attiny261 attiny261a attiny43u attiny44 attiny441 attiny44a
+ *   attiny45 attiny461 attiny461a attiny48 attiny828 attiny84 attiny84a attiny861 attiny861a
  *
  * How the bootloader works
  *
@@ -139,11 +157,7 @@
  *
  * Assumptions, limitations, caveats, tips and tricks for *this* bootloader
  *
- *   - The uploading program is assumed to be avrdude with either the arduino or urclock
- *     programmer: call avrdude -c [arduino|urclock] for this. I have not tested other uploaders.
- *     The tightest bootloader code (see URPROTOCOL=1 option below) requires avrdude's urclock
- *     programmer as this forgoes some get/put parameter calls that arduino issues unnecessarily
- *     and uses its own leaner protocol.
+ *   - The uploading program is assumed to be avrdude with the urclock programmer (-c urclock)
  *
  *   - A bootloader with dual-boot support needs to know which port pin is assigned to the chip
  *     select of the SPI flash memory, which pin drives a blinking LED (if wanted), where the tx/rx
@@ -254,6 +268,8 @@
  *
  * Edit History:
  *
+ * May 2024
+ * 8.0 smr: Remove -c arduino compatibility, make URPROTOCOL default (and remove it)
  * Nov 2022
  * 7.7 smr: added autobaud and, for vector bootloaders, reset vector protection
  * Jun 2022
@@ -278,7 +294,7 @@
  * Jun 2016
  * 7.0 smr: reviewed Bill Westfield's code; rewrote it reducing its size; introduced fine-grained
  *     compile time options to better control the size of bootloader; made vector bootloaders work;
- *     introduced dual boot, auto-increment (removed in v7.5), pgm_write_page()
+ *     introduced dual boot, auto-increment (removed in u7.5), pgm_write_page()
  */
 
 
@@ -289,11 +305,11 @@
 #include <avr/eeprom.h>
 
 #include <avr/boot.h>
-#include "urboot_r30.h"         // Own definitions for address being kept globally in Z=r30/31
 #include "urboot_mcuid.h"       // MCU id (a small int constant sent to avrdude)
 
-#include "pin_defs.h"           // Definitions for LEDs and some avr name differences
 #include "urboot_wdt.h"         // Don't use <avr/wdt.h> owing to unwanted interrupt overhead
+#include "urboot_ioregs.h"      // I/O register definitions; RAM and EEPROM sizes
+#include "pin_defs.h"           // Definitions for LEDs and REG names (include after urboot_ioregs.h)
 #include "errata.h"
 
 #ifndef UARTNUM                 // Default UART to 0
@@ -307,22 +323,38 @@
 #include "ur_uart.h"            // Unified register and bit names for various UART types
 #include "ur_uartnum.h"         // Generic UARTn names depending on UARTNUM/UARTALT
 
-
 #ifndef VERSION
-#define VERSION             077 // v7.7 in octal, as minor version is in 3 least significant bits
+#define VERSION            0100 // u8.0 in octal, as minor version is in 3 least significant bits
 #endif
 
 #define MAJORVER (VERSION >> 3) // Max 31
 #define MINORVER (VERSION & 7)  // Max 7
 
 
+// Some sanity checks
+#if SPM_PAGESIZE > 256          // Not applicable for classic parts, but check just in case
+#error urboot.c cannot handle flash page sizes > 256
+#endif
+
+#if !defined(RAMSTART) || !defined(RAMEND)
+#error Need to know RAMSTART and RAMEND
+#endif
+#if defined(RAMSIZE) && RAMEND-RAMSTART+1 != RAMSIZE
+#error Inconsistent RAMSIZE/RAMSTART/RAMEND
+#endif
+
+#if EEPROM && (!defined(EESIZE) || EESIZE < 0)
+#error Need to know EESIZE to generate bootloader EEPROM code
+#endif
+
+
+
 /*
  * Different flash memory size categories:
  *  -   8k or less: no jmp, only rjmp, small device
  *  -  64k or less: no need for RAMPZ, plain sailing, use lmp/smp
- *  - 128k or less: needs RAMPZ for elpm/spm, jmp targets; STK500 word addresses fit in 16-bit
+ *  - 128k or less: needs RAMPZ for elpm/spm, jmp targets
  *  - more than 128k: needs RAMPZ for elpm/spm, EIND for indirect jumps, jmp targets exceed 16-bit
- *                    also needs extention for STK500 v1 protocol
  *  - more than 4M: low 16 bit of jmp opcode no longer 0x940c (currently only a theoretical issue)
  */
 
@@ -334,7 +366,7 @@
 #define FLASHabove128k (FLASHEND  >  0x1fffful)
 #define FLASHabove4M   (FLASHEND  > 0x3ffffful)
 
-// Defaults to 1 iff flash size is power of 2
+// Set to 1 iff flash size is power of 2 (All classic parts except ATmega406 with its 40 kB flash)
 #ifndef FLASHWRAPS
 #define FLASHWRAPS (!(FLASHEND & (FLASHEND+1UL)))
 #endif
@@ -344,14 +376,14 @@
 #define DUAL                  0
 #endif
 
-// Vector bootloaders
-#define VBL_NONE              0 // Regular bootloader for an MCU with boot section support
-#define VBL_JUMP              1 // Bootloader jumps to the application via an interrupt vector
-#define VBL_PATCH             2 // When uploading patch reset and designated interrupt vector
-#define VBL_VERIFY            3 // Patch during upload and ignore verify attempts of vector table
+#ifndef VBL // Vector bootloader
+#define VBL                   0
+#endif
 
-#ifndef VBL
-#define VBL            VBL_NONE
+#if VBL > 1
+#warning u8.0+ no longer caters for VBL 2 and 3, setting VBL to 1
+#undef VBL
+#define VBL 1
 #endif
 
 #if defined(SFMCS) || defined(LED)
@@ -381,9 +413,23 @@
 
 #if DUAL
 
-#if !defined(SPDR) || !defined(SPSR) || !defined(SPIF) || !defined(MSTR) || \
-    !defined(SPE) || !defined(SPCR)
-#error SPI communication not implemented for this MCU; might be as simple as renaming registers...
+#if !defined(SPIF) && defined(SPIF0)
+#define SPIF SPIF0
+#endif
+#if !defined(MSTR) && defined(MSTR0)
+#define MSTR MSTR0
+#endif
+#if !defined(SPE) && defined(SPE0)
+#define SPE SPE0
+#endif
+
+#if !defined(SPDR) || !defined(SPSR) || !defined(SPCR) || \
+    !defined(SPIF) || !defined(MSTR) || !defined(SPE) || \
+    !defined(AtmelCS) || !defined(AtmelPOCI) || !defined(AtmelPICO)
+// Might be as simple as renaming registers... but then the part might not have SPI
+#warning SPI communication not implemented for this MCU, switching off DUAL
+#undef  DUAL
+#define DUAL                  0
 #endif
 
 #if TEMPLATE
@@ -410,12 +456,17 @@
 #define RJMPWP       RET_OPCODE
 #endif
 
-#undef  PROTECTME               // From v7.7 enforce bootloader self-protection
+#undef  PROTECTME               // From u7.7 enforce bootloader self-protection
 #define PROTECTME             1
 
+#if defined(PROTECTRESET) && PROTECTRESET && !FLASHWRAPS && VBL
+#undef  PROTECTRESET
+#define PROTECTRESET          0
+#warning Cannot generate code to protect reset vector when flash is not a power of two
+#endif
 
 #ifndef PROTECTRESET
-#if defined(_urboot_AVAILABLE) && VBL == 1
+#if defined(_urboot_AVAILABLE) && VBL
 #if FLASHabove64k && _urboot_AVAILABLE >= 18
 #define PROTECTRESET          1
 #define _urboot_AVAILABLE_r1 (_urboot_AVAILABLE - 18)
@@ -426,7 +477,7 @@
 #define PROTECTRESET          0
 #define _urboot_AVAILABLE_r1 _urboot_AVAILABLE
 #endif
-#else  // !(defined(_urboot_AVAILABLE) && VBL == 1)
+#else  // !(defined(_urboot_AVAILABLE) && VBL)
 #define PROTECTRESET          0
 #endif
 #endif // PROTECTRESET
@@ -436,28 +487,36 @@
 #ifndef WDTO
 #define WDTO              500MS
 #endif
-#define expandcat(x,y)     x##y
-#define WATCHDOG_TIMEOUT(x) expandcat(WATCHDOG_,x)
-
-#ifndef URPROTOCOL
-#define URPROTOCOL            0
-#endif
+#define expandcat(x, y)    x##y
+#define WATCHDOG_TIMEOUT(x) expandcat(WATCHDOG_, x)
 
 #ifndef FRILLS
 #define FRILLS                0
 #endif
 
 #ifndef PAGE_ERASE
-#define PAGE_ERASE 0
+#define PAGE_ERASE            0
 #endif
+
+// Some parts can only erase 4 pages at a time
+#define FOUR_PAGE_ERASE (defined(__AVR_ATtiny441__) || defined(__AVR_ATtiny841__) || \
+  defined(__AVR_ATtiny1634__) || defined(__AVR_ATtiny1634R__))
 
 #ifndef CHIP_ERASE
 #define CHIP_ERASE (FRILLS >= 7)
 #endif
 
-#ifndef RETSWVERS
-#define RETSWVERS (FRILLS >= 6)
+// Flash needs erasing before writing if write page function exported or there is no CE
+#define ERASE_B4_WRITE (PGMWRITEPAGE || !CHIP_ERASE)
+
+#ifndef UPDATE_FL
+#if FOUR_PAGE_ERASE
+#define UPDATE_FL             0
+#else
+#define UPDATE_FL (FRILLS >= 10? 4: FRILLS >= 9? 3: FRILLS >= 8? 2: FRILLS >= 6)
 #endif
+#endif // UPDATE_FL
+
 #ifndef QEXITEND
 #define QEXITEND  (FRILLS >= 5)
 #endif
@@ -475,10 +534,11 @@
 #define AUTOBAUD              0
 #endif
 
-// Some parts can only erase 4 pages at a time
-#define FOUR_PAGE_ERASE (defined(__AVR_ATtiny441__) || defined(__AVR_ATtiny841__) || \
-  defined(__AVR_ATtiny1634__) || defined(__AVR_ATtiny1634R__))
-
+#if FOUR_PAGE_ERASE && UPDATE_FL
+#undef UPDATE_FL
+#define UPDATE_FL             0
+#warning Unsetting UPDATE_FL option on FOUR_PAGE_ERASE parts
+#endif
 
 #if defined(DEBUG_FREQ)
 // Set LED pin as default if no frequency pin defined
@@ -534,7 +594,7 @@
 
 
 #if TEMPLATE
-// Different NOP codes (mov rN,rN) can be replaced on the fly by urloader
+// Different NOP codes (mov rN, rN) can be replaced on the fly by urloader
 #define NOP_LED_SBIPORT() asm volatile("mov r0, r0\n")
 #define NOP_LED_CBIPORT() asm volatile("mov r1, r1\n")
 #define NOP_LED_SBIDDR()  asm volatile("mov r12, r12\n") // Once had asm("mov r2, %0\n") in code
@@ -637,6 +697,16 @@
 #define AUTOBAUD 0
 #endif
 
+
+#if SWIO
+#define getch_clobberlist "r25", "r18",
+#define putch_clobberlist "r25", "r18",
+#else
+#define getch_clobberlist
+#define putch_clobberlist "r25",
+#define UisIOSPACE(reg) (UARTn_addr + reg##_off < 0x3f + __SFR_OFFSET)
+#endif // !SWIO
+
 #if !AUTOBAUD
 
 // Set the baud rate defaults
@@ -651,7 +721,6 @@
 #define BAUD_RATE         1200L // Good even at 32768 Hz
 #endif
 #endif // !defined(BAUD_RATE)
-
 
 
 #if !SWIO                       // ... and compute baud rate settings for various UART types
@@ -763,6 +832,7 @@
 #endif
 
 #endif // UR_UARTTYPE
+
 #endif // !SWIO
 
 #endif // !AUTOBAUD
@@ -788,11 +858,21 @@
 
 /*
  * Dedicated interrupt vector for VBL to store the jump to the application
- *  - set custom VBL_VECT_NUM in Makefile using vector name (or number)
- *  - defaults to SPM_READY_vect_num or, if that does not exist, to EE_READY_vect_num, if that does
- *    not exist either, the first unused vector in the table is taken or the table expanded
- *  - if num is -1 it refers to the additional vbl interrupt vector; uploaded sketches need to have
- *    created that slot (see comment in VBL section above how to do that for all your sketches)
+ *
+ *  - Set custom VBL_VECT_NUM in Makefile using vector name (or number)
+ *
+ *  - Defaults to SPM_READY_vect_num or, if that does not exist, to EE_READY_vect_num. If that
+ *    does not exist either, the first unused vector in the table is taken or, failing that, the
+ *    vector table is assumed to be expanded by one slot and that extra slot is taken
+ *
+ *  - If num is -1 it refers to the additional vbl interrupt vector; uploaded sketches need to
+ *    have increased the vector table by one slot. This can be done in the Arduino IDE through
+ *    adding the following to the end of the hardware/arduino/avr/cores/arduino/main.cpp source
+ *    that will then automatically be included into every application:
+ *
+ *    // Additional vector in ISR vector table used by the urboot bootloader
+ *    uint8_t __attribute__((used)) __attribute__((section(".vectors")))
+ *    _vbl_jmp_to_application[FLASHEND+1UL > 8192? 4: 2] = {0x0C, 0x94};
  */
 
 #define VBL_VECT_additional (_VECTORS_SIZE/(FLASHin8k? 2: 4))
@@ -807,7 +887,7 @@
 
 #else // !defined(VBL_VECT_NUM)
 
-#if VBL == VBL_NONE
+#if !VBL
 #define VBL_VECT_NUM 0
 #elif         defined(SPMR_vect_num)
 #define VBL_VECT_NUM (SPMR_vect_num)
@@ -849,20 +929,6 @@
 #endif
 #endif
 #endif // VBL_VECT_NUM
-
-
-#if EEPROM
-
-#if defined(EEAR)
-#define set_eear(addr) (EEAR = addr)
-#elif defined(EEARH) && defined(EEARL)
-#define set_eear(addr) ({uint16_t x = addr; EEARH = (x) >> 8; EEARL = (x) & 0xff; })
-#elif defined(EEARL)
-#define set_eear(addr) (EEARL = addr)
-#endif
-
-#endif
-
 
 
 // Watchdog settings
@@ -927,14 +993,7 @@
 #define STK_OK         STK_OK_C // Possibly redefined further below
 #define CRC_EOP            0x20
 
-// STK500 parameter definitions
 
-#define Parm_STK_HW_VER    0x80
-#define Parm_STK_SW_MAJOR  0x81
-#define Parm_STK_SW_MINOR  0x82
-
-
-#if URPROTOCOL
 // Redefine STK_INSYNC and STK_OK so they inform avrdude about MCU type and 5 bit urboot features
 
 #undef  STK_INSYNC
@@ -948,7 +1007,7 @@
 
 #define UB_READ_FLASH         4u // Urboot always can read flash
 
-#if !PGMWRITEPAGE && CHIP_ERASE  // No page erase during flash STK_PROG_PAGE
+#if !ERASE_B4_WRITE              // No page erase during flash STK_PROG_PAGE
 #define UB_FLASH_LL_NOR       8u // Flash programming with STK_PROG_PAGE looks like NAND memory
 #else
 #define UB_FLASH_LL_NOR       0u // Uploader needs to read flash first for sub-page modifications
@@ -967,9 +1026,9 @@
 #define UB_FEATURES  (UB_READ_FLASH | UB_FLASH_LL_NOR | UB_CHIP_ERASE)
 #define UB_INFO (UB_FEATURES*UB_N_MCU + UB_MCUID(__AVR_DEVICE_NAME__))
 
-// Reserve one slot for URPROTOCOL=0 case and 256 more to make STK_OK and STK_INSYNC different
+// Reserve one slot for STK500 protocol and 256 more to make STK_OK and STK_INSYNC different
 #if UB_INFO >= 255*256-1
-#error Afraid, cannot work with this MCU/feature combination
+#error Cannot work with this MCU/feature combination
 #endif
 
 // Put TMP_INSYNC in [0, 255] and TMP_OK1 in [0, 254]
@@ -979,7 +1038,7 @@
 // TMP_OK is in [0, 255] and different from TMP_INSYNC
 #define TMP_OK     ((TMP_OK1 < TMP_INSYNC)? TMP_OK1: TMP_OK1+1)
 
-// Indistinguishable from URPROTOCOL==0 case? map to 255/254
+// Indistinguishable from STK500 protocol? Map to 255/254
 #if TMP_INSYNC == STK_INSYNC_C && TMP_OK == STK_OK_C
 #define STK_INSYNC 255
 #define STK_OK     254
@@ -988,27 +1047,22 @@
 #define STK_OK     TMP_OK
 #endif
 
-#endif // URPROTOCOL
-
-
 
 /*
  * Global variables and where they are stored
  *
  * For small code size it's useful to have a handful of global variables. The most important
- * variable that deals with addresses for lpm and spm opcodes to read and write flash is the 16-bit
- * zaddress. It is stored permanently in the Z register pair r31:r30 throughout. This is
+ * variable that deals with addresses for lpm and spm opcodes to read and write flash is the
+ * 16-bit zaddress. It is stored permanently in the Z register pair r31:30 throughout. This is
  * complemented by RAMPZ on larger devices. Where a Boolean variable is needed the code uses bits
- * from GPIOR0, which results in shorter opcodes (in and out rather than lds and sts). We also need
- * a global variable, extaddr, to keep a copy of the extended avrdude load address for those larger
- * devices, so RAMPZ can be set appropriately. Extaddr is placed into GPIOR1 for similar reasons.
- * SRAM is only needed for copies of page buffers read, written or verified.
+ * from GPIOR0 or a similar, which results in shorter opcodes (sbi, cbi etc). SRAM is only needed
+ * for a single copies of flash/eeprom page buffers for writing (max SPM_PAGESIZE bytes).
  *
  * register uint16_t zaddress asm("r30");
  *
- * For flash programming the strategy is to always use a 16 bit address and, if necessary, RAMPZ to
- * deal with larger addresses. The spm opcode uses RAMPZ/Z (Z=r31:r30), elmp uses RAMPZ/Z, so
- * making the 16-bit address global and putting it in Z=r31:r30 makes it "right at home". The only
+ * For flash programming the strategy is to always use a 16 bit address and, if necessary, RAMPZ
+ * to deal with larger addresses. The spm opcode uses RAMPZ:Z (Z=r31:30), elmp uses RAMPZ:Z, so
+ * making the 16-bit address global and putting it in Z=r31:30 makes it "right at home". The only
  * trouble is that this register pair is call-clobbered, ie, is likely to be destroyed by library
  * function calls. Fortunately, this source does not use library calls. For the full application
  * binary interface and register usage of avr-gcc see https://gcc.gnu.org/wiki/avr-gcc
@@ -1021,130 +1075,57 @@
 
 register uint16_t zaddress asm("r30");
 
-#if FLASHabove128k
-#define extaddr GPIOR1          // Only used for ATmega2560/2561 and similar, should be in IO area
-#endif
-
-
-#if VBL >= VBL_VERIFY
-/*
- * Use GPIOR0/TWBR for Booleans so that compiler can utilise shorter sbi, cbi, sbic, ... opcodes.
- * These booleans are only set in parts of the bootloader that exit with a watchdog timer reset, so
- * GPIOR0/TWBR will be set to 0 after that WDT reset.
- */
-typedef struct {
-  uint8_t b0:1; uint8_t b1:1; uint8_t b2:1; uint8_t b3:1;
-  uint8_t b4:1; uint8_t b5:1; uint8_t b6:1; uint8_t b7:1;
-} bools_t;
-
-#if !defined(GPIOR0) && defined(TWBR)
-#define GPIOR0 TWBR             // ATmega8/16/32/64/128
-#endif
-
-#if !defined(GPIOR0) && VBL >= VBL_VERIFY // eg, ATmega161
-#error Cannot handle VBL level on this device
-#endif
-
-#if VBL >= VBL_VERIFY
-#define modverify (((volatile bools_t *)_SFR_MEM_ADDR(GPIOR0))->b0)
-#endif
-
-#endif // VBL >= VBL_VERIFY
-
-
-#if !defined(RAMSIZE) && defined(RAMSTART) && defined(RAMEND)
-#define RAMSIZE ((RAMEND)-(RAMSTART)+1)
-#endif
-
-#if !defined(RAMSTART) || !defined(RAMSIZE)
-#error need to know RAMSTART and either RAMSIZE or RAMEND
-#endif
 
 /*
- * Contrary to normal C programs these global variables are *not* initialised, as we drop the zero
- * init code, saving PROGMEM. We use a buffer at RAMSTART that contains two pages of flash memory:
+ * Contrary to normal C programs global variables are *not* initialised, as we drop the
+ * initialisation code, saving PROGMEM. Urboot only needs one flash page worth of SRAM:
  *
- * uint8_t rambuf[2*SPM_PAGESIZE];
+ * uint8_t rambuffer[SPM_PAGESIZE];
  */
 
+// Place rambuffer at 0x100 boundary if at least 32 bytes left for stack rcalls
+#if (RAMSTART & 0xFF) && ((RAMSTART+255) & ~0xFF) + SPM_PAGESIZE + 30 < RAMSTART+RAMSIZE
+#define RAMBUFFER ((RAMSTART+255) & ~0xFF)
+#else
+#define RAMBUFFER RAMSTART
+#endif
 
-#define rambuf ((uint8_t *)(RAMSTART))
+#define rambuffer ((uint8_t *) RAMBUFFER)
 
 // Hi byte of low word or opcode at reset position (is 0xCX for rjmp and 0x94 for jmp)
-#define resethi8 rambuf[1]
+#define resethi8 rambuffer[1]
 #define isRjmp(op16hi) (((op16hi) & 0xF0) == 0xC0)
 
 
 #if FLASHabove64k
-#define LPM_OP "elpm"
+#define LPM "elpm "
 typedef const uint_farptr_t progmem_t;
 #else
-#define LPM_OP "lpm"
+#define LPM "lpm "
 typedef const void *progmem_t;
 #endif
 
-
 /*
- * This bootloader does not accept page_read/page_write commands with more than one SPM_PAGESIZE
- * bytes, even when dealing with EEPROM. The type spm_pagesize_store_t handles variables that store
- * the length of data records. SPM_PAGESIZE == 256 can be handled with 8-bit spm_pagesize_store_t.
- * Avrdude and any self-respecting programmer will specify lengths 1 ... 256 (full page), never 0
- * bytes though. Although the low byte of 256 is zero, length == 0 works for do { ... }
- * while(--length); loops when length is of type uint8_t. Magic, eh! Only use with these types of
- * loops, though.
+ * This bootloader does not accept page_read/page_write commands with more than SPM_PAGESIZE
+ * bytes, even when dealing with EEPROM. For classic parts SPM_PAGESIZE ist at most 256, which can
+ * be handled with uint8_t. Avrdude and any self-respecting programmer will specify lengths 1 ...
+ * 256 (full page), never 0 bytes though. Note the low byte of 256 is zero, and len == 0 works for
+ * do { ... } while(--len); loops when len is of type uint8_t. Magic, eh! Only use with these
+ * types of loops, though.
  */
 
-#if SPM_PAGESIZE > 256          // Sic! See above comment for SPM_PAGESIZE == 256
-typedef uint16_t spm_pagesize_store_t;
-// Length is big endian
-#define getlength() ({ spm_pagesize_store_t length = (spm_pagesize_store_t) (getch()<<8); \
-  length |= getch(); length; })
-void writebuffer(uint16_t *sram);
-
-#define ub_page_erase() ({ urboot_page_erase_r30(); boot_spm_busy_wait(); })
-
-// Todo: test SPM_PAGESIZE > 256 branch: it's C code for pgm_write_page() and writebuffer(sram)
-
-#else
-typedef uint8_t spm_pagesize_store_t;
-#if URPROTOCOL
-#define getlength() getch()
-#else
-#define getlength() getch2()
-#endif
-
-#if DUAL                        //  writebuffer called twice for dual-boot: load sram addr in func
-void writebufferRS();
-#define writebuffer(sram) writebufferRS()
-
-#else
-
-void writebufferX();
-#define writebuffer(sram)  ({ \
-  asm volatile ( \
-  "ldi   r26, lo8(%[sramp])\n" \
-  "ldi   r27, hi8(%[sramp])\n" \
-  :: [sramp] "n"(sram) \
-  ); \
-  writebufferX(); \
-})
-
-#endif
+void writebufferX(void);
 
 void ub_spm(uint8_t cmd);
 #define ub_page_erase() ub_spm(__BOOT_PAGE_ERASE)
 
-#endif // SPM_PAGESIZE > 256
-
-
 // Number of program pages below the boot section
 #define SPM_NUMPAGES  (START/SPM_PAGESIZE)
 
-// Does this fit into a byte?
-#if SPM_NUMPAGES > 256
+#if SPM_NUMPAGES > 256          // Needs more than one byte
 typedef uint16_t spm_pages_index_t;
 #else
-typedef uint8_t spm_pages_index_t; // Can handle SPM_NUMPAGES==256
+typedef uint8_t spm_pages_index_t; // Can handle SPM_NUMPAGES==256 with do { ... } while(--len);
 #endif
 
 
@@ -1153,30 +1134,21 @@ typedef uint8_t spm_pages_index_t; // Can handle SPM_NUMPAGES==256
 int main(void) __attribute__ ((OS_main, section(".init9")));
 
 void __attribute__ ((noinline)) putch(char);
-uint8_t __attribute__ ((noinline)) getch2(void);
 uint8_t __attribute__ ((noinline)) getch(void);
-
-#if URPROTOCOL
-void  __attribute__ ((noinline)) get1sync();
-#else
-void  __attribute__ ((noinline)) getNsync(uint8_t);
-#define get1sync() getNsync(1)
-#endif
+void  __attribute__ ((noinline)) get_sync(void);
 
 void __attribute__ ((noinline)) watchdogConfig(uint8_t x);
 
 // Endless loop leading to a watchdog reset; the equivalent while(1); can produce larger code
 #define bootexit() ({asm("rjmp .-2\n");  __builtin_unreachable (); })
 
-// quickbootexit() tries to use existing code for quick exit, failing that it's bootexit()
 #if QEXITERR
 #define RJMPQEXIT "rjmp qexiterr\n"
-#define BRNEQEXIT "breq .+2\n" \
-                  "rjmp qexiterr\n"
 #else
 #define RJMPQEXIT "rjmp .-2\n"
-#define BRNEQEXIT "brne .-2\n"
 #endif
+
+// quickbootexit() tries to use existing code for quick exit, failing that it's bootexit()
 #define quickbootexit() ({asm(RJMPQEXIT);  __builtin_unreachable (); })
 
 
@@ -1274,7 +1246,7 @@ void bitDelay();
 
 #if CHIP_ERASE
 
-#if FOUR_PAGE_ERASE
+#if FOUR_PAGE_ERASE             // CE_SIZE <= 256 (parts with 4-page erase have small page sizes)
 #define CE_SIZE (4*SPM_PAGESIZE)
 #else
 #define CE_SIZE SPM_PAGESIZE
@@ -1285,25 +1257,68 @@ void bitDelay();
 #endif
 
 static void chip_erase() {
-  // Erase flash from top to bottom to protect reset vector in case of power loss
-  zaddress = (uint16_t) START;
+  asm volatile(
+    ldi(r30, lo8(%[top]))       // Load RAMPZ:Z with START-CE_SIZE
+    ldi(r31, hi8(%[top]))
 #if FLASHabove64k
-  RAMPZ = START>>16;
+    ldi(r25, hh8(%[top]))
+    out_rampz(r25)
 #endif
+  "1: "
+    "wdr\n"                     // Reset WDT as CE can take a long time
 
-  do {
-#if FLASHabove64k
-    if(!zaddress)
-      RAMPZ--;
+#if UPDATE_FL >= 2
+    "movw r18, r30\n"
+#if CE_SIZE == 256              // Determine loop end comparison reg r23
+    "mov  r23, r30\n"
+#else
+     ldi(r23, lo8(CE_SIZE))
+    "add  r23, r30\n"
 #endif
-    zaddress -= CE_SIZE;
-    wdt_reset();
-    ub_page_erase();
-  } while(zaddress
+  "2: "
+    LPM "r22, Z+\n"             // Might increment RAMPZ
+    cpi(r22, 0xff)
+    "brne 3f\n"                 // Leave loop at first non-0xff
+    "cpse r30, r23\n"           // Cpse does not change SREG (and its Z-bit)
+    "rjmp 2b\n"
+  "3: "
+    "movw r30, r18\n"
 #if FLASHabove64k
-     || RAMPZ
+    out_rampz(r25)
 #endif
-     );
+    "breq 4f\n"                 // Skip page erase if the page was all 0xff
+#endif // UPDATE_FL
+
+    ldi(r24, __BOOT_PAGE_ERASE)
+    "rcall ub_spm\n"            // Erase page
+#if defined(RWWSRE)
+    "rcall rww_enable\n"
+#endif
+ "4: "
+#if CE_SIZE == 256
+    subi(r31, 1)
+#elif CE_SIZE <= 32
+    sbiw(r30, CE_SIZE)
+#else
+    subi(r30, CE_SIZE)
+    "sbc r31, r1\n"
+#endif
+#if FLASHabove64k
+    "sbc r25, r1\n"
+    out_rampz(r25)             // Decrement RAMPZ:Z by CE_SIZE
+#endif
+    "brcc 1b\n"
+  : "=z"(zaddress)
+  : [top] "n"((uint32_t) (START-CE_SIZE))
+  :
+#if FLASHabove64k
+    "r25",
+#endif
+#if UPDATE_FL >= 2
+    "r23", "r22", "r18", "r19",
+#endif
+    "r24"
+  );
 }
 
 #endif // CHIP_ERASE
@@ -1320,139 +1335,14 @@ static void chip_erase() {
 #define RJMP_BWD_START (0xC000 | (((uint16_t)((START-FLASHEND-3UL)/2))&0xFFF))
 
 
-// Vector bootloader support
-#if VBL
-
-#if VBL >= VBL_VERIFY
-/*
- * The I/O buffer for a single memory page of SPM_PROGSIZE bytes is located at RAMSTART. That's
- * what rambuf points to. In order to be able to return the original values of the manipulated
- * reset and vbl interrupt vectors for verify, they need to be copies them somewhere. Rather than
- * allocating space behind the I/O buffer for the two variables, rather than using valuable
- * registers and rather than using less orthodox space as in TCNT1, OCR0A or similar, I allocate a
- * full second memory page, and copy the complete memory page once as opposed to carrying out two
- * delicate variable copies for rstVectOrig and appVectOrig. This uses the least number of code
- * words. Although smaller MCUs don't have a lot of SRAM (some as small as 128 bytes, eg, ATtiny24)
- * their SPM_PAGESIZES tend to be correspondingly small (32 bytes for the ATtiny24), so that you
- * can still hold these two SPM_PAGESIZE areas and have sufficient SRAM for the stack (should any
- * be used in the bootloader) on the other end.
- *
- */
-#define VectorTableCopy ((uint8_t *)RAMSTART+SPM_PAGESIZE)
-
-#endif // VBL >= VBL_VERIFY
-
-
-#if FLASHin8k
-typedef uint16_t VBLvect_t;     // AVRs with up to 8k of flash have 2-byte vectors (rjmp)
-#else
-typedef uint32_t VBLvect_t;     // Larger AVRs have 4-byte vectors (jmp)
-#endif
-
-#define rstVectOrig (((VBLvect_t *)(RAMSTART))[0])
-#define appVectOrig (((VBLvect_t *)(RAMSTART))[VBL_VECT_NUM])
-
-// The corresponding low/hi words of the interrupt vectors
-#define rstVectOrigLo (((uint16_t *) & rstVectOrig)[0])
-#define rstVectOrigHi (((uint16_t *) & rstVectOrig)[1])
-
-#define appVectOrigLo (((uint16_t *) & appVectOrig)[0])
-#define appVectOrigHi (((uint16_t *) & appVectOrig)[1])
-
-
-#if VBL >= VBL_VERIFY || VBL == VBL_PATCH
-
-// Check VBL_VECT_NUM vector is on the first page (patching and verifying code assume that)
-#if VBL_VECT_NUM >= SPM_PAGESIZE/(FLASHin8k? 2: 4)
-#error VBL_VECT_NUM vector not in the same page as reset: use a smaller VBL_VECT_NUM=...
-#endif
-
-/*
- * Vector bootloader patch code for the vector table during upload
- *
- * This needs to be executed unless the sketch has already been patched externally before. Set a
- * bit so that any subsequent read of the vector table is treated as verification attempt, which in
- * turn returns a copy of the vector page before modification. This patch code is also deployed
- * when uploading a sketch from external SPI flash memory (but only when VBL is 2 or 3).
- *
- * One challenge is that the gcc compiler generates rjmps for large devices if the application
- * start is reachable through a forward rjmp, ie, less than or equal to address 4096. One would
- * expect, however, that the bootloader start address is not reachable through a forward rjmp from
- * the reset position. I make the assumption here (tested with the avr-gcc 7.4.0 toolchain) that
- * gcc does not issue a backward rjmp from zero to reach high memory positions on large devices,
- * though that would work owing to the wrap-around of zero to FLASHEND when going backwards. So,
- * when trying to figure out whether the incoming sketch has already been patched on a large
- * device, I assume that I only need to check whether the opcode at reset is an absolute jmp to the
- * bootloader as relative rjmps would not be generated by the compiler to reach the bootloader.
- *
- * Another challenge is to recalculate rjmp opcodes efficiently when they are moved from the reset
- * vector to the vector that jumps to the application. The rjmp opcode is 0xCjjj with signed 0xjjj
- * relative jump distance in words. On small devices, simply subtracting VBL_VECT_NUM from the old
- * reset rjmp opcode does the trick to get the new opcode; this is correct even when rather than
- * jumping backwards in 8k flash the new rjmp now needs to jump forward to reach its destination.
- * Only when the original jump from reset was to a target between the reset vector and the save
- * vector within the interrupt vector table would the subtraction produce a carry that eats into
- * the 0xCjjj opcode structure. It is a reasonable assumption, though, that the compiler will not
- * have populated the vector table with anything other than jump opcodes (rjmp or jmp). On larger
- * devices (> 8k flash) the simplest way to adjust the rjmp opcode is to subtract 2*VBL_VECT_NUM,
- * as each vector has two words.
- *
- */
-
-#if VBL >= VBL_VERIFY
-#define setmodverify() (modverify = 1)
-#else
-#define setmodverify()
-#endif
-
-
-#if FLASHin8k                   // AVR with 2-byte interrupt vectors uses rjmp
-
-void vbl_patch() {
-  // Normally, RJMP_FWD is the same as RJMP_BWD and compiler optimises redundant chech away
-  if(rstVectOrig != RJMP_FWD_START && rstVectOrig != RJMP_BWD_START) { // Don't patch again
-    appVectOrig = rstVectOrig - VBL_VECT_NUM;
-    rstVectOrig = RJMP_FWD_START;
-    setmodverify();
-  }
-}
-
-#else                           // AVR with 4-byte interrupt
-
-void vbl_patch() {
-#if FLASHabove128k
-  if(rstVectOrig != JMP_START && rstVectOrigLo != RJMP_BWD_START) { //} Don't patch if already done
-    // Copy full 4-byte reset jmp instruction to the vbl interrupt vector slot on large MCUs
-    appVectOrig = rstVectOrig;
-#else
-  /*
-   * If rjmp to app was used, then rstVectorHi will be 0x0000 and comparison triggers as
-   * JMP_START>>16 is START, which cannot be 0
-   */
-  if(rstVectOrigHi != (JMP_START>>16)) {
-    // Assume jmp: first two bytes of jmp opcode should still be 0x940C, no need to copy these
-    appVectOrigHi = rstVectOrigHi;
-#endif
-    // If it was an rjmp, though, copy over the adjusted 2-byte rjmp opcode
-    if(isRjmp(resethi8))
-      appVectOrigLo = rstVectOrigLo - 2*VBL_VECT_NUM;
-
-    rstVectOrig = JMP_START;
-    setmodverify();
-  }
-}
-#endif // FLASHin8k
-
-#endif // VBL >= VBL_VERIFY || VBL == VBL_PATCH
-
-
-// Location of the saved reset vector in bytes
-#define appstart_vec_loc (VBL_VECT_NUM*sizeof(VBLvect_t))
-
+// Location of the application start vector in bytes
+#if VBL && FLASHin8k
+#define appstart_vec_loc (VBL_VECT_NUM*2)
+#elif VBL
+#define appstart_vec_loc (VBL_VECT_NUM*4)
 #else // !VBL
-
-#define appstart_vec_loc 0      // Jump to reset vector to reach application
-#endif // VBL
+#define appstart_vec_loc 0
+#endif
 
 
 #if DUAL
@@ -1464,11 +1354,16 @@ void vbl_patch() {
 #define SFM_C_SE4k         0x20 // Sector erase (4k)
 
 // SPI communication
-uint8_t __attribute__ ((noinline)) spi_transfer(uint8_t data) {
-  SPDR = data;
-  while(!(SPSR & _BV(SPIF)))
-    continue;
-  return SPDR;
+static uint8_t spi_transfer(uint8_t data) {
+  asm volatile(
+    out_spdr(%[data])           // SPDR = data;
+ "1: "
+    sbxs_spsr(%[data], SPIF)    // while(!(SPSR & _BV(SPIF)))
+    "rjmp 1b\n"                 //   continue;
+    in_spdr(%[data])            // data = SPDR;
+  : [data] "=r"(data) : "0"(data)
+  );
+  return data;
 }
 
 /*
@@ -1485,11 +1380,6 @@ uint8_t __attribute__ ((noinline)) spi_transfer(uint8_t data) {
  */
 
 static void sfm_read_page() {
-  uint8_t *bufp = rambuf;
-
-  // Cast avoids compiler warning when SPM_PAGESIZE == 256 and type is uint8_t
-  spm_pagesize_store_t n = (spm_pagesize_store_t) SPM_PAGESIZE;
-
   sfm_assert();
   spi_transfer(SFM_C_READ);
   // 24 bit address
@@ -1500,10 +1390,28 @@ static void sfm_read_page() {
 #endif
   spi_transfer(zaddress >> 8);
   spi_transfer(zaddress);
-  // One memory page of data
-  do {
-    *bufp++ = spi_transfer(0);
-  } while(--n);
+
+  // Copy one MCU flash page of data from SPI flash memory to SRAM
+  asm volatile(
+    ldi(r26, lo8(RAMBUFFER))    // uint8_t *bufp = rambuffer;
+    ldi(r27, hi8(RAMBUFFER))    // uint8_t n = SPM_PAGESIZE;
+  "1: "
+    ldi(r24, 0)                 // do {
+    "rcall spi_transfer\n"      //   *bufp++ = spi_transfer(0);
+    "st X+, r24\n"              // } while(--n);
+     cpi(r26, lo8(RAMBUFFER + SPM_PAGESIZE))
+    "brne 1b\n"
+#if SPM_PAGESIZE == 256
+    "subi  r27, 1\n"           // X = X - 256
+#elif (RAMBUFFER+SPM_PAGESIZE)/256 == RAMBUFFER/256
+     ldi(r26, lo8(RAMBUFFER))
+#else
+     ldi(r26, lo8(RAMBUFFER))
+     ldi(r27, hi8(RAMBUFFER))
+#endif
+    ::: getch_clobberlist "r26", "r27", "r24"
+  );
+
   sfm_release();
 }
 #endif
@@ -1518,243 +1426,139 @@ static void sfm_read_page() {
 #endif
 
 static void dual_boot() {
-      /*
-       * Define relevant SPI pins as outputs - CS must be output for SPI to work in master mode.
-       * Pullup CS to deactivate any attached device (eg, RFM module) and pullup the chip select CS
-       * for the external memory. Also pullup CIPO, just so you read all 1's when there is no
-       * external SPI flash installed. There is a slight code saving when CS is on the same port as
-       * SFMCS of the SPI interface. The code makes the reasonable(?) assumption that the lines for
-       * SPI are all on the same port.
-       */
+ /*
+  * Define relevant SPI pins as outputs - CS must be output for SPI to work in master mode. Pull
+  * up CS to deactivate any attached device (eg, RFM module); pull up the chip select CS for the
+  * external memory; and pull up POCI, so a stream of 1's is seen without an external SPI flash.
+  * There is a slight code saving when CS is on the same port as SFMCS of the SPI interface. The
+  * code makes the reasonable(?) assumption that the lines for SPI are all on the same port.
+  */
 
 #if SAME_PORT_SFMCS_CS
-      UR_PORT(AtmelCS) = UR_BV(SFMCS) | UR_BV(AtmelCS) | UR_BV(AtmelCIPO);
-      UR_DDR(AtmelCS)  = UR_BV(SFMCS) | UR_BV(AtmelCS) | UR_BV(AtmelCOPI) | UR_BV(AtmelSCK);
+  UR_PORT(AtmelCS) = UR_BV(SFMCS) | UR_BV(AtmelCS) | UR_BV(AtmelPOCI);
+  UR_DDR(AtmelCS)  = UR_BV(SFMCS) | UR_BV(AtmelCS) | UR_BV(AtmelPICO) | UR_BV(AtmelSCK);
 #else
-      UR_PORT(AtmelCS) = UR_BV(AtmelCS) | UR_BV(AtmelCIPO);
-      UR_DDR(AtmelCS) = UR_BV(AtmelCS) | UR_BV(AtmelCOPI) | UR_BV(AtmelSCK);
-      sfm_release();
-      sfm_setupcs();
+  UR_PORT(AtmelCS) = UR_BV(AtmelCS) | UR_BV(AtmelPOCI);
+  UR_DDR(AtmelCS) = UR_BV(AtmelCS) | UR_BV(AtmelPICO) | UR_BV(AtmelSCK);
+  sfm_release();
+  sfm_setupcs();
 #endif
 
-      SPCR = _BV(MSTR) | _BV(SPE);      // Init SPI: Master, F_CPU/4, MSBFIRST, SPI_MODE0
+  SPCR = _BV(MSTR) | _BV(SPE);  // Init SPI: Master, F_CPU/4, MSBFIRST, SPI_MODE0
 
-      zaddress = 0;             // RAMPZ will be 0 here
-      spm_pages_index_t numpages = (spm_pages_index_t) SPM_NUMPAGES;
-      do {
-        // Read in a full memory page from external flash
-        sfm_read_page();
+  zaddress = 0;                 // RAMPZ will be 0 here
+  spm_pages_index_t numpages = (spm_pages_index_t) SPM_NUMPAGES;
+  do {
+    // Read in a full memory page from external flash
+    sfm_read_page();
 
 #if FLASHabove64k
-        if(RAMPZ == 0)
+    if(RAMPZ == 0)
 #endif
-          if(zaddress == 0) {
-            // On first (vector) page check whether reset vector is an rjmp or jmp instruction
-            if(
+      if(zaddress == 0) {
+        // On first (vector) page check whether reset vector is an rjmp or jmp instruction
+        if(
 #if FLASHabove4M                // jmp for an MCU with more than 4M flash (should be so lucky :)
-              (resethi8 >> 1) != (0x94U >> 1) &&
+          (resethi8 >> 1) != (0x94U >> 1) &&
 #elif FLASHabove8k              // Otherwise jmp opcode has 0x94 as high byte
-              resethi8 != 0x94U &&
+          resethi8 != 0x94U &&
 #endif
-              !isRjmp(resethi8) )
-              goto startingapp; // No AVR program in SPI flash: directly start the application
+          !isRjmp(resethi8) )
+          goto startingapp;     // No AVR program in SPI flash: directly start the application
+      }
 
-#if VBL == VBL_PATCH || VBL == VBL_VERIFY
-             vbl_patch();
-#endif
-          }
+    writebufferX();             // Returns with original zaddress/RAMPZ intact
+    inczaddresspage();
+  } while(--numpages);
 
-        writebuffer((uint16_t *) rambuf); // Returns with original zaddress/RAMPZ intact
-        inczaddresspage();
-      } while(--numpages);
+  // Erase first 4 kB using SFM_C_SE4k command and reboot via WDT reset
+  sfm_assert();
+  spi_transfer(SFM_C_WREN);
+  sfm_release();
+  sfm_assert();
 
-#ifdef DUAL_NO_SECTOR_ERASE     // Minimal clearup when desperate for code space
+  asm volatile(                 // Looks a bit convoluted but saves 4 bytes
+    "ldi   r16, 4\n"
+     ldi(r24, SFM_C_SE4k)
+ "1: rcall spi_transfer\n"      // spi_transfer(SFM_C_SE4k);
+    "ldi   r24, 0\n"            // spi_transfer(0);
+    "subi  r16, 1\n"            // spi_transfer(0);
+    "brne  1b\n"                // spi_transfer(0);
+    ::: "r24", "r16"
+  );
 
-#if FLASHabove64k               // Only zap RAMPZ after burning program, then start the app
-      RAMPZ = 0;
-#endif
+  sfm_release();
 
-#else                           // Much better: erase first 4 kB and reboot via WDT reset
-      sfm_assert();
-      spi_transfer(SFM_C_WREN);
-      sfm_release();
-      sfm_assert();
-#if 0
-      spi_transfer(SFM_C_SE4k);
-      spi_transfer(0);
-      spi_transfer(0);
-      spi_transfer(0);
-#else
-      asm volatile(             // Looks a bit convoluted, but saves 4 bytes
-        "   ldi r16,4\n"        // R16 is a call-saved register: spi_transfer() won't change it
-        "   ldi r24,%[secmd]\n" // Sector erase command for first spi_transfer()
-        "1: rcall spi_transfer\n"
-        "   ldi r24,0\n"        // Next three calls are spi_transfer(0)
-        "   subi r16,1\n"
-        "   brne 1b\n"
-        :: [secmd] "M"(SFM_C_SE4k) : "r0", "r24", "r16"
-      );
-#endif
-      sfm_release();
-
-      // Let sector erase finish before reset - 1 s should be ample
-      watchdogConfig(WATCHDOG_1S);
-      bootexit();               // Deleted the first 4 kB sector on the SPI flash: reset via WDT
-
-#endif // DUAL_NO_SECTOR_ERASE
+  // Let sector erase finish before reset - 1 s should be ample
+  watchdogConfig(WATCHDOG_1S);
+  bootexit();                   // Deleted the first 4 kB sector on the SPI flash: reset via WDT
 
 startingapp:
-      // Crude initialisation before starting the app (WDT reset would result in an endless loop)
-      SPCR = 0;                 // Always switch off SPI
+  // Crude initialisation before starting the app (WDT reset would result in an endless loop)
+  SPCR = 0;                     // Always switch off SPI
 
 #ifndef DUAL_NO_SPI_RESET
-      UR_DDR(AtmelCS) = 0;
-      UR_PORT(AtmelCS) = 0;
+  UR_DDR(AtmelCS) = 0;
+  UR_PORT(AtmelCS) = 0;
 #if !SAME_PORT_SFMCS_CS
-      sfm_resetddr();
-      sfm_resetport();
+  sfm_resetddr();
+  sfm_resetport();
 #endif
 #endif // DUAL_NO_SPI_RESET
 }
 #endif // DUAL
 
-
-static void read_page_fl(spm_pagesize_store_t length) {
-#if VBL >= VBL_VERIFY // Read from copy of first vector page
-        uint8_t *bufp = VectorTableCopy;
-#endif
-        do {
-            uint8_t one;
-            // Can use lpm/elpm with address post-increment (elmp also increments RAMPZ)
-            asm volatile(LPM_OP " %0,Z+\n": "=r"(one), "=&r"(zaddress): "1"(zaddress));
-#if VBL >= VBL_VERIFY // Undo patch in vector page so verify passes
-          if(modverify)
-            one = *bufp++;
-#endif
-            putch(one);
-        } while(--length);
-#if VBL >= VBL_VERIFY
-        modverify = 0;
-#endif
-}
-
-
 #if EEPROM
-static void read_page_ee(spm_pagesize_store_t length) {
-        do {
-          while(EECR & _BV(EEPE))
-            continue;
-          set_eear(zaddress);
-          EECR |= _BV(EERE);    // Start EEPROM read
-          putch(EEDR);
-          // zaddress++;        // Compiler makes a pig's ear of simple increment - use short code
-          asm volatile("adiw %0, 1\n" : "=&r" (zaddress) : "0"(zaddress));
-        } while(--length);
-}
 
-static void write_page_ee(spm_pagesize_store_t length) {
-        uint8_t *bufp = rambuf;
-        do {
-          while(EECR & _BV(EEPE))
-            continue;
-#if defined(EEPM1) && defined(EEPM0)
-          EECR = 0;             // Erase and write in one (atomic) operation
+static void write_sram(uint8_t length) { // Write data from host into SRAM and reload X to RAMBUFFER
+  uint8_t xend = length;
+
+  asm volatile(
+    ldi(r26, lo8(RAMBUFFER))
+    ldi(r27, hi8(RAMBUFFER))
+#if RAMBUFFER & 0xff
+    "add   %[xend], r26\n"
 #endif
-          set_eear(zaddress);
-          EEDR = *bufp++;
-          EECR |= _BV(EEMPE);   // EEPROM master write enable
-          EECR |= _BV(EEPE);    // EEPROM write enable
-          // zaddress++;
-          asm volatile("adiw %0, 1\n" : "=&r" (zaddress) : "0"(zaddress));
-        } while(--length);
-}
-
-#endif
-
-#define exitnotF(memtype) \
-  asm volatile( \
-    "cpi %[dest], 0x46\n" /* memtype == 'F'? */ \
-    BRNEQEXIT \
-    :: [dest] "d"(memtype) \
-  )
-
-
-static void write_page_fl() {
-#if VBL >= VBL_VERIFY || VBL == VBL_PATCH
-        // Live-patch the reset vector page so bootloader runs first
-#if FLASHabove64k                    // Only patch page 0, and not the page at 0x10000 :)
-        if(RAMPZ==0)
-#endif
-        if(zaddress == 0) {     // Page 0?
-#if VBL >= VBL_VERIFY
-          // Copy save vectors for later flash verify - copy full mem page to save PROGMEM
-          spm_pagesize_store_t n = (spm_pagesize_store_t) SPM_PAGESIZE;
-          uint8_t *q = VectorTableCopy;
-          uint8_t *p = rambuf;
-          do {
-            *q++ = *p++;
-          } while(--n);
-#endif
-          vbl_patch();
-        }
-#endif // VBL >= VBL_VERIFY || VBL == VBL_PATCH
-
-        writebuffer((uint16_t *) rambuf);
-}
-
-
-static void write_sram(spm_pagesize_store_t length) {
-        // Write data from PC data into SRAM
-#if (RAMSTART & 0xff) == 0 && SPM_PAGESIZE <= 256 && URPROTOCOL
-        asm volatile (
-          "   ldi   r26, 0\n"   // Low byte of RAMSTART must be 0 to enable cpse below
-          "   ldi   r27, %[RAMSTARThi]\n"
-          "1: rcall getch\n"    // Add to clobbered list all that getch() changes
-          "   st    X+, r24\n"
-          "   cpse  %[length],r26\n" // 1 byte comparison to length works even when it's 256
-          "   rjmp  1b\n"
-         : : [RAMSTARThi] "M"(RAMSTART/0x100), [length] "r"(length)
-         : "r26", "r27", "r24", "r25", "r18" // r18 and r24:25 are clobbered by getch()
-        );
+  "1: rcall getch\n"
+    "st    X+, r24\n"
+    "cpse  %[xend], r26\n"
+    "rjmp  1b\n"
+    ldi(r26, lo8(RAMBUFFER))
+    ldi(r27, hi8(RAMBUFFER))
+#if RAMBUFFER & 0xff            // Tell gcc that xend will be changed
+   : [xend] "=r"(xend) : "0"(xend)
 #else
-      { uint8_t *bufp = rambuf;
-        spm_pagesize_store_t len2 = length;
-        do {
-          *bufp++ = getch();
-        } while(--len2);
-      }
+   :: [xend] "r"(xend)
 #endif
+   : getch_clobberlist "r26", "r27", "r24"
+  );
 }
 
-
-#if !URPROTOCOL
-static void get_parameter() {
-#if RETSWVERS
-      unsigned char which = getch();
-
-      get1sync();
-      // Send urboot version as SW version (MAJORVER.MINORVER) and MAJORVER for everything else
-      putch(which == Parm_STK_SW_MINOR? MINORVER: MAJORVER);
 #else
-      getNsync(2);
-      putch(MAJORVER);          // Make hardware/software/sub versions all MAJORVER, saves 28 bytes
+
+static void write_sram_spm_pagesize(void) { // Also resets X to rambuffer at end
+  asm volatile(
+     ldi(r26, lo8(RAMBUFFER))
+     ldi(r27, hi8(RAMBUFFER))
+ "1: rcall getch\n"
+    "st    X+, r24\n"
+     cpi(r26, lo8(RAMBUFFER + SPM_PAGESIZE))
+    "brne  1b\n"
+#if SPM_PAGESIZE == 256
+    "subi  r27, 1\n"           // X = X - 256
+#elif (RAMBUFFER+SPM_PAGESIZE)/256 == RAMBUFFER/256
+     ldi(r26, lo8(RAMBUFFER))
+#else
+     ldi(r26, lo8(RAMBUFFER))
+     ldi(r27, hi8(RAMBUFFER))
 #endif
+    ::: getch_clobberlist "r26", "r27", "r24"
+  );
 }
 
-static void read_sign() {
-      // Don't actually read the device sig - return what's in /usr/lib/avr/include/avr/iom<mcu>.h
-      get1sync();
-      putch(SIGNATURE_0);
-      putch(SIGNATURE_1);
-      putch(SIGNATURE_2);
-}
 #endif
 
-
-#if URPROTOCOL
-
-static spm_pagesize_store_t __attribute__ ((noinline)) getaddrlength();
-static spm_pagesize_store_t getaddrlength() {
+static uint8_t getaddrlength() {
   asm volatile(             // Compiler is not great at setting address from next two/three bytes
     "rcall getch\n"
     "mov %A0, r24\n"
@@ -1762,87 +1566,20 @@ static spm_pagesize_store_t getaddrlength() {
     "mov %B0, r24\n"
 #if FLASHabove64k
     "rcall getch\n"
-    "out %[rampz], r24\n"
+    out_rampz(r24)
 #endif
-    : "=r"(zaddress)
-    :
-#if FLASHabove64k
-      [rampz] "I"(_SFR_IO_ADDR(RAMPZ))
-#endif // FLASHabove64k
-    : "r24", "r25", "r18" // Clobbered by getch()
+    : "=r"(zaddress) :: getch_clobberlist "r24"
   );
 
-  return getlength();
+  return getch();
 }
-
-#else // !URPROTOCOL
-
-static void load_address() {
-      asm volatile(             // Compiler is not great at setting address from next 2/3 bytes
-        "rcall getch\n"
-        "mov %A0, r24\n"
-        "rcall getch\n"
-        "mov %B0, r24\n"
-
-        "add %A0, %A0\n"        // zaddress <<= 1
-        "adc %B0, %B0\n"
-#if FLASHabove64k               // Compute RAMPZ
-#if FLASHabove128k
-        "in  r24, %[ext]\n"
-#else
-        "eor r24, r24\n"
-#endif
-        "adc r24, r24\n"
-        "out %[rampz], r24\n"
-#endif // FLASHabove64k
-
-         : "=r"(zaddress)
-         :
-#if FLASHabove64k
-           [rampz] "I"(_SFR_IO_ADDR(RAMPZ))
-#if FLASHabove128k && !URPROTOCOL
-        ,  [ext] "I"(_SFR_IO_ADDR(extaddr)) // extaddr must be in IO space (eg, if set to GPIOR1)
-#endif
-#endif // FLASHabove64k
-         : "r24", "r25", "r18" // Clobbered by getch()
-      );
-}
-
-#endif
-
-#if !URPROTOCOL
-static void universal() {
-#if FLASHabove128k || CHIP_ERASE
-      uint8_t what0, what1, what2;
-      what0 = getch();
-      what1 = getch();
-      what2 = getch();
-      getch();
-      get1sync();
-#if FLASHabove128k
-      if(what0 == STK_UNIVERSAL_EXT)
-        extaddr = what2;
-      (void) what1;
-#endif
-#if CHIP_ERASE
-      if(what0 == STK_UNIVERSAL_CE0 && what1 == STK_UNIVERSAL_CE1)
-        chip_erase();
-      (void) what2;
-#endif
-#else                           // UNIVERSAL command is ignored otherwise
-      getNsync(5);
-#endif // FLASHabove128k || CHIP_ERASE
-
-      putch(0xff);              // Return value of universal command
-}
-#endif
 
 
 #if QEXITEND
 static void leave_progmode() {
-      // Shorten watchdog timeout to start application pretty soon
-      watchdogConfig(WATCHDOG_16MS);
-      get1sync();
+  // Shorten watchdog timeout to start application pretty soon
+  watchdogConfig(WATCHDOG_16MS);
+  get_sync();
 }
 #endif
 
@@ -1852,8 +1589,8 @@ static void leave_progmode() {
 /*
  * Urboot layout of top six bytes
  *
- * FLASHEND-5: numblpags, only from v7.5: 1 byte number 1..127 of bootloader flash pages
- * FLASHEND-4: vblvecnum, only from v7.5: 1 byte vector number 1..127 for vector bootloader
+ * FLASHEND-5: numblpags, only from u7.5: 1 byte number 1..127 of bootloader flash pages
+ * FLASHEND-4: vblvecnum, only from u7.5: 1 byte vector number 1..127 for vector bootloader
  * FLASHEND-3: 2 byte rjmp opcode to bootloader pgm_write_page(sram, flash) or ret opcode
  * FLASHEND-1: capability byte of bootloader
  * FLASHEND-0: version number of bootloader: 5 msb = major version, 3 lsb = minor version
@@ -1862,45 +1599,35 @@ static void leave_progmode() {
 /*
  * Capability byte of bootloader from version 7.2 onwards
  *
- * The PGMWRITEPAGE bit has been redundant from v7.5 as one can tell presence of the page write
- * routine by checking the rjmp opcode against the ret opcode. From v7.7 this bit has been
- * allocated for autobaud detection. Similarly, from v7.7 the PROTECTME option has been forced to
- * 1, and the RESETFLAGS presevation has been on from at least v7.6. These two bits have also been
- * reallocated in v7.7 to represent even stronger protection (bootloader and reset vector) and chip
+ * The PGMWRITEPAGE bit has been redundant from u7.5 as one can tell presence of the page write
+ * routine by checking the rjmp opcode against the ret opcode. From u7.7 this bit has been
+ * allocated for autobaud detection. Similarly, from u7.7 the PROTECTME option has been forced to
+ * 1, and the RESETFLAGS presevation has been on from at least u7.6. These two bits have also been
+ * reallocated in u7.7 to represent even stronger protection (bootloader and reset vector) and chip
  * erase capability, respectively.
  */
 
-#define UR_PGMWRITEPAGE     128 // pgm_write_page() can be called from application at FLASHEND+1-4
-#define UR_AUTOBAUD         128 // Bootloader has autobaud detection (v7.7+)
+#define UR_AUTOBAUD         128 // Bootloader has autobaud detection (u7.7+)
 #define UR_EEPROM            64 // EEPROM read/write support
-#define UR_URPROTOCOL        32 // Bootloader uses urprotocol that requires avrdude -c urclock
+#define UR_UPDATE_FL         32 // Check flash page before writing it (from u8.0)
 #define UR_DUAL              16 // Dual boot
-#define UR_VBLMASK           12 // Vector bootloader bits
-#define UR_VBLPATCHVERIFY    12 // Patch reset/interrupt vectors and show original ones on verify
-#define UR_VBLPATCH           8 // Patch reset/interrupt vectors only (expect an error on verify)
-#define UR_VBL                4 // Merely start application via interrupt vector instead of reset
+#define UR_VBLMASK           12 // Mask for two vector bootloader bits
+#define UR_VBLPATCHVERIFY    12 // No longer used in u8.0+
+#define UR_VBLPATCH           8 // No longer used in u8.0+
+#define UR_VBLJUMP            4 // Start application via interrupt vector instead of reset
 #define UR_NO_VBL             0 // Not a vector bootloader, must set fuses to HW bootloader support
-#define UR_PROTECTME          2 // Bootloader safeguards against overwriting itself
-#define UR_PROTECTRESET       2 // Bootloader enforces reset vector points to bootloader (v7.7+)
-#define UR_RESETFLAGS         1 // Load reset flags into register R2 before starting application
-#define UR_HAS_CE             1 // Bootloader has Chip Erase (v7.7+)
+#define UR_PROTECTRESET       2 // Bootloader enforces reset vector points to bootloader (u7.7+)
+#define UR_HAS_CE             1 // Bootloader has Chip Erase (u7.7+)
 
-#define UR_WFLAG  (PGMWRITEPAGE && RJMPWP != RET_OPCODE? UR_PGMWRITEPAGE: 0)
 #define UR_AFLAG  (AUTOBAUD? UR_AUTOBAUD: 0)
 #define UR_EFLAG  (EEPROM? UR_EEPROM: 0)
-#define UR_UFLAG  (URPROTOCOL? UR_URPROTOCOL: 0)
+#define UR_UFLAG  (UPDATE_FL? UR_UPDATE_FL: 0)
 #define UR_DFLAG  (DUAL? UR_DUAL: 0)
-#define UR_VFLAGS ((VBL  & 3) * UR_VBL)
-#define UR_PFLAG  (PROTECTME? UR_PROTECTME: 0)
-#define UR_QFLAG  (PROTECTRESET && VBL==1? UR_PROTECTRESET: 0)
+#define UR_VFLAGS ((VBL & 3) * (UR_VBLMASK & -UR_VBLMASK)) // Shift VBL into mask position
+#define UR_PFLAG  (PROTECTRESET && VBL? UR_PROTECTRESET: 0)
 #define UR_CFLAG  (CHIP_ERASE? UR_HAS_CE: 0)
-#define UR_RFLAG  UR_RESETFLAGS // Always set
 
-#if VERSION >= 077
-#define UR_TYPE (UR_AFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_UFLAG | UR_QFLAG | UR_CFLAG)
-#else
-#define UR_TYPE (UR_WFLAG | UR_EFLAG | UR_DFLAG | UR_VFLAGS | UR_UFLAG | UR_PFLAG | UR_RFLAG)
-#endif
+#define UR_TYPE (UR_AFLAG | UR_EFLAG | UR_UFLAG | UR_DFLAG | UR_VFLAGS | UR_PFLAG | UR_CFLAG)
 
 /*
  * Version section just under FLASHEND has 6 bytes (4 bytes in versions 7.2 to 7.4)
@@ -1924,7 +1651,7 @@ unsigned const int __attribute__ ((section(".version"))) urboot_version[] = {
 
 
 
-// Normal app start: jump to reset vector or dedicated VBL vector, reminding compiler mcusr needed
+// Normal app start: jump to reset vector or dedicated VBL vector and tell compiler mcusr is needed
 #if FLASHin8k || FLASHWRAPS
 #define jmpToAppOpcode() asm("rjmp urboot_version+%0\n" :: \
   "n"(sizeof urboot_version+appstart_vec_loc), "r"(mcusr))
@@ -1937,15 +1664,9 @@ unsigned const int __attribute__ ((section(".version"))) urboot_version[] = {
 int main(void) {
   register uint8_t mcusr asm("r2"); // Ask compiler to allocate r2 for reset flags
 
-  asm volatile(" eor r1,r1");   // Clear temporary register r1 to zero
+  asm volatile(" eor r1, r1");  // Clear temporary register r1 to zero
 #if !UB_INIT_SP_IS_RAMEND       // Some MCUs initialise SP to 0, not RAMEND, after reset
   SP = RAMEND;
-#endif
-
-#if VBL>=VBL_VERIFY // GPIOR0 (and TWBR) probably zero after reset
-#if defined(UB_INIT_GPIOR0) && UB_INIT_GPIOR0
-  GPIOR0 = 0;                   // But who wants to read all 184 atmel data sheets to verify this?
-#endif
 #endif
 
   // Copy reset flags and clear them
@@ -1956,7 +1677,7 @@ int main(void) {
   // Unless there was an external reset jump to application
 #if !DUAL && !(defined(__AVR_ERRATA_SKIP_JMP_CALL__) && __AVR_ERRATA_SKIP_JMP_CALL__ && \
   !FLASHin8k && !FLASHWRAPS)
-  // Skip next instruction if EXTRF set (compier doesn't know length of asm is one instruction)
+  // Skip next instruction if EXTRF set (compiler doesn't know length of asm is one instruction)
   asm volatile("sbrs %[ms], %[extrf]\n" :: [ms] "r"(mcusr), [extrf] "I"(EXTRF));
     jmpToAppOpcode();
 #else
@@ -2008,11 +1729,7 @@ int main(void) {
   U_REMAP = _BV(U0MAP);
 #endif
 
-#if AUTOBAUD
-
-#if defined(__AVR_XMEGA__)
-# error Baudrate loop takes 6 cycles not 5 (owing to XMEGAs 2-cycle sbis); todo: find a solution
-#endif
+#if AUTOBAUD                    // 18 bytes to measure host baudrate vs 2 bytes to load constant BR
 
 // Measure cycles/rxbit = F_CPU/baudrate and set UBBRnL
 // Loop 2 below modified from https://github.com/nerdralph/picoboot/
@@ -2022,105 +1739,140 @@ int main(void) {
 #endif
 
 #if UART2X || UR_UARTTYPE == UR_UARTTYPE_LIN
-#define AUTO_INCX  "adiw  r26, 256/8\n"  // Add 0.125 to X, ie, 256/8 to XL, in 8-bit fixed point rep
+#define auto_inc (256/8)        // Add 0.125 to X, ie, 256/8 to XL, in 8-bit fixed point rep
 #else
-#define AUTO_INCX  "adiw  r26, 256/16\n" // Add 0.0625 to X, ie, 256/16 to XL, in 8-bit fixed point rep
+#define auto_inc (256.16)       // Add 0.0625 to X, ie, 256/16 to XL, in 8-bit fixed point rep
 #endif
 
-#define AUTO_BRL \
-  "   ldi  r26, 0x7f\n"         /* Initialise X with -0.5 in 8-bit fixed point representation */ \
-  "   ldi  r27, 0xff\n"         /* Want XH = UBRRnL = F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
-  "1: sbic %[RXPin],%[RXBit]\n" /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
-  "   rjmp 1b\n" \
-  "2: " AUTO_INCX               /* Increment X (r26:27) so that final value of r27 is BRRL divisor */ \
-  "   sbis %[RXPin],%[RXBit]\n" /* Loop as long as rx bit is low */ \
-  "   rjmp 2b\n"                /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */
-
-#define AUTO_DRAIN \
-  "3: sbiw  r26, 1\n"           /* Drain input: run down X for 25.6 rx bits (256/8 * 4 c/5 c) */ \
-  "   brne  3b\n"               /* 4-cycle loop */
-
-  // UR_PORT(RX) |= UR_BV(RX);  // Pullup rx (should be done by HW, really)
+#define autobaud(store_brrl) \
+   "ldi  r26, 0x7f\n"           /* Initialise X with -0.5 in 8-bit fixed point representation */ \
+   "ldi  r27, 0xff\n"           /* Want XH = UBRRnL = F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
+ "1: " \
+   "sbic %[RXPin], %[RXBit]\n"  /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
+   "rjmp 1b\n" \
+ "2: " \
+    adiw(r26, auto_inc)         /* Increment r26:27 so that final value of r27 is BRRL divisor */ \
+   "sbis %[RXPin], %[RXBit]\n"  /* Loop as long as rx bit is low */ \
+   "rjmp 2b\n"                  /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */ \
+    store_brrl                  /* Store r27 to BRRL register */ \
+ "3: " \
+   "sbiw r26, 1\n"              /* Drain input: run down X for 25.6 rx bits (256/8 * 4 c/5 c) */ \
+   "brne 3b\n"                  /* 4-cycle loop */
 
 #endif // AUTOBAUD
 
 
 #if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
-  if(&UBRRnL - __SFR_OFFSET < (uint8_t *) 0x20) { // Can use out, good
-#if AUTOBAUD
-  asm volatile(
-    AUTO_BRL                    // Measure and load the divisor for the baud rate register
-    " out %[ubrrnl], r27\n"
-    AUTO_DRAIN                  // Drain the two-byte input before initialising comms
-  :: [ubrrnl] "I"(_SFR_IO_ADDR(UBRRnL)),
-     [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX))
-  : "r30", "r31", "r26", "r27"
-  );
+
+// Number of USART registers /not/ in I/O space (ignore shared BRRH for rare cases)
+#define SHARED_BRRH (!AUTOBAUD && UARTNUM==1 && (defined(__AVR_ATmega161__) || defined(__AVR_AT94K__)) && BAUD_SETTING > 255)
+#define N_not_IO_BRRL !UisIOSPACE(UBRRnL)
+#if !AUTOBAUD && !SHARED_BRRH && defined(UBRRnH) && BAUD_SETTING > 255
+#define N_not_IO_BRRH !UisIOSPACE(UBRRnH)
 #else
-// The joy of two UARTs sharing the register for the high byte of the baud rate divisor
-#if UARTNUM==1 && (defined(__AVR_ATmega161__) || defined(__AVR_AT94K__)) && BAUD_SETTING > 255
-    U_UBRR0H = (BAUD_SETTING>>8) << 4; // Sic! UART0's high BRR serves in its top 4 bit UART1's
-#elif defined(UBRRnH) && BAUD_SETTING > 255
-    UBRRnH = BAUD_SETTING>>8;
-#endif
-    asm volatile(".global ldi_baud\nldi_baud:\n\t" :::); // Mark location of baud setting
-    UBRRnL = BAUD_SETTING & 0xff;
+#define N_not_IO_BRRH 0
 #endif
 #if UART2X
-    UCSRnA = _BV(A_U2Xn);
+#define N_not_IO_CSRA !UisIOSPACE(UCSRnA)
+#else
+#define N_not_IO_CSRA 0
 #endif
-    UCSRnB = (_BV(B_RXENn) | _BV(B_TXENn));
+#define N_not_IO_CSRB !UisIOSPACE(UCSRnB)
 #if UB_INIT_UCSRnC && defined(UCSRnC_val)
-    UCSRnC = UCSRnC_val;
+#define N_not_IO_CSRC !UisIOSPACE(UCSRnC)
+#else
+#define N_not_IO_CSRC 0
 #endif
-  } else {
-    asm volatile(
-      " ldi r30, lo8(%[base])\n" // Load Z for st Z+offset, r27
-      " ldi r31, hi8(%[base])\n"
+
+// Less than 3 regs to be initialised outside I/O space? Assign all directly
+#if N_not_IO_BRRL+N_not_IO_BRRH+N_not_IO_CSRA+N_not_IO_CSRB+N_not_IO_CSRC < 3
+
+  asm volatile(
+
 #if AUTOBAUD
-      AUTO_BRL
-      " std Z+%[brrl_off], r27\n"
-      AUTO_DRAIN
+    autobaud(out_ubrrnl(r27))
+#else // !AUTOBAUD
+#if SHARED_BRRH
+    ldi(r24, %[shared_setting]) // Sic! UART0's high BRR nibble serves as bit 9:11 of UART1's
+    out_ubrr0h(r24)             // U_UBRR0H = (BAUD_SETTING>>8) << 4;
+#elif defined(UBRRnH) && BAUD_SETTING > 255
+    ldi(r24, hi8(%[baud_setting]))
+    out_ubrrnh(r24)             // UBRRnH = BAUD_SETTING>>8;
+#endif
+ ".global ldi_baud\nldi_baud: " // Mark location of baud setting
+    ldi(r24, lo8(%[baud_setting]))
+    out_ubrrnl(r24)             // UBRRnL = BAUD_SETTING & 0xff;
+#endif // AUTOBAUD
+
+#if UART2X
+    ldi(r24, _BV(A_U2Xn))
+    out_ucsrna(r24)             // UCSRnA = _BV(A_U2Xn);
+#endif
+    ldi(r24, (_BV(B_RXENn) | _BV(B_TXENn)))
+    out_ucsrnb(r24)             // UCSRnB = (_BV(B_RXENn) | _BV(B_TXENn));
+#if UB_INIT_UCSRnC && defined(UCSRnC_val)
+    ldi(r24, UCSRnC_val)
+    out_ucsrnc(r24)             // UCSRnC = UCSRnC_val;
+#endif
+  ::
+#if !AUTOBAUD
+    [baud_setting] "n"(BAUD_SETTING),
+    [shared_setting] "n"((uint8_t) ((BAUD_SETTING>>8)<<4)),
+#endif
+    [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX))
+  : "r26", "r27", "r24"
+  );
+
+#else // 3 or more registers to be initialised: assign via store indirect Z+offset
+
+  asm volatile(
+    "ldi r30, lo8(%[base])\n"   // Load Z for st Z+offset, r27
+    "ldi r31, hi8(%[base])\n"
+
+#if AUTOBAUD
+    autobaud("std Z+%[brrl_off], r27\n")
 #else
 #if defined(UBRRnH_off) && BAUD_SETTING > 255
-      " ldi r27, hi8(%[brrl_val])\n"
-      " std Z+%[brrh_off], r27\n"
+    "ldi r27, hi8(%[brrl_val])\n"
+    "std Z+%[brrh_off], r27\n"
 #endif
-    ".global ldi_baud\nldi_baud:" // Mark location of baud setting
-      " ldi r27, lo8(%[brrl_val])\n"
-      " std Z+%[brrl_off], r27\n"
-#endif
+  ".global ldi_baud\nldi_baud: " // Mark location of baud setting
+    "ldi r27, lo8(%[brrl_val])\n"
+    "std Z+%[brrl_off], r27\n"
+#endif // AUTOBAUD
+
 #if UART2X
-      " ldi r27, lo8(%[sra_val])\n"
-      " std Z+%[sra_off], r27\n"
+    "ldi r27, lo8(%[sra_val])\n"
+    "std Z+%[sra_off], r27\n"
 #endif
-      " ldi r27, lo8(%[srb_val])\n"
-      " std Z+%[srb_off], r27\n"
+    "ldi r27, lo8(%[srb_val])\n"
+    "std Z+%[srb_off], r27\n"
 #if UB_INIT_UCSRnC && defined(UCSRnC_val)
-      " ldi r27, lo8(%[src_val])\n"
-      " std Z+%[src_off], r27\n"
+    "ldi r27, lo8(%[src_val])\n"
+    "std Z+%[src_off], r27\n"
 #endif
-   :: [brrl_off] "I" (UBRRnL_off),
+  ::
+    [brrl_off] "I"(UBRRnL_off),
 #if defined(UBRRnH_off)
-      [brrh_off] "I" (UBRRnH_off),
+    [brrh_off] "I"(UBRRnH_off),
 #endif
 #if AUTOBAUD
-      [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX)),
+    [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX)),
 #else
-      [brrl_val] "n" (BAUD_SETTING),
+    [brrl_val] "n"(BAUD_SETTING),
 #endif
-      [sra_off] "I" (UCSRnA_off),
-      [sra_val] "n" (_BV(A_U2Xn)),
-      [srb_off] "I" (UCSRnB_off),
-      [srb_val] "n" (_BV(B_RXENn) | _BV(B_TXENn)),
+    [sra_off] "I"(UCSRnA_off),
+    [sra_val] "n"(_BV(A_U2Xn)),
+    [srb_off] "I"(UCSRnB_off),
+    [srb_val] "n"(_BV(B_RXENn) | _BV(B_TXENn)),
 #if UB_INIT_UCSRnC && defined(UCSRnC_val)
-      [src_off] "I" (UCSRnC_off),
-      [src_val] "n" (UCSRnC_val),
+    [src_off] "I"(UCSRnC_off),
+    [src_val] "n"(UCSRnC_val),
 #endif
-      [base] "n" ( _SFR_MEM_ADDR(*UARTn_base))
-      : "r30", "r31", "r26", "r27"
-    );
-  }
+    [base] "n"(_SFR_MEM_ADDR(*UARTn_base))
+    : "r30", "r31", "r26", "r27"
+  );
+#endif // Less than 3 regs to be initialised outside I/O space?
 
 #elif UR_UARTTYPE == UR_UARTTYPE_LIN
 
@@ -2130,34 +1882,33 @@ int main(void) {
 // LINCRn = _BV(C_LENAn) | _BV(C_LCMDn2) | _BV(C_LCMDn1) | _BV(C_LCMDn0);
 
   asm volatile(
-    " ldi r30, lo8(%[base])\n" // Load Z for st Z+offset, r27
-    " ldi r31, hi8(%[base])\n"
-    ".global ldi_linlbt\nldi_linlbt:" // Mark location of LINLBT setting
-    " ldi r27, %[btr_val]\n"
-    " std Z+%[btr_off], r27\n"
+    "ldi r30, lo8(%[base])\n"   // Load Z for st Z+offset, r27
+    "ldi r31, hi8(%[base])\n"
+  ".global ldi_linlbt\nldi_linlbt: " // Mark location of LINLBT setting
+    "ldi r27, %[btr_val]\n"
+    "std Z+%[btr_off], r27\n"
 #if AUTOBAUD
-    AUTO_BRL
-    " std Z+%[brrl_off], r27\n"
-    AUTO_DRAIN
+    autobaud("std Z+%[brrl_off], r27\n")
 #else
-    ".global ldi_linbaud\nldi_linbaud:" // Mark location of LIN baud setting
-    " ldi r27, %[brrl_val]\n"
-    " std Z+%[brrl_off], r27\n"
+  ".global ldi_linbaud\nldi_linbaud: " // Mark location of LIN baud setting
+    "ldi r27, %[brrl_val]\n"
+    "std Z+%[brrl_off], r27\n"
 #endif
-    " ldi r27, %[lincr_val]\n"
-    " std Z+%[lincr_off], r27\n"
- :: [brrl_off] "I" (LINBRRnL_off),
-    [btr_off] "I" (LINBTRn_off),
+    "ldi r27, %[lincr_val]\n"
+    "std Z+%[lincr_off], r27\n"
+  ::
+    [brrl_off] "I"(LINBRRnL_off),
+    [btr_off] "I"(LINBTRn_off),
 #if AUTOBAUD
     [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX)),
-    [btr_val] "n" (_BV(S_LDISRn) | (8 << S_LBTn0)),
+    [btr_val] "n"(_BV(S_LDISRn) | (8 << S_LBTn0)),
 #else
-    [btr_val] "n" (_BV(S_LDISRn) | (BAUD_LINLBT << S_LBTn0)),
-    [brrl_val] "n" (BAUD_SETTING),
+    [btr_val] "n"(_BV(S_LDISRn) | (BAUD_LINLBT << S_LBTn0)),
+    [brrl_val] "n"(BAUD_SETTING),
 #endif
-    [lincr_off] "I" (LINCRn_off),
-    [lincr_val] "n" (_BV(C_LENAn) | _BV(C_LCMDn2) | _BV(C_LCMDn1) | _BV(C_LCMDn0)),
-    [base] "n" ( _SFR_MEM_ADDR(*UARTn_base))
+    [lincr_off] "I"(LINCRn_off),
+    [lincr_val] "n"(_BV(C_LENAn) | _BV(C_LCMDn2) | _BV(C_LCMDn1) | _BV(C_LCMDn0)),
+    [base] "n"(_SFR_MEM_ADDR(*UARTn_base))
     : "r30", "r31", "r26", "r27"
   );
 #endif // UR_UARTTYPEs
@@ -2199,111 +1950,94 @@ int main(void) {
     if(0) {
 
 
-#if URPROTOCOL
 #if CHIP_ERASE
     } else if(ch == STK_CHIP_ERASE) {
-      get1sync();               // First sync before chip_erase which can take long
+      get_sync();               // First sync before chip_erase which can take long
       chip_erase();
 #endif
 
 #if PAGE_ERASE
     } else if(ch == UR_PAGE_ERASE) {
-      spm_pagesize_store_t length = getaddrlength();
-      get1sync();               // First sync before chip_erase which can take long
+      (void) getaddrlength();
+      get_sync();               // First sync before page_erase which can take long
       ub_page_erase();
 #endif
 
-    } else if(ch == UR_PROG_PAGE_FL
 #if EEPROM
-           || ch == UR_PROG_PAGE_EE
-#endif
-      ) {
-      spm_pagesize_store_t length = getaddrlength();
+    } else if(ch == UR_PROG_PAGE_FL || ch == UR_PROG_PAGE_EE) {
+      uint8_t length = getaddrlength();
       write_sram(length);
-      get1sync();
-#if EEPROM
-      if(ch == UR_PROG_PAGE_EE)
-        write_page_ee(length);
-      else
+      get_sync();
+      if(ch == UR_PROG_PAGE_EE) { asm volatile(
+      "1: "
+#if EESIZE > 256
+        out_eearh(r31)
+#endif                          // do {
+        out_eearl(r30)          //   EEAR = zaddress;
+        "ld  r24, X+\n"         //   EEDR = *bufp++;
+        out_eedr(r24)            //
+        "sbi %[eecr], %[eempe]\n" // EECR |= _BV(EEMPE); // EEPROM master write enable
+        "sbi %[eecr], %[eepe]\n"  // EECR |= _BV(EEPE);  // EEPROM write enable
+        "adiw r30, 1\n"         //   zaddress++;
+      "2: "
+        sbxc_eecr(xx, EEPE)     //   while(EECR & _BV(EEPE))
+        "rjmp 2b\n"             //     continue;
+        "subi %[len], 1\n"
+        "brne 1b\n"             // } while(--length);
+      : /*
+         * No need to tell gcc that length or zaddress is changed; they
+         * won't be needed and the compiler doesn't know what they are.
+         */
+      : [len] "d"(length), "z"(zaddress),
+        [eecr] "I"(_SFR_IO_ADDR(EECR)), [eempe] "I"(EEMPE), [eepe] "I"(EEPE)
+      : "r24", "r26", "r27");
+      } else {
+        writebufferX();
+      }
+#else
+    } else if(ch == UR_PROG_PAGE_FL) {
+      (void) getaddrlength();
+      write_sram_spm_pagesize();
+      get_sync();
+      writebufferX();
 #endif
-        write_page_fl();
 
     } else if(ch == UR_READ_PAGE_FL) {
-      spm_pagesize_store_t length = getaddrlength();
-      get1sync();
-      read_page_fl(length);
+      uint8_t length = getaddrlength();
+      get_sync();
+      asm volatile(
+      "1: "
+        LPM  "r24, Z+\n"        // do {
+        "rcall putch\n"         //   putch(*zaddress++);
+        "subi %[len], 1\n"      // } while(--length);
+        "brne 1b\n"
+      : // Again, don't tell gcc length has changed
+      : [len] "d"(length), "z"(zaddress)
+      : putch_clobberlist "r24"
+      );
 
 #if EEPROM
     } else if(ch == UR_READ_PAGE_EE) {
-      spm_pagesize_store_t length = getaddrlength();
-      get1sync();
-      read_page_ee(length);
-#else
-    } else if(ch == UR_READ_PAGE_EE || ch == UR_PROG_PAGE_EE) {
-      quickbootexit();
+      uint8_t length = getaddrlength();
+      get_sync();
+      asm volatile(
+      "1: "
+#if EESIZE > 256
+        out_eearh(r31)
+#endif                          // do {
+        out_eearl(r30)          //   EEAR = zaddress;
+        "sbi %[eecr], %[eere]\n" //  EECR |= _BV(EERE); // Start EEPROM read
+        in_eedr(r24)            //   putch(EEDR);
+        "rcall putch\n"         //
+        "adiw r30, 1\n"         //   zaddress++;
+        "subi %[len], 1\n"      // } while(--length);
+        "brne 1b\n"
+      : // Don't tell gcc length has changed
+      : [len] "d"(length), "z"(zaddress),
+        [eecr] "I"(_SFR_IO_ADDR(EECR)), [eere] "I"(EERE)
+      : putch_clobberlist "r24"
+      );
 #endif
-
-#else // !URPROTOCOL
-
-    } else if(ch == STK_GET_PARAMETER) {
-      get_parameter();
-
-    } else if(ch == STK_SET_DEVICE) {
-      getNsync(21);             // Ignore
-
-    } else if(ch == STK_SET_DEVICE_EXT) {
-      getNsync(6);              // Ignore
-
-    } else if(ch == STK_READ_SIGN) {
-      read_sign();
-
-    } else if(ch == STK_UNIVERSAL) {
-      universal();
-
-    } else if(ch == STK_LOAD_ADDRESS) {
-      load_address();
-      get1sync();
-
-    } else if(ch == STK_PROG_PAGE) {
-      uint8_t desttype;
-      spm_pagesize_store_t length = getlength();  // number of bytes sent for EEPROM/flash (must be
-      desttype = getch();                         // SPM_PAGESIZE for flash)
-
-#if !EEPROM                     // Without EEPROM support throw error if desttype != 'F'
-      exitnotF(desttype);
-#endif
-
-      write_sram(length);
-
-      // Read command terminator, start reply
-      get1sync();
-
-#if EEPROM
-      if(desttype != 'F')
-        write_page_ee(length);
-      else
-#endif
-        write_page_fl();
-
-    } else if(ch == STK_READ_PAGE) {
-      spm_pagesize_store_t length = getlength();
-      uint8_t srctype =  getch();
-
-
-#if !EEPROM                     // Without EEPROM support throw error if desttype != 'F'
-      exitnotF(srctype);
-#endif
-
-      get1sync();
-
-#if EEPROM
-      if(srctype != 'F')
-        read_page_ee(length);
-      else
-#endif
-        read_page_fl(length);
-
-#endif // URPROTOCOL
 
 
 #if QEXITEND
@@ -2311,8 +2045,18 @@ int main(void) {
       leave_progmode();
 #endif
 
-    } else
-      get1sync();               // Covers the rest, eg, STK_ENTER_PROGMODE, STK_GET_SYNC, ...
+    } else {
+#if !EEPROM
+#if QEXITEND
+      if(ch == UR_READ_PAGE_EE || ch == UR_PROG_PAGE_EE)
+        quickbootexit();
+#else
+      while(ch == UR_READ_PAGE_EE || ch == UR_PROG_PAGE_EE)
+        continue;
+#endif
+#endif
+      get_sync();               // Covers the rest, eg, STK_ENTER_PROGMODE, STK_GET_SYNC, ...
+    }
 
     putch(STK_OK);
   }
@@ -2320,160 +2064,155 @@ int main(void) {
 
 
 void putch(char chr) {
+  asm volatile(
 #if !SWIO
+
+  "1: "
 #if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
-  while(!(UCSRnA & _BV(A_UDREn)))
-    continue;
-  UDRn = chr;
+    sbxs_ucsrna(r25, A_UDREn)   // while(!(UCSRnA & _BV(A_UDREn)))
+    "rjmp 1b\n"                 //   continue;
+    out_udrn(%[chr])            // UDRn = chr;
 #elif UR_UARTTYPE == UR_UARTTYPE_LIN
-  while(LINSIRn & _BV(A_LBUSYn))
-    continue;
-  LINDATn = chr;
+    sbxc_linsirn(r25, A_LBUSYn) // while(LINSIRn & _BV(A_LBUSYn))
+    "rjmp 1b\n"                 //   continue;
+    out_lindatn(%[chr])         // LINDATn = chr;
 #endif
+  :: [chr] "r"(chr) : "r25"
+
 #else
   // By and large follows Atmel's AN AVR305
-#if defined(SWIO_STOP_BITS) && SWIO_STOP_BITS > 0
-  uint8_t bitcount=9+SWIO_STOP_BITS; // Start bit, 8 data bits, n stop bits
-#else
-  uint8_t bitcount=10;          // Start bit, 8 data bits, 1 stop bit
-#endif
-  asm volatile(
-    "   com %[chr]\n"           // One's complement
-    "   sec\n"                  // Set carry (for start bit)
-    "1: brcc 2f\n"
-    ".global cbi_tx\ncbi_tx:"   // Mark location of cbi tx opcode
-    "   cbi %[TXPort],%[TXBit]\n" // Set carry puts line low
-    "   rjmp 3f\n"
-    "2: sbi %[TXPort],%[TXBit]\n" // Clear carry puts line high
-    "   nop\n"
-    "3: rcall bitDelay\n"
+    "ldi  r18, 10\n"            // Start bit, 8 data bits, 1 stop bit
+    "com  %[chr]\n"             // One's complement
+    "sec\n"                     // Set carry (for start bit)
+  "1: "
+    "brcc 2f\n"
+  ".global cbi_tx\ncbi_tx: "    // Mark location of cbi tx opcode
+    "cbi %[TXPort], %[TXBit]\n" // Set carry puts line low
+    "rjmp 3f\n"
+  "2: "
+    "sbi %[TXPort], %[TXBit]\n" // Clear carry puts line high
+    "nop\n"
+  "3: "
+    "rcall bitDelay\n"
 #if SWIO_B_DLYTX == 1           // Add 1 cycle to adjust timing to be same as getch()
-    "   nop\n"
+    "nop\n"
 #endif
-    "   lsr %[chr]\n"           // Push lsb into carry, on empty byte carry is clear (stop bit)
-    "   dec %[bitcnt]\n"
-    "   brne 1b\n"
-    "   ret\n"
+    "lsr %[chr]\n"              // Push lsb into carry, on empty byte carry is clear (stop bit)
+    "dec r18\n"
+    "brne 1b\n"
+    "ret\n"
 
   "bitDelay: \n"
 #if B_EXTRA == 1 || B_EXTRA == 2
-    ".global swio_extra\nswio_extra:" // Mark location of SWIO extra delay
+    ".global swio_extra\nswio_extra: " // Mark location of SWIO extra delay
 #endif
 #if B_EXTRA & 1
-    "   nop\n"
+    "nop\n"
 #endif
 #if B_EXTRA == 2 || B_EXTRA == 3
-    "   rjmp .+0\n"
+    "rjmp .+0\n"
 #endif
-    "   rcall halfBitDelay\n"
+    "rcall halfBitDelay\n"
     "halfBitDelay: "
 #if SWIO_B_VALUE > 0
-    ".global ldi_bvalue\nldi_bvalue:" // Mark location of ldi SWIO_B_VALUE
-    "   ldi r25,%[bvalue]\n"
-    "1: dec r25\n"
-    "   brne 1b\n"
+    ".global ldi_bvalue\nldi_bvalue: " // Mark location of ldi SWIO_B_VALUE
+    "ldi r25, %[bvalue]\n"
+  "1: "
+    "dec r25\n"
+    "brne 1b\n"
 #endif
 #if B_EXTRA == 4 || B_EXTRA == 5
-    "   rjmp .+0\n"
+    "rjmp .+0\n"
 #endif
-      : "=&d"(bitcount)
-      : [bitcnt] "0"(bitcount), [chr] "r"(chr), [TXPort] "I"(_SFR_IO_ADDR(UR_PORT(TX))),
-        [TXBit] "I"(UR_BIT(TX)), [bvalue] "M"(SWIO_B_VALUE & 0xff)
-      : "r25" // Clobbers r25
+  ::
+    [chr] "r"(chr), [TXPort] "I"(_SFR_IO_ADDR(UR_PORT(TX))),
+    [TXBit] "I"(UR_BIT(TX)), [bvalue] "M"(SWIO_B_VALUE & 0xff)
+  : "r18", "r25"
+#endif
   );
-#endif
 }
 
 
-#if URPROTOCOL                  // No need for getch2()
-uint8_t getch(void) { // }
-#else
-// Read 2 chars and return the last one, also provides the function getch() that returns one char
-uint8_t getch2(void) {
-  asm volatile (
-    "rcall getch\n"
-    "getch:\n"
-  );
-#endif
-
+uint8_t getch(void) {
   uint8_t chr;
 
   led_on();
   led_setup();
 
-#if SWIO
   asm volatile(
-    "   ldi   r18, 9\n"         // 8 bit + 1 stop bit
-    ".global sbic_rx\nsbic_rx:" // Mark location of sbic rx opcode
-    "1: sbic  %[RXPin],%[RXBit]\n" // Wait for falling edge of start bit
-    "   rjmp  1b\n"
-    "   rcall halfBitDelay\n"   // Get to middle of start bit
-    "2: rcall bitDelay\n"       // Wait 1 bit & sample
-    "   clc\n"
-    "   sbic  %[RXPin],%[RXBit]\n"
-    "   sec\n"
-    "   dec   r18\n"
-    "   breq  3f\n"
-    "   ror   %[chr]\n"
-#if SWIO_B_DLYRX == 1           // Add 1 cycle so timing is same as putch()
-    "   nop\n"
-#endif
-    "   rjmp  2b\n"
-    "3:\n"
-#if EXITFE==2                   // Hard exit on frame error
-    "   brcs .+2\n"             // Jump to wdt when OK (carry contains stop bit, set = no FE)
-    RJMPQEXIT                   // Two-byte relative jump (either to quick exit or endless loop)
-#elif EXITFE==1                 // Don't reset the watchdog timer on frame error
-    "   brcc .+2\n"             // Jump over wdt on frame error (carry is stop bit, clear = FE)
-#endif
-    "   wdr\n"
-      : [chr] "=r"(chr)
-      : [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX))
-      : "r25", "r18" // r25 is clobbered by bitDelay
-  );
-#else // !SWIO
-#if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
-  uint8_t usr;
-  do {
-    usr = UCSRnA;
-  } while(!(usr & _BV(A_RXCn)));
+#if !SWIO
 
-  // Watchdog reset wdr, (possibly skipped when frame error bit A_FEn is set in uart status reg usr)
-  asm volatile(
+#if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
+  "1: "
+    sbxs_ucsrna(%[chr], A_RXCn)
+    "rjmp 1b\n"
+
+    // Watchdog reset wdr (possibly skipped when rx error bit is set in uart status reg USRAn)
 #if EXITFE==2
-    "sbrc %[usr], %[fe0]\n"  // Skip 2-byte exit code if bit A_FEn is clear in uart status register
+    sbRc_ucsrna(%[chr], A_FEn)  // Skip 2-byte exit code if error bit is clear in uart status register
     RJMPQEXIT
 #elif EXITFE==1
-    "sbrs %[usr], %[fe0]\n"  // Skip wdr if bit A_FEn is set in uart status register
-#endif // EXITFE
+    sbRs_ucsrna(%[chr], A_FEn)  // Skip wdr if error bit is set in uart status register
+#endif
     "wdr\n"
-    :: [usr] "r"(usr), [fe0] "I"(A_FEn)
-  );
-
-  chr = UDRn;
+    in_udrn(%[chr])             // Load UART data register
 
 #elif UR_UARTTYPE == UR_UARTTYPE_LIN
-  uint8_t usr;
-  do {
-    usr = LINSIRn;
-  } while(!(usr & _BV(A_LRXOKn)));
+  "1: "
+    sbxs_linsirn(%[chr], A_LRXOKn)
+    "rjmp 1b\n"
 
-  // Watchdog reset wdr, (possibly skipped when rx error bit A_LERRn is set in uart status reg usr)
-  asm volatile(
+    // Watchdog reset wdr (possibly skipped when rx error bit is set in uart status reg USRAn)
 #if EXITFE==2
-    "sbrc %[usr], %[lerr]\n"  // Skip 2-byte exit code if bit A_LERRn is clear in uart status register
+    sbRc_linsirn(%[chr], A_LERRn) // Skip 2-byte exit code if error bit is clear in uart status register
     RJMPQEXIT
 #elif EXITFE==1
-    "sbrs %[usr], %[lerr]\n"  // Skip wdr if bit A_LERRn is set in uart status register
-#endif // EXITFE
+    sbRs_linsirn(%[chr], A_LERRn) // Skip wdr if error bit is set in uart status register#endif
+#endif
     "wdr\n"
-    :: [usr] "r"(usr), [lerr] "I"(A_LERRn)
-  );
+    in_lindatn(%[chr])          // Load UART data register
 
-  chr = LINDATn;
+#endif // UR_UARTTYPE
+    : [chr] "=r"(chr)
 
-#endif // UR_UARTTYPEs
+#else // SWIO
+
+    "ldi   r18, 9\n"            // 8 bit + 1 stop bit
+  ".global sbic_rx\nsbic_rx: "  // Mark location of sbic rx opcode
+  "1: "
+    "sbic  %[RXPin], %[RXBit]\n" // Wait for falling edge of start bit
+    "rjmp  1b\n"
+    "rcall halfBitDelay\n"      // Get to middle of start bit
+  "2: "
+    "rcall bitDelay\n"          // Wait 1 bit & sample
+    "clc\n"
+    "sbic  %[RXPin], %[RXBit]\n"
+    "sec\n"
+    "dec   r18\n"
+    "breq  3f\n"
+    "ror   %[chr]\n"
+#if SWIO_B_DLYRX == 1           // Add 1 cycle so timing is same as putch()
+    "nop\n"
+#endif
+    "rjmp  2b\n"
+  "3: "
+#if EXITFE==2                   // Hard exit on frame error
+#if QEXITERR
+    "brcs .+2\n"                // Jump to wdt when OK (carry contains stop bit, set = no FE)
+    RJMPQEXIT                   // Two-byte relative jump to quick exit
+#else
+    "brcc .-2\n"                // WDT reset
+#endif
+#elif EXITFE==1                 // Don't reset the watchdog timer on frame error
+    "brcc .+2\n"                // Jump over wdt on frame error (carry is stop bit, clear = FE)
+#endif
+    "   wdr\n"
+  : [chr] "=r"(chr)
+  : [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX))
+  : "r25", "r18" // r25 is clobbered by bitDelay
+
 #endif // !SWIO
+  );
 
   led_off();
 
@@ -2481,35 +2220,7 @@ uint8_t getch2(void) {
 }
 
 
-#if !URPROTOCOL
-
-void getNsync(uint8_t count) {
-  uint8_t last;
-
-  do {
-    last = getch();
-  } while(--count);
-
-#if QEXITERR
-  if(last != CRC_EOP) {
-    asm volatile("qexiterr:\n\t" :::);
-    watchdogConfig(WATCHDOG_16MS); // Shorten WD timeout
-    bootexit();
-  }
-#else
-  asm volatile (   // if(last != CRC_EOP) bootexit();
-    "cpi %[last], %[crc_eop]\n"
-    "brne .-2\n"
-    :: [last] "r"(last), [crc_eop] "n"(CRC_EOP)
-  );
-#endif
-
-  putch(STK_INSYNC);
-}
-
-#else
-
-void get1sync() {
+void get_sync(void) {
   uint8_t last = getch();
 
 #if QEXITERR
@@ -2519,16 +2230,15 @@ void get1sync() {
     bootexit();
   }
 #else
-  asm volatile (   // if(last != CRC_EOP) bootexit();
-    "cpi %[last], %[crc_eop]\n"
-    "brne .-2\n"
-    :: [last] "r"(last), [crc_eop] "n"(CRC_EOP)
+  asm volatile(
+    cpi(%[last], CRC_EOP)       // if(last != CRC_EOP)
+    "brne .-2\n"                //   bootexit();
+    :: [last] "r"(last)
   );
 #endif
 
   putch(STK_INSYNC);
 }
-#endif
 
 
 void watchdogConfig(uint8_t x) {
@@ -2536,161 +2246,100 @@ void watchdogConfig(uint8_t x) {
 }
 
 
-#if SPM_PAGESIZE > 256 // Sic! 256 is treated as one byte, argument len is 0, and we use assembler
+// Optimise backing up and restoring Z below
+#if SPM_PAGESIZE == 256 // Subtract 256
+#define backupZ
+#define restoreZ "subi r31, 1\n"
+#define clobberZ
 
-#if PGMWRITEPAGE
-/*
- * void pgm_write_page(void *sram, progmem_t pgm)
- *
- * Burn one memory page to page-aligned address pgm
- *
- * This is a prefix part of the internally needed writebuffer() function to export a function that
- * can be called by the application code from outside the bootloader. Sram is already the right
- * argument in the right place for writebuffer(uint16_t *sram).
- */
+#elif SPM_PAGESIZE <= 32
+#define backupZ
+#define restoreZ sbiw(r30, SPM_PAGESIZE)
+#define clobberZ
 
-void pgm_write_page(void *sram, progmem_t pgm) {
-  asm volatile (
-#if FLASHabove64k
-    "out %[rampz],%C[pgm]\n"    // RAMPZ = pgm>>16;
-#endif
-    "movw %[zaddr],%A[pgm]\n"   // zaddress = pgm & 0xffff
-      : [zaddr] "=&r"(zaddress)
-      : [pgm]   "r"(pgm)
-#if FLASHabove64k
-      , [rampz] "I"(_SFR_IO_ADDR(RAMPZ))
-#endif
-  );
-  writebuffer(sram);
-}
+#elif UPDATE_FL || DUAL         // Either requires a full backup/restore
+#define backupZ  "movw r18, r30\n"
+#define restoreZ "movw r30, r18\n"
+#define clobberZ "r19", "r18",
 
-#endif
-
-/*
- * writebuffer() burns a page from SRAM into PROGMEM at location address
- *
- * 16 bit address is fine for writebuffer because the SPM opcode in the urboot_page_*_r30() macros
- * uses RAMPZ, which has been kept up to date.
- *
- * C code here is for large devices and serves as reference for assembler below
- */
-void writebuffer(uint16_t *sram) {
-  spm_pagesize_store_t len = SPM_PAGESIZE;
-  uint16_t origzaddr = zaddress;
-
-#if PROTECTME                   // Must avoid RAMPZ/Z >= START (RAMPZ/Z == START-1 is OK to write
-#if FLASHabove64k               // because writebuffer only changes the page zaddress points into)
-  uint8_t rampz = RAMPZ;
-  if(rampz > (uint8_t)(START>>16) || (rampz == (uint8_t)(START>>16) && zaddress >= (START&0xffff)))
-    return;
-#if VBL && FLASHWRAPS
-  if(rampz == 0 && zaddress == 0)
-    *sram = RJMP_BWD_START;
-#endif
 #else
-  if(zaddress >= START)
-    return;
-#if VBL && FLASHWRAPS
-  if(zaddress == 0)
-    *sram = RJMP_BWD_START;
+#define backupZ
+#define restoreZ "sbiw r30, 2\n" // Just get Z back to previous page
+#define clobberZ
 #endif
-#endif
-#endif
-
-#if PGMWRITEPAGE || !CHIP_ERASE // Page erase needed for pgm_write_page() or if CE not implemented
-#if FOUR_PAGE_ERASE
-  if(!(zaddress & (3*SPM_PAGESIZE)))
-#endif
-    ub_page_erase();
-#endif
-
-  // Copy data from SRAM buffer into the flash write buffer (RAMPZ and hi bits of zaddress ignored)
-  do {
-    urboot_page_fill_r30(*sram++);
-    zaddress += 2;
-  } while(len -= 2);
-
-  zaddress = origzaddr;
-  // Actually write the buffer to flash and wait for it to finish
-  urboot_page_write_r30();
-  boot_spm_busy_wait();
-
-#if defined(RWWSRE)
-  urboot_rww_enable_r30();        // Re-enable read access to flash
-#endif
-}
-
-#else // SPM_PAGESIZE > 256
 
 /*
  * Rather than using the <avr/boot.h> macros I roll my own: it's worth it (saves 16-24 bytes)
  *
  * zaddress  r31:30 global
- * X         r27:26 local pointer
- * sram      r25:24 pointer argument as input, r24 also used for calling ub_spm, r25 as temp var
- *           r23    unused
- * len       r22    1 byte len (0 if SPM_PAGESIZE is 256)
- *           r21    unused
- *           r20    unused
- * origzaddr r19:18 copy of Z
+ * X         r27:26 local pointer (scans through sram)
+ * sram      r25:24 argument as input
+ *           r25    used as Boolean variable for UPDATE_FL
+ * argument  r24    used for calling ub_spm and as temporary register
+ * pgm       r23:22 argument if flash <= 64 kB (otherwise high 16 bit of pgm)
+ *           r21:20 argument low 16 bit of pgm if flash > 64 kB
+ *           r20    old byte from PROGMEM (UPDATE_FL only)
+ *           r21    new to-be-written byte from SRAM (UPDATE_FL only)
+ * origRAMPZ r22    third byte of 32 bit pgm argument if flash > 64 kB
+ * xloopend  r23    lo8(X) at end of loop (for comparison)
+ * origzaddr r19:18 copy of global address in Z (when needed, see clobberZ)
+ *           r1     null on return (compiler relies on r1 being 0)
  * tmp       r0
  *
  * The spm command is called 3 times with an address in flash; the erase and write spm call should
  * operate on the same address including RAMPZ to avoid erasing one page and writing to another.
  * The fill buffer spm call ignores the page the address belongs to but uses the lower bits for
  * position in buffer. The caller can pass to writebuffer() a pointer to /any/ location in the page
- * and the algorithm will write that page (though the contents will be cyclicly rotated if the
- * initial address was not the start of the flash page.
+ * and the algorithm will write that page.
  *
  */
 
 #if PGMWRITEPAGE
+
 void pgm_write_page(void *sram, progmem_t pgm) {
-  asm volatile (                // ) }
+  asm volatile(                 // Copy sram to X and pgm to Z
 #if FLASHabove64k
-    "out  %[rampz], r22\n"      // RAMPZ = pgm>>16;
-    "movw r30, r20\n"           // zaddress = pgm & 0xffff
+     out_rampz(r22)             // RAMPZ = pgm>>16;
+    "movw r30, r20\n"           // zaddress = pgm & 0xffff, r21:20 is free now
 #else
     "movw r30, r22\n"           // zaddress = pgm (pgm is a 2-byte pointer)
 #endif
-    "movw r26, r24\n"           // X = sram, now r25 and r24 are free
-
-#if DUAL
-    "rjmp writebufferX\n"
- "writebufferRS: \n"
-    "ldi   r26, lo8(%[sramp])\n"
-    "ldi   r27, hi8(%[sramp])\n"
-#endif
-                                // Fall through to void writebuffer(uint16_t *sram)
+    "movw r26, r24\n"           // X = sram, r25:24 is free now
+                                // Fall through to void writebufferX()
   "writebufferX:\n"
 
 #else // !PGMWRITEPAGE
 
-void writebufferX() {
-  asm volatile (
+void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAMPZ:Z
+  asm volatile(                 // ) }
 #endif // PGMWRITEPAGE
 
+    andi(r30, lo8(~(SPM_PAGESIZE-1))) // Ensure Z aligns with page boundary
 
 /*
  * Compute low byte of the sram address at end of loop that reads SPM_PAGESIZE bytes, so we can
  * compare with cpse. If either
  *   - the low byte of SPM_PAGESIZE is zero or
- *   - the sram address is always RAMSTART (ie, no PGMWRITEPAGE) and the low byte of RAMSTART is 0
- * it is only a move, otherwise add low byte of sram to low byte of SPM_PAGESIZE for end condition
+ *   - no PGMWRITEPAGE (then the sram address is the constant rambuffer)
+ * it is a mov/ldi, otherwise add low byte of sram to low byte of SPM_PAGESIZE for end condition.
+ * The loop is for no more than 256 bytes, so single byte arithmetic is OK.
  */
-#if (SPM_PAGESIZE & 0xff) == 0
-    "mov  r22, r26\n"           // No need to add, just copy low byte of sram address
-#elif !PGMWRITEPAGE && (RAMSTART & 0xff) == 0
-    "ldi  r22, lo8(%[spmsz])\n" // Load length len
-#else                           // SPM_PAGESIZE is 256, ie len == 0
-    "ldi  r22, lo8(%[spmsz])\n" // Load length len
-    "add  r22, r26\n"           // len += sram & 0xff (for cpse comparison at end of len/2 loop)
+#if SPM_PAGESIZE == 256         // Determine loop end comparison reg r23
+    "mov  r23, r26\n"           // No need to add, just copy low byte of sram address
+#elif !PGMWRITEPAGE             // No page write? This routine is only used for sram=RAMBUFFER
+     ldi(r23, lo8(RAMBUFFER + SPM_PAGESIZE))
+#else
+     ldi(r23, lo8(SPM_PAGESIZE))
+    "add  r23, r26\n"           // r23 = lo8(len + sram) for loop end comparison with lo8(X)
 #endif
 
-    "movw r18, r30\n"           // uint16_t copy = zaddress;
+    backupZ
+#if FLASHabove64k && (PROTECTME || (VBL && PROTECTRESET))
+     in_rampz(r22)              // Also copy RAMPZ
+#endif
 
 #if PROTECTME
-#if (START & 0xff)
+#if START & 0xff
     "cpi  r30, lo8(%[start])\n" // zaddress >= START?
     "ldi  r24, hi8(%[start])\n"
     "cpc  r31, r24\n"
@@ -2698,100 +2347,145 @@ void writebufferX() {
     "cpi  r31, hi8(%[start])\n" // zaddress >= START?
 #endif
 #if FLASHabove64k
-    "in   r25, %[rampz]\n"      // Load RAMPZ
     "ldi  r24, hh8(%[start])\n"
-    "cpc  r25, r24\n"
+    "cpc  r22, r24\n"           // RAMPZ
 #endif
     "brcc ub_ret\n"             // Return if so
-#endif
-#if PGMWRITEPAGE || !CHIP_ERASE // Page erase is needed for pgm_write_page() or CE not implemented
-#if FOUR_PAGE_ERASE && SPM_PAGESIZE > 64
-    "ldi   r24, hi8(%[spm3])\n" // if(!(zaddress & 3*SPM_PAGESIZE))
-    "and   r24, r31\n"          //   ub_page_erase();
-    "brne  no_erase\n"
-#endif
-#if FOUR_PAGE_ERASE
-    "ldi   r24, lo8(%[spm3])\n"
-    "and   r24, r30\n"
-    "brne  no_erase\n"
-#endif
-    "ldi   r24, %[bpera]\n"     // boot_page_erase_r30(); boot_spm_busy_wait();
-    "rcall ub_spm\n"
-"no_erase:"
-#endif
+#endif // PROTECTME
+
 #if VBL && PROTECTRESET && FLASHWRAPS // Store "rjmp START" opcode at addr 0 to protect bootloader
 #if FLASHabove64k
-    "cpi   r25, 0\n"            // RAMZ != 0?
-    "brne   do_fill\n"
+    "cpi   r22, 0\n"            // RAMZ != 0?
+    "brne  not_reset_page\n"
 #endif
     "adiw  r30, 0\n"            // zaddress != 0?
-    "brne  do_fill\n"
+    "brne  not_reset_page\n"
     "ldi   r24, lo8(%[rjmp_bwd_start])\n" // Store rjmp to bootloader at address 0
     "st    X+, r24\n"
     "ldi   r24, hi8(%[rjmp_bwd_start])\n"
     "st    X, r24\n"
-    "sbiw  r26, 1\n"
-"do_fill:"
+    "sbiw  r26, 1\n"            // Restore X pointer to ram
+  "not_reset_page: "
 #endif
-    "ldi   r24, %[bpfil]\n"     // do { boot_page_fill_r30(*sram++); zaddress+=2; } while(len-=2);
+
+#if UPDATE_FL >= 1              // Return if flash page already has desired contents
+    ldi(r25, 0)                 // Set all Booleans to 0
+  "3: "
+     LPM  "r20, Z+\n"           // Load existing byte from PROGMEM, might increment RAMPZ
+    "ld    r21, X+\n"           // Load new byte from ram page
+#if !ERASE_B4_WRITE
+    "and   r21, r20\n"          // New byte can only delete existing 1's in NOR memory
+#endif
+    "cpse  r20, r21\n"          // Does a page write make a difference?
+    "ori r25, 1<<%[differ]\n"
+
+#if ERASE_B4_WRITE && UPDATE_FL >= 4
+    cpi(r21, 0xff)              // Are any of the to-be-written bytes not 0xff?
+    "breq .+2\n"
+    "ori r25, 1<<%[notff]\n"
+#endif
+
+#if ERASE_B4_WRITE && UPDATE_FL >= 3
+    "and   r20, r21\n"          // Check if new byte from ram would set a bit
+    "cpse  r20, r21\n"
+    "ori r25, 1<<%[clearpg]\n"  // If so PROGMEM needs erasing before write
+#endif
+
+    "cpse  r26, r23\n"          // Finished?
+    "rjmp  3b\n"
+
+    restoreZ
+#if FLASHabove64k
+    out_rampz(r22)              // Restore RAMPZ should it have gone over 64 kB boundary
+#endif
+#if SPM_PAGESIZE == 256         // Restore sram
+    "dec r27\n"
+#elif SPM_PAGESIZE <= 32
+    sbiw(r26, SPM_PAGESIZE)
+#elif !PGMWRITEPAGE && (RAMBUFFER+SPM_PAGESIZE)/256 == RAMBUFFER/256
+    ldi(r26, lo8(RAMBUFFER))    // sram was RAMBUFFER if we don't offer pgm_write_page()
+#else                           // Any sram, subtracy SPM_PAGESIZE to go to start
+    subi(r26, SPM_PAGESIZE)
+    "sbc r27, r1\n"
+#endif
+
+    "sbrs r25, %[differ]\n"
+    "rjmp ub_ret\n"             // Return straight away if page write not needed
+
+#if ERASE_B4_WRITE && UPDATE_FL >= 3
+    "sbrs r25, %[clearpg]\n"
+    "rjmp skip_erase\n"         // Can skip erase when no bit in page needs setting
+#endif
+#endif // UPDATE_FL
+
+#if ERASE_B4_WRITE
+#if FOUR_PAGE_ERASE             // 3*SPM_PAGESIZE fits in one byte for those
+     ldi(r24, 3*SPM_PAGESIZE)   // if(!(zaddress & 3*SPM_PAGESIZE))
+    "and  r24, r30\n"           //   ub_page_erase();
+    "brne skip_erase\n"
+#endif
+    ldi(r24, __BOOT_PAGE_ERASE)
+    "rcall ub_spm\n"
+
+#if UPDATE_FL >= 4              // All data 0xff? Page just erased no need to write
+#if defined(RWWSRE)
+    "sbrs r25, %[notff]\n"
+    "rjmp rww_enable\n"
+#else
+    "sbrs r25, %[notff]\n"
+    "rjmp ub_ret\n"
+#endif
+#endif // UPDATE_FL >= 4
+#endif // ERASE_B4_WRITE
+
+  "skip_erase: "
+     ldi(r24, __BOOT_PAGE_FILL)
   "1: "
     "ld    r0,  X+\n"
-    "ld    r1,  X+\n"           // Data word for spm page fill is in r1:r0
+    "ld    r1,  X+\n"           // Data word for spm page fill is in r1:0
     "rcall ub_spm\n"
-    "adiw  r30, 2\n"            // zaddress += 2
-    "cpse  r26, r22\n"          // Finished?
+    "adiw  r30, 2\n"            // zaddress += 2, RAMPZ stays the same
+    "cpse  r26, r23\n"          // Finished?
     "rjmp  1b\n"
 
-    "movw  r30, r18\n"          // zaddress = original value, so we point again to original page
-
-    "ldi   r24, %[bpwri]\n"     // urboot_page_write_r30(); boot_spm_busy_wait();
+    restoreZ
+    ldi(r24, __BOOT_PAGE_WRITE)
 #if defined(RWWSRE)
     "rcall ub_spm\n"
-    "ldi  r24, %[bprww]\n"      // boot_rww_enable_r30();  (re-enable read access to flash)
+  "rww_enable: "
+    ldi(r24, __BOOT_RWW_ENABLE)
 #endif                          // Fall through to ub_spm and return
 
   "ub_spm: "
-    ub_oust " %[spmrg], r24\n"
+    out_spmcr(r24)
     "spm\n"
-    SPM_PIPELINE
-// Test mysterious defect in some MCUs that don't seem to take it well to write to NRWW sections
-#if defined(TESTING) && TESTING > 0
-   ".word 0xffff\n"             // Odd number of 0xffff, followwed by a nop (0xffff is invalid but
-   ".word 0xffff\n"             // processed as sbrs r31,7: skip one opcode if bit 7 in R31 is set)
-   ".word 0xffff\n"
-   ".word 0xffff\n"
-   ".word 0xffff\n"
-   ".word 0xffff\n"
-   ".word 0xffff\n"
+#if defined(__AVR_ATmega161__) || defined(__AVR_ATmega163__) || defined(__AVR_ATmega323__)
+   ".word 0xffff\n"            // Above microprocessors need this code pipeline after SPM
    "nop\n"
 #endif
   "2: "
-    ub_lind " r0, %[spmrg]\n"   // Poll spm has finished (not needed for fill/clearing RWWSB)
-    "sbrc r0, %[spmen]\n"
+   sbxc_spmcr(r1, __SPM_ENABLE)
     "rjmp 2b\n"
   "ub_ret: "
-    "eor r1, r1\n"              // R1 will also have been destroyed on smp for fill page
+    "eor r1, r1\n"              // R1 will also have been destroyed on spm for fill page
   ::
-    [spmrg] "i" (UB_SPM_REG),
-    [spmen] "M"(__SPM_ENABLE),
-    [bpera] "M"(__BOOT_PAGE_ERASE),
-    [bpfil] "M"(__BOOT_PAGE_FILL),
-    [bpwri] "M"(__BOOT_PAGE_WRITE),
-#if defined(RWWSRE)
-    [bprww] "M"(__BOOT_RWW_ENABLE),
+#if UPDATE_FL
+    [differ] "I"(0),            // Do SRAM and PROGMEM effecively differ? (bit 0 in r25)
+#if ERASE_B4_WRITE
+#if UPDATE_FL >=4
+    [notff] "I"(1),             // Is one of the new bytes in SRAM 0xff?
 #endif
-#if FLASHabove64k
-    [rampz] "I" (_SFR_IO_ADDR(RAMPZ)),
+#if UPDATE_FL >= 3
+    [clearpg] "I"(2),           // Does the page need erasing?
+#endif
+#endif
 #endif
     [start] "n"((uint32_t) START),
-    [spmsz] "n"(SPM_PAGESIZE),
-#if FOUR_PAGE_ERASE
-    [spm3] "n"(3*SPM_PAGESIZE),
-#endif
-    [sramp]    "n"(RAMSTART),
     [rjmp_bwd_start] "n"(RJMP_BWD_START)
-  : "r0", "r27", "r26", "r25", "r24", "r22", "r19", "r18"
+  : clobberZ "r31", "r30", "r27", "r26", "r25", "r24", "r23", "r22",
+#if UPDATE_FL
+    "r21", "r20",
+#endif
+    "r0"
   );
 }
-
-#endif

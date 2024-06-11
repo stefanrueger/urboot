@@ -16,6 +16,7 @@ use warnings;
 use Cwd qw(abs_path);
 use File::Basename;
 use Capture::Tiny ':all';
+use Number::Range;
 
 my $progname = basename($0);
 
@@ -472,7 +473,7 @@ if( 0 < (grep { /-DAUTOFRILLS=/ } @ARGV) && 0 < (grep { /-DFRILLS=/ } @ARGV)) {
   push @warns, "$progname: ignoring AUTOFRILLS as FRILLS was explicitly set\n";
 } elsif((my $autofr) = grep { /-DAUTOFRILLS=/ } @ARGV) {
   $autofr =~ s/-DAUTOFRILLS=//;
-  @autofrills = split(',', $autofr) if defined($autofr);
+  @autofrills = Number::Range->new($autofr)->range if defined($autofr);
 }
 @ARGV = grep { ! /-DAUTOFRILLS=/ } @ARGV;
 
@@ -547,7 +548,7 @@ do {
 
     if(-r $elf && @autofrills > 0) {
       # Now choose the highest FRILL level of the list that fits into space occupied by the first one
-      my ($bestfrills, $beyond) = ($autofrills[0], 10);
+      my ($bestfrills, $beyond) = ($autofrills[0], 20);
       for(my $fri =1; $fri < @autofrills; $fri++) {
         my $frills=$autofrills[$fri];
         if($frills < $beyond && $frills > $bestfrills) {

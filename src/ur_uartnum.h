@@ -13,7 +13,7 @@
  * encode and set the upper 4 bit of the register UBRRHI that is shared with UBRR0H.
  *
  * v 1.0
- * 12.05.2024
+ * 02.06.2024
  *
  */
 
@@ -26,14 +26,92 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x08)
+#define in_udrn(rx)  "in  " #rx ", 0x08\n"
+#define out_udrn(rx) "out 0x08, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x08, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x08, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x08, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x08, " #b "\n"
+
 #define UCSRnA     _ureg8(0x0e)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0e\n"
+#define out_ucsrna(rx) "out 0x0e, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0e, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0e, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0e, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0e, " #b "\n"
+
 #define UCSRnB     _ureg8(0x0d)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0d\n"
+#define out_ucsrnb(rx) "out 0x0d, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0d, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0d, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0d, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0d, " #b "\n"
+
 #define UCSRnC     _ureg8(0x0c)
+#define in_ucsrnc(rx)  "in  " #rx ", 0x0c\n"
+#define out_ucsrnc(rx) "out 0x0c, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_ucsrnc(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnD     _ureg8(0x0b)
+#define in_ucsrnd(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrnd(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrnd(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UBRRnL     _ureg8(0x09)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 #define UBRRnH     _ureg8(0x0a)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x0a\n"
+#define out_ubrrnh(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ubrrnh(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbic 0x0a, " #b "\n"
+
 
 #define UARTn_base   _uad(0x08)
+#define UARTn_addr         0x08
 #define UARTn_size            7
 #define UARTn_IOSPACE         1
 #define UDRn_off              0
@@ -65,16 +143,105 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define LINDATn    _ureg8(0xd2)
+#define in_lindatn(rx)  "lds " #rx ", 0xd2\n"
+#define out_lindatn(rx) "sts 0xd2, " #rx "\n"
+#define sbxs_lindatn(rx, b) _sbxs_lindatn(rx, b)
+#define sbxc_lindatn(rx, b) _sbxc_lindatn(rx, b)
+#define sbRs_lindatn(rx, b) _sbRs_lindatn(rx, b)
+#define sbRc_lindatn(rx, b) _sbRc_lindatn(rx, b)
+#define _sbxs_lindatn(rx, b) in_lindatn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_lindatn(rx, b) in_lindatn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_lindatn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_lindatn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINSIRn    _ureg8(0xc9)
+#define in_linsirn(rx)  "lds " #rx ", 0xc9\n"
+#define out_linsirn(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_linsirn(rx, b) _sbxs_linsirn(rx, b)
+#define sbxc_linsirn(rx, b) _sbxc_linsirn(rx, b)
+#define sbRs_linsirn(rx, b) _sbRs_linsirn(rx, b)
+#define sbRc_linsirn(rx, b) _sbRc_linsirn(rx, b)
+#define _sbxs_linsirn(rx, b) in_linsirn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linsirn(rx, b) in_linsirn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linsirn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linsirn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINENIRn   _ureg8(0xca)
+#define in_linenirn(rx)  "lds " #rx ", 0xca\n"
+#define out_linenirn(rx) "sts 0xca, " #rx "\n"
+#define sbxs_linenirn(rx, b) _sbxs_linenirn(rx, b)
+#define sbxc_linenirn(rx, b) _sbxc_linenirn(rx, b)
+#define sbRs_linenirn(rx, b) _sbRs_linenirn(rx, b)
+#define sbRc_linenirn(rx, b) _sbRc_linenirn(rx, b)
+#define _sbxs_linenirn(rx, b) in_linenirn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linenirn(rx, b) in_linenirn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linenirn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linenirn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINCRn     _ureg8(0xc8)
+#define in_lincrn(rx)  "lds " #rx ", 0xc8\n"
+#define out_lincrn(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_lincrn(rx, b) _sbxs_lincrn(rx, b)
+#define sbxc_lincrn(rx, b) _sbxc_lincrn(rx, b)
+#define sbRs_lincrn(rx, b) _sbRs_lincrn(rx, b)
+#define sbRc_lincrn(rx, b) _sbRc_lincrn(rx, b)
+#define _sbxs_lincrn(rx, b) in_lincrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_lincrn(rx, b) in_lincrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_lincrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_lincrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBTRn    _ureg8(0xcc)
+#define in_linbtrn(rx)  "lds " #rx ", 0xcc\n"
+#define out_linbtrn(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_linbtrn(rx, b) _sbxs_linbtrn(rx, b)
+#define sbxc_linbtrn(rx, b) _sbxc_linbtrn(rx, b)
+#define sbRs_linbtrn(rx, b) _sbRs_linbtrn(rx, b)
+#define sbRc_linbtrn(rx, b) _sbRc_linbtrn(rx, b)
+#define _sbxs_linbtrn(rx, b) in_linbtrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbtrn(rx, b) in_linbtrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbtrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbtrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBRRn   _ureg16(0xcd)
 #define LINBRRnL   _ureg8(0xcd)
+#define in_linbrrnl(rx)  "lds " #rx ", 0xcd\n"
+#define out_linbrrnl(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_linbrrnl(rx, b) _sbxs_linbrrnl(rx, b)
+#define sbxc_linbrrnl(rx, b) _sbxc_linbrrnl(rx, b)
+#define sbRs_linbrrnl(rx, b) _sbRs_linbrrnl(rx, b)
+#define sbRc_linbrrnl(rx, b) _sbRc_linbrrnl(rx, b)
+#define _sbxs_linbrrnl(rx, b) in_linbrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbrrnl(rx, b) in_linbrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBRRnH   _ureg8(0xce)
+#define in_linbrrnh(rx)  "lds " #rx ", 0xce\n"
+#define out_linbrrnh(rx) "sts 0xce, " #rx "\n"
+#define sbxs_linbrrnh(rx, b) _sbxs_linbrrnh(rx, b)
+#define sbxc_linbrrnh(rx, b) _sbxc_linbrrnh(rx, b)
+#define sbRs_linbrrnh(rx, b) _sbRs_linbrrnh(rx, b)
+#define sbRc_linbrrnh(rx, b) _sbRc_linbrrnh(rx, b)
+#define _sbxs_linbrrnh(rx, b) in_linbrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbrrnh(rx, b) in_linbrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINERRn    _ureg8(0xcb)
+#define in_linerrn(rx)  "lds " #rx ", 0xcb\n"
+#define out_linerrn(rx) "sts 0xcb, " #rx "\n"
+#define sbxs_linerrn(rx, b) _sbxs_linerrn(rx, b)
+#define sbxc_linerrn(rx, b) _sbxc_linerrn(rx, b)
+#define sbRs_linerrn(rx, b) _sbRs_linerrn(rx, b)
+#define sbRc_linerrn(rx, b) _sbRc_linerrn(rx, b)
+#define _sbxs_linerrn(rx, b) in_linerrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linerrn(rx, b) in_linerrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linerrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linerrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size           11
 #define UARTn_IOSPACE         0
 #define LINDATn_off          10
@@ -104,14 +271,92 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x80)
+#define in_udrn(rx)  "lds " #rx ", 0x80\n"
+#define out_udrn(rx) "sts 0x80, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0x86)
+#define in_ucsrna(rx)  "lds " #rx ", 0x86\n"
+#define out_ucsrna(rx) "sts 0x86, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0x85)
+#define in_ucsrnb(rx)  "lds " #rx ", 0x85\n"
+#define out_ucsrnb(rx) "sts 0x85, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0x84)
+#define in_ucsrnc(rx)  "lds " #rx ", 0x84\n"
+#define out_ucsrnc(rx) "sts 0x84, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0x83)
+#define in_ucsrnd(rx)  "lds " #rx ", 0x83\n"
+#define out_ucsrnd(rx) "sts 0x83, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x81)
+#define in_ubrrnl(rx)  "lds " #rx ", 0x81\n"
+#define out_ubrrnl(rx) "sts 0x81, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0x82)
+#define in_ubrrnh(rx)  "lds " #rx ", 0x82\n"
+#define out_ubrrnh(rx) "sts 0x82, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x80)
+#define UARTn_addr         0x80
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              0
@@ -142,14 +387,92 @@
 
 #elif defined(UARTNUM) && UARTNUM == 1
 #define UDRn       _ureg8(0x90)
+#define in_udrn(rx)  "lds " #rx ", 0x90\n"
+#define out_udrn(rx) "sts 0x90, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0x96)
+#define in_ucsrna(rx)  "lds " #rx ", 0x96\n"
+#define out_ucsrna(rx) "sts 0x96, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0x95)
+#define in_ucsrnb(rx)  "lds " #rx ", 0x95\n"
+#define out_ucsrnb(rx) "sts 0x95, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0x94)
+#define in_ucsrnc(rx)  "lds " #rx ", 0x94\n"
+#define out_ucsrnc(rx) "sts 0x94, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0x93)
+#define in_ucsrnd(rx)  "lds " #rx ", 0x93\n"
+#define out_ucsrnd(rx) "sts 0x93, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x91)
+#define in_ubrrnl(rx)  "lds " #rx ", 0x91\n"
+#define out_ubrrnl(rx) "sts 0x91, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0x92)
+#define in_ubrrnh(rx)  "lds " #rx ", 0x92\n"
+#define out_ubrrnh(rx) "sts 0x92, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x90)
+#define UARTn_addr         0x90
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              0
@@ -180,14 +503,92 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0xc3)
+#define in_ucsrnd(rx)  "lds " #rx ", 0xc3\n"
+#define out_ucsrnd(rx) "sts 0xc3, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -217,14 +618,92 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x40)
+#define in_udrn(rx)  "in  " #rx ", 0x20\n"
+#define out_udrn(rx) "out 0x20, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0x46)
+#define in_ucsrna(rx)  "in  " #rx ", 0x26\n"
+#define out_ucsrna(rx) "out 0x26, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0x45)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x25\n"
+#define out_ucsrnb(rx) "out 0x25, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0x44)
+#define in_ucsrnc(rx)  "in  " #rx ", 0x24\n"
+#define out_ucsrnc(rx) "out 0x24, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0x43)
+#define in_ucsrnd(rx)  "in  " #rx ", 0x23\n"
+#define out_ucsrnd(rx) "out 0x23, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x41)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x21\n"
+#define out_ubrrnl(rx) "out 0x21, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0x42)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x22\n"
+#define out_ubrrnh(rx) "out 0x22, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x40)
+#define UARTn_addr         0x40
 #define UARTn_size            7
 #define UARTn_IOSPACE         1
 #define UDRn_off              0
@@ -249,14 +728,92 @@
 
 #elif defined(UARTNUM) && UARTNUM == 1
 #define UDRn       _ureg8(0x73)
+#define in_udrn(rx)  "lds " #rx ", 0x73\n"
+#define out_udrn(rx) "sts 0x73, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0x79)
+#define in_ucsrna(rx)  "lds " #rx ", 0x79\n"
+#define out_ucsrna(rx) "sts 0x79, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0x78)
+#define in_ucsrnb(rx)  "lds " #rx ", 0x78\n"
+#define out_ucsrnb(rx) "sts 0x78, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0x77)
+#define in_ucsrnc(rx)  "lds " #rx ", 0x77\n"
+#define out_ucsrnc(rx) "sts 0x77, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0x76)
+#define in_ucsrnd(rx)  "lds " #rx ", 0x76\n"
+#define out_ucsrnd(rx) "sts 0x76, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x74)
+#define in_ubrrnl(rx)  "lds " #rx ", 0x74\n"
+#define out_ubrrnl(rx) "sts 0x74, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0x75)
+#define in_ubrrnh(rx)  "lds " #rx ", 0x75\n"
+#define out_ubrrnh(rx) "sts 0x75, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x73)
+#define UARTn_addr         0x73
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              0
@@ -286,13 +843,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UCSRnC     _ureg8(0x23)
+#define in_ucsrnc(rx)  "in  " #rx ", 0x03\n"
+#define out_ucsrnc(rx) "out 0x03, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) "sbis 0x03, " #b "\n"
+#define _sbxc_ucsrnc(rx, b) "sbic 0x03, " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbis 0x03, " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbic 0x03, " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 #define UBRRnH     _ureg8(0x22)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x02\n"
+#define out_ubrrnh(rx) "out 0x02, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) "sbis 0x02, " #b "\n"
+#define _sbxc_ubrrnh(rx, b) "sbic 0x02, " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbis 0x02, " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbic 0x02, " #b "\n"
+
 
 #define UARTn_base   _uad(0x22)
+#define UARTn_addr         0x22
 #define UARTn_size           11
 #define UARTn_IOSPACE         1
 #define UDRn_off             10
@@ -320,13 +944,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UCSRnC     _ureg8(0x40)
+#define in_ucsrnc(rx)  "in  " #rx ", 0x20\n"
+#define out_ucsrnc(rx) "out 0x20, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 #define UBRRnH     _ureg8(0x40)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x20\n"
+#define out_ubrrnh(rx) "out 0x20, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -355,14 +1046,92 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xce)
+#define in_udrn(rx)  "lds " #rx ", 0xce\n"
+#define out_udrn(rx) "sts 0xce, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc8)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc8\n"
+#define out_ucsrna(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc9)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc9\n"
+#define out_ucsrnb(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xca)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xca\n"
+#define out_ucsrnc(rx) "sts 0xca, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0xcb)
+#define in_ucsrnd(rx)  "lds " #rx ", 0xcb\n"
+#define out_ucsrnd(rx) "sts 0xcb, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xcc)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xcc\n"
+#define out_ubrrnl(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xcd)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xcd\n"
+#define out_ubrrnh(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -394,13 +1163,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UCSRnC     _ureg8(0x40)
+#define in_ucsrnc(rx)  "in  " #rx ", 0x20\n"
+#define out_ucsrnc(rx) "out 0x20, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 #define UBRRnH     _ureg8(0x40)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x20\n"
+#define out_ubrrnh(rx) "out 0x20, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -430,16 +1266,105 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define LINDATn    _ureg8(0xd2)
+#define in_lindatn(rx)  "lds " #rx ", 0xd2\n"
+#define out_lindatn(rx) "sts 0xd2, " #rx "\n"
+#define sbxs_lindatn(rx, b) _sbxs_lindatn(rx, b)
+#define sbxc_lindatn(rx, b) _sbxc_lindatn(rx, b)
+#define sbRs_lindatn(rx, b) _sbRs_lindatn(rx, b)
+#define sbRc_lindatn(rx, b) _sbRc_lindatn(rx, b)
+#define _sbxs_lindatn(rx, b) in_lindatn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_lindatn(rx, b) in_lindatn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_lindatn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_lindatn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINSIRn    _ureg8(0xc9)
+#define in_linsirn(rx)  "lds " #rx ", 0xc9\n"
+#define out_linsirn(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_linsirn(rx, b) _sbxs_linsirn(rx, b)
+#define sbxc_linsirn(rx, b) _sbxc_linsirn(rx, b)
+#define sbRs_linsirn(rx, b) _sbRs_linsirn(rx, b)
+#define sbRc_linsirn(rx, b) _sbRc_linsirn(rx, b)
+#define _sbxs_linsirn(rx, b) in_linsirn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linsirn(rx, b) in_linsirn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linsirn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linsirn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINENIRn   _ureg8(0xca)
+#define in_linenirn(rx)  "lds " #rx ", 0xca\n"
+#define out_linenirn(rx) "sts 0xca, " #rx "\n"
+#define sbxs_linenirn(rx, b) _sbxs_linenirn(rx, b)
+#define sbxc_linenirn(rx, b) _sbxc_linenirn(rx, b)
+#define sbRs_linenirn(rx, b) _sbRs_linenirn(rx, b)
+#define sbRc_linenirn(rx, b) _sbRc_linenirn(rx, b)
+#define _sbxs_linenirn(rx, b) in_linenirn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linenirn(rx, b) in_linenirn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linenirn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linenirn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINCRn     _ureg8(0xc8)
+#define in_lincrn(rx)  "lds " #rx ", 0xc8\n"
+#define out_lincrn(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_lincrn(rx, b) _sbxs_lincrn(rx, b)
+#define sbxc_lincrn(rx, b) _sbxc_lincrn(rx, b)
+#define sbRs_lincrn(rx, b) _sbRs_lincrn(rx, b)
+#define sbRc_lincrn(rx, b) _sbRc_lincrn(rx, b)
+#define _sbxs_lincrn(rx, b) in_lincrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_lincrn(rx, b) in_lincrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_lincrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_lincrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBTRn    _ureg8(0xcc)
+#define in_linbtrn(rx)  "lds " #rx ", 0xcc\n"
+#define out_linbtrn(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_linbtrn(rx, b) _sbxs_linbtrn(rx, b)
+#define sbxc_linbtrn(rx, b) _sbxc_linbtrn(rx, b)
+#define sbRs_linbtrn(rx, b) _sbRs_linbtrn(rx, b)
+#define sbRc_linbtrn(rx, b) _sbRc_linbtrn(rx, b)
+#define _sbxs_linbtrn(rx, b) in_linbtrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbtrn(rx, b) in_linbtrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbtrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbtrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBRRn   _ureg16(0xcd)
 #define LINBRRnL   _ureg8(0xcd)
+#define in_linbrrnl(rx)  "lds " #rx ", 0xcd\n"
+#define out_linbrrnl(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_linbrrnl(rx, b) _sbxs_linbrrnl(rx, b)
+#define sbxc_linbrrnl(rx, b) _sbxc_linbrrnl(rx, b)
+#define sbRs_linbrrnl(rx, b) _sbRs_linbrrnl(rx, b)
+#define sbRc_linbrrnl(rx, b) _sbRc_linbrrnl(rx, b)
+#define _sbxs_linbrrnl(rx, b) in_linbrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbrrnl(rx, b) in_linbrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBRRnH   _ureg8(0xce)
+#define in_linbrrnh(rx)  "lds " #rx ", 0xce\n"
+#define out_linbrrnh(rx) "sts 0xce, " #rx "\n"
+#define sbxs_linbrrnh(rx, b) _sbxs_linbrrnh(rx, b)
+#define sbxc_linbrrnh(rx, b) _sbxc_linbrrnh(rx, b)
+#define sbRs_linbrrnh(rx, b) _sbRs_linbrrnh(rx, b)
+#define sbRc_linbrrnh(rx, b) _sbRc_linbrrnh(rx, b)
+#define _sbxs_linbrrnh(rx, b) in_linbrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbrrnh(rx, b) in_linbrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINERRn    _ureg8(0xcb)
+#define in_linerrn(rx)  "lds " #rx ", 0xcb\n"
+#define out_linerrn(rx) "sts 0xcb, " #rx "\n"
+#define sbxs_linerrn(rx, b) _sbxs_linerrn(rx, b)
+#define sbxc_linerrn(rx, b) _sbxc_linerrn(rx, b)
+#define sbRs_linerrn(rx, b) _sbRs_linerrn(rx, b)
+#define sbRc_linerrn(rx, b) _sbRc_linerrn(rx, b)
+#define _sbxs_linerrn(rx, b) in_linerrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linerrn(rx, b) in_linerrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linerrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linerrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size           11
 #define UARTn_IOSPACE         0
 #define LINDATn_off          10
@@ -469,14 +1394,92 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xce)
+#define in_udrn(rx)  "lds " #rx ", 0xce\n"
+#define out_udrn(rx) "sts 0xce, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc8)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc8\n"
+#define out_ucsrna(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc9)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc9\n"
+#define out_ucsrnb(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xca)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xca\n"
+#define out_ucsrnc(rx) "sts 0xca, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0xcb)
+#define in_ucsrnd(rx)  "lds " #rx ", 0xcb\n"
+#define out_ucsrnd(rx) "sts 0xcb, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xcc)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xcc\n"
+#define out_ubrrnl(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xcd)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xcd\n"
+#define out_ubrrnh(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -508,13 +1511,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UCSRnC     _ureg8(0x40)
+#define in_ucsrnc(rx)  "in  " #rx ", 0x20\n"
+#define out_ucsrnc(rx) "out 0x20, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 #define UBRRnH     _ureg8(0x40)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x20\n"
+#define out_ubrrnh(rx) "out 0x20, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -543,13 +1613,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xce)
+#define in_udrn(rx)  "lds " #rx ", 0xce\n"
+#define out_udrn(rx) "sts 0xce, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc8)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc8\n"
+#define out_ucsrna(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc9)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc9\n"
+#define out_ucsrnb(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xca)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xca\n"
+#define out_ucsrnc(rx) "sts 0xca, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xcc)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xcc\n"
+#define out_ubrrnl(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xcd)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xcd\n"
+#define out_ubrrnh(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -576,13 +1713,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -611,14 +1815,92 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0xc3)
+#define in_ucsrnd(rx)  "lds " #rx ", 0xc3\n"
+#define out_ucsrnd(rx) "sts 0xc3, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -650,13 +1932,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UCSRnC     _ureg8(0x95)
+#define in_ucsrnc(rx)  "lds " #rx ", 0x95\n"
+#define out_ucsrnc(rx) "sts 0x95, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 #define UBRRnH     _ureg8(0x90)
+#define in_ubrrnh(rx)  "lds " #rx ", 0x90\n"
+#define out_ubrrnh(rx) "sts 0x90, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size          109
 #define UARTn_IOSPACE         0
 #define UDRn_off              3
@@ -680,13 +2029,80 @@
 
 #elif defined(UARTNUM) && UARTNUM == 1
 #define UDRn       _ureg8(0x9c)
+#define in_udrn(rx)  "lds " #rx ", 0x9c\n"
+#define out_udrn(rx) "sts 0x9c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0x9b)
+#define in_ucsrna(rx)  "lds " #rx ", 0x9b\n"
+#define out_ucsrna(rx) "sts 0x9b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0x9a)
+#define in_ucsrnb(rx)  "lds " #rx ", 0x9a\n"
+#define out_ucsrnb(rx) "sts 0x9a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0x9d)
+#define in_ucsrnc(rx)  "lds " #rx ", 0x9d\n"
+#define out_ucsrnc(rx) "sts 0x9d, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x99)
+#define in_ubrrnl(rx)  "lds " #rx ", 0x99\n"
+#define out_ubrrnl(rx) "sts 0x99, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0x98)
+#define in_ubrrnh(rx)  "lds " #rx ", 0x98\n"
+#define out_ubrrnh(rx) "sts 0x98, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x98)
+#define UARTn_addr         0x98
 #define UARTn_size            6
 #define UARTn_IOSPACE         0
 #define UDRn_off              4
@@ -715,16 +2131,105 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define LINDATn    _ureg8(0xca)
+#define in_lindatn(rx)  "lds " #rx ", 0xca\n"
+#define out_lindatn(rx) "sts 0xca, " #rx "\n"
+#define sbxs_lindatn(rx, b) _sbxs_lindatn(rx, b)
+#define sbxc_lindatn(rx, b) _sbxc_lindatn(rx, b)
+#define sbRs_lindatn(rx, b) _sbRs_lindatn(rx, b)
+#define sbRc_lindatn(rx, b) _sbRc_lindatn(rx, b)
+#define _sbxs_lindatn(rx, b) in_lindatn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_lindatn(rx, b) in_lindatn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_lindatn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_lindatn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINSIRn    _ureg8(0xc1)
+#define in_linsirn(rx)  "lds " #rx ", 0xc1\n"
+#define out_linsirn(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_linsirn(rx, b) _sbxs_linsirn(rx, b)
+#define sbxc_linsirn(rx, b) _sbxc_linsirn(rx, b)
+#define sbRs_linsirn(rx, b) _sbRs_linsirn(rx, b)
+#define sbRc_linsirn(rx, b) _sbRc_linsirn(rx, b)
+#define _sbxs_linsirn(rx, b) in_linsirn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linsirn(rx, b) in_linsirn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linsirn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linsirn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINENIRn   _ureg8(0xc2)
+#define in_linenirn(rx)  "lds " #rx ", 0xc2\n"
+#define out_linenirn(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_linenirn(rx, b) _sbxs_linenirn(rx, b)
+#define sbxc_linenirn(rx, b) _sbxc_linenirn(rx, b)
+#define sbRs_linenirn(rx, b) _sbRs_linenirn(rx, b)
+#define sbRc_linenirn(rx, b) _sbRc_linenirn(rx, b)
+#define _sbxs_linenirn(rx, b) in_linenirn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linenirn(rx, b) in_linenirn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linenirn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linenirn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINCRn     _ureg8(0xc0)
+#define in_lincrn(rx)  "lds " #rx ", 0xc0\n"
+#define out_lincrn(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_lincrn(rx, b) _sbxs_lincrn(rx, b)
+#define sbxc_lincrn(rx, b) _sbxc_lincrn(rx, b)
+#define sbRs_lincrn(rx, b) _sbRs_lincrn(rx, b)
+#define sbRc_lincrn(rx, b) _sbRc_lincrn(rx, b)
+#define _sbxs_lincrn(rx, b) in_lincrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_lincrn(rx, b) in_lincrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_lincrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_lincrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBTRn    _ureg8(0xc4)
+#define in_linbtrn(rx)  "lds " #rx ", 0xc4\n"
+#define out_linbtrn(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_linbtrn(rx, b) _sbxs_linbtrn(rx, b)
+#define sbxc_linbtrn(rx, b) _sbxc_linbtrn(rx, b)
+#define sbRs_linbtrn(rx, b) _sbRs_linbtrn(rx, b)
+#define sbRc_linbtrn(rx, b) _sbRc_linbtrn(rx, b)
+#define _sbxs_linbtrn(rx, b) in_linbtrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbtrn(rx, b) in_linbtrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbtrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbtrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBRRn   _ureg16(0xc5)
 #define LINBRRnL   _ureg8(0xc5)
+#define in_linbrrnl(rx)  "lds " #rx ", 0xc5\n"
+#define out_linbrrnl(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_linbrrnl(rx, b) _sbxs_linbrrnl(rx, b)
+#define sbxc_linbrrnl(rx, b) _sbxc_linbrrnl(rx, b)
+#define sbRs_linbrrnl(rx, b) _sbRs_linbrrnl(rx, b)
+#define sbRc_linbrrnl(rx, b) _sbRc_linbrrnl(rx, b)
+#define _sbxs_linbrrnl(rx, b) in_linbrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbrrnl(rx, b) in_linbrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBRRnH   _ureg8(0xc6)
+#define in_linbrrnh(rx)  "lds " #rx ", 0xc6\n"
+#define out_linbrrnh(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_linbrrnh(rx, b) _sbxs_linbrrnh(rx, b)
+#define sbxc_linbrrnh(rx, b) _sbxc_linbrrnh(rx, b)
+#define sbRs_linbrrnh(rx, b) _sbRs_linbrrnh(rx, b)
+#define sbRc_linbrrnh(rx, b) _sbRc_linbrrnh(rx, b)
+#define _sbxs_linbrrnh(rx, b) in_linbrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbrrnh(rx, b) in_linbrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINERRn    _ureg8(0xc3)
+#define in_linerrn(rx)  "lds " #rx ", 0xc3\n"
+#define out_linerrn(rx) "sts 0xc3, " #rx "\n"
+#define sbxs_linerrn(rx, b) _sbxs_linerrn(rx, b)
+#define sbxc_linerrn(rx, b) _sbxc_linerrn(rx, b)
+#define sbRs_linerrn(rx, b) _sbRs_linerrn(rx, b)
+#define sbRc_linerrn(rx, b) _sbRc_linerrn(rx, b)
+#define _sbxs_linerrn(rx, b) in_linerrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linerrn(rx, b) in_linerrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linerrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linerrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size           11
 #define UARTn_IOSPACE         0
 #define LINDATn_off          10
@@ -757,13 +2262,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -786,13 +2358,80 @@
 
 #elif defined(UARTNUM) && UARTNUM == 1
 #define UDRn       _ureg8(0xce)
+#define in_udrn(rx)  "lds " #rx ", 0xce\n"
+#define out_udrn(rx) "sts 0xce, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc8)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc8\n"
+#define out_ucsrna(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc9)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc9\n"
+#define out_ucsrnb(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xca)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xca\n"
+#define out_ucsrnc(rx) "sts 0xca, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xcc)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xcc\n"
+#define out_ubrrnl(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xcd)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xcd\n"
+#define out_ubrrnh(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -820,11 +2459,56 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -850,12 +2534,68 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 #define UBRRnH     _ureg8(0x40)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x20\n"
+#define out_ubrrnh(rx) "out 0x20, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -877,11 +2617,56 @@
 
 #elif defined(UARTNUM) && UARTNUM == 1
 #define UDRn       _ureg8(0x23)
+#define in_udrn(rx)  "in  " #rx ", 0x03\n"
+#define out_udrn(rx) "out 0x03, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x03, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x03, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x03, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x03, " #b "\n"
+
 #define UCSRnA     _ureg8(0x22)
+#define in_ucsrna(rx)  "in  " #rx ", 0x02\n"
+#define out_ucsrna(rx) "out 0x02, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x02, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x02, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x02, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x02, " #b "\n"
+
 #define UCSRnB     _ureg8(0x21)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x01\n"
+#define out_ucsrnb(rx) "out 0x01, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x01, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x01, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x01, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x01, " #b "\n"
+
 #define UBRRnL     _ureg8(0x20)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x00\n"
+#define out_ubrrnl(rx) "out 0x00, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x00, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x00, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x00, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x00, " #b "\n"
+
 
 #define UARTn_base   _uad(0x20)
+#define UARTn_addr         0x20
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -907,13 +2692,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UCSRnC     _ureg8(0x40)
+#define in_ucsrnc(rx)  "in  " #rx ", 0x20\n"
+#define out_ucsrnc(rx) "out 0x20, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 #define UBRRnH     _ureg8(0x40)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x20\n"
+#define out_ubrrnh(rx) "out 0x20, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -936,13 +2788,80 @@
 
 #elif defined(UARTNUM) && UARTNUM == 1
 #define UDRn       _ureg8(0x23)
+#define in_udrn(rx)  "in  " #rx ", 0x03\n"
+#define out_udrn(rx) "out 0x03, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x03, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x03, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x03, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x03, " #b "\n"
+
 #define UCSRnA     _ureg8(0x22)
+#define in_ucsrna(rx)  "in  " #rx ", 0x02\n"
+#define out_ucsrna(rx) "out 0x02, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x02, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x02, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x02, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x02, " #b "\n"
+
 #define UCSRnB     _ureg8(0x21)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x01\n"
+#define out_ucsrnb(rx) "out 0x01, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x01, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x01, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x01, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x01, " #b "\n"
+
 #define UCSRnC     _ureg8(0x5c)
+#define in_ucsrnc(rx)  "in  " #rx ", 0x3c\n"
+#define out_ucsrnc(rx) "out 0x3c, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x20)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x00\n"
+#define out_ubrrnl(rx) "out 0x00, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x00, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x00, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x00, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x00, " #b "\n"
+
 #define UBRRnH     _ureg8(0x5c)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x3c\n"
+#define out_ubrrnh(rx) "out 0x3c, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x20)
+#define UARTn_addr         0x20
 #define UARTn_size           61
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -970,11 +2889,56 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1003,13 +2967,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1033,13 +3064,80 @@
 
 #elif defined(UARTNUM) && UARTNUM == 1
 #define UDRn       _ureg8(0xce)
+#define in_udrn(rx)  "lds " #rx ", 0xce\n"
+#define out_udrn(rx) "sts 0xce, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc8)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc8\n"
+#define out_ucsrna(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc9)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc9\n"
+#define out_ucsrnb(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xca)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xca\n"
+#define out_ucsrnc(rx) "sts 0xca, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xcc)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xcc\n"
+#define out_ubrrnl(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xcd)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xcd\n"
+#define out_ubrrnh(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1076,13 +3174,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1113,13 +3278,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1149,13 +3381,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UCSRnC     _ureg8(0x40)
+#define in_ucsrnc(rx)  "in  " #rx ", 0x20\n"
+#define out_ucsrnc(rx) "out 0x20, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 #define UBRRnH     _ureg8(0x40)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x20\n"
+#define out_ubrrnh(rx) "out 0x20, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1183,14 +3482,92 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0xc3)
+#define in_ucsrnd(rx)  "lds " #rx ", 0xc3\n"
+#define out_ucsrnd(rx) "sts 0xc3, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1216,14 +3593,92 @@
 
 #elif defined(UARTNUM) && UARTNUM == 1
 #define UDRn       _ureg8(0xce)
+#define in_udrn(rx)  "lds " #rx ", 0xce\n"
+#define out_udrn(rx) "sts 0xce, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc8)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc8\n"
+#define out_ucsrna(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc9)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc9\n"
+#define out_ucsrnb(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xca)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xca\n"
+#define out_ucsrnc(rx) "sts 0xca, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0xcb)
+#define in_ucsrnd(rx)  "lds " #rx ", 0xcb\n"
+#define out_ucsrnd(rx) "sts 0xcb, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xcc)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xcc\n"
+#define out_ubrrnl(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xcd)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xcd\n"
+#define out_ubrrnh(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1249,14 +3704,92 @@
 
 #elif defined(UARTNUM) && UARTNUM == 2
 #define UDRn       _ureg8(0xd6)
+#define in_udrn(rx)  "lds " #rx ", 0xd6\n"
+#define out_udrn(rx) "sts 0xd6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xd0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xd0\n"
+#define out_ucsrna(rx) "sts 0xd0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xd1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xd1\n"
+#define out_ucsrnb(rx) "sts 0xd1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xd2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xd2\n"
+#define out_ucsrnc(rx) "sts 0xd2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0xd3)
+#define in_ucsrnd(rx)  "lds " #rx ", 0xd3\n"
+#define out_ucsrnd(rx) "sts 0xd3, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xd4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xd4\n"
+#define out_ubrrnl(rx) "sts 0xd4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xd5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xd5\n"
+#define out_ubrrnh(rx) "sts 0xd5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xd0)
+#define UARTn_addr         0xd0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1287,14 +3820,92 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0xc3)
+#define in_ucsrnd(rx)  "lds " #rx ", 0xc3\n"
+#define out_ucsrnd(rx) "sts 0xc3, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1320,14 +3931,92 @@
 
 #elif defined(UARTNUM) && UARTNUM == 1
 #define UDRn       _ureg8(0xce)
+#define in_udrn(rx)  "lds " #rx ", 0xce\n"
+#define out_udrn(rx) "sts 0xce, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc8)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc8\n"
+#define out_ucsrna(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc9)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc9\n"
+#define out_ucsrnb(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xca)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xca\n"
+#define out_ucsrnc(rx) "sts 0xca, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0xcb)
+#define in_ucsrnd(rx)  "lds " #rx ", 0xcb\n"
+#define out_ucsrnd(rx) "sts 0xcb, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xcc)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xcc\n"
+#define out_ubrrnl(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xcd)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xcd\n"
+#define out_ubrrnh(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1358,13 +4047,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1388,13 +4144,80 @@
 
 #elif defined(UARTNUM) && UARTNUM == 1
 #define UDRn       _ureg8(0xce)
+#define in_udrn(rx)  "lds " #rx ", 0xce\n"
+#define out_udrn(rx) "sts 0xce, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc8)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc8\n"
+#define out_ucsrna(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc9)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc9\n"
+#define out_ucsrnb(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xca)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xca\n"
+#define out_ucsrnc(rx) "sts 0xca, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xcc)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xcc\n"
+#define out_ubrrnl(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xcd)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xcd\n"
+#define out_ubrrnh(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1418,13 +4241,80 @@
 
 #elif defined(UARTNUM) && UARTNUM == 2
 #define UDRn       _ureg8(0xd6)
+#define in_udrn(rx)  "lds " #rx ", 0xd6\n"
+#define out_udrn(rx) "sts 0xd6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xd0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xd0\n"
+#define out_ucsrna(rx) "sts 0xd0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xd1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xd1\n"
+#define out_ucsrnb(rx) "sts 0xd1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xd2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xd2\n"
+#define out_ucsrnc(rx) "sts 0xd2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xd4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xd4\n"
+#define out_ubrrnl(rx) "sts 0xd4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xd5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xd5\n"
+#define out_ubrrnh(rx) "sts 0xd5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xd0)
+#define UARTn_addr         0xd0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1448,13 +4338,80 @@
 
 #elif defined(UARTNUM) && UARTNUM == 3
 #define UDRn       _ureg8(0x136)
+#define in_udrn(rx)  "lds " #rx ", 0x136\n"
+#define out_udrn(rx) "sts 0x136, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0x130)
+#define in_ucsrna(rx)  "lds " #rx ", 0x130\n"
+#define out_ucsrna(rx) "sts 0x130, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0x131)
+#define in_ucsrnb(rx)  "lds " #rx ", 0x131\n"
+#define out_ucsrnb(rx) "sts 0x131, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0x132)
+#define in_ucsrnc(rx)  "lds " #rx ", 0x132\n"
+#define out_ucsrnc(rx) "sts 0x132, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x134)
+#define in_ubrrnl(rx)  "lds " #rx ", 0x134\n"
+#define out_ubrrnl(rx) "sts 0x134, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0x135)
+#define in_ubrrnh(rx)  "lds " #rx ", 0x135\n"
+#define out_ubrrnh(rx) "sts 0x135, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base  _uad(0x130)
+#define UARTn_addr        0x130
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1483,13 +4440,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1518,13 +4542,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1548,13 +4639,80 @@
 
 #elif defined(UARTNUM) && UARTNUM == 1
 #define UDRn       _ureg8(0xce)
+#define in_udrn(rx)  "lds " #rx ", 0xce\n"
+#define out_udrn(rx) "sts 0xce, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc8)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc8\n"
+#define out_ucsrna(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc9)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc9\n"
+#define out_ucsrnb(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xca)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xca\n"
+#define out_ucsrnc(rx) "sts 0xca, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xcc)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xcc\n"
+#define out_ubrrnl(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xcd)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xcd\n"
+#define out_ubrrnh(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1583,13 +4741,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UCSRnC     _ureg8(0x40)
+#define in_ucsrnc(rx)  "in  " #rx ", 0x20\n"
+#define out_ucsrnc(rx) "out 0x20, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 #define UBRRnH     _ureg8(0x40)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x20\n"
+#define out_ubrrnh(rx) "out 0x20, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1617,13 +4842,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UCSRnC     _ureg8(0x40)
+#define in_ucsrnc(rx)  "in  " #rx ", 0x20\n"
+#define out_ucsrnc(rx) "out 0x20, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 #define UBRRnH     _ureg8(0x40)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x20\n"
+#define out_ubrrnh(rx) "out 0x20, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1651,11 +4943,56 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1671,13 +5008,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1706,13 +5110,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1736,13 +5207,80 @@
 
 #elif defined(UARTNUM) && UARTNUM == 1
 #define UDRn       _ureg8(0xce)
+#define in_udrn(rx)  "lds " #rx ", 0xce\n"
+#define out_udrn(rx) "sts 0xce, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc8)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc8\n"
+#define out_ucsrna(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc9)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc9\n"
+#define out_ucsrnb(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xca)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xca\n"
+#define out_ucsrnc(rx) "sts 0xca, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xcc)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xcc\n"
+#define out_ubrrnl(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xcd)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xcd\n"
+#define out_ubrrnh(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1771,14 +5309,92 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xce)
+#define in_udrn(rx)  "lds " #rx ", 0xce\n"
+#define out_udrn(rx) "sts 0xce, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc8)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc8\n"
+#define out_ucsrna(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc9)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc9\n"
+#define out_ucsrnb(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xca)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xca\n"
+#define out_ucsrnc(rx) "sts 0xca, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnD     _ureg8(0xcb)
+#define in_ucsrnd(rx)  "lds " #rx ", 0xcb\n"
+#define out_ucsrnd(rx) "sts 0xcb, " #rx "\n"
+#define sbxs_ucsrnd(rx, b) _sbxs_ucsrnd(rx, b)
+#define sbxc_ucsrnd(rx, b) _sbxc_ucsrnd(rx, b)
+#define sbRs_ucsrnd(rx, b) _sbRs_ucsrnd(rx, b)
+#define sbRc_ucsrnd(rx, b) _sbRc_ucsrnd(rx, b)
+#define _sbxs_ucsrnd(rx, b) in_ucsrnd(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnd(rx, b) in_ucsrnd(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnd(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnd(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xcc)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xcc\n"
+#define out_ubrrnl(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xcd)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xcd\n"
+#define out_ubrrnh(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1807,13 +5423,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xc6)
+#define in_udrn(rx)  "lds " #rx ", 0xc6\n"
+#define out_udrn(rx) "sts 0xc6, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc0)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc0\n"
+#define out_ucsrna(rx) "sts 0xc0, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc1)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc1\n"
+#define out_ucsrnb(rx) "sts 0xc1, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xc2)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xc2\n"
+#define out_ucsrnc(rx) "sts 0xc2, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xc4)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xc4\n"
+#define out_ubrrnl(rx) "sts 0xc4, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xc5)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xc5\n"
+#define out_ubrrnh(rx) "sts 0xc5, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc0)
+#define UARTn_addr         0xc0
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1842,13 +5525,80 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0xce)
+#define in_udrn(rx)  "lds " #rx ", 0xce\n"
+#define out_udrn(rx) "sts 0xce, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) in_udrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_udrn(rx, b) in_udrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_udrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_udrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnA     _ureg8(0xc8)
+#define in_ucsrna(rx)  "lds " #rx ", 0xc8\n"
+#define out_ucsrna(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) in_ucsrna(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrna(rx, b) in_ucsrna(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnB     _ureg8(0xc9)
+#define in_ucsrnb(rx)  "lds " #rx ", 0xc9\n"
+#define out_ucsrnb(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) in_ucsrnb(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnb(rx, b) in_ucsrnb(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UCSRnC     _ureg8(0xca)
+#define in_ucsrnc(rx)  "lds " #rx ", 0xca\n"
+#define out_ucsrnc(rx) "sts 0xca, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) in_ucsrnc(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ucsrnc(rx, b) in_ucsrnc(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnL     _ureg8(0xcc)
+#define in_ubrrnl(rx)  "lds " #rx ", 0xcc\n"
+#define out_ubrrnl(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) in_ubrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnl(rx, b) in_ubrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define UBRRnH     _ureg8(0xcd)
+#define in_ubrrnh(rx)  "lds " #rx ", 0xcd\n"
+#define out_ubrrnh(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size            7
 #define UARTn_IOSPACE         0
 #define UDRn_off              6
@@ -1876,11 +5626,56 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1906,12 +5701,68 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 #define UBRRnH     _ureg8(0x23)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x03\n"
+#define out_ubrrnh(rx) "out 0x03, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) "sbis 0x03, " #b "\n"
+#define _sbxc_ubrrnh(rx, b) "sbic 0x03, " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbis 0x03, " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbic 0x03, " #b "\n"
+
 
 #define UARTn_base   _uad(0x23)
+#define UARTn_addr         0x23
 #define UARTn_size           10
 #define UARTn_IOSPACE         1
 #define UDRn_off              9
@@ -1938,11 +5789,56 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1968,12 +5864,68 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)
+#define in_udrn(rx)  "in  " #rx ", 0x0c\n"
+#define out_udrn(rx) "out 0x0c, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x0c, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x0c, " #b "\n"
+
 #define UCSRnA     _ureg8(0x2b)
+#define in_ucsrna(rx)  "in  " #rx ", 0x0b\n"
+#define out_ucsrna(rx) "out 0x0b, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x0b, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x0b, " #b "\n"
+
 #define UCSRnB     _ureg8(0x2a)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x0a\n"
+#define out_ucsrnb(rx) "out 0x0a, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x0a, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x0a, " #b "\n"
+
 #define UBRRnL     _ureg8(0x29)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x09\n"
+#define out_ubrrnl(rx) "out 0x09, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x09, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x09, " #b "\n"
+
 #define UBRRnH     _ureg8(0x40)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x20\n"
+#define out_ubrrnh(rx) "out 0x20, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) in_ubrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_ubrrnh(rx, b) in_ubrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0x29)
+#define UARTn_addr         0x29
 #define UARTn_size           24
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -1984,11 +5936,56 @@
 
 #elif defined(UARTNUM) && UARTNUM == 1
 #define UDRn       _ureg8(0x23)
+#define in_udrn(rx)  "in  " #rx ", 0x03\n"
+#define out_udrn(rx) "out 0x03, " #rx "\n"
+#define sbxs_udrn(rx, b) _sbxs_udrn(rx, b)
+#define sbxc_udrn(rx, b) _sbxc_udrn(rx, b)
+#define sbRs_udrn(rx, b) _sbRs_udrn(rx, b)
+#define sbRc_udrn(rx, b) _sbRc_udrn(rx, b)
+#define _sbxs_udrn(rx, b) "sbis 0x03, " #b "\n"
+#define _sbxc_udrn(rx, b) "sbic 0x03, " #b "\n"
+#define _sbRs_udrn(rx, b) "sbis 0x03, " #b "\n"
+#define _sbRc_udrn(rx, b) "sbic 0x03, " #b "\n"
+
 #define UCSRnA     _ureg8(0x22)
+#define in_ucsrna(rx)  "in  " #rx ", 0x02\n"
+#define out_ucsrna(rx) "out 0x02, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x02, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x02, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x02, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x02, " #b "\n"
+
 #define UCSRnB     _ureg8(0x21)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x01\n"
+#define out_ucsrnb(rx) "out 0x01, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x01, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x01, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x01, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x01, " #b "\n"
+
 #define UBRRnL     _ureg8(0x20)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x00\n"
+#define out_ubrrnl(rx) "out 0x00, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x00, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x00, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x00, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x00, " #b "\n"
+
 
 #define UARTn_base   _uad(0x20)
+#define UARTn_addr         0x20
 #define UARTn_size            4
 #define UARTn_IOSPACE         1
 #define UDRn_off              3
@@ -2003,16 +6000,105 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define LINDATn    _ureg8(0xd2)
+#define in_lindatn(rx)  "lds " #rx ", 0xd2\n"
+#define out_lindatn(rx) "sts 0xd2, " #rx "\n"
+#define sbxs_lindatn(rx, b) _sbxs_lindatn(rx, b)
+#define sbxc_lindatn(rx, b) _sbxc_lindatn(rx, b)
+#define sbRs_lindatn(rx, b) _sbRs_lindatn(rx, b)
+#define sbRc_lindatn(rx, b) _sbRc_lindatn(rx, b)
+#define _sbxs_lindatn(rx, b) in_lindatn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_lindatn(rx, b) in_lindatn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_lindatn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_lindatn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINSIRn    _ureg8(0xc9)
+#define in_linsirn(rx)  "lds " #rx ", 0xc9\n"
+#define out_linsirn(rx) "sts 0xc9, " #rx "\n"
+#define sbxs_linsirn(rx, b) _sbxs_linsirn(rx, b)
+#define sbxc_linsirn(rx, b) _sbxc_linsirn(rx, b)
+#define sbRs_linsirn(rx, b) _sbRs_linsirn(rx, b)
+#define sbRc_linsirn(rx, b) _sbRc_linsirn(rx, b)
+#define _sbxs_linsirn(rx, b) in_linsirn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linsirn(rx, b) in_linsirn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linsirn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linsirn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINENIRn   _ureg8(0xca)
+#define in_linenirn(rx)  "lds " #rx ", 0xca\n"
+#define out_linenirn(rx) "sts 0xca, " #rx "\n"
+#define sbxs_linenirn(rx, b) _sbxs_linenirn(rx, b)
+#define sbxc_linenirn(rx, b) _sbxc_linenirn(rx, b)
+#define sbRs_linenirn(rx, b) _sbRs_linenirn(rx, b)
+#define sbRc_linenirn(rx, b) _sbRc_linenirn(rx, b)
+#define _sbxs_linenirn(rx, b) in_linenirn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linenirn(rx, b) in_linenirn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linenirn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linenirn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINCRn     _ureg8(0xc8)
+#define in_lincrn(rx)  "lds " #rx ", 0xc8\n"
+#define out_lincrn(rx) "sts 0xc8, " #rx "\n"
+#define sbxs_lincrn(rx, b) _sbxs_lincrn(rx, b)
+#define sbxc_lincrn(rx, b) _sbxc_lincrn(rx, b)
+#define sbRs_lincrn(rx, b) _sbRs_lincrn(rx, b)
+#define sbRc_lincrn(rx, b) _sbRc_lincrn(rx, b)
+#define _sbxs_lincrn(rx, b) in_lincrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_lincrn(rx, b) in_lincrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_lincrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_lincrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBTRn    _ureg8(0xcc)
+#define in_linbtrn(rx)  "lds " #rx ", 0xcc\n"
+#define out_linbtrn(rx) "sts 0xcc, " #rx "\n"
+#define sbxs_linbtrn(rx, b) _sbxs_linbtrn(rx, b)
+#define sbxc_linbtrn(rx, b) _sbxc_linbtrn(rx, b)
+#define sbRs_linbtrn(rx, b) _sbRs_linbtrn(rx, b)
+#define sbRc_linbtrn(rx, b) _sbRc_linbtrn(rx, b)
+#define _sbxs_linbtrn(rx, b) in_linbtrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbtrn(rx, b) in_linbtrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbtrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbtrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBRRn   _ureg16(0xcd)
 #define LINBRRnL   _ureg8(0xcd)
+#define in_linbrrnl(rx)  "lds " #rx ", 0xcd\n"
+#define out_linbrrnl(rx) "sts 0xcd, " #rx "\n"
+#define sbxs_linbrrnl(rx, b) _sbxs_linbrrnl(rx, b)
+#define sbxc_linbrrnl(rx, b) _sbxc_linbrrnl(rx, b)
+#define sbRs_linbrrnl(rx, b) _sbRs_linbrrnl(rx, b)
+#define sbRc_linbrrnl(rx, b) _sbRc_linbrrnl(rx, b)
+#define _sbxs_linbrrnl(rx, b) in_linbrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbrrnl(rx, b) in_linbrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBRRnH   _ureg8(0xce)
+#define in_linbrrnh(rx)  "lds " #rx ", 0xce\n"
+#define out_linbrrnh(rx) "sts 0xce, " #rx "\n"
+#define sbxs_linbrrnh(rx, b) _sbxs_linbrrnh(rx, b)
+#define sbxc_linbrrnh(rx, b) _sbxc_linbrrnh(rx, b)
+#define sbRs_linbrrnh(rx, b) _sbRs_linbrrnh(rx, b)
+#define sbRc_linbrrnh(rx, b) _sbRc_linbrrnh(rx, b)
+#define _sbxs_linbrrnh(rx, b) in_linbrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbrrnh(rx, b) in_linbrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINERRn    _ureg8(0xcb)
+#define in_linerrn(rx)  "lds " #rx ", 0xcb\n"
+#define out_linerrn(rx) "sts 0xcb, " #rx "\n"
+#define sbxs_linerrn(rx, b) _sbxs_linerrn(rx, b)
+#define sbxc_linerrn(rx, b) _sbxc_linerrn(rx, b)
+#define sbRs_linerrn(rx, b) _sbRs_linerrn(rx, b)
+#define sbRc_linerrn(rx, b) _sbRc_linerrn(rx, b)
+#define _sbxs_linerrn(rx, b) in_linerrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linerrn(rx, b) in_linerrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linerrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linerrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base   _uad(0xc8)
+#define UARTn_addr         0xc8
 #define UARTn_size           11
 #define UARTn_IOSPACE         0
 #define LINDATn_off          10
@@ -2035,16 +6121,105 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define LINDATn    _ureg8(0x17d)
+#define in_lindatn(rx)  "lds " #rx ", 0x17d\n"
+#define out_lindatn(rx) "sts 0x17d, " #rx "\n"
+#define sbxs_lindatn(rx, b) _sbxs_lindatn(rx, b)
+#define sbxc_lindatn(rx, b) _sbxc_lindatn(rx, b)
+#define sbRs_lindatn(rx, b) _sbRs_lindatn(rx, b)
+#define sbRc_lindatn(rx, b) _sbRc_lindatn(rx, b)
+#define _sbxs_lindatn(rx, b) in_lindatn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_lindatn(rx, b) in_lindatn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_lindatn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_lindatn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINSIRn    _ureg8(0x174)
+#define in_linsirn(rx)  "lds " #rx ", 0x174\n"
+#define out_linsirn(rx) "sts 0x174, " #rx "\n"
+#define sbxs_linsirn(rx, b) _sbxs_linsirn(rx, b)
+#define sbxc_linsirn(rx, b) _sbxc_linsirn(rx, b)
+#define sbRs_linsirn(rx, b) _sbRs_linsirn(rx, b)
+#define sbRc_linsirn(rx, b) _sbRc_linsirn(rx, b)
+#define _sbxs_linsirn(rx, b) in_linsirn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linsirn(rx, b) in_linsirn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linsirn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linsirn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINENIRn   _ureg8(0x175)
+#define in_linenirn(rx)  "lds " #rx ", 0x175\n"
+#define out_linenirn(rx) "sts 0x175, " #rx "\n"
+#define sbxs_linenirn(rx, b) _sbxs_linenirn(rx, b)
+#define sbxc_linenirn(rx, b) _sbxc_linenirn(rx, b)
+#define sbRs_linenirn(rx, b) _sbRs_linenirn(rx, b)
+#define sbRc_linenirn(rx, b) _sbRc_linenirn(rx, b)
+#define _sbxs_linenirn(rx, b) in_linenirn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linenirn(rx, b) in_linenirn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linenirn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linenirn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINCRn     _ureg8(0x173)
+#define in_lincrn(rx)  "lds " #rx ", 0x173\n"
+#define out_lincrn(rx) "sts 0x173, " #rx "\n"
+#define sbxs_lincrn(rx, b) _sbxs_lincrn(rx, b)
+#define sbxc_lincrn(rx, b) _sbxc_lincrn(rx, b)
+#define sbRs_lincrn(rx, b) _sbRs_lincrn(rx, b)
+#define sbRc_lincrn(rx, b) _sbRc_lincrn(rx, b)
+#define _sbxs_lincrn(rx, b) in_lincrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_lincrn(rx, b) in_lincrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_lincrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_lincrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBTRn    _ureg8(0x177)
+#define in_linbtrn(rx)  "lds " #rx ", 0x177\n"
+#define out_linbtrn(rx) "sts 0x177, " #rx "\n"
+#define sbxs_linbtrn(rx, b) _sbxs_linbtrn(rx, b)
+#define sbxc_linbtrn(rx, b) _sbxc_linbtrn(rx, b)
+#define sbRs_linbtrn(rx, b) _sbRs_linbtrn(rx, b)
+#define sbRc_linbtrn(rx, b) _sbRc_linbtrn(rx, b)
+#define _sbxs_linbtrn(rx, b) in_linbtrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbtrn(rx, b) in_linbtrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbtrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbtrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBRRn  _ureg16(0x178)
 #define LINBRRnL   _ureg8(0x178)
+#define in_linbrrnl(rx)  "lds " #rx ", 0x178\n"
+#define out_linbrrnl(rx) "sts 0x178, " #rx "\n"
+#define sbxs_linbrrnl(rx, b) _sbxs_linbrrnl(rx, b)
+#define sbxc_linbrrnl(rx, b) _sbxc_linbrrnl(rx, b)
+#define sbRs_linbrrnl(rx, b) _sbRs_linbrrnl(rx, b)
+#define sbRc_linbrrnl(rx, b) _sbRc_linbrrnl(rx, b)
+#define _sbxs_linbrrnl(rx, b) in_linbrrnl(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbrrnl(rx, b) in_linbrrnl(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbrrnl(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbrrnl(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINBRRnH   _ureg8(0x179)
+#define in_linbrrnh(rx)  "lds " #rx ", 0x179\n"
+#define out_linbrrnh(rx) "sts 0x179, " #rx "\n"
+#define sbxs_linbrrnh(rx, b) _sbxs_linbrrnh(rx, b)
+#define sbxc_linbrrnh(rx, b) _sbxc_linbrrnh(rx, b)
+#define sbRs_linbrrnh(rx, b) _sbRs_linbrrnh(rx, b)
+#define sbRc_linbrrnh(rx, b) _sbRc_linbrrnh(rx, b)
+#define _sbxs_linbrrnh(rx, b) in_linbrrnh(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linbrrnh(rx, b) in_linbrrnh(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linbrrnh(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linbrrnh(rx, b) "sbrc " #rx ", " #b "\n"
+
 #define LINERRn    _ureg8(0x176)
+#define in_linerrn(rx)  "lds " #rx ", 0x176\n"
+#define out_linerrn(rx) "sts 0x176, " #rx "\n"
+#define sbxs_linerrn(rx, b) _sbxs_linerrn(rx, b)
+#define sbxc_linerrn(rx, b) _sbxc_linerrn(rx, b)
+#define sbRs_linerrn(rx, b) _sbRs_linerrn(rx, b)
+#define sbRc_linerrn(rx, b) _sbRc_linerrn(rx, b)
+#define _sbxs_linerrn(rx, b) in_linerrn(rx) "sbrs " #rx ", " #b "\n"
+#define _sbxc_linerrn(rx, b) in_linerrn(rx) "sbrc " #rx ", " #b "\n"
+#define _sbRs_linerrn(rx, b) "sbrs " #rx ", " #b "\n"
+#define _sbRc_linerrn(rx, b) "sbrc " #rx ", " #b "\n"
+
 
 #define UARTn_base  _uad(0x173)
+#define UARTn_addr        0x173
 #define UARTn_size           11
 #define UARTn_IOSPACE         0
 #define LINDATn_off          10
@@ -2067,12 +6242,68 @@
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UCSRnA     _ureg8(0x31)
+#define in_ucsrna(rx)  "in  " #rx ", 0x11\n"
+#define out_ucsrna(rx) "out 0x11, " #rx "\n"
+#define sbxs_ucsrna(rx, b) _sbxs_ucsrna(rx, b)
+#define sbxc_ucsrna(rx, b) _sbxc_ucsrna(rx, b)
+#define sbRs_ucsrna(rx, b) _sbRs_ucsrna(rx, b)
+#define sbRc_ucsrna(rx, b) _sbRc_ucsrna(rx, b)
+#define _sbxs_ucsrna(rx, b) "sbis 0x11, " #b "\n"
+#define _sbxc_ucsrna(rx, b) "sbic 0x11, " #b "\n"
+#define _sbRs_ucsrna(rx, b) "sbis 0x11, " #b "\n"
+#define _sbRc_ucsrna(rx, b) "sbic 0x11, " #b "\n"
+
 #define UCSRnB     _ureg8(0x32)
+#define in_ucsrnb(rx)  "in  " #rx ", 0x12\n"
+#define out_ucsrnb(rx) "out 0x12, " #rx "\n"
+#define sbxs_ucsrnb(rx, b) _sbxs_ucsrnb(rx, b)
+#define sbxc_ucsrnb(rx, b) _sbxc_ucsrnb(rx, b)
+#define sbRs_ucsrnb(rx, b) _sbRs_ucsrnb(rx, b)
+#define sbRc_ucsrnb(rx, b) _sbRc_ucsrnb(rx, b)
+#define _sbxs_ucsrnb(rx, b) "sbis 0x12, " #b "\n"
+#define _sbxc_ucsrnb(rx, b) "sbic 0x12, " #b "\n"
+#define _sbRs_ucsrnb(rx, b) "sbis 0x12, " #b "\n"
+#define _sbRc_ucsrnb(rx, b) "sbic 0x12, " #b "\n"
+
 #define UCSRnC     _ureg8(0x33)
+#define in_ucsrnc(rx)  "in  " #rx ", 0x13\n"
+#define out_ucsrnc(rx) "out 0x13, " #rx "\n"
+#define sbxs_ucsrnc(rx, b) _sbxs_ucsrnc(rx, b)
+#define sbxc_ucsrnc(rx, b) _sbxc_ucsrnc(rx, b)
+#define sbRs_ucsrnc(rx, b) _sbRs_ucsrnc(rx, b)
+#define sbRc_ucsrnc(rx, b) _sbRc_ucsrnc(rx, b)
+#define _sbxs_ucsrnc(rx, b) "sbis 0x13, " #b "\n"
+#define _sbxc_ucsrnc(rx, b) "sbic 0x13, " #b "\n"
+#define _sbRs_ucsrnc(rx, b) "sbis 0x13, " #b "\n"
+#define _sbRc_ucsrnc(rx, b) "sbic 0x13, " #b "\n"
+
 #define UBRRnL     _ureg8(0x34)
+#define in_ubrrnl(rx)  "in  " #rx ", 0x14\n"
+#define out_ubrrnl(rx) "out 0x14, " #rx "\n"
+#define sbxs_ubrrnl(rx, b) _sbxs_ubrrnl(rx, b)
+#define sbxc_ubrrnl(rx, b) _sbxc_ubrrnl(rx, b)
+#define sbRs_ubrrnl(rx, b) _sbRs_ubrrnl(rx, b)
+#define sbRc_ubrrnl(rx, b) _sbRc_ubrrnl(rx, b)
+#define _sbxs_ubrrnl(rx, b) "sbis 0x14, " #b "\n"
+#define _sbxc_ubrrnl(rx, b) "sbic 0x14, " #b "\n"
+#define _sbRs_ubrrnl(rx, b) "sbis 0x14, " #b "\n"
+#define _sbRc_ubrrnl(rx, b) "sbic 0x14, " #b "\n"
+
 #define UBRRnH     _ureg8(0x35)
+#define in_ubrrnh(rx)  "in  " #rx ", 0x15\n"
+#define out_ubrrnh(rx) "out 0x15, " #rx "\n"
+#define sbxs_ubrrnh(rx, b) _sbxs_ubrrnh(rx, b)
+#define sbxc_ubrrnh(rx, b) _sbxc_ubrrnh(rx, b)
+#define sbRs_ubrrnh(rx, b) _sbRs_ubrrnh(rx, b)
+#define sbRc_ubrrnh(rx, b) _sbRc_ubrrnh(rx, b)
+#define _sbxs_ubrrnh(rx, b) "sbis 0x15, " #b "\n"
+#define _sbxc_ubrrnh(rx, b) "sbic 0x15, " #b "\n"
+#define _sbRs_ubrrnh(rx, b) "sbis 0x15, " #b "\n"
+#define _sbRc_ubrrnh(rx, b) "sbic 0x15, " #b "\n"
+
 
 #define UARTn_base   _uad(0x31)
+#define UARTn_addr         0x31
 #define UARTn_size            5
 #define UARTn_IOSPACE         1
 #define UCSRnA_off            0
@@ -2447,7 +6678,7 @@
 #endif
 
 #elif defined(__AVR_ATxmega64A1__) || defined(__AVR_ATxmega128A1__) || \
-  defined(__AVR_ATxmega128A1revD__)
+  defined(__AVR_ATxmega128A1revD__) || defined(__AVR_ATxmega128A1REVD__)
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UARTn_base  _uad(0x8a0)

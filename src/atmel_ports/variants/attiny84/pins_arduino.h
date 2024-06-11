@@ -32,7 +32,7 @@
 //          (D11 or !Reset, PCINT11) PB3  4|    |11 PA2 (PCINT2, D2=A2)
 //         (OC0A, INT0, D8, PCINT10) PB2  5|    |10 PA3 (PCINT3, D3=A3)
 //             (OC0B, A7=D7, PCINT7) PA7  6|    |9  PA4 (PCINT4, D4=A4, SCK, SCL, T1)
-//  (OC1A, SDA, COPI, A6=D6, PCINT6) PA6  7|    |8  PA5 (PCINT5, D5=A5, CIPO, OC1B)
+//  (OC1A, SDA, PICO, A6=D6, PCINT6) PA6  7|    |8  PA5 (PCINT5, D5=A5, POCI, OC1B)
 //                                         +----+
 
 #define NUM_DIGITAL_PINS           12 // D11 == !Reset
@@ -40,8 +40,8 @@
 #define analogInputToDigitalPin(p)  ((p) <8? (p): -1)
 
 static const uint8_t CS   = 7;
-static const uint8_t COPI = 6;
-static const uint8_t CIPO = 5;
+static const uint8_t PICO = 6;
+static const uint8_t POCI = 5;
 static const uint8_t SCK  = 4;
 
 static const uint8_t SDA = 6;

@@ -161,19 +161,18 @@ fi
 declare -A config
 
 # Vector bootloaders
-        config[_]="VBL=1                EEPROM=0 CHIP_ERASE=0 URPROTOCOL=1"
-      config[_pr]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=0 URPROTOCOL=1"
-   config[_pr_ce]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=1 URPROTOCOL=1"
-   config[_pr_ee]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=0 URPROTOCOL=1"
-config[_pr_ee_ce]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=1 URPROTOCOL=1"
+        config[_]="VBL=1                EEPROM=0 CHIP_ERASE=0"
+      config[_pr]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=0"
+   config[_pr_ce]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=1"
+   config[_pr_ee]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=0"
+config[_pr_ee_ce]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=1"
 
 # Hardware supported bootloaders
 if [[ minbootsz[$mcu] -gt 0 ]]; then
   if [[ minbootsz[$mcu] -eq 256 ]]; then
-                    config[_hw]="VBL=0 EEPROM=0 CHIP_ERASE=0 URPROTOCOL=1"
+      config[_hw]="VBL=0 EEPROM=0 CHIP_ERASE=0"
   fi
-              config[_ee_ce_hw]="VBL=0 EEPROM=1 CHIP_ERASE=1 URPROTOCOL=1"
-       config[_ee_ce_hw_stk500]="VBL=0 EEPROM=1 CHIP_ERASE=1 URPROTOCOL=0"
+config[_ee_ce_hw]="VBL=0 EEPROM=1 CHIP_ERASE=1"
 fi
 
 
@@ -504,7 +503,7 @@ for fc in ${fcpus[@]}; do
         for wdto in 1S 2S; do
           for bb in ${brd[@]}; do
             for cfg in ${!config[@]}; do
-              extra="AUTOFRILLS=0,6,4,3,2"
+              extra="AUTOFRILLS=0,6,8..10,5,4,3,2"
               [[ ${minbootsz[$mcu]} -gt 4096 && ${config[$cfg]} == *VBL=0* ]] && extra+=" PGMWRITEPAGE=0"
               mkfilename "$mcu" "$fbfilenm" "${bcfg[$bb]}" "$cfg" "$thisio" "$wdto"
               args="MCU=$mcu "WDTO=$wdto" F_CPU=${fcpu}L $br $thisio ${config[$cfg]} ${bcfg[$bb]//_/ } $extra NAME=$filename"

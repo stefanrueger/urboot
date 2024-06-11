@@ -5,8 +5,8 @@
 # published under GNU General Public License, version 3 (GPL-3.0)
 # author Stefan Rueger
 #
-# v 1.8
-# 7.04.2023
+# v 1.80
+# 15.05.2024
 # first version 16.07.2016
 #
 
@@ -18,7 +18,7 @@ use Scalar::Util qw(looks_like_number);
 use Getopt::Long qw(GetOptions);
 
 my $progname = basename($0);
-my $myvers = "1.07";
+my $myvers = "1.80";
 my $Usage = <<"END_USAGE";
 Syntax: $progname {<bootloader>.hex}
 Function: list urboot bootloader hex files with size, version, features and name
@@ -38,15 +38,16 @@ my ($version, $check, $srt, $usage, $md, $mcu, $pre, $l, $c, $t, $title, $in, $d
 my %feature = (
   'w'      => "  + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`\n",
   'e'      => "  + `e` EEPROM read/write support\n",
-  'u'      => "  + `u` uses urprotocol requiring `avrdude -c urclock` for programming\n",
+  'u'      => "  + `u` uses urprotocol (default from u8.0)\n",
+  'U'      => "  + `U` checks whether flash pages need writing before doing so\n",
   's'      => "  + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work\n",
   'd'      => "  + `d` dual boot (over-the-air programming from external SPI flash)\n",
   'D'      => "  + `D` dual boot with SE and SPI restoration\n",
   'f'      => "  + `f` (not recommended) dual boot without erasing trigger sector, beware the application must do so\n",
   'h'      => "  + `h` hardware boot section: make sure fuses are set for reset to jump to boot section\n",
   'j'      => "  + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`\n",
-  'v'      => "  + `v` vector bootloader: patches the vector table itself during upload but verification fails\n",
-  'V'      => "  + `V` vector bootloader: patches the vector table itself during upload, skips verifying the first page\n",
+  'v'      => "  + `v` vector bootloader: patches the vector table during upload but verification fails\n",
+  'V'      => "  + `V` vector bootloader: patches the vector table during upload, skips verifying the first page\n",
   'p'      => "  + `p` bootloader protects itself from being overwritten\n",
   'P'      => "  + `P` vector bootloader only: protects itself and reset vector from being overwritten\n",
   'r'      => "  + `r` preserves reset flags for the application in the register R2\n",
@@ -90,8 +91,8 @@ my %feature = (
   'stk500' => "  + `stk500` uses deprecated STK500v1 protocol to communicate with bootloader\n",
   'vbl'    => "  + `vbl` vector bootloader: set fuses to jump to reset, not the HW boot section\n",
   'hw'     => "  + `hw` hardware supported bootloader: set fuses to jump to the HW boot section, not to addr 0\n",
-  'v2'     => "  + `v2` vector bootloader that patches application itself\n",
-  'v3'     => "  + `v3` vector bootloader that patches application itself and skips verifying the first page\n",
+  'v2'     => "  + `v2` vector bootloader that patches application (deprecated)\n",
+  'v3'     => "  + `v3` vector bootloader that patches application and skips verifying the first page (deprecated)\n",
   'fp9'    => "  + `fp9` for debugging the bootloader uses, eg, Arduino pin 9 to swing a signal of low frequency, eg, 50 Hz\n",
   'ddd'    => "  + `d` dual boot\n",
   'dur'    => "  + `dur` dual boot and uses urprotocol\n",
@@ -226,9 +227,10 @@ $t = defined($md)? "`": "";
 
 use constant {
   UR_PGMWRITEPAGE   => 128, # pgm_write_page() subroutine that can be called from application at FLASHEND+1-4
-  UR_AUTOBAUD       => 128, # Bootloader has autobaud detection (v7.7+)
+  UR_AUTOBAUD       => 128, # Bootloader has autobaud detection (u7.7+)
   UR_EEPROM         =>  64, # EEPROM read/write support
-  UR_URPROTOCOL     =>  32, # bootloader uses own protocol and requires avrdude -c urclock
+  UR_URPROTOCOL     =>  32, # uses urprotocol requiring avrdude -c urclock (up to u7.7)
+  UR_UPDATE_FL      =>  32, # checks whether flash page needs writing (from u8.0)
   UR_DUAL           =>  16, # dual boot
   UR_VBLMASK        =>  12, # vector bootloader bits (point reset vector to bootloader and some interrupt vector to application)
   UR_VBLPATCHVERIFY =>  12, # patches reset/interrupt vectors and pretends original vectors on verify
@@ -236,8 +238,8 @@ use constant {
   UR_VBL            =>   4, # merely starts application through interrupt vector instead of reset (vectors must be patched externally)
   UR_NO_VBL         =>   0, # no vector bootloader support
   UR_PROTECTME      =>   2, # bootloader safeguards against overwriting itself
-  UR_RESETFLAGS     =>   1, # load reset flags into register R2 before jumping to the application
-  UR_HAS_CE         =>   1, # Bootloader has Chip Erase (v7.7+)
+  UR_RESETFLAGS     =>   1, # load reset flags into register R2 before jumping to the application (up to u7.6)
+  UR_HAS_CE         =>   1, # Bootloader has Chip Erase (u7.7+)
 };
 
 # default to all *.hex files if no argument given
@@ -307,7 +309,19 @@ foreach my $fname (@ARGV) {
   if(!defined($vers) || $vers == 0xffff || $vers < 4*256+1) { # Optiboot puts the version number in binary from v4.1
     $ver = "x0.0"; $fea = ".........";
     f('.');
-  } elsif(int($vers/256) >= 7*8+6) { # from version 7.6 onwards URPROTOCOL has its own bit
+  } elsif(int($vers/256) >= 8*8+0) { # from version 8.0 onwards
+    $ver = sprintf("u%d.%d", int($vers/(8*256)), ($vers/256)&7);
+    $fea = f((defined($rjmpop) && substr($rjmpop, 0, 1) eq 'c')? 'w': '-');
+    $fea .= f($vers & UR_EEPROM? 'e': '-');
+    $fea .= f($vers & UR_UPDATE_FL? 'U': '-');
+    $fea .= f($vers & UR_DUAL? 'd': '-');
+    $flags = ($vers/UR_VBL) & 3;
+    $fea .= f($flags==3? 'V': $flags==2? 'v': $flags? 'j': 'h'); # V = VBL, patch & verify, v = VBL, patch only, j = VBL, jump only, h = hw boot support
+    $fea .= f($vers & UR_PROTECTME? 'P': 'p');
+    $fea .= f('r');
+    $fea .= f($vers & UR_AUTOBAUD? 'a': '-');
+    $fea .= f($vers & UR_HAS_CE? 'c': '-');
+  } elsif(int($vers/256) >= 7*8+6) { # from version 7.6 onwards
     my $v77 = int($vers/256) >= 7*8+7;
     $ver = sprintf("u%d.%d", int($vers/(8*256)), ($vers/256)&7);
     $fea = f((!$v77 && ($vers & UR_PGMWRITEPAGE)) || ($v77 && defined($rjmpop) && substr($rjmpop, 0, 1) eq 'c')? 'w': '-');
@@ -398,7 +412,7 @@ if(!$check) {
      "- **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size\n".
      "- **Version:** For example, u7.6 is an urboot version, o5.2 is an optiboot version\n".
      "- **Features:**\n";
-     print $feature{$_} for grep { $legend{$_} } (qw(w e u s d D f h j v V p P r a c ? . -));
+     print $feature{$_} for grep { $legend{$_} } (qw(w e u U s d D f h j v V p P r a c ? . -));
      print "- **Hex file:** often qualified by the MCU name and/or configuration\n";
      print $feature{$_} for grep { $legend{$_} } (qw(wdto xfcpu ifcpu <fcpu >fcpu fcpux+ fcpui+ fcpupm baud+ auto auto2 swio uart alt rxtx
        led-b1 led9 ledPB1 lednop no-led csb0 cs8 csPB0 csnop template dual fp9 pr ee ce fr vbl hw ur aur dur adur stk500 ddd v2 v3 min));

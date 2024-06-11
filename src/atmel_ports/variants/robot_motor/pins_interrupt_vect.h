@@ -29,8 +29,8 @@
 #define	SDA	 2
 #define	SCL	 3
 #define	CS	17
-#define	COPI	16
-#define	CIPO	14
+#define	PICO	16
+#define	POCI	14
 #define	SCK	15
 #define	A0	18
 #define	A1	19

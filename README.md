@@ -21,6 +21,7 @@
      + Bootloader protects itself from overwriting (default on)
      + Automatic host baud rate detection
      + Chip erase in bootloader (faster than -c urclock emulation)
+     + Update flash feature that tries to wear out flash less (and is faster)
  - Avrdude (from v7.1 onwards) supports urboot bootloaders with `-c urclock`
 
 Urboot bootloaders can be hundreds of bytes shorter than
@@ -47,14 +48,14 @@ with the corresponding ones in the directory
 [`src/all`](https://github.com/stefanrueger/urboot/tree/main/src/all). Once all these hurdles are
 taken, it is easy to create own bootloaders with commands such as
 ```
- $ make MCU=atmega328p F_CPU=16000000L BAUD_RATE=115200 EEPROM=1 URPROTOCOL=1 \
+ $ make MCU=atmega328p F_CPU=16000000L BAUD_RATE=115200 EEPROM=1 \
    LED=AtmelPB1 SFMCS=AtmelPB0 DUAL=1 FRILLS=7 NAME=moteino-dual
 ```
 
 Alternatively, the Dockerfile may be built and used to build binaries on other systems:
 ```
  $ docker run --platform linux/amd64 -v "$(pwd)/src":/src --rm -it $(docker build -q .) \
-   MCU=atmega328p F_CPU=16000000L BAUD_RATE=115200 EEPROM=1 URPROTOCOL=1 \
+   MCU=atmega328p F_CPU=16000000L BAUD_RATE=115200 EEPROM=1 \
    LED=AtmelPB1 SFMCS=AtmelPB0 DUAL=1 FRILLS=7 NAME=moteino-dual
 ```
 More detailed information here: [`make` options](https://github.com/stefanrueger/urboot/blob/main/docs/makeoptions.md)
@@ -193,15 +194,15 @@ for all `F_CPU` and a range of associated baudrates.
 
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|222|224|u7.7|`w-u-jpr--`|[urboot_t2313_1s_x16m0_115k2_uart0_rxd0_txd1_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/watchdog_1_s/external_oscillator_x/16m000000_hz/+115k2_baud/uart0_rxd0_txd1/lednop/urboot_t2313_1s_x16m0_115k2_uart0_rxd0_txd1_lednop.hex)|
-|256|256|u7.7|`w-u-jPra-`|[urboot_t2313_1s_autobaud_uart0_rxd0_txd1_lednop.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/attiny2313/watchdog_1_s/autobaud/uart0_rxd0_txd1/lednop/urboot_t2313_1s_autobaud_uart0_rxd0_txd1_lednop.hex)|
-|252|256|u7.7|`w-u-jPr--`|[urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/external_oscillator_x/16m000000_hz/+115k2_baud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5.hex)|
-|368|384|u7.7|`weu-jPrac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_pr_ee_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_pr_ee_ce.hex)|
-|438|512|u7.7|`wes-hpr-c`|[urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/external_oscillator_x/16m000000_hz/+115k2_baud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex)|
-|454|512|u7.7|`wes-hprac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex)|
-|474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
-|496|512|u7.7|`weudhprac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+d5_csb0_dual_ee_ce_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/boards/urclockusb/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+d5_csb0_dual/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+d5_csb0_dual_ee_ce_hw.hex)|
-|710|1024|o8.3|`-es-h-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex)|
+|190|192|u8.0|`----jpr--`|[attiny2313_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny2313_min.hex)|
+|248|256|u8.0|`w---jPr--`|[urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5_pr.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/external_oscillator_x/16m000000_hz/+115k2_baud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_x16m0_115k2_uart0_rxd0_txd1_led+b5_pr.hex)|
+|256|256|u8.0|`we--jpr--`|[attiny2313_emin.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny2313_emin.hex)|
+|384|384|u8.0|`weU-jPrac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_pr_ee_ce.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/mcus/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_pr_ee_ce.hex)|
+|454|512|u7.7|`wes-hprac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/u7.7/mcus/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex)|
+|474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex) from the optiboot project|
+|504|512|u8.0|`weUdhprac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+d5_csb0_dual_ee_ce_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/boards/urclockusb/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+d5_csb0_dual/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+d5_csb0_dual_ee_ce_hw.hex)|
+|512|512|u8.0|`weUdhprac`|[atmega328p_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_ad.hex)|
+|710|1024|o8.3|`-es-h-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex) from the optiboot project|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -209,8 +210,8 @@ for all `F_CPU` and a range of associated baudrates.
 - **Features:**
   + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
-  + `u` uses urprotocol requiring `avrdude -c urclock` for programming
-  + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
+  + `U` checks whether flash pages need writing before doing so
+  + `s` uses skeleton of STK500v1 protocol (only u7.7); `-c urclock` and `-c arduino` both OK
   + `d` dual boot (over-the-air programming from external SPI flash)
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
@@ -222,5 +223,3 @@ for all `F_CPU` and a range of associated baudrates.
   + `-` corresponding feature not present
 
 The naming convention for the `.hex` files is given in the [larger comparison table covering a range of MCUs](https://github.com/stefanrueger/urboot/blob/main/docs/comparison.md).
-
-**Bugs.** The code still defaults to `URPROTOCOL=0`. The urprotocol should be chosen by default! :)

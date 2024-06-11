@@ -100,13 +100,25 @@ int main() {
 #endif
 
   printf("\n");
+  printf("#ifndef AtmelCS\n");
   printf("#define AtmelCS       ArduinoPin%d\n", CS);
-  printf("#define AtmelCOPI     ArduinoPin%d\n", COPI);
-  printf("#define AtmelCIPO     ArduinoPin%d\n", CIPO);
+  printf("#endif\n");
+  printf("#ifndef AtmelPICO\n");
+  printf("#define AtmelPICO     ArduinoPin%d\n", PICO);
+  printf("#endif\n");
+  printf("#ifndef AtmelPOCI\n");
+  printf("#define AtmelPOCI     ArduinoPin%d\n", POCI);
+  printf("#endif\n");
+  printf("#ifndef AtmelSCK\n");
   printf("#define AtmelSCK      ArduinoPin%d\n", SCK);
+  printf("#endif\n");
   printf("\n");
+  printf("#ifndef AtmelSDA\n");
   printf("#define AtmelSDA      ArduinoPin%d\n", SDA);
+  printf("#endif\n");
+  printf("#ifndef AtmelSCL\n");
   printf("#define AtmelSCL      ArduinoPin%d\n", SCL);
+  printf("#endif\n");
 
   printf("\n#endif\n");
 }

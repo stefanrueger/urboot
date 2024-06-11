@@ -38,8 +38,8 @@
 #define digitalPinHasPWM(p)         (((p) >= 2 && (p) <= 13) || ((p) >= 44 && (p)<= 46))
 
 static const uint8_t CS   = 53;
-static const uint8_t COPI = 51;
-static const uint8_t CIPO = 50;
+static const uint8_t PICO = 51;
+static const uint8_t POCI = 50;
 static const uint8_t SCK  = 52;
 
 static const uint8_t SDA = 20;
@@ -155,8 +155,8 @@ static const uint8_t A15 = 69;
  * ~18 PH6 = D9, OC2B
  *  19 PB0 = D53 (CS), CS, PCINT0
  *  20 PB1 = D52 (SCK), SCK, PCINT1
- *  21 PB2 = D51 (COPI), COPI, PCINT2
- *  22 PB3 = D50 (CIPO), CIPO, PCINT3
+ *  21 PB2 = D51 (PICO), PICO, PCINT2
+ *  22 PB3 = D50 (POCI), POCI, PCINT3
  * ~23 PB4 = D10, OC2A, PCINT4
  * ~24 PB5 = D11, OC1A, PCINT5
  * ~25 PB6 = D12, OC1B, PCINT6
@@ -255,8 +255,8 @@ static const uint8_t A15 = 69;
  *  71 PA7 = D29, AD7
  *  19 PB0 = D53 (CS), CS, PCINT0
  *  20 PB1 = D52 (SCK), SCK, PCINT1
- *  21 PB2 = D51 (COPI), COPI, PCINT2
- *  22 PB3 = D50 (CIPO), CIPO, PCINT3
+ *  21 PB2 = D51 (PICO), PICO, PCINT2
+ *  22 PB3 = D50 (POCI), POCI, PCINT3
  * ~23 PB4 = D10, OC2A, PCINT4
  * ~24 PB5 = D11, OC1A, PCINT5
  * ~25 PB6 = D12, OC1B, PCINT6
@@ -412,8 +412,8 @@ static const uint8_t A15 = 69;
  *  37 PL2 = D47, T5
  *  36 PL1 = D48, ICP5
  *  35 PL0 = D49, ICP4
- *  22 PB3 = D50 (CIPO), CIPO, PCINT3
- *  21 PB2 = D51 (COPI), COPI, PCINT2
+ *  22 PB3 = D50 (POCI), POCI, PCINT3
+ *  21 PB2 = D51 (PICO), PICO, PCINT2
  *  20 PB1 = D52 (SCK), SCK, PCINT1
  *  19 PB0 = D53 (CS), CS, PCINT0
  *
@@ -540,8 +540,8 @@ const uint8_t PROGMEM digital_pin_to_port_PGM[] = {
 	PL	, // PL 2 ** 47 ** D47	
 	PL	, // PL 1 ** 48 ** D48	
 	PL	, // PL 0 ** 49 ** D49	
-	PB	, // PB 3 ** 50 ** SPI_CIPO	
-	PB	, // PB 2 ** 51 ** SPI_COPI	
+	PB	, // PB 3 ** 50 ** SPI_POCI	
+	PB	, // PB 2 ** 51 ** SPI_PICO	
 	PB	, // PB 1 ** 52 ** SPI_SCK	
 	PB	, // PB 0 ** 53 ** SPI_CS	
 	PF	, // PF 0 ** 54 ** A0	
@@ -615,8 +615,8 @@ const uint8_t PROGMEM digital_pin_to_bit_mask_PGM[] = {
 	_BV( 2 )	, // PL 2 ** 47 ** D47	
 	_BV( 1 )	, // PL 1 ** 48 ** D48	
 	_BV( 0 )	, // PL 0 ** 49 ** D49	
-	_BV( 3 )	, // PB 3 ** 50 ** SPI_CIPO	
-	_BV( 2 )	, // PB 2 ** 51 ** SPI_COPI	
+	_BV( 3 )	, // PB 3 ** 50 ** SPI_POCI	
+	_BV( 2 )	, // PB 2 ** 51 ** SPI_PICO	
 	_BV( 1 )	, // PB 1 ** 52 ** SPI_SCK	
 	_BV( 0 )	, // PB 0 ** 53 ** SPI_CS	
 	_BV( 0 )	, // PF 0 ** 54 ** A0	
@@ -690,8 +690,8 @@ const uint8_t PROGMEM digital_pin_to_timer_PGM[] = {
 	NOT_ON_TIMER	, // PL 2 ** 47 ** D47	
 	NOT_ON_TIMER	, // PL 1 ** 48 ** D48	
 	NOT_ON_TIMER	, // PL 0 ** 49 ** D49	
-	NOT_ON_TIMER	, // PB 3 ** 50 ** SPI_CIPO	
-	NOT_ON_TIMER	, // PB 2 ** 51 ** SPI_COPI	
+	NOT_ON_TIMER	, // PB 3 ** 50 ** SPI_POCI	
+	NOT_ON_TIMER	, // PB 2 ** 51 ** SPI_PICO	
 	NOT_ON_TIMER	, // PB 1 ** 52 ** SPI_SCK	
 	NOT_ON_TIMER	, // PB 0 ** 53 ** SPI_CS	
 	NOT_ON_TIMER	, // PF 0 ** 54 ** A0	

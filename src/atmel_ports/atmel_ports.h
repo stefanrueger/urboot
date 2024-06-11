@@ -8,7 +8,7 @@
  * meta-author Stefan Rueger
  *
  * First version 12.06.2016
- * Generated 03.03.2023
+ * Generated 26.05.2024
  *
  * Usage
  *
@@ -195,7 +195,6 @@
 
 #if defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168A__) || defined(__AVR_ATmega168PA__) || defined(__AVR_ATmega168__) || defined(__AVR_ATmega168P__) || defined(__AVR_ATmega88A__) || defined(__AVR_ATmega88PA__) || defined(__AVR_ATmega88__) || defined(__AVR_ATmega88P__) || defined(__AVR_ATmega48A__) || defined(__AVR_ATmega48PA__) || defined(__AVR_ATmega48__) || defined(__AVR_ATmega48P__) || defined(__AVR_ATmega8__)
 
-#define ArduinoPin0  AtmelPD0
 #define ArduinoPin1  AtmelPD1
 #define ArduinoPin2  AtmelPD2
 #define ArduinoPin3  AtmelPD3
@@ -217,24 +216,35 @@
 #define ArduinoPin19 AtmelPC5
 #define ArduinoPin20 AtmelPC6
 
-#define ArduinoPinA0 ArduinoPin14
 #define ArduinoPinA1 ArduinoPin15
 #define ArduinoPinA2 ArduinoPin16
 #define ArduinoPinA3 ArduinoPin17
 #define ArduinoPinA4 ArduinoPin18
 #define ArduinoPinA5 ArduinoPin19
 
+#ifndef AtmelCS
 #define AtmelCS       ArduinoPin10
-#define AtmelCOPI     ArduinoPin11
-#define AtmelCIPO     ArduinoPin12
+#endif
+#ifndef AtmelPICO
+#define AtmelPICO     ArduinoPin11
+#endif
+#ifndef AtmelPOCI
+#define AtmelPOCI     ArduinoPin12
+#endif
+#ifndef AtmelSCK
 #define AtmelSCK      ArduinoPin13
+#endif
 
+#ifndef AtmelSDA
 #define AtmelSDA      ArduinoPin18
+#endif
+#ifndef AtmelSCL
 #define AtmelSCL      ArduinoPin19
+#endif
+
 
 #elif defined(__AVR_ATmega1284__) || defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega644A__) || defined(__AVR_ATmega644PA__) || defined(__AVR_ATmega644__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega324A__) || defined(__AVR_ATmega324PA__) || defined(__AVR_ATmega164A__) || defined(__AVR_ATmega164PA__) || defined(__AVR_ATmega16__) || defined(__AVR_ATmega32__)
 
-#define ArduinoPin0  AtmelPB0
 #define ArduinoPin1  AtmelPB1
 #define ArduinoPin2  AtmelPB2
 #define ArduinoPin3  AtmelPB3
@@ -267,7 +277,6 @@
 #define ArduinoPin30 AtmelPA6
 #define ArduinoPin31 AtmelPA7
 
-#define ArduinoPinA0 ArduinoPin24
 #define ArduinoPinA1 ArduinoPin25
 #define ArduinoPinA2 ArduinoPin26
 #define ArduinoPinA3 ArduinoPin27
@@ -276,17 +285,29 @@
 #define ArduinoPinA6 ArduinoPin30
 #define ArduinoPinA7 ArduinoPin31
 
+#ifndef AtmelCS
 #define AtmelCS       ArduinoPin4
-#define AtmelCOPI     ArduinoPin5
-#define AtmelCIPO     ArduinoPin6
+#endif
+#ifndef AtmelPICO
+#define AtmelPICO     ArduinoPin5
+#endif
+#ifndef AtmelPOCI
+#define AtmelPOCI     ArduinoPin6
+#endif
+#ifndef AtmelSCK
 #define AtmelSCK      ArduinoPin7
+#endif
 
+#ifndef AtmelSDA
 #define AtmelSDA      ArduinoPin17
+#endif
+#ifndef AtmelSCL
 #define AtmelSCL      ArduinoPin16
+#endif
+
 
 #elif defined(__AVR_ATmega2560__) || defined(__AVR_ATmega2561__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega1281__) || defined(__AVR_ATmega640__)
 
-#define ArduinoPin0  AtmelPE0
 #define ArduinoPin1  AtmelPE1
 #define ArduinoPin2  AtmelPE4
 #define ArduinoPin3  AtmelPE5
@@ -357,7 +378,6 @@
 #define ArduinoPin68 AtmelPK6
 #define ArduinoPin69 AtmelPK7
 
-#define ArduinoPinA0  ArduinoPin54
 #define ArduinoPinA1  ArduinoPin55
 #define ArduinoPinA2  ArduinoPin56
 #define ArduinoPinA3  ArduinoPin57
@@ -374,17 +394,29 @@
 #define ArduinoPinA14 ArduinoPin68
 #define ArduinoPinA15 ArduinoPin69
 
+#ifndef AtmelCS
 #define AtmelCS       ArduinoPin53
-#define AtmelCOPI     ArduinoPin51
-#define AtmelCIPO     ArduinoPin50
+#endif
+#ifndef AtmelPICO
+#define AtmelPICO     ArduinoPin51
+#endif
+#ifndef AtmelPOCI
+#define AtmelPOCI     ArduinoPin50
+#endif
+#ifndef AtmelSCK
 #define AtmelSCK      ArduinoPin52
+#endif
 
+#ifndef AtmelSDA
 #define AtmelSDA      ArduinoPin20
+#endif
+#ifndef AtmelSCL
 #define AtmelSCL      ArduinoPin21
+#endif
+
 
 #elif defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
 
-#define ArduinoPin0  AtmelPA0
 #define ArduinoPin1  AtmelPA1
 #define ArduinoPin2  AtmelPA2
 #define ArduinoPin3  AtmelPA3
@@ -397,7 +429,6 @@
 #define ArduinoPin10 AtmelPB0
 #define ArduinoPin11 AtmelPB3
 
-#define ArduinoPinA0 ArduinoPin0
 #define ArduinoPinA1 ArduinoPin1
 #define ArduinoPinA2 ArduinoPin2
 #define ArduinoPinA3 ArduinoPin3
@@ -406,39 +437,62 @@
 #define ArduinoPinA6 ArduinoPin6
 #define ArduinoPinA7 ArduinoPin7
 
+#ifndef AtmelCS
 #define AtmelCS       ArduinoPin7
-#define AtmelCOPI     ArduinoPin6
-#define AtmelCIPO     ArduinoPin5
+#endif
+#ifndef AtmelPICO
+#define AtmelPICO     ArduinoPin6
+#endif
+#ifndef AtmelPOCI
+#define AtmelPOCI     ArduinoPin5
+#endif
+#ifndef AtmelSCK
 #define AtmelSCK      ArduinoPin4
+#endif
 
+#ifndef AtmelSDA
 #define AtmelSDA      ArduinoPin6
+#endif
+#ifndef AtmelSCL
 #define AtmelSCL      ArduinoPin4
+#endif
+
 
 #elif defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
 
-#define ArduinoPin0 AtmelPB0
 #define ArduinoPin1 AtmelPB1
 #define ArduinoPin2 AtmelPB2
 #define ArduinoPin3 AtmelPB3
 #define ArduinoPin4 AtmelPB4
 #define ArduinoPin5 AtmelPB5
 
-#define ArduinoPinA0 ArduinoPin5
 #define ArduinoPinA1 ArduinoPin2
 #define ArduinoPinA2 ArduinoPin4
 #define ArduinoPinA3 ArduinoPin3
 
+#ifndef AtmelCS
 #define AtmelCS       ArduinoPin3
-#define AtmelCOPI     ArduinoPin0
-#define AtmelCIPO     ArduinoPin1
+#endif
+#ifndef AtmelPICO
+#define AtmelPICO     ArduinoPin0
+#endif
+#ifndef AtmelPOCI
+#define AtmelPOCI     ArduinoPin1
+#endif
+#ifndef AtmelSCK
 #define AtmelSCK      ArduinoPin2
+#endif
 
+#ifndef AtmelSDA
 #define AtmelSDA      ArduinoPin0
+#endif
+#ifndef AtmelSCL
 #define AtmelSCL      ArduinoPin2
+#endif
+
 
 #elif defined(__AVR_ATtiny87__) || defined(__AVR_ATtiny167__)
 
-#define ArduinoPin0  AtmelPB0
 #define ArduinoPin1  AtmelPB1
 #define ArduinoPin2  AtmelPB2
 #define ArduinoPin3  AtmelPB3
@@ -453,7 +507,6 @@
 #define ArduinoPin12 AtmelPA6
 #define ArduinoPin13 AtmelPB7
 
-#define ArduinoPinA4  ArduinoPin4
 #define ArduinoPinA5  ArduinoPin5
 #define ArduinoPinA6  ArduinoPin6
 #define ArduinoPinA7  ArduinoPin7
@@ -464,13 +517,26 @@
 #define ArduinoPinA12 ArduinoPin12
 #define ArduinoPinA13 ArduinoPin13
 
+#ifndef AtmelCS
 #define AtmelCS       ArduinoPin12
-#define AtmelCOPI     ArduinoPin10
-#define AtmelCIPO     ArduinoPin8
+#endif
+#ifndef AtmelPICO
+#define AtmelPICO     ArduinoPin10
+#endif
+#ifndef AtmelPOCI
+#define AtmelPOCI     ArduinoPin8
+#endif
+#ifndef AtmelSCK
 #define AtmelSCK      ArduinoPin11
+#endif
 
+#ifndef AtmelSDA
 #define AtmelSDA      ArduinoPin0
+#endif
+#ifndef AtmelSCL
 #define AtmelSCL      ArduinoPin2
+#endif
+
 
 #else
 // Will not know mapping of ArduinoPinX to AtmelPXX: don't allow their use

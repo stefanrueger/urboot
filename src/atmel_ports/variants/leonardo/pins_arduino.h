@@ -105,8 +105,8 @@ static const uint8_t SCL = 3;
 
 // Map SPI port to 'new' pins D14..D17
 static const uint8_t CS   = 17;
-static const uint8_t COPI = 16;
-static const uint8_t CIPO = 14;
+static const uint8_t PICO = 16;
+static const uint8_t POCI = 14;
 static const uint8_t SCK  = 15;
 
 // Mapping of analog pins as digital I/O
@@ -170,9 +170,9 @@ extern const uint8_t PROGMEM analog_pin_to_channel_PGM[];
 //
 // New pins D14..D17 to map SPI port to digital pins
 //
-// CIPO		D14		PB3					CIPO,PCINT3
+// POCI		D14		PB3					POCI,PCINT3
 // SCK		D15		PB1					SCK,PCINT1
-// COPI		D16		PB2					COPI,PCINT2
+// PICO		D16		PB2					PICO,PCINT2
 // CS		D17		PB0					RXLED,CS/PCINT0
 //
 // TXLED	D30		PD5					XCK1
@@ -229,9 +229,9 @@ const uint8_t PROGMEM digital_pin_to_port_PGM[] = {
 	PD, // D12 - PD6
 	PC, // D13 - PC7
 	
-	PB,	// D14 - CIPO - PB3
+	PB,	// D14 - POCI - PB3
 	PB,	// D15 - SCK - PB1
-	PB,	// D16 - COPI - PB2
+	PB,	// D16 - PICO - PB2
 	PB,	// D17 - CS - PB0
 	
 	PF,	// D18 - A0 - PF7
@@ -267,9 +267,9 @@ const uint8_t PROGMEM digital_pin_to_bit_mask_PGM[] = {
 	_BV(6), // D12 - PD6
 	_BV(7), // D13 - PC7
 	
-	_BV(3),	// D14 - CIPO - PB3
+	_BV(3),	// D14 - POCI - PB3
 	_BV(1),	// D15 - SCK - PB1
-	_BV(2),	// D16 - COPI - PB2
+	_BV(2),	// D16 - PICO - PB2
 	_BV(0),	// D17 - CS - PB0
 	
 	_BV(7),	// D18 - A0 - PF7

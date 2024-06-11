@@ -14,6 +14,7 @@ modules:
   POSIX
   Scalar::Util
   Getopt::Long
+  Number::Range
 ```
 They can normally be installed using `cpan install <module>`. On the first run, `cpan` may need
 to be configured. Follow the recommendations there; my personal choice for the way cpan installs
@@ -162,8 +163,9 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    a consequence, LIN/UARTs can create almost all baud rates well within 1% of quantisation error
    with far fewer blind spots. Urboot bootloaders for these parts make use of that automagically.
    The setting of `UART2X` takes no effect for these parts when working with fixed baud rates.
-   `AUTOBAUD` though works exactly as for the other classic parts, ie, the number of samples will be
-   either set to 8 or 16 depending on the setting of `UART2X` as described above.
+   `AUTOBAUD` though works exactly as it does for normal USARTs of other classic parts, ie, the
+   number of samples will be either set to 8 or 16 depending on the setting of `UART2X` as
+   described above.
 
    `SWIO=1` creates code for software I/O. That is not only useful for those MCUs that don't have
    a UART, but also for those combinations of `F_CPU` and `BAUD_RATE` where a UART would create
@@ -197,27 +199,25 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
 
 ## Main functional features
 
- - `URPROTOCOL=<0|1>`
+ - `URPROTOCOL=<1|0>`
 
-   When set to 0, this option implements a skeleton of the STK500v1 protocol and generates extra
-   code that is needed for avrdude's arduino programmer to work with the bootloader. The generated
-   code at places does not do anything useful except keeping the STK500 v1 protocol going: `avrdude
-   -c arduino` is a full-fledged `stk500v1` programmer, which issues a couple of requests to set
-   the device that are not needed here and wants to read fuses. With `URPROTOCOL=0` the generated
-   code gracefully accepts these requests but ignores them or, worse, returns a value that is just
-   not true: for example, the bootloader pretends the fuses are `0xff`.
+   From urboot u8.0, this option is no longer available and the urprotocol is deemed to be switched on.
+
+   When set to 0, this option used to implement a skeleton of the STK500v1 protocol that generated
+   extra code needed for avrdude's arduino programmer to work with the bootloader. The generated
+   code at places did not do anything useful except keeping the STK500 v1 protocol going for the
+   `avrdude -c arduino` programmer, which would issue a couple of requests to set the device that
+   are not needed. With `URPROTOCOL=0` the generated code gracefully accepted these requests but
+   ignored them or, worse, returned a value that just was not true: for example, the so generated
+   bootloader pretended the fuses are `0xff`.
 
    `URPROTOCOL=1` works with a version of avrdude that offers an urclock programmer. The protocol
    is different to STK500v1, so that an MCU id and a few other features of this bootloader are sent
    to avrdude. Generally `URPROTOCOL=1` requires the bootloader to do much less work and shifts
-   some of the work to the programmer. In this case, it is needed to run `avrdude -c urclock` for
-   programming and `-c arduino` will not work. Setting `URPROTOCOL=1` saves between 76 and 112
-   bytes.
+   some of the work to the programmer. As Avrdude v7.1 or above with its urclock programmer is
+   reasonably well distributed, urboot u8.0+ bootloaders *only* ever use urprotocol. This
+   simplifies `urboot.c` and its maintenance.
 
-   For historical reasons the default is `URPROTOCOL=0` though that is rarely useful. Once Avrdude
-   v7.1 with its urclock programmer is reasonably well distributed, it is likely that `URPROTOCOL=1`
-   will become the default. At some point `URPROTOCOL=0` will be withdrawn altogether to
-   simplify `urboot.c`.
 
  - `WDTO=<timeout>` (watchdog timeout)
 
@@ -228,8 +228,8 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    associated USB-to-serial converter chip then small times such as `500MS` (the default in the
    `urboot.c` file) or `1S` (the default in the Makefile) are useful. If there is no such reset
    circuit and upload involves manual synchronisation then higher values such as `2S` are
-   recommended. Very small values up to `125MS` are unlikely to provide enough time for a handshake
-   with the uploading program.
+   recommended. Very small values up to `125MS` are unlikely to provide enough time for
+   establishing a handshake with the uploading program.
 
  - `EEPROM=<1|0>`
 
@@ -242,23 +242,23 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
 
    This option is valid for parts that do not have a `UPDI` interface. It determines whether or not
    a vector bootloader is generated. The default for this option is `VBL=0` for devices that have
-   hardware boot section support.
+   hardware boot section support. As planned, from urboot u8.0 `VBL=2` or `VBL=3` are no longer
+   available.
 
    `VBL=1` creates a vector bootloader: The AVR interrupt vector table consists of 4-byte `jmp`
    instructions or 2-byte `rjmp` instructions (if the MCU has no more than 8 kB flash it is always
    a `rjmp`). The reset vector is the first in the table, and contains a jump instruction to the
-   start of the application. A vector bootloader (`VBL=1`, `2`, or `3`) is a hook between the reset
-   vector and the application, where the reset vector has been made to point to the bootloader, and
-   the bootloader - once finished - jumps to a dedicated but otherwise unused interrupt vector that
-   has been made to point to the application. This trick provides a bootloader for boards or MCUs
-   without boot section support (think Trinket, Digispark, ATmega48, ...). On MCUs with boot
-   section support one can utilise a vector bootloader, too, by changing the fuses to jump to
-   `0x0000` on external reset. This way the boot section can start at any multiple of
-   `SPM_PAGESIZE` in high flash space, which can considerably reduce the space taken by the
-   bootloader. For example, an ATmega328P system can then use 384 bytes (3 pages) rather than the
-   otherwise minimum 512 bytes boot section. Likewise, those MCUs with 1 kB minimum boot size
-   (ATmega1284P, eg) might save considerably more space that would otherwise needlessly be used for
-   the bootloader.
+   start of the application. A vector bootloader is a hook between the reset vector and the
+   application, where the reset vector has been made to point to the bootloader, and the bootloader
+   — once finished — jumps to a dedicated but otherwise unused interrupt vector that has been made
+   to point to the application. This trick provides a bootloader for boards or MCUs without boot
+   section support (think Trinket, Digispark, ATmega48, ...). On MCUs with boot section support one
+   can utilise a vector bootloader, too, by changing the fuses to jump to `0x0000` on external
+   reset. This way the boot section can start at any multiple of `SPM_PAGESIZE` in high flash
+   space, which can reduce the space taken by the bootloader. For example, an ATmega328P system can
+   then use 384 bytes (3 pages) rather than the otherwise minimum 512 bytes boot section. Likewise,
+   those MCUs with 1 kB minimum boot size (ATmega1284P, eg) might save considerably more space that
+   would otherwise needlessly be used for the bootloader.
 
    By default, a vector bootloader loses one interrupt vector that no program ever can use on that
    device. Urboot chooses a "rare" vector of the target MCU to store a jump instruction to the
@@ -280,7 +280,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    patches the destination address in the missing upper half of the 4-byte `jmp`. This increases
    the size of each sketch by 4 or 2 bytes, respectively. Compiling the bootloader with the option
    `VBL_VECT_NUM=-1` tells it to use this additional vector (which, eg, would translate to 26 for
-   the ATmega328P, 35 for the ATmega1284P, 57 for the ATmega2560, 15 for the ATtiny85 and 20 for
+   the ATmega328P; 35 for the ATmega1284P; 57 for the ATmega2560; 15 for the ATtiny85 and 20 for
    the ATtiny167).
 
    `VBL=1` creates a vector bootloader with otherwise zero bytes overhead; the only change in the
@@ -296,30 +296,13 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    top of the boot section (see below), so that `avrdude -c urclock` can and will apply the patch
    for upload and verification auto-magically.
 
-   If neither avrdude nor external patching of applications fits the workflow, one can alternatively
-   compile a bootloader with `VBL=2` or `3`, so it patches the vectors at the cost of enlarged code
-   size. Options `VBL=2` or `3` both create a vector bootloader that copies the reset vector of a
-   program during upload into an unused interrupt vector and replaces the reset vector with a jump
-   to the bootloader. Once the bootloader has modified the uploaded program, `avrdude -c arduino`
-   would notice the changes in the verification step and complain. `VBL=3` creates code that
-   specifically alters verification of the first page at address zero, which contains the vector
-   table, so a copy of the uploaded vector page is returned. This way, everything except the page
-   with the modified vector table is being verified. A serial communication error on the first page
-   would still be discovered as the bootloader returns what it has read. Note that verification of
-   the vector page is altered only when immediately done after programming, ie, when using
-   avrdude's implicit verify option. If the program flash is read in a separate avrdude call then
-   the real contents is returned as it should be. From version 7.5 onwards the `VBL=2` or `3` code
-   checks whether the reset vector already points to the bootloader, in which case the patch is not
-   executed. Consequently, verification of the page at zero is not altered. This is done to allow
-   both un-patched and patched applications be uploaded with a vector bootloader when VBL is set to
-   2 or 3.
 
-   `VBL=1` is recommended over `VBL=2` or `3` as the bootloader code to patch the incoming
-   application on the device makes more assumptions than avrdude's urclock programmer. Once avrdude
-   v7.1 with its urclock programmer is reasonably well distributed, it is likely that options
-   `VBL=2` and `VBL=3` are going to be deprecated as patching the application vectors in *every*
-   bootloader is not a good use of flash if that an be done by the uploader program. Removing these
-   options will simplify the source code `urboot.c`.
+   Earlier urboot versions up to u7.7 could compile a bootloader with `VBL=2` or `3`, so the
+   bootloader itself patches the vectors at the cost of enlarged code size. As avrdude v7.1 or
+   higher with its urclock programmer is now reasonably well distributed, options `VBL=2` and
+   `VBL=3` are no longer relevant: patching the application vectors in *every* bootloader is not
+   a good use of flash if that can be done by the uploader program. Removing these options has
+   simplified the source code `urboot.c`.
 
    Burning a VBL-enabled urboot onto an MCU should in theory also require the jump to boot section
    be burned to the reset vector. The accompanying `urloader` sketch does that.  However, one will
@@ -343,7 +326,6 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    application has just reprogrammed itself: Voila! Useful for those wireless projects that are
    installed where they are kind of hard to get to. The default is `DUAL=0`.
 
-
    The `SFMCS=<AtmelPxx|ArduinoPinX>` option encodes the pin number of the SPI flash memory chip
    select line: either use a constant such as `AtmelPB0` (port B, pin 0) or, eg, `ArduinoPin8`,
    which uses the Arduino Pin numbers that are available for some boards/MCUs.
@@ -362,7 +344,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    bootloader uses hardware boot section support and the lock bits are set to protect the
    bootloader. As the protection code is only between 4 and 10 bytes and the user might forget
    protecting the hardware-supported boot section through lockbits, this protection can no longer
-   be switched off from v7.7 onwards.
+   be switched off from urboot u7.7 onwards.
 
 
  - `PROTECTRESET=<1|0>`
@@ -400,7 +382,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    are certain risks involved, as this option allows the application to modify itself. If you are
    concerned about this, I recommend using external programming using a programmer instead of using
    any bootloader at all (rendering urboot moot) and/or setting the fuses very restrictively (which
-   renders this option obsolete).
+   renders this option obsolete). Applications call the urboot function `pgm_write_page()` normally by
 
    ```
      ((void (*)(void *, progmem_t))((FLASHEND+1UL-4UL)/2))(sram, pgm);
@@ -462,14 +444,40 @@ The options below are frills, ie, not really essential for the functionality of 
    bootloader's chip erase, as it carries the overhead of sending `0xff` bytes over the serial
    interface. Setting this option will cost around 16-38 bytes code.
 
+ - `UPDATE_FL=<0|1|2|3|4>` (skip unnecessary page erases or writes)
+
+    This option is new in urboot u8.0. It allows various degrees of updating flash rather than
+    writing to it unconditionally. Flash memory of AVR microprocessors is physically organised in
+    pages that need erasing (all bytes set to `0xff`) before writing new content to them.  Write
+    and, in particular, erase cycles reduce the endurance of flash memory to the extent that the
+    data sheet only warrants a certain number of them, typically 100,000. `UPDATE_FL=1` adds code
+    to the write page routine that checks first whether flash would be changed by the new page
+    contents and *only* writes to flash if necessary. `UPDATE_FL=2` does the same as `1` and, in
+    addition, compiles  code into the chip erase routine that skips erasing a flash page if it was
+    already all 0xff. `UPDATE_FL=3` does the same as `2` but in addition checks within the write
+    page routine whether, once a flash page needs modifying, it needs erasing first; some content
+    changes only transition selected bits from  `1` to `0` for which a page erase is unnecessary.
+    `UPDATE_FL=4` does the same as `3` but in addition compile in checks for whether the new page
+    is empty, for which after a page erase no further page write is necessary. Note that the extra
+    code for level `2` is only generated if there is a chip erase routine in the bootloader, ie,
+    `CHIP_ERASE=1`. And the extra code in levels `3` and `4` is only generated when the bootloader
+    write page routine normally erases a page before writing it; this is so if the bootloader
+    provides a page erase function for the user, ie, `PGMWRITEPAGE=1`, or if the bootloader has no
+    other means of erasing a chip, ie, `CHIP_ERASE=0`. Level `1` costs roughly 20 bytes code, level
+    `2` another 20 bytes and level `3` and `4` add 10 bytes code each. Of course, a fully kitted
+    out `UPDATE_FL=4` level also makes the bootloader the fastest it can be.
+
+
  - `RETSWVERS=<0|1>` (return correct software version)
 
-   Option `RETSWVERS=1` creates code to tell the avrdude or otherwise programmer truthfully the
-   current software version. The space used for this code is probably not worthwhile. Without it,
-   urboot pretends to be on software version `X.X` and hardware version `X`, where `X` is the major
-   software version (currently 7). `RETSWVERS=0` saves 28 bytes for `URPROTOCOL=0`. With
-   `URPROTOCOL=1` this option has no effect, as the bootloader does not expect, nor respond to,
-   `STK_SW_MAJOR/MINOR` requests.
+   From urboot u8.0 this option has been deprecated as it no longer has an effect.
+
+   Option `RETSWVERS=1` used to create code to tell the avrdude or otherwise programmer truthfully
+   the current software version. The space used for this code was never worthwhile. Without it,
+   urboot pretended to be on software version `X.X` and hardware version `X`, where `X` is the
+   major software version. `RETSWVERS=0` used to save 28 bytes for `URPROTOCOL=0` (STK500
+   compatibility), which is no longer supported in u8.0. With `URPROTOCOL=1` this option had no
+   effect, as the bootloader did not expect, nor respond to, `STK_SW_MAJOR/MINOR` requests.
 
  - `EXITFE=<0|1|2>` (exit on frame errors)
 
@@ -511,12 +519,15 @@ The options below are frills, ie, not really essential for the functionality of 
    options are undefined they will be defined as
    | Option | default |
    | :--    | :-- |
-   |`CHIP_ERASE` | `FRILLS >= 7` |
-   |`RETSWVERS`  | `FRILLS >= 6` |
-   |`QEXITEND`   | `FRILLS >= 5` |
-   |`QEXITERR`   | `FRILLS >= 4` |
-   |`EXITFE`     | `FRILLS >= 3? 2: FRILLS >= 2` |
-   |`BLINK`      | `FRILLS >= 1` |
+   |`UPDATE_FL=4` | `FRILLS >= 10`|
+   |`UPDATE_FL=3` | `FRILLS >= 9` |
+   |`UPDATE_FL=2` | `FRILLS >= 8` |
+   |`CHIP_ERASE`  | `FRILLS >= 7` |
+   |`UPDATE_FL=1` | `FRILLS >= 6` |
+   |`QEXITEND`    | `FRILLS >= 5` |
+   |`QEXITERR`    | `FRILLS >= 4` |
+   |`EXITFE`      | `FRILLS >= 3? 2: FRILLS >= 2` |
+   |`BLINK`       | `FRILLS >= 1` |
 
 
  - `AUTOFRILLS=<level-list>`
@@ -527,7 +538,9 @@ The options below are frills, ie, not really essential for the functionality of 
    For example `AUTOFRILLS=0,7,6,1,2,3,4` first determines the space usage of a bootloader with
    `FRILLS=0` and then figures out which of the other `FRILLS` levels also fit into that space.
    The finally compiled bootloader uses the biggest of these. This option is only seen by
-   the `avr-gcc` wrapper `urboot-gcc` and not passed on to the actual compiler.
+   the `avr-gcc` wrapper `urboot-gcc` and not passed on to the actual compiler. From urboot u8.0
+   the range operator `..` can be used as well: above AUTOFRILLS could have been specified with
+   `0,7,6,1..4`.
 
 
 ## Debug options
@@ -547,7 +560,7 @@ The options below are frills, ie, not really essential for the functionality of 
    signal on `FREQ_PIN` stays low, irrespective of `FREQ_POLARITY`. The duration of one period of
    the square wave might be too short by up to 5 clock cycles, which is normally of no concern. If
    precision of this debug square wave is of importance, then `EXACT_DF` can be set to `1`, in
-   which case the quantisation error of one period is less than 1 clock cycle at the expense of up
+   which case the quantisation error of one period is at most 1 clock cycle at the expense of up
    to 4 bytes extra code.
 
  - `FLASHWRAPS=<1|0>`
@@ -558,8 +571,8 @@ The options below are frills, ie, not really essential for the functionality of 
    then the bootloader can execute a short 2-byte `rjmp` over the end of flash to the vector table
    rather than a absolute `jmp` thus saving 2 bytes of code. The default is `FLASHWRAPS=1` iff the
    size of flash memory is a power of 2, but can be overwritten should this assumption be wrong for
-   a particular MCU. This option has no effect in MCUs with up to 8k flash memory as they always
-   use `rjmp`.
+   a particular MCU. This option has no effect in MCUs with up to 8k flash as they always use
+   `rjmp`.
 
 
 ## `urboot-gcc` wrapper
@@ -629,7 +642,7 @@ of flash just before the two version bytes.
 
 In addition to figuring out the correct start address of the bootloader and the correct rjmp to the
 pgm_write_page(sram, flash) bootloader routine, urboot-gcc also runs avr-gcc one more final time
-with -D_urboot_AVAILABLE=<num_bytes> to indicate how many free bytes are available for desirable,
+with `-D_urboot_AVAILABLE=<num_bytes>` to indicate how many free bytes are available for desirable,
 but not essential features. Currently, urboot.c uses this feature for the generation of reset
 vector protection code for vector bootloaders.
 
@@ -641,13 +654,15 @@ name.
 ```
 $ hexls -\?
 Syntax: hexls {<bootloader>.hex}
-Function: list urboot bootloader hex files with size, usage, version, features and name
+Function: list urboot bootloader hex files with size, version, features and name
 Options:
-  -version     print version (1.05) and exit
-  -md=url      print neat markdown table with header (files use url)
-  -check       check rjmp op code at end (if pgm_page_write-enabled and .lst file there)
-  -sort        sort rows according to use, size, version, features, name
-  -use         print number of bytes occupied by bootloader and exit
+  -version     Print version (1.80) and exit
+  -pre=<text>  Print <text> as preamble
+  -mcu=<name>  Assume the hex files were compiled for MCU <name>
+  -md=url      Print neat markdown table with header (files use url)
+  -check       Check rjmp op code at end (if pgm_page_write-enabled and .lst file there)
+  -sort        Sort rows according to use, size, version, features, name
+  -use         Print number of bytes occupied by bootloader and exit
 ```
 
 Example:
@@ -657,13 +672,13 @@ $ hexls -sort -md *.hex
 
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|252|256|u7.7|`w-u-jpr--`|atmega328p_min.hex|
-|254|256|u7.7|`w-u-jpra-`|atmega328p_amin.hex|
-|358|384|u7.7|`weu-jPr-c`|atmega328p_ur.hex|
-|374|384|u7.7|`weu-jPrac`|atmega328p_autobaud_ur.hex|
-|376|384|u7.7|`weu-jPr-c`|atmega328p_8000khz_swio_ur.hex|
-|460|512|u7.7|`wes-hpr-c`|atmega328p.hex|
-|508|512|u7.7|`weudhprac`|atmega328p_adur.hex|
+|256|256|u8.0|`w---jPr--`|[atmega328p_min.hex](atmega328p_7875khz_swio.hex/atmega328p_min.hex)|
+|256|256|u8.0|`w---jPra-`|[atmega328p_amin.hex](atmega328p_7875khz_swio.hex/atmega328p_amin.hex)|
+|366|384|u8.0|`weU-jPr--`|[atmega328p_8000khz_swio.hex](atmega328p_7875khz_swio.hex/atmega328p_8000khz_swio.hex)|
+|384|384|u8.0|`weU-jPr-c`|[atmega328p_led9_50Hz_fp9.hex](atmega328p_7875khz_swio.hex/atmega328p_led9_50Hz_fp9.hex)|
+|384|384|u8.0|`weU-jPrac`|[atmega328p_a.hex](atmega328p_7875khz_swio.hex/atmega328p_a.hex)|
+|406|512|u8.0|`weU-hprac`|[atmega328p_h.hex](atmega328p_7875khz_swio.hex/atmega328p_h.hex)|
+|512|512|u8.0|`weUdhprac`|[atmega328p_ad.hex](atmega328p_7875khz_swio.hex/atmega328p_ad.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
@@ -671,8 +686,7 @@ $ hexls -sort -md *.hex
 - **Features:**
   + `w` bootloader provides `pgm_write_page(sram, flash)` for the application at `FLASHEND-4+1`
   + `e` EEPROM read/write support
-  + `u` uses urprotocol requiring `avrdude -c urclock` for programming
-  + `s` uses skeleton of STK500v1 protocol (deprecated); `-c urclock` and `-c arduino` both work
+  + `U` checks whether flash pages need writing before doing so
   + `d` dual boot (over-the-air programming from external SPI flash)
   + `h` hardware boot section: make sure fuses are set for reset to jump to boot section
   + `j` vector bootloader: applications *need to be patched externally*, eg, using `avrdude -c urclock`
@@ -681,99 +695,62 @@ $ hexls -sort -md *.hex
   + `r` preserves reset flags for the application in the register R2
   + `a` autobaud detection (f_cpu/8n using discrete divisors, n = 1, 2, ..., 256)
   + `c` bootloader provides chip erase functionality (recommended for large MCUs)
+  + `.` unable to tell from .hex file whether this feature is present
   + `-` corresponding feature not present
+- **Hex file:** often qualified by the MCU name and/or configuration
+  + `swio` software I/O (not UART)
+  + `led9` toggles an LED on, in this example, Arduino pin 9
+  + `fp9` for debugging the bootloader uses, eg, Arduino pin 9 to swing a signal of low frequency, eg, 50 Hz
+  + `d` dual boot
+  + `min` most feature-rich bootloader for smallest achievable flash usage (implies `ur`)
+
+
 
 ## Production options
 
- - `TOOLVER=<4.8.1|4.9.2|5.4.0|7.4.0|system>`
+ - `TOOLVER=<4.8.1|4.9.2|5.4.0|7.3.0|system>`
 
    This selects the version of the avr toolchain that should be used for compilation. Older toolchains
-   tend produce slightly smaller code. The `Makefile` selects good versions automatically depending on
-   the chosen options and the part.
+   tended to produce slightly smaller code. From urboot u8.0 onwards, the sweetspot seems to be
+   the now default `TOOLVER=7.3.0`
 
  - `GCCROOT=<dir>`
 
    Alternatively, `GCCROOT`, the directories with the binaries of the toolchain, can be specified
    directly; the default is `./avr-toolchain/$(TOOLVER)/bin/`.
 
-   Below is a comparison table that has been compiled from different toolchain versions. Urboot is the
-   one where the `Makefile` automatically selects between the available ones in this repository, and
-   with rare exceptions the best choice. Later versions tend to have larger code still.
-
-   Features | Name | urboot | 4.8.1 | 5.4.0 | 7.4.0
-   --: | :-- | --: | --:  | --: | --:
-   `w-u-jpr--` | attiny2313_min.hex | 224 | 224 | 222 | 244
-   `w-u-hpr--` | atmega8_min.hex | 244 | 244 | 246 | 254
-   `w-u-jpr--` | atmega32_min.hex | 244 | 244 | 246 | 254
-   `w-u-jpr--` | atmega1284p_min.hex | 248 | 248 | 248 | 248
-   `w-u-jpr--` | atmega2560_min.hex | 248 | 248 | 248 | 248
-   `w-u-jpr--` | atmega644p_min.hex | 250 | 250 | 250 | 250
-   `w-u-jpr--` | atmega88_min.hex | 252 | 252 | 252 | 252
-   `w-u-jpr--` | attiny167_min.hex | 252 | 252 | 252 | 252
-   `w-u-jpra-` | atmega328p_amin.hex | 254 | 254 | 254 | 254
-   `w-u-jpr--` | attiny84_min.hex | 256 | 256 | 276 | 284
-   `weu-jpr--` | atmega88_ur.hex | 310 | 310 | 310 | 310
-   `weu-jpr--` | atmega8_ur.hex | 314 | 314 | 314 | 314
-   `weu-jPr-c` | atmega32_ur.hex | 354 | 354 | 354 | 354
-   `weu-jPr-c` | atmega328p_ur.hex | 358 | 358 | 358 | 358
-   `weu-jPr-c` | attiny167_ur.hex | 372 | 372 | 372 | 372
-   `weu-jpr-c` | luminet_baud9600_ur.hex | 372 | 372 | 372 | 372
-   `weu-jPrac` | atmega328p_autobaud_ur.hex | 374 | 374 | 374 | 374
-   `weu-jPr-c` | atmega328p_8000khz_swio_ur.hex | 376 | 376 | 376 | 376
-   `weu-jPr-c` | attiny85_ur.hex | 376 | 376 | 376 | 376
-   `weu-jPr-c` | atmega328p_7875khz_swio_ur.hex | 378 | 378 | 378 | 378
-   `weu-jPr-c` | atmega2560_ur.hex | 386 | 386 | 386 | 386
-   `wes-hpr-c` | atmega8.hex | 432 | 432 | 438 | 456
-   `wes-hpr-c` | atmega32.hex | 434 | 434 | 440 | 458
-   `wes-hpr-c` | pro_20mhz.hex | 440 | 440 | 440 | 456
-   `wes-hpr-c` | atmega328p.hex | 444 | 444 | 444 | 460
-   `wes-hpr-c` | pro_8mhz.hex | 462 | 462 | 462 | 478
-   `weudhpr-c` | urclock_cs8_dur.hex | 484 | 484 | 484 | 484
-   `weudhpr-c` | atmega328p_dur.hex | 492 | 492 | 492 | 492
-   `weudjpr--` | atmega2560_dur.hex | 496 | 496 | 496 | 496
-   `weudjpr-c` | attiny167_dur.hex | 500 | 500 | 500 | 500
-   `wes-vpr--` | atmega1284p_v2.hex | 504 | 504 | 504 | 522
-   `weudhprac` | atmega328p_adur.hex | 508 | 508 | 508 | 508
-
-
 ## Examples
 
 ### Generating bootloaders with `make`
 
 ```
-make MCU=attiny2313 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=2 VBL_VECT_NUM=EEPROM_READY_vect_num NAME=attiny2313_min
-make MCU=atmega328p URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=6 NAME=atmega328p_min
-make MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=3 NAME=atmega328p_amin
-make MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=atmega328p_autobaud_ur
-make MCU=atmega328p URPROTOCOL=1 VBL=1 FRILLS=7 NAME=atmega328p_ur
-make MCU=atmega328p F_CPU=8000000L URPROTOCOL=1 SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 FRILLS=7 NAME=atmega328p_8000khz_swio_ur
-make MCU=atmega328p AUTOBAUD=1 URPROTOCOL=1 VBL=1 LED=AtmelPB5 FRILLS=7 NAME=promini_led13_ur
-make MCU=atmega168 F_CPU=8000000L URPROTOCOL=1 SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 FRILLS=7 NAME=lilypad_ur
-make MCU=atmega2560 URPROTOCOL=1 EEPROM=0 VBL=1 FRILLS=3 NAME=atmega2560_min
-make MCU=atmega2560 URPROTOCOL=1 VBL=1 FRILLS=7 NAME=atmega2560_ur
+make MCU=attiny2313 EEPROM=0 VBL=1 FRILLS=0 PGMWRITEPAGE=0 VBL_VECT_NUM=EEPROM_READY_vect_num NAME=attiny2313_min
+make MCU=atmega328p AUTOBAUD=1 VBL=1 AUTOFRILLS=5..10 NAME=atmega328p_a
+make MCU=atmega328p AUTOBAUD=1 FRILLS=10 NAME=atmega328p_h
+make MCU=atmega328p AUTOBAUD=1 VBL=1 SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 AUTOFRILLS=5..10 NAME=atmega328p_swio
 ```
 
 ### Generating bootloaders with `urboot-gcc`
 
 ```
-./urboot-gcc -toolchain=4.8.1 -g -Wundef -Wall -Os -fno-split-wide-types -mrelax -mmcu=attiny2313 -DF_CPU=16000000L -Wno-clobbered -DWDTO=1S -DDUAL=0 -DEEPROM=0 -DURPROTOCOL=1 -DFRILLS=2 -DVBL=1 -DVBL_VECT_NUM=EEPROM_READY_vect_num -Wl,--relax -nostartfiles -nostdlib -o attiny2313_min.elf urboot.c
-./avr-toolchain/4.8.1/bin/avr-objcopy -j .text -j .data -j .version --set-section-flags .version=alloc,load -O ihex attiny2313_min.elf attiny2313_min.hex
-./avr-toolchain/4.8.1/bin/avr-objdump -h -S attiny2313_min.elf > attiny2313_min.lst
+./urboot-gcc -toolchain=7.3.0 -g -Wundef -Wall -Os -fno-split-wide-types -mrelax -mmcu=attiny2313 -DF_CPU=16000000L -Wno-clobbered -DWDTO=1S -DAUTOBAUD=0 -DDUAL=0 -DEEPROM=0 -DVBL=1 -DVBL_VECT_NUM=EEPROM_READY_vect_num -DPGMWRITEPAGE=0 -DFRILLS=0 -Wl,--relax -nostartfiles -nostdlib -o attiny2313_min.elf urboot.c
+./avr-toolchain/7.3.0/bin/avr-objcopy -j .text -j .data -j .version --set-section-flags .version=alloc,load -O ihex attiny2313_min.elf attiny2313_min.hex
+./avr-toolchain/7.3.0/bin/avr-objdump -h -S attiny2313_min.elf > attiny2313_min.lst
 
-./urboot-gcc -toolchain=5.4.0 -g -Wundef -Wall -Os -fno-split-wide-types -mrelax -mmcu=atmega328p -DF_CPU=16000000L -Wno-clobbered -DWDTO=1S -DAUTOBAUD=1 -DDUAL=0 -DEEPROM=1 -DURPROTOCOL=1 -DFRILLS=7 -DVBL=1 -Wl,--relax -nostartfiles -nostdlib -o atmega328p_autobaud_ur.elf urboot.c
-./avr-toolchain/5.4.0/bin/avr-objcopy -j .text -j .data -j .version --set-section-flags .version=alloc,load -O ihex atmega328p_autobaud_ur.elf atmega328p_autobaud_ur.hex
-./avr-toolchain/5.4.0/bin/avr-objdump -h -S atmega328p_autobaud_ur.elf > atmega328p_autobaud_ur.lst
+./urboot-gcc -toolchain=7.3.0 -g -Wundef -Wall -Os -fno-split-wide-types -mrelax -mmcu=atmega328p -DF_CPU=16000000L -Wno-clobbered -DWDTO=1S -DAUTOBAUD=1 -DDUAL=0 -DEEPROM=1 -DVBL=1 -DPGMWRITEPAGE=1 -DAUTOFRILLS=5..10 -Wl,--relax -nostartfiles -nostdlib -o atmega328p_a.elf urboot.c
+./avr-toolchain/7.3.0/bin/avr-objcopy -j .text -j .data -j .version --set-section-flags .version=alloc,load -O ihex atmega328p_a.elf atmega328p_a.hex
+./avr-toolchain/7.3.0/bin/avr-objdump -h -S atmega328p_a.elf > atmega328p_a.lst
 ```
 
 ### Generating bootloaders with `avr-gcc`
 
 ```
-./avr-toolchain/4.8.1/bin/avr-gcc -DSTART=0x720UL -DRJMPWP=0xcfe3 -Wl,--section-start=.text=0x720 -Wl,--section-start=.version=0x7fa -g -Wundef -Wall -Os -fno-split-wide-types -mrelax -mmcu=attiny2313 -DF_CPU=16000000L -Wno-clobbered -DWDTO=1S -DDUAL=0 -DEEPROM=0 -DURPROTOCOL=1 -DFRILLS=2 -DVBL=1 -DVBL_VECT_NUM=EEPROM_READY_vect_num -Wl,--relax -nostartfiles -nostdlib -o attiny2313_min.elf urboot.c
-./avr-toolchain/4.8.1/bin/avr-objcopy -j .text -j .data -j .version --set-section-flags .version=alloc,load -O ihex attiny2313_min.elf attiny2313_min.hex
-./avr-toolchain/4.8.1/bin/avr-objdump -h -S attiny2313_min.elf > attiny2313_min.lst
+./avr-toolchain/7.3.0/bin/avr-gcc -DSTART=0x740UL -DRJMPWP=0x9508 -Wl,--section-start=.text=0x740 -Wl,--section-start=.version=0x7fa -DFRILLS=0 -D_urboot_AVAILABLE=2 -g -Wundef -Wall -Os -fno-split-wide-types -mrelax -mmcu=attiny2313 -DF_CPU=16000000L -Wno-clobbered -DWDTO=1S -DAUTOBAUD=0 -DDUAL=0 -DEEPROM=0 -DVBL=1 -DVBL_VECT_NUM=EEPROM_READY_vect_num -DPGMWRITEPAGE=0 -Wl,--relax -nostartfiles -nostdlib -o attiny2313_min.elf urboot.c
+./avr-toolchain/7.3.0/bin/avr-objcopy -j .text -j .data -j .version --set-section-flags .version=alloc,load -O ihex attiny2313_min.elf attiny2313_min.hex
+./avr-toolchain/7.3.0/bin/avr-objdump -h -S attiny2313_min.elf > attiny2313_min.lst
 
-./avr-toolchain/5.4.0/bin/avr-gcc -DSTART=0x3fe00UL -DRJMPWP=0xcf98 -Wl,--section-start=.text=0x3fe00 -Wl,--section-start=.version=0x3fffa -D_urboot_AVAILABLE=144 -g -Wundef -Wall -Os -fno-split-wide-types -mrelax -mmcu=atmega2560 -DF_CPU=16000000L -Wno-clobbered -DWDTO=1S -DDUAL=0 -DEEPROM=1 -DURPROTOCOL=1 -DFRILLS=7 -DVBL=1 -Wl,--relax -nostartfiles -nostdlib -o atmega2560_16mhz_115200bps_ev1f7_wdto1s_ur.elf urboot.c
-./avr-toolchain/5.4.0/bin/avr-objcopy -j .text -j .data -j .version --set-section-flags .version=alloc,load -O ihex atmega2560_16mhz_115200bps_ev1f7_wdto1s_ur.elf atmega2560_16mhz_115200bps_ev1f7_wdto1s_ur.hex
-./avr-toolchain/5.4.0/bin/avr-objdump -h -S atmega2560_16mhz_115200bps_ev1f7_wdto1s_ur.elf > atmega2560_16mhz_115200bps_ev1f7_wdto1s_ur.lst
+./avr-toolchain/7.3.0/bin/avr-gcc -DSTART=0x7e80UL -DRJMPWP=0xcfcd -Wl,--section-start=.text=0x7e80 -Wl,--section-start=.version=0x7ffa -DFRILLS=7 -D_urboot_AVAILABLE=14 -g -Wundef -Wall -Os -fno-split-wide-types -mrelax -mmcu=atmega328p -DF_CPU=16000000L -Wno-clobbered -DWDTO=1S -DAUTOBAUD=1 -DDUAL=0 -DEEPROM=1 -DVBL=1 -DPGMWRITEPAGE=1 -Wl,--relax -nostartfiles -nostdlib -o atmega328p_a.elf urboot.c
+./avr-toolchain/7.3.0/bin/avr-objcopy -j .text -j .data -j .version --set-section-flags .version=alloc,load -O ihex atmega328p_a.elf atmega328p_a.hex
+./avr-toolchain/7.3.0/bin/avr-objdump -h -S atmega328p_a.elf > atmega328p_a.lst
 ```
 

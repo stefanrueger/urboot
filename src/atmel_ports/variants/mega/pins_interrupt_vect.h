@@ -101,8 +101,8 @@
 
 // macros to replace static const uint8_t XYZ;
 #define	CS	53
-#define	COPI	51
-#define	CIPO	50
+#define	PICO	51
+#define	POCI	50
 #define	SCK	52
 #define	SDA	20
 #define	SCL	21

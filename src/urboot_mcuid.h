@@ -8,8 +8,8 @@
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v 1.2
- * 12.05.2024
+ * v 1.28
+ * 02.06.2024
  *
  */
 
@@ -18,14 +18,6 @@
 
 #if !defined(__AVR_DEVICE_NAME__)
 #include "urboot_devicename.h"
-#endif
-
-#if !defined(RAMSIZE) && defined(RAMSTART) && defined(RAMEND)
-#define RAMSIZE ((RAMEND)-(RAMSTART)+1)
-#endif
-
-#if !defined(RAMSTART) || !defined(RAMSIZE)
-#include "urboot_sram.h"
 #endif
 
 #define UB_MCUID(name) UB_MCUID_expand(name)

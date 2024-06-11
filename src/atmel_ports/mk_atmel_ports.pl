@@ -101,16 +101,23 @@ my @uPs = (
 
 my $washere;
 foreach my $uP (@uPs) {
-  my ($ifline, $file, $ardu, $seen, $inp);
+  my ($ifline, $file, $empty, $inp);
 
   $ifline .= "defined(__AVR_${_}__) || " for @{$uP->[1]};
   print "\n".($washere? '#elif ' : '#if ').substr($ifline, 0, -4)."\n";
   open($inp, $file="variants/$uP->[0]/pins_atmel_map.h") or die "cannot open $file (stopped)";
   while(<$inp>) {
-    $ardu = /define.Arduino/ || /define.Atmel/;
-    print "\n" if(!$seen && $ardu);
-    print if $ardu;
-    $seen = $ardu;
+    chomp;
+    if(/define.Arduino/ || /^$/) {
+      print "$_\n" if !$empty;
+      $empty = /^$/;
+    } elsif(/define.Atmel/) {
+      my $vname = s/^ *# *define. *(Atmel[a-zA-Z_0-9]*).*/$1/r;
+      print "#ifndef $vname\n";
+      print "$_\n";
+      print "#endif\n";
+      $empty = 0;
+    }
   }
   close($inp);
   $washere = 1;

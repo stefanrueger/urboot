@@ -36,8 +36,8 @@
 #endif
 
 static const uint8_t CS   = 10;
-static const uint8_t COPI = 11;
-static const uint8_t CIPO = 12;
+static const uint8_t PICO = 11;
+static const uint8_t POCI = 12;
 static const uint8_t SCK  = 13;
 
 static const uint8_t SDA = 18;
@@ -79,8 +79,8 @@ static const uint8_t A7 = 21; // and only available on TQFP and MLF square SFD c
 //                             GND  8|      |21  AREF
 // (PCINT6, XTAL1, TOSC1, n/a) PB6  9|x     |20  AVCC
 // (PCINT7, XTAL2, TOSC2, n/a) PB7 10|x     |19  PB5 (D13=LED, SCK, PCINT5)
-//     (PCINT21, OC0B, T1, D5) PD5 11|~+    |18  PB4 (D12, CIPO, PCINT4)
-//   (PCINT22, OC0A, AIN0, D6) PD6 12|~+   ~|17  PB3 (D11, COPI, OC2A, PCINT3)
+//     (PCINT21, OC0B, T1, D5) PD5 11|~+    |18  PB4 (D12, POCI, PCINT4)
+//   (PCINT22, OC0A, AIN0, D6) PD6 12|~+   ~|17  PB3 (D11, PICO, OC2A, PCINT3)
 //         (PCINT23, AIN1, D7) PD7 13|     ~|16  PB2 (D10, !CS, OC1B, PCINT2)
 //    (PCINT0, CLKO, ICP1, D8) PB0 14|     ~|15  PB1 (D9, OC1A, PCINT1)
 //                                   +------+
