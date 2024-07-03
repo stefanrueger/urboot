@@ -1733,7 +1733,7 @@ int main(void) {
 #if UART2X || UR_UARTTYPE == UR_UARTTYPE_LIN
 #define auto_inc (256/8)        // Add 0.125 to X, ie, 256/8 to XL, in 8-bit fixed point rep
 #else
-#define auto_inc (256.16)       // Add 0.0625 to X, ie, 256/16 to XL, in 8-bit fixed point rep
+#define auto_inc (256/16)       // Add 0.0625 to X, ie, 256/16 to XL, in 8-bit fixed point rep
 #endif
 
 #define autobaud(store_brrl) \
