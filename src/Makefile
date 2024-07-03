@@ -312,11 +312,11 @@ COMMON_OPTIONS = $(WDTO_CMD) $(AUTOBAUD_CMD) $(BAUD_RATE_CMD) $(UART2X_CMD) $(LE
 bootloader: CFLAGS += $(COMMON_OPTIONS)
 bootloader: $(WHAT).hex
 
-min: attiny2313_min attiny2313_emin atmega1280_min atmega1284p_min atmega168_min atmega2560_min atmega32_min \
+min: attiny2313_min attiny2313a_emin atmega1280_min atmega1284p_min atmega168_min atmega2560_min atmega32_min \
   atmega328p_min atmega644p_min atmega8_min atmega88_min attiny167_min attiny84_min attiny85_min
 	./hexls -sort
 
-all: clean attiny2313_min attiny2313_emin atmega168_min atmega32_min \
+all: clean attiny2313_min attiny2313a_emin atmega168_min atmega32_min \
   atmega2560_min atmega1280_min atmega1284p_min \
   atmega644p_min atmega8_min atmega88_min attiny84_min \
   atmega328p_min \
@@ -373,8 +373,9 @@ attiny2313_min:
 ####
 # 256 bytes with EEPROM support
 #
-attiny2313_emin:
-	$(MAKE) $(MK_OPTS) MCU=attiny2313 EEPROM=1 VBL=1 AUTOFRILLS=0..3 PGMWRITEPAGE=1 VBL_VECT_NUM=EEPROM_READY_vect_num NAME=$@
+# Note the symbolic names for ATtiny2313 and ATtiny2313A's EEPROM Ready interrupt differ in avr-libc (READY vs Ready)
+attiny2313a_emin:
+	$(MAKE) $(MK_OPTS) MCU=attiny2313a EEPROM=1 VBL=1 BLINK=1 AUTOFRILLS=0..3 VBL_VECT_NUM=EEPROM_Ready_vect_num NAME=$@
 
 
 ##

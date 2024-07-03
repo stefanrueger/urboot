@@ -48,6 +48,7 @@
  *  - ATtiny1634 (4-page erase)
  *  - ATtiny841 (4-page erase)
  *  - ATtiny4313 (smallest b/loaders owing to USART in bit-addressable I/O space)
+ *  - ATtiny2313A (as above, tested 190 byte b/loader and 256 byte b/loader with EEPROM and LED)
  *
  * Tested (for u7.7)
  *  - ATmega328P (Urclock, UrSense, UrclockMini, Uno, Duemilanove, Anarduino, Moteino, Jeenode etc)
@@ -92,9 +93,9 @@
  *   atmega644pa atmega644rfr2 atmega645 atmega6450 atmega6450a atmega6450p atmega645a atmega645p
  *   atmega649 atmega6490 atmega6490a atmega6490p atmega649a atmega649p atmega64a atmega64c1
  *   atmega64hve atmega64hve2 atmega64m1 atmega64rfr2 atmega8 atmega8515 atmega88 atmega88a
- *   atmega88p atmega88pa atmega88pb atmega8a atmega8hva atmega8u2 attiny13 attiny2313a attiny24
- *   attiny24a attiny25 attiny261 attiny261a attiny43u attiny44 attiny441 attiny44a attiny45
- *   attiny461 attiny461a attiny48 attiny828 attiny84 attiny84a attiny861 attiny861a
+ *   atmega88p atmega88pa atmega88pb atmega8a atmega8hva atmega8u2 attiny13 attiny24 attiny24a
+ *   attiny25 attiny261 attiny261a attiny43u attiny44 attiny441 attiny44a attiny45 attiny461
+ *   attiny461a attiny48 attiny828 attiny84 attiny84a attiny861 attiny861a
  *
  * How the bootloader works
  *

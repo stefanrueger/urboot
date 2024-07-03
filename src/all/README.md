@@ -14,7 +14,7 @@
 |256|256|u8.0|`w---jPr--`|[atmega328p_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_min.hex)|
 |256|256|u8.0|`w---jPr--`|[atmega88_min.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega88_min.hex)|
 |256|256|u8.0|`w---jPra-`|[atmega328p_amin.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_amin.hex)|
-|256|256|u8.0|`we--jpr--`|[attiny2313_emin.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny2313_emin.hex)|
+|256|256|u8.0|`we--jpr--`|[attiny2313a_emin.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny2313a_emin.hex)|
 |304|320|u8.0|`we--jPr--`|[atmega8.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega8.hex)|
 |316|320|u8.0|`we--jPr--`|[atmega88.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega88.hex)|
 |318|320|u8.0|`we--jPra-`|[atmega88_a.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega88_a.hex)|
