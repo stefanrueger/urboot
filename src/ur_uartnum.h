@@ -12,8 +12,8 @@
  * Known shortcut: pretends ATmega161 has no UBRR1H register rather than inventing a way to
  * encode and set the upper 4 bit of the register UBRRHI that is shared with UBRR0H.
  *
- * v 1.0
- * 02.06.2024
+ * v 1.39
+ * 03.07.2024
  *
  */
 
