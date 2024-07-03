@@ -1645,10 +1645,17 @@ unsigned const int __attribute__ ((section(".version"))) urboot_version[] = {
 
 // Normal app start: jump to reset vector or dedicated VBL vector and tell compiler mcusr is needed
 #if FLASHin8k || FLASHWRAPS
-#define jmpToAppOpcode() asm("rjmp urboot_version+%0\n" :: \
-  "n"(sizeof urboot_version+appstart_vec_loc), "r"(mcusr))
+#define jmpToAppOpcode() asm( \
+  ".global rjmp_application\nrjmp_application:\n" \
+    "rjmp urboot_version+%0\n" \
+  :: "n"(sizeof urboot_version+appstart_vec_loc), "r"(mcusr) \
+  )
 #else
-#define jmpToAppOpcode() asm("jmp %0\n" :: "n"(appstart_vec_loc), "r"(mcusr))
+#define jmpToAppOpcode() asm(
+  ".global jmp_application\njmp_application:\n" \
+    "jmp %0\n" \
+  :: "n"(appstart_vec_loc), "r"(mcusr) \
+  )
 #endif
 
 
@@ -1671,7 +1678,7 @@ int main(void) {
   !FLASHin8k && !FLASHWRAPS)
   // Skip next instruction if EXTRF set (compiler doesn't know length of asm is one instruction)
   asm volatile("sbrs %[ms], %[extrf]\n" :: [ms] "r"(mcusr), [extrf] "I"(EXTRF));
-    jmpToAppOpcode();
+  jmpToAppOpcode();
 #else
 
   if(!(mcusr & _BV(EXTRF))) {
@@ -1679,7 +1686,7 @@ int main(void) {
     if(mcusr & _BV(WDRF))       // Reset by watchdog? Check for dual boot from external flash
       dual_boot();
 #endif
-     jmpToAppOpcode();
+    jmpToAppOpcode();
     __builtin_unreachable ();
   }
 #endif
@@ -1687,8 +1694,8 @@ int main(void) {
 
 // Start of bootloader
 
-  // Mark location of WDTO setting, so urloader can change the 500 ms default externally
-  asm volatile(".global watchdog_setting\nwatchdog_setting:\n\t" :::);
+  asm volatile(".global watchdog_setting\nwatchdog_setting:\n" :::);
+  asm volatile(".global ldi_wdto\nldi_wdto:\n" :::);
   watchdogConfig(WATCHDOG_TIMEOUT(WDTO));
 
 
@@ -1737,22 +1744,23 @@ int main(void) {
 #endif
 
 #define autobaud(store_brrl) \
-   "ldi  r26, 0x7f\n"           /* Initialise X with -0.5 in 8-bit fixed point representation */ \
-   "ldi  r27, 0xff\n"           /* Want XH = UBRRnL = F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
- "1: " \
-   "sbic %[RXPin], %[RXBit]\n"  /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
-   "rjmp 1b\n" \
- "2: " \
+    "ldi  r26, 0x7f\n"          /* Initialise X with -0.5 in 8-bit fixed point representation */ \
+    "ldi  r27, 0xff\n"          /* Want XH = UBRRnL = F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
+  "1:\n" \
+  ".global sbic_rx\nsbic_rx:\n" \
+    "sbic %[RXPin], %[RXBit]\n" /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
+    "rjmp 1b\n" \
+  "2: " \
     adiw(r26, auto_inc)         /* Increment r26:27 so that final value of r27 is BRRL divisor */ \
-   "sbis %[RXPin], %[RXBit]\n"  /* Loop as long as rx bit is low */ \
-   "rjmp 2b\n"                  /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */ \
+  ".global sbis_rx\nsbis_rx:\n" \
+    "sbis %[RXPin], %[RXBit]\n" /* Loop as long as rx bit is low */ \
+    "rjmp 2b\n"                 /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */ \
     store_brrl                  /* Store r27 to BRRL register */ \
- "3: " \
-   "sbiw r26, 1\n"              /* Drain input: run down X for 25.6 rx bits (256/8 * 4 c/5 c) */ \
-   "brne 3b\n"                  /* 4-cycle loop */
+  "3: " \
+    "sbiw r26, 1\n"             /* Drain input: run down X for 25.6 rx bits (256/8 * 4 c/5 c) */ \
+    "brne 3b\n"                 /* 4-cycle loop */
 
 #endif // AUTOBAUD
-
 
 #if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
 
@@ -1776,7 +1784,7 @@ int main(void) {
 #define N_not_IO_CSRC 0
 #endif
 
-// Less than 3 regs to be initialised outside I/O space? Assign all directly
+// Fewer than 3 regs to be initialised outside I/O space? Assign all directly
 #if N_not_IO_BRRL+N_not_IO_BRRH+N_not_IO_CSRA+N_not_IO_CSRB+N_not_IO_CSRC < 3
 
   asm volatile(
@@ -1791,7 +1799,7 @@ int main(void) {
     ldi(r24, hi8(%[baud_setting]))
     out_ubrrnh(r24)             // UBRRnH = BAUD_SETTING>>8;
 #endif
- ".global ldi_baud\nldi_baud: " // Mark location of baud setting
+  ".global ldi_baud\nldi_baud:\n"
     ldi(r24, lo8(%[baud_setting]))
     out_ubrrnl(r24)             // UBRRnL = BAUD_SETTING & 0xff;
 #endif // AUTOBAUD
@@ -1828,7 +1836,7 @@ int main(void) {
     "ldi r27, hi8(%[brrl_val])\n"
     "std Z+%[brrh_off], r27\n"
 #endif
-  ".global ldi_baud\nldi_baud: " // Mark location of baud setting
+  ".global ldi_baud\nldi_baud: "
     "ldi r27, lo8(%[brrl_val])\n"
     "std Z+%[brrl_off], r27\n"
 #endif // AUTOBAUD
@@ -1876,13 +1884,15 @@ int main(void) {
   asm volatile(
     "ldi r30, lo8(%[base])\n"   // Load Z for st Z+offset, r27
     "ldi r31, hi8(%[base])\n"
-  ".global ldi_linlbt\nldi_linlbt: " // Mark location of LINLBT setting
+#if AUTOBAUD
     "ldi r27, %[btr_val]\n"
     "std Z+%[btr_off], r27\n"
-#if AUTOBAUD
     autobaud("std Z+%[brrl_off], r27\n")
 #else
-  ".global ldi_linbaud\nldi_linbaud: " // Mark location of LIN baud setting
+  ".global ldi_linlbt\nldi_linlbt:\n"
+    "ldi r27, %[btr_val]\n"
+    "std Z+%[btr_off], r27\n"
+  ".global ldi_linbaud\nldi_linbaud:\n"
     "ldi r27, %[brrl_val]\n"
     "std Z+%[brrl_off], r27\n"
 #endif
@@ -2050,6 +2060,7 @@ int main(void) {
       get_sync();               // Covers the rest, eg, STK_ENTER_PROGMODE, STK_GET_SYNC, ...
     }
 
+    asm volatile(".global ldi_stk_ok\nldi_stk_ok:\n" :::);
     putch(STK_OK);
   }
 }
@@ -2078,7 +2089,7 @@ void putch(char chr) {
     "sec\n"                     // Set carry (for start bit)
   "1: "
     "brcc 2f\n"
-  ".global cbi_tx\ncbi_tx: "    // Mark location of cbi tx opcode
+  ".global cbi_tx\ncbi_tx:\n"
     "cbi %[TXPort], %[TXBit]\n" // Set carry puts line low
     "rjmp 3f\n"
   "2: "
@@ -2096,7 +2107,7 @@ void putch(char chr) {
 
   "bitDelay: \n"
 #if B_EXTRA == 1 || B_EXTRA == 2
-    ".global swio_extra\nswio_extra: " // Mark location of SWIO extra delay
+  ".global swio_extra12\nswio_extra12:\n"
 #endif
 #if B_EXTRA & 1
     "nop\n"
@@ -2107,7 +2118,7 @@ void putch(char chr) {
     ".word 0xd000\n"            // "rcall .+0\n" was changed to rjmp .+0 when no code followed
   "halfBitDelay: "
 #if SWIO_B_VALUE > 0
-    ".global ldi_bvalue\nldi_bvalue: " // Mark location of ldi SWIO_B_VALUE
+  ".global ldi_bvalue\nldi_bvalue:\n"
     "ldi r25, %[bvalue]\n"
   "1: "
     "dec r25\n"
@@ -2170,14 +2181,15 @@ uint8_t getch(void) {
 #else // SWIO
 
     "ldi   r18, 9\n"            // 8 bit + 1 stop bit
-  ".global sbic_rx\nsbic_rx: "  // Mark location of sbic rx opcode
-  "1: "
+  "1:\n"
+  ".global sbic_rx\nsbic_rx:\n"
     "sbic  %[RXPin], %[RXBit]\n" // Wait for falling edge of start bit
     "rjmp  1b\n"
     "rcall halfBitDelay\n"      // Get to middle of start bit
   "2: "
     "rcall bitDelay\n"          // Wait 1 bit & sample
     "clc\n"
+  ".global sbic_rx_stop\nsbic_rx_stop:\n"
     "sbic  %[RXPin], %[RXBit]\n"
     "sec\n"
     "dec   r18\n"
@@ -2229,6 +2241,7 @@ void get_sync(void) {
   );
 #endif
 
+  asm volatile(".global ldi_stk_insync\nldi_stk_insync:\n" :::);
   putch(STK_INSYNC);
 }
 
@@ -2332,13 +2345,17 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
 
 #if PROTECTME
 #if START & 0xff
+  ".global cpi_startlo\ncpi_startlo:\n"
     "cpi  r30, lo8(%[start])\n" // zaddress >= START?
+  ".global ldi_starthi\nldi_starthi:\n"
     "ldi  r24, hi8(%[start])\n"
     "cpc  r31, r24\n"
 #else                           // Low byte of START zero, easier comparison
+  ".global cpi_starthi\ncpi_starthi:\n"
     "cpi  r31, hi8(%[start])\n" // zaddress >= START?
 #endif
 #if FLASHabove64k
+  ".global ldi_starthhz\nldi_starthhz:\n"
     "ldi  r24, hh8(%[start])\n"
     "cpc  r22, r24\n"           // RAMPZ
 #endif
