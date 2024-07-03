@@ -965,22 +965,11 @@
 #endif
 
 
-// STK500 command definitions
+// Urprotocol command definitions
 
-#define STK_GET_PARAMETER  0x41
-#define STK_SET_DEVICE     0x42
-#define STK_SET_DEVICE_EXT 0x45
 #define STK_ENTER_PROGMODE 0x50
 #define STK_LEAVE_PROGMODE 0x51
 #define STK_CHIP_ERASE     0x52
-#define STK_LOAD_ADDRESS   0x55
-#define STK_UNIVERSAL      0x56
-#define STK_UNIVERSAL_EXT  0x4d
-#define STK_UNIVERSAL_CE0  0xac
-#define STK_UNIVERSAL_CE1  0x80
-#define STK_PROG_PAGE      0x64
-#define STK_READ_PAGE      0x74
-#define STK_READ_SIGN      0x75
 
 #define UR_PROG_PAGE_EE    0x00
 #define UR_READ_PAGE_EE    0x01
@@ -1010,8 +999,8 @@
 
 #define UB_READ_FLASH         4u // Urboot always can read flash
 
-#if !ERASE_B4_WRITE              // No page erase during flash STK_PROG_PAGE
-#define UB_FLASH_LL_NOR       8u // Flash programming with STK_PROG_PAGE looks like NAND memory
+#if !ERASE_B4_WRITE              // No page erase during flash UR_PROG_PAGE_FL
+#define UB_FLASH_LL_NOR       8u // Flash programming looks like NAND memory
 #else
 #define UB_FLASH_LL_NOR       0u // Uploader needs to read flash first for sub-page modifications
 #endif
