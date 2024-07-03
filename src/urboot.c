@@ -2104,8 +2104,8 @@ void putch(char chr) {
 #if B_EXTRA == 2 || B_EXTRA == 3
     "rjmp .+0\n"
 #endif
-    "rcall halfBitDelay\n"
-    "halfBitDelay: "
+    ".word 0xd000\n"            // "rcall .+0\n" was changed to rjmp .+0 when no code followed
+  "halfBitDelay: "
 #if SWIO_B_VALUE > 0
     ".global ldi_bvalue\nldi_bvalue: " // Mark location of ldi SWIO_B_VALUE
     "ldi r25, %[bvalue]\n"
