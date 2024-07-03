@@ -454,7 +454,7 @@ atmega328p_8125khz_swio:
 # 512 bytes, hardware-supported bootloader
 #
 atmega328p_h:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 AUTOFRILLS=2,8..10,3 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p VBL=0 AUTOBAUD=1 AUTOFRILLS=2,8..10,3 NAME=$@
 
 ##
 # Boards below have external spi flash memory, which we use for over-the-air programming
@@ -464,25 +464,25 @@ atmega328p_h:
 # 512 bytes and DUAL=1
 #
 atmega328p_d:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p DUAL=1 AUTOFRILLS=5..10 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p VBL=0 DUAL=1 AUTOFRILLS=5..10 NAME=$@
 
 atmega328p_ad:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 DUAL=1 AUTOFRILLS=5..10 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p VBL=0 AUTOBAUD=1 DUAL=1 AUTOFRILLS=5..10 NAME=$@
 
 # These bootloaders can be derived from the version above
 anarduino_cs5_ad:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 SFMCS=ArduinoPin5 LED=AtmelPB1 DUAL=1 AUTOFRILLS=5..10 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p VBL=0 AUTOBAUD=1 SFMCS=ArduinoPin5 LED=AtmelPB1 DUAL=1 AUTOFRILLS=5..10 NAME=$@
 
 timeduino_cs8_ad urclock_cs8_ad moteino_cs8_ad:
-	$(MAKE) $(MK_OPTS) MCU=atmega328p AUTOBAUD=1 SFMCS=ArduinoPin8 LED=AtmelPB1 DUAL=1 AUTOFRILLS=5..10 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega328p VBL=0 AUTOBAUD=1 SFMCS=ArduinoPin8 LED=AtmelPB1 DUAL=1 AUTOFRILLS=5..10 NAME=$@
 
 
 
 atmega16a_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega16a EEPROM=0 AUTOFRILLS=0..10 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega16a VBL=0 EEPROM=0 AUTOFRILLS=0..10 NAME=$@
 
 atmega163_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega162 EEPROM=0 AUTOFRILLS=0..10 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega162 VBL=0 EEPROM=0 AUTOFRILLS=0..10 NAME=$@
 
 
 ##
@@ -493,7 +493,7 @@ atmega163_min:
 # 256 bytes == 2 pages (no EEPROM support)
 #
 atmega168_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega168 EEPROM=0 AUTOFRILLS=0..10 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega168 VBL=0 EEPROM=0 AUTOFRILLS=0..10 NAME=$@
 
 pro_8mhz lilypad:
 	$(MAKE) $(MK_OPTS) MCU=atmega168 F_CPU=8000000L SWIO=1 RX=ArduinoPin0 TX=ArduinoPin1 VBL=1 AUTOFRILLS=5..10 NAME=$@
@@ -569,7 +569,7 @@ luminet_baud9600:
 # 256 bytes == 2 pages (no EEPROM support)
 #
 atmega8_min:
-	$(MAKE) $(MK_OPTS) MCU=atmega8 EEPROM=0 AUTOFRILLS=0..5 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega8 VBL=0 EEPROM=0 AUTOFRILLS=0..5 NAME=$@
 
 ##
 # 320 bytes == 5 pages
@@ -584,7 +584,7 @@ atmega8_a:
 # 512 bytes, hardware-supported bootloader
 #
 atmega8_h:
-	$(MAKE) $(MK_OPTS) MCU=atmega8 AUTOBAUD=1 FRILLS=7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega8 VBL=0 AUTOBAUD=1 FRILLS=7 NAME=$@
 
 ##
 # ATmega88
@@ -609,7 +609,7 @@ atmega88_a:
 # 512 bytes, hardware-supported bootloader
 #
 atmega88_h:
-	$(MAKE) $(MK_OPTS) MCU=atmega88 AUTOBAUD=1 FRILLS=7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega88 VBL=0 AUTOBAUD=1 FRILLS=7 NAME=$@
 
 ##
 # Atmega32 (used to be listed with unusual F_CPU=11059200L)
@@ -634,7 +634,7 @@ atmega32_a:
 # 512 bytes, hardware-supported bootloader
 #
 atmega32_h:
-	$(MAKE) $(MK_OPTS) MCU=atmega32 AUTOBAUD=1 FRILLS=7 NAME=$@
+	$(MAKE) $(MK_OPTS) MCU=atmega32 VBL=0 AUTOBAUD=1 FRILLS=7 NAME=$@
 
 ##
 # 1284p/644p boards have a (too big) min bootloader size of 1k and a page size of 256
