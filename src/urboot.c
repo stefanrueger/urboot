@@ -32,11 +32,13 @@
  * Supported and tested (for u8.0)
  *  - ATmega328P (Urclock, UrSense, UrclockMini, Uno, Duemilanove, Anarduino, Moteino, Jeenode etc)
  *  - ATmega328PB
+ *  - ATmega1284 (MightyCore)
  *  - ATmega1284P (UrclockMega, MoteinoMega, MightyCore)
  *  - ATmega2560 (Mega R3)
- *  - ATtiny85 (Digispark)
+ *  - ATtiny85 (Digispark, MicroCore)
  *  - ATtiny167 (Digispark Pro)
  *  - ATmega16 (MightyCore)
+ *  - ATmega16A (MightyCore)
  *  - ATmega32A (MightyCore)
  *  - ATmega64 (MightyCore)
  *  - ATmega8535 (MightyCore)
@@ -49,6 +51,7 @@
  *  - ATtiny841 (4-page erase)
  *  - ATtiny4313 (smallest b/loaders owing to USART in bit-addressable I/O space)
  *  - ATtiny2313A (as above, tested 190 byte b/loader and 256 byte b/loader with EEPROM and LED)
+ *  - ATtiny2313
  *
  * Tested (for u7.7)
  *  - ATmega328P (Urclock, UrSense, UrclockMini, Uno, Duemilanove, Anarduino, Moteino, Jeenode etc)
@@ -81,21 +84,21 @@
  *   at90pwm3b at90pwm81 at90scr100 at90usb1286 at90usb1287 at90usb162 at90usb646 at90usb647
  *   at90usb82 ata5272 ata5505 ata5702m322 ata5782 ata5790 ata5790n ata5791 ata5795 ata5831 ata6285
  *   ata6286 ata6289 ata6612c ata6613c ata6614q ata6616c ata6617c ata664251 ata8210 ata8510
- *   atmega128 atmega1280 atmega1281 atmega1284 atmega1284rfr2 atmega128a atmega128rfr2 atmega161
- *   atmega163 atmega164a atmega164p atmega164pa atmega165 atmega165a atmega165pa atmega168
- *   atmega168a atmega168p atmega168pa atmega168pb atmega169 atmega169a atmega169p atmega169pa
- *   atmega16a atmega16hva atmega16hva2 atmega16hvb atmega16hvbrevb atmega16m1 atmega16u2
- *   atmega16u4 atmega2564rfr2 atmega256rfr2 atmega323 atmega324a atmega324pa atmega324pb atmega325
- *   atmega3250 atmega3250a atmega3250p atmega3250pa atmega325a atmega325p atmega325pa atmega328
- *   atmega329 atmega3290 atmega3290a atmega3290p atmega3290pa atmega329a atmega329p atmega329pa
- *   atmega32c1 atmega32hvb atmega32hvbrevb atmega32m1 atmega32u2 atmega32u4 atmega32u6 atmega406
- *   atmega48 atmega48a atmega48p atmega48pa atmega48pb atmega640 atmega644 atmega644a atmega644p
- *   atmega644pa atmega644rfr2 atmega645 atmega6450 atmega6450a atmega6450p atmega645a atmega645p
- *   atmega649 atmega6490 atmega6490a atmega6490p atmega649a atmega649p atmega64a atmega64c1
- *   atmega64hve atmega64hve2 atmega64m1 atmega64rfr2 atmega8 atmega8515 atmega88 atmega88a
- *   atmega88p atmega88pa atmega88pb atmega8a atmega8hva atmega8u2 attiny13 attiny24 attiny24a
- *   attiny25 attiny261 attiny261a attiny43u attiny44 attiny441 attiny44a attiny45 attiny461
- *   attiny461a attiny48 attiny828 attiny84 attiny84a attiny861 attiny861a
+ *   atmega128 atmega1280 atmega1281 atmega1284rfr2 atmega128a atmega128rfr2 atmega161 atmega163
+ *   atmega164a atmega164p atmega164pa atmega165 atmega165a atmega165pa atmega168 atmega168a
+ *   atmega168p atmega168pa atmega168pb atmega169 atmega169a atmega169p atmega169pa atmega16hva
+ *   atmega16hva2 atmega16hvb atmega16hvbrevb atmega16m1 atmega16u2 atmega16u4 atmega2564rfr2
+ *   atmega256rfr2 atmega323 atmega324a atmega324pa atmega324pb atmega325 atmega3250 atmega3250a
+ *   atmega3250p atmega3250pa atmega325a atmega325p atmega325pa atmega328 atmega329 atmega3290
+ *   atmega3290a atmega3290p atmega3290pa atmega329a atmega329p atmega329pa atmega32c1 atmega32hvb
+ *   atmega32hvbrevb atmega32m1 atmega32u2 atmega32u4 atmega32u6 atmega406 atmega48 atmega48a
+ *   atmega48p atmega48pa atmega48pb atmega640 atmega644 atmega644a atmega644p atmega644pa
+ *   atmega644rfr2 atmega645 atmega6450 atmega6450a atmega6450p atmega645a atmega645p atmega649
+ *   atmega6490 atmega6490a atmega6490p atmega649a atmega649p atmega64a atmega64c1 atmega64hve
+ *   atmega64hve2 atmega64m1 atmega64rfr2 atmega8 atmega8515 atmega88 atmega88a atmega88p
+ *   atmega88pa atmega88pb atmega8a atmega8hva atmega8u2 attiny13 attiny24 attiny24a attiny25
+ *   attiny261 attiny261a attiny43u attiny44 attiny441 attiny44a attiny45 attiny461 attiny461a
+ *   attiny48 attiny828 attiny84 attiny84a attiny861 attiny861a
  *
  * How the bootloader works
  *
