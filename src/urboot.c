@@ -1754,7 +1754,7 @@ int main(void) {
     "sbic %[RXPin], %[RXBit]\n" /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
     "rjmp 1b\n" \
   "2: " \
-    adiw(r26, auto_inc)         /* Increment r26:27 so that final value of r27 is BRRL divisor */ \
+    adiw(r26, auto_inc)         /* Increment r27:26 so that final value of r27 is BRRL divisor */ \
   ".global sbis_rx\nsbis_rx:\n" \
     "sbis %[RXPin], %[RXBit]\n" /* Loop as long as rx bit is low */ \
     "rjmp 2b\n"                 /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */ \
