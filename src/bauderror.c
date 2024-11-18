@@ -26,6 +26,11 @@ void Usage(void);
 void fatal(const char *fmt, ...);
 extern int errno;
 
+
+// x, v, 2, b, s parameters to be printed on -p=...
+struct { int type, b_extra, b_value, brr, ns; } parm = { 0, -1, -1, -1, -1 };
+
+
 Uart_info *uinfo(const char *p) {
   for(size_t i=0; i<sizeof Uart_table/sizeof*Uart_table; i++)
     if(strcasecmp(Uart_table[i].avrname, p)==0)
@@ -53,11 +58,13 @@ int rawuartbrr(Uart_info *up, long f_cpu, long br, int nsamples) {
 int uartbrr(Uart_info *up, long f_cpu, long br, int nsamples) {
   int ret = rawuartbrr(up, f_cpu, br, nsamples), mxb = maxbrr(up);
 
-  return ret<0? 0: ret > mxb? mxb: ret;
+  parm.brr = ret<0? 0: ret > mxb? mxb: ret;
+  return parm.brr;
 }
 
 // Actual baud rate given f_cpu, desired baud rated and number 8..63 of samples
 long uartbaud(Uart_info *up, long f_cpu, long br, int nsamples) {
+  parm.ns = nsamples;
   return f_cpu/(nsamples*(uartbrr(up, f_cpu, br, nsamples) + 1));
 }
 
@@ -73,7 +80,7 @@ int uart2x(Uart_info *up, long f_cpu, long br, int u2x) {
   if(!u2x || !up->has_u2x)      // No choice: must use 1x mode
     return 0;
   if(u2x == 2)                  // No choice: must use 2x mode
-    return 0;
+    return 1;
   /*
    * Part can choose between UART2X = 1 (nsamples == 8) and UART2X = 0 (nsamples == 16) and the
    * user doesn't mind. Switch to 2x mode if error for normal mode is > 1.4% and error with 2x
@@ -155,7 +162,7 @@ int main(int argc, char **argv) {
   char *p;
 
   int u2x = 1, swio = 0, ppt = 0, ppm = 0, absnum = 0, verbose = 0, raw, mxb, smp;
-  const char *mcu = "ATmega328P", *errstr = NULL, *mode = "UNKNOWN";
+  const char *mcu = "ATmega328P", *errstr = NULL, *mode = "UNKNOWN", *pparms = NULL;
   long f_cpu = 16000000L, brate = 115200L, gotbaud = 123L;
   double err;
 
@@ -183,6 +190,12 @@ int main(int argc, char **argv) {
           if(!*p || p[1] || *p < '0' || *p > '2')
             fatal("unknown value for -u: must be 0, 1 or 2");
           u2x = *p-'0';
+          break;
+        case 'p':
+          if(*++p=='=')
+            p++;
+          pparms = p;
+          p=""-1;
           break;
         case 'v':
           verbose++;
@@ -228,7 +241,7 @@ int main(int argc, char **argv) {
     up->brr_is12bit = 0;
 
   if(!swio) {
-    switch(up->uarttype) {
+    switch((parm.type = up->uarttype)) {
     case 0:
       swio = 1;
       break;
@@ -274,8 +287,11 @@ int main(int argc, char **argv) {
      errstr = "baud rate too fast for SWIO";
     else if(b_extra > 5 || b_extra < 0)
       errstr = "baud rate incompatible with F_CPU for SWIO";
-    else
+    else {
+      parm.b_value = b_value;
+      parm.b_extra = b_extra;
       gotbaud = f_cpu/(swio_cpb(up, b_value) + b_extra);
+    }
     mode = "SWIO";
   }
 
@@ -289,7 +305,23 @@ int main(int argc, char **argv) {
   else if(err < -1000)
     err = -1000;
 
-  if(verbose) {
+  if(pparms) {
+    for(const char *p = pparms; *p; p++) {
+      if(*p=='%' && p[1]) {
+        switch(p[1]) {
+        case 't': printf("%d", parm.type); break;
+        case 'x': printf("%d", parm.b_extra); break;
+        case 'v': printf("%d", parm.b_value); break;
+        case 'b': printf("%d", parm.brr); break;
+        case 's': printf("%d", parm.ns); break;
+        default:  printf("%c", p[1]);
+        }
+        p++;
+      } else
+        printf("%c", *p);
+    }
+    printf("\n");
+  } else if(verbose) {
     if(errstr)
       printf("The %s @ %ld Hz cannot create %s %ld baud: %s\n", mcu, f_cpu, mode, brate, errstr);
     else {
@@ -319,11 +351,12 @@ void Usage() {
     "Options:\n",
     "    -f=<F_CPU> Clock frequency (default 16 MHz) of <mcuname> (default ATmega328P)\n",
     "    -b=<baud>  Desired baud rate <baud> (default 115200 baud)\n",
+    "    -u=[0|1|2] Assume UART2X=<u> for classic UART part, default 1 (choose best)\n",
     "    -s         Software I/O instead of UART\n",
-    "    -a         Print absolute error, not a signed error\n"
-    "    -t         Print integer error per thousand, eg, -12 means -1.2%\n"
-    "    -m         Print integer error per million, eg, +4999 means +0.4999%\n"
-    "    -u=[0|1|2] Assume UART2X=<u> for classic UART part\n",
+    "    -a         Print absolute error, not a signed error\n",
+    "    -t         Print integer error per thousand, eg, -12 means -1.2%\n",
+    "    -m         Print integer error per million, eg, +4999 means +0.4999%\n",
+    "    -p=<str>   Print with %t=type, %x=b_extra, %v=b_value, %b=BRR, %s=samples\n",
     "    -v         Verbose mode\n",
     NULL
   };
