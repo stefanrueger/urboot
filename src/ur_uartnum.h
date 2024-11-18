@@ -12,8 +12,8 @@
  * Known shortcut: pretends ATmega161 has no UBRR1H register rather than inventing a way to
  * encode and set the upper 4 bit of the register UBRRHI that is shared with UBRR0H.
  *
- * v 1.39
- * 03.07.2024
+ * v 1.41
+ * 18.11.2024
  *
  */
 
@@ -7811,7 +7811,7 @@
 #warning UARTNUM value not recognised
 #endif
 
-#elif defined(__AVR_AVR16EB14__)
+#elif defined(__AVR_AVR16EB14__) || defined(__AVR_AVR32EB14__)
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UARTn_base  _uad(0x800)
@@ -7947,7 +7947,8 @@
 #warning UARTNUM value not recognised
 #endif
 
-#elif defined(__AVR_AVR16EB20__) || defined(__AVR_AVR16EB28__) || defined(__AVR_AVR16EB32__)
+#elif defined(__AVR_AVR16EB20__) || defined(__AVR_AVR16EB28__) || defined(__AVR_AVR16EB32__) || \
+  defined(__AVR_AVR32EB20__) || defined(__AVR_AVR32EB28__) || defined(__AVR_AVR32EB32__)
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UARTn_base  _uad(0x800)
@@ -8290,7 +8291,8 @@
 #warning UARTNUM value not recognised
 #endif
 
-#elif defined(__AVR_AVR32DA28__) || defined(__AVR_AVR64DA28__) || defined(__AVR_AVR128DA28__)
+#elif defined(__AVR_AVR32DA28__) || defined(__AVR_AVR64DA28__) || defined(__AVR_AVR128DA28__) || \
+  defined(__AVR_AVR128DA28S__)
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UARTn_base  _uad(0x800)
@@ -8398,7 +8400,8 @@
 #warning UARTNUM value not recognised
 #endif
 
-#elif defined(__AVR_AVR32DA32__) || defined(__AVR_AVR64DA32__) || defined(__AVR_AVR128DA32__)
+#elif defined(__AVR_AVR32DA32__) || defined(__AVR_AVR64DA32__) || defined(__AVR_AVR128DA32__) || \
+  defined(__AVR_AVR128DA32S__)
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UARTn_base  _uad(0x800)
@@ -8518,7 +8521,8 @@
 #warning UARTNUM value not recognised
 #endif
 
-#elif defined(__AVR_AVR32DA48__) || defined(__AVR_AVR64DA48__) || defined(__AVR_AVR128DA48__)
+#elif defined(__AVR_AVR32DA48__) || defined(__AVR_AVR64DA48__) || defined(__AVR_AVR128DA48__) || \
+  defined(__AVR_AVR128DA48S__)
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UARTn_base  _uad(0x800)
@@ -8718,7 +8722,7 @@
 #warning UARTNUM value not recognised
 #endif
 
-#elif defined(__AVR_AVR64DA64__) || defined(__AVR_AVR128DA64__)
+#elif defined(__AVR_AVR64DA64__) || defined(__AVR_AVR128DA64__) || defined(__AVR_AVR128DA64S__)
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UARTn_base  _uad(0x800)

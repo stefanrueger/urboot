@@ -8,8 +8,8 @@
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v 1.39
- * 03.07.2024
+ * v 1.41
+ * 18.11.2024
  *
  */
 
@@ -1081,11 +1081,17 @@
 #elif defined(__AVR_AVR32DU14__)
 #define __AVR_DEVICE_NAME__ avr32du14
 
+#elif defined(__AVR_AVR32EB14__)
+#define __AVR_DEVICE_NAME__ avr32eb14
+
 #elif defined(__AVR_AVR32DD20__)
 #define __AVR_DEVICE_NAME__ avr32dd20
 
 #elif defined(__AVR_AVR32DU20__)
 #define __AVR_DEVICE_NAME__ avr32du20
+
+#elif defined(__AVR_AVR32EB20__)
+#define __AVR_DEVICE_NAME__ avr32eb20
 
 #elif defined(__AVR_AVR32DA28__)
 #define __AVR_DEVICE_NAME__ avr32da28
@@ -1102,6 +1108,9 @@
 #elif defined(__AVR_AVR32EA28__)
 #define __AVR_DEVICE_NAME__ avr32ea28
 
+#elif defined(__AVR_AVR32EB28__)
+#define __AVR_DEVICE_NAME__ avr32eb28
+
 #elif defined(__AVR_AVR32DA32__)
 #define __AVR_DEVICE_NAME__ avr32da32
 
@@ -1116,6 +1125,9 @@
 
 #elif defined(__AVR_AVR32EA32__)
 #define __AVR_DEVICE_NAME__ avr32ea32
+
+#elif defined(__AVR_AVR32EB32__)
+#define __AVR_DEVICE_NAME__ avr32eb32
 
 #elif defined(__AVR_AVR32DA48__)
 #define __AVR_DEVICE_NAME__ avr32da48
@@ -1180,11 +1192,17 @@
 #elif defined(__AVR_AVR128DA28__)
 #define __AVR_DEVICE_NAME__ avr128da28
 
+#elif defined(__AVR_AVR128DA28S__)
+#define __AVR_DEVICE_NAME__ avr128da28s
+
 #elif defined(__AVR_AVR128DB28__)
 #define __AVR_DEVICE_NAME__ avr128db28
 
 #elif defined(__AVR_AVR128DA32__)
 #define __AVR_DEVICE_NAME__ avr128da32
+
+#elif defined(__AVR_AVR128DA32S__)
+#define __AVR_DEVICE_NAME__ avr128da32s
 
 #elif defined(__AVR_AVR128DB32__)
 #define __AVR_DEVICE_NAME__ avr128db32
@@ -1192,11 +1210,17 @@
 #elif defined(__AVR_AVR128DA48__)
 #define __AVR_DEVICE_NAME__ avr128da48
 
+#elif defined(__AVR_AVR128DA48S__)
+#define __AVR_DEVICE_NAME__ avr128da48s
+
 #elif defined(__AVR_AVR128DB48__)
 #define __AVR_DEVICE_NAME__ avr128db48
 
 #elif defined(__AVR_AVR128DA64__)
 #define __AVR_DEVICE_NAME__ avr128da64
+
+#elif defined(__AVR_AVR128DA64S__)
+#define __AVR_DEVICE_NAME__ avr128da64s
 
 #elif defined(__AVR_AVR128DB64__)
 #define __AVR_DEVICE_NAME__ avr128db64
