@@ -1818,11 +1818,12 @@ int main(void) {
     out_ucsrnc(r24)             // UCSRnC = UCSRnC_val;
 #endif
   ::
-#if !AUTOBAUD
-    [baud_setting] "n"(BAUD_SETTING),
-    [shared_setting] "n"((uint8_t) ((BAUD_SETTING>>8)<<4)),
-#endif
+#if AUTOBAUD
     [RXPin] "I"(_SFR_IO_ADDR(UR_PIN(RX))), [RXBit] "I"(UR_BIT(RX))
+#else
+    [baud_setting] "n"(BAUD_SETTING),
+    [shared_setting] "n"((uint8_t) ((BAUD_SETTING>>8)<<4))
+#endif
   : "r26", "r27", "r24"
   );
 
