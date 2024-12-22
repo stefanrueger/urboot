@@ -21,8 +21,8 @@
  *     + Subroutine pgm_write_page(sram, progmem) for applications so they can change themselves:
  *       on many MCUs the SPM write flash only works when called from the bootloader section
  *     + Dual programming from external SPI flash memory for over-the-air programming
- *     + Template bootloader with nops that will be replaced "on the fly" with code to manipulate
- *       the right LED/TX/RX/CS pins at bootloader-burning time (see accompanying urloader sketch)
+ *     + Template bootloader with nops that can be replaced with opcodes to set/clear the right
+ *       LED or CS pins
  *     + Saves the reset flags in R2 for inspection by the application via the .init0 section
  *     + Bootloader protects itself from overwriting
  *     + Automatic host baud rate detection
@@ -166,13 +166,11 @@
  *   - The uploading program is assumed to be avrdude with the urclock programmer (-c urclock)
  *
  *   - A bootloader with dual-boot support needs to know which port pin is assigned to the chip
- *     select of the SPI flash memory, which pin drives a blinking LED (if wanted), where the tx/rx
- *     lines are for serial communication, how long the watchdog timeout should be etc. This
- *     explodes the option space for this bootloader. Using the accompanying urloader sketch for
- *     burning this bootloader onto a board mitigates this somewhat by the use of "template"
- *     bootloaders (see TEMPLATE option). Urloader lets you interactively set at bootloader burn
- *     time which pins it should set/clear for LED, chip select, and RX/TX (for software serial
- *     I/O). Urloader knows some common boards and offers the right bootloaders for them.
+ *     select of the SPI flash memory, which pin drives a blinking LED (if wanted), where the
+ *     RX/TX lines are for serial communication, how long the watchdog timeout should be etc. This
+ *     explodes the option space for this bootloader. Template bootloaders (see TEMPLATE option)
+ *     provide space holders for code that sets/clears the right pin for LED and chip select for
+ *     dual boot. In most cases they won't work unmodified, though.
  *
  *   - Remember that dual-boot bootloaders communicate with the SPI flash memory at all external
  *     and WDT resets. Therefore, all other attached SPI devices need their chip select pulled
@@ -203,8 +201,7 @@
  *     set to make the processor jump to the reset vector as opposed to the bootloader. And ensure
  *     that the protection bits in the lock byte actually allow code be written into the bootloader
  *     section with SPM instructions. Otherwise the extra space in the boot section that is freed
- *     by smaller vector bootloaders cannot be used. The urloader sketch sets fuses and lock bits
- *     appropriately when burning a vector bootloader onto your board. More on VBLs below.
+ *     by smaller vector bootloaders cannot be used. More on VBLs below.
  *
  *   - The code makes several assumptions that reduce the code size (eg, no interrupts can occur,
  *     SP points to RAMEND). They are true after a hardware reset, but will not necessarily be true
@@ -229,18 +226,18 @@
  * Rewritten entirely by Stefan Rueger in 2016
  *
  *
- * There are now 6 main optional features (EEPROM support, vector bootloader, software serial code,
- * dual boot from external flash, on-the-fly setting of LED/TX/RX/CS pins at burn-time and a
- * pgm_write_page() function that can be called from the application code) plus a lot of fine-
- * grained compile-time options to control size and behaviour. The first three already existed, but
- * didn't necessarily fit into 512 bytes. Now most features fit into 512 bytes.
+ * There are now 6 main optional features (EEPROM support, vector bootloader, software serial
+ * code, dual boot from external flash, template bootloaders and a pgm_write_page() function that
+ * can be called from the application code) plus a lot of fine- grained compile-time options to
+ * control size and behaviour. The first three already existed, but didn't necessarily fit into
+ * 512 bytes. Now most features fit into 512 bytes.
  *
  * Urboot version number in the object code
  *
  * I put my own spiel on version numbers so that they are encoded in one byte (bit packing) freeing
  * one byte for a description of the features of the specific bootloader such as VBL, DUAL, EEPROM,
  * ... This is useful, eg, to detect whether a bootloader is a VBL or provides the pgm_write_page()
- * function. The urboot-gcc wrapper makes use of that feature, as does the urloader program.
+ * function. The urboot-gcc wrapper makes use of that feature.
  *
  *
  * Condition to enter the bootloader
@@ -289,9 +286,9 @@
  * 7.3 smr: added TEMPLATE feature
  *
  * Jul 2016
- * 7.2 smr: packed feature bits into urboot_version so that urloader displays them; new Atmel port
- *     port code (atmel_ports.h) so TX/RX/SFMCS all can be set same as LEDs; reformatted code;
- *     wrote urboot-gcc wrapper in perl and checked that code compiles for 110+ MCUs
+ * 7.2 smr: packed feature bits into urboot_version so that they can be displayed; new Atmel port
+ *     code (atmel_ports.h) so RX/TX/SFMCS all can be set in the same way as LEDs; reformatted
+ *     code; wrote urboot-gcc wrapper in perl and checked that code compiles for 110+ MCUs
  *
  * 7.1 smr: changed Makefile to work with new options; further reduced code size with careful
  *     recoding; rewrote eeprom access and moved address to r30; Adding 3-4 features keeps the code
@@ -600,7 +597,7 @@
 
 
 #if TEMPLATE
-// Different NOP codes (mov rN, rN) can be replaced on the fly by urloader
+// Different NOP codes (mov rN, rN) that can be replaced with sbi/cbi/out opcodes
 #define NOP_LED_SBIPORT() asm volatile("mov r0, r0\n")
 #define NOP_LED_CBIPORT() asm volatile("mov r1, r1\n")
 #define NOP_LED_SBIDDR()  asm volatile("mov r12, r12\n") // Once had asm("mov r2, %0\n") in code
@@ -1157,7 +1154,7 @@ void bitDelay();
  * AVR305: Half Duplex Compact Software UART (Rev. 0952C-AVR-0905). The equation for the delay
  * counter SWIO_B_VALUE = (((F_CPU/BAUD_RATE)-23+3)/6) from AVR305 is correct for the Mega
  * architecture with 16 bit PC. Different 8-bit AVR architecture families have slightly different
- * timings. I list the number of clock cycles for 1 tx/rx bit delay for parameter b = SWIO_B_VALUE
+ * timings. I list the number of clock cycles for 1 rx/tx bit delay for parameter b = SWIO_B_VALUE
  * below for tx and rx routines:
  *
  * clock cycles/bit  | tx       | rx      |

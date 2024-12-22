@@ -90,13 +90,11 @@ actual app is started. Here some choices for the first decision:
     urclock`
 
   - A bootloader with dual-boot support needs to know which port pin is assigned to the chip
-    select of the SPI flash memory, which pin drives a blinking LED (if wanted), where the tx/rx
-    lines are for serial communication, how long the watchdog timeout should be etc. This
-    explodes the option space for this bootloader. Using the accompanying urloader sketch for
-    burning this bootloader onto a board mitigates this somewhat by the use of "template"
-    bootloaders (see TEMPLATE option). Urloader lets you interactively set at bootloader burn
-    time which pins it should set/clear for LED, chip select, and RX/TX (for software serial
-    I/O). Urloader knows some common boards and offers the right bootloaders for them.
+    select of the SPI flash memory, which pin drives a blinking LED (if wanted), where the
+    RX/TX lines are for serial communication, how long the watchdog timeout should be etc. This
+    explodes the option space for this bootloader. Template bootloaders (see TEMPLATE option)
+    provide space holders for code that sets/clears the right pin for LED and chip select for
+    dual bootloaders. In most cases they won't work unmodified, though.
 
   - Remember that dual-boot bootloaders communicate with the SPI flash memory at all external
     and WDT resets. Therefore, all other attached SPI devices need their chip select pulled
@@ -123,12 +121,11 @@ actual app is started. Here some choices for the first decision:
 
     This should be the case with all regular sketches produced by avr-gcc. Vector bootloaders are
     also useful for devices with boot section support to allow them to use less space than the
-    smallest offered hardware-supported boot section. In this case ensure that the fuses are set to
-    make the processor jump to the reset vector as opposed to the bootloader. And ensure that the
-    protection bits in the lock byte actually allow code be written into the bootloader section
+    smallest offered hardware-supported boot section. In this case, the fuses must be set to
+    make the processor jump to the reset vector as opposed to the bootloader. Also, the
+    protection bits in the lock byte should allow code be written into the bootloader section
     with SPM instructions. Otherwise the extra space in the boot section that is freed by smaller
-    vector bootloaders cannot be used. The urloader sketch sets fuses and lock bits appropriately
-    when burning a vector bootloader onto your board.
+    vector bootloaders cannot be used.
 
   - The code makes several assumptions that reduce the code size (eg, no interrupts can occur, the `USART`
     character size register defaults to 8N1). They are true after a hardware reset, but will not

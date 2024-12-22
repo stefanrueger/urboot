@@ -305,7 +305,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    simplified the source code `urboot.c`.
 
    Burning a VBL-enabled urboot onto an MCU should in theory also require the jump to boot section
-   be burned to the reset vector. The accompanying `urloader` sketch does that.  However, one will
+   be burned to the reset vector. However, one will
    get away with not burning the reset jump address into the vector table, if the MCU flash is
    erased otherwise: erased words read `0xffff`, and although this is not an official opcode, it
    behaves as `sbrs r31, 7` (skip one instruction if bit 7 in R31 is set). Any reset to `0x0000` on
@@ -331,10 +331,9 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    which uses the Arduino Pin numbers that are available for some boards/MCUs.
 
    `TEMPLATE=1` creates a template bootloader with different nop opcodes (`mov rN,rN`) where the
-   `SFMCS` pin needs to be manipulated. These template bootloaders cannot be used as they are, but
-   the accompanying urloader sketch (to burn a template bootloader) allows the user to select the
-   CS pin of the flash memory. This will then replace the `mov rN, rN` opcodes with the right
-   `sbi`/`cbi` opcodes in the right places on the fly when burning the bootloader.
+   `SFMCS` pin needs to be manipulated. These template bootloaders cannot be used as they are;
+   only after replacing the `mov rN, rN` opcodes with the right `sbi`/`cbi`/`out` opcodes will
+   the bootloader be functional.
 
 
  - `PROTECTME=<1|0>`
@@ -503,9 +502,7 @@ The options below are frills, ie, not really essential for the functionality of 
    (`LEDPOLARITY=-1`) or high active otherwise (`LEDPOLARITY` undefined or set to 1). Using
    `TEMPLATE=1` is an alternative to specifying the LED pin at compile time. This creates a
    template bootloader with different nop opcodes (`mov rN,rN`) instead of code that operates the
-   LED. The urloader sketch to burn a template bootloader lets the user select/change the LED pin
-   and polarity. This will then replace the `mov rN, rN` opcodes with the right `sbi`/`cbi` opcodes
-   in the right places on the fly when burning the bootloader.
+   LED.
 
  - `QEXITEND=<0|1>` (quick exit on end)
 
