@@ -333,8 +333,40 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    `TEMPLATE=1` creates a template bootloader with different nop opcodes (`mov rN,rN`) where the
    `SFMCS` pin needs to be manipulated. These template bootloaders cannot be used as they are;
    only after replacing the `mov rN, rN` opcodes with the right `sbi`/`cbi`/`out` opcodes will
-   the bootloader be functional.
+   the bootloader be functional. Here the relevant replacement table for the code:
 
+   |Template code | Replacement code | Comment |
+   | :-- | :-- | :-- |
+   |`mov r5, r5` | `sbi <port>, <n>` | Set bit `n` of PORT address `<port>` (release CS)|
+   |`mov r6, r6` | `cbi <port>, <n>` | Clear bit `n` of PORT address `<port>` (assert CS)|
+   |`mov r7, r7` | `sbi <ddr>, <n>` | Set bit `n` of DDR address `<ddr>` (make CS output)|
+   |`mov r8, r8` | `out <port>, r1` | Reset all PORT bits: register R1 contains 0 |
+   |`mov r9, r9` | `out <ddr>, r1`  | Reset all DDR bits|
+
+   The corresponding opcodes are two-byte words. Note that the two-byte opcodes will appear
+   low-byte first in the template bootloader hex file, as AVRs generally are little endian.
+
+   |Template code | Opcode | Replacement opcode | Replacement code |
+   | :-- | :-- | :-- | :-- |
+   |`mov r5, r5` | `0x2c55` | `0b.1001.1010.PPPP.PNNN` | `sbi <PPPPP>, <NNN>` |
+   |`mov r6, r6` | `0x2c66` | `0b.1001.1000.PPPP.PNNN` | `cbi <PPPPP>, <NNN>` |
+   |`mov r7, r7` | `0x2c77` | `0b.1001.1010.DDDD.DNNN` | `sbi <DDDDD>, <NNN>` |
+   |`mov r8, r8` | `0x2c88` | `0b.1011.10P0.0001.PPPP` | `out <PPPPP>, r1` |
+   |`mov r9, r9` | `0x2c99` | `0b.1011.10D0.0001.DDDD` | `out <DDDDD>, r1` |
+
+   For example, if a board wants to use the `PC2` pin of the ATmega328P as chip select pin for the
+   SPI flash memory, this means that `NNN` is set to `010` (2) while `<port> PPPPP` is `01000`
+   (0x08) and `<ddr> DDDDD` is `00111` (0x07). The reason for the latter two is that for the
+   ATmega328P the address of PORT C is 0x08 and that of DDR C is 0x07:
+
+   ```
+   $ avrdude -qq -p atmega328p -c dryrun -T "regfile -a" | grep portc
+   I/O 0x06: portc.pinc
+   I/O 0x07: portc.ddrc
+   I/O 0x08: portc.portc
+   ```
+
+   Once these replacements are done in the template bootloader, it will be ready for use.
 
  - `PROTECTME=<1|0>`
 
@@ -499,10 +531,52 @@ The options below are frills, ie, not really essential for the functionality of 
    Light effects: `BLINK=1` toggles the activity LED during serial data I/O. The Option
    `LED=<pin>` sets the LED pin in terms of Atmel port and bit number as in, eg, `AtmelPB1` or
    `ArduinoPin9`. `LEDPOLARITY` specifies whether the LED is assumed to be low active
-   (`LEDPOLARITY=-1`) or high active otherwise (`LEDPOLARITY` undefined or set to 1). Using
-   `TEMPLATE=1` is an alternative to specifying the LED pin at compile time. This creates a
+   (`LEDPOLARITY=-1`) or high active otherwise (`LEDPOLARITY` undefined or set to 1).
+
+   Using `TEMPLATE=1` is an alternative to specifying the LED pin at compile time. This creates a
    template bootloader with different nop opcodes (`mov rN,rN`) instead of code that operates the
-   LED.
+   LED. The desired high-active LED can be addressed with the following replacements:
+
+   |Template code | Replacement code | Comment |
+   | :-- | :-- | :-- |
+   |`mov r0, r0` | `sbi <port>, <n>` | Set bit `n` of PORT address `<port>` (switch LED on)|
+   |`mov r1, r1` | `cbi <port>, <n>` | Clear bit `n` of PORT address `<port>` (switch LED off)|
+   |`mov r12, r12` | `sbi <ddr>, <n>` | Set bit `n` of DDR address `<ddr>` (make LED pin output)|
+   |`mov r3, r3` | `out <port>, r1` | Reset all PORT bits: register R1 contains 0 |
+   |`mov r4, r4` | `out <ddr>, r1`  | Reset all DDR bits|
+
+   The corresponding opcodes are two-byte words. Note that the two-byte opcodes will appear
+   low-byte first in the template bootloader hex file, as AVRs generally are little endian. The
+   last two replacements for resetting PORT/DDR will only be needed for certain dual-boot
+   bootloaders.
+
+   |Template code | Opcode | Replacement opcode | Replacement code |
+   | :-- | :-- | :-- | :-- |
+   |`mov r0, r0` | `0x2c00` | `0b.1001.1010.PPPP.PNNN` | `sbi <PPPPP>, <NNN>` |
+   |`mov r1, r1` | `0x2c11` | `0b.1001.1000.PPPP.PNNN` | `cbi <PPPPP>, <NNN>` |
+   |`mov r12, r12` | `0x2ccc` | `0b.1001.1010.DDDD.DNNN` | `sbi <DDDDD>, <NNN>` |
+   |`mov r3, r3` | `0x2c33` | `0b.1011.10P0.0001.PPPP` | `out <PPPPP>, r1` |
+   |`mov r4, r4` | `0x2c44` | `0b.1011.10D0.0001.DDDD` | `out <DDDDD>, r1` |
+
+   For example, if a board wants to use the `PB5` pin of the ATmega328P as high-active LED pin,
+   this means that `NNN` is set to `101` (5) while `<port> PPPPP` is `00101` (0x05) and `<ddr>
+   DDDDD` is `00100` (0x04). AVRDUDE reveals the latter two addresses, eg, by
+
+   ```
+   $ avrdude -qq -p atmega328p -c dryrun -T "regfile -a" | grep portb
+   I/O 0x03: portb.pinb
+   I/O 0x04: portb.ddrb
+   I/O 0x05: portb.portb
+   ```
+
+   Once these replacements are done, the bootloader will blink the desired LEDs during operation.
+   A low-active LED needs a slightly different replacement table for which the first two rows read
+
+   |Template code | Opcode | Replacement opcode | Replacement code |
+   | :-- | :-- | :-- | :-- |
+   |`mov r0, r0` | `0x2c00` | `0b.1001.1000.PPPP.PNNN` | `cbi <PPPPP>, <NNN>` |
+   |`mov r1, r1` | `0x2c11` | `0b.1001.1010.PPPP.PNNN` | `sbi <PPPPP>, <NNN>` |
+
 
  - `QEXITEND=<0|1>` (quick exit on end)
 
