@@ -330,7 +330,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    select line: either use a constant such as `AtmelPB0` (port B, pin 0) or, eg, `ArduinoPin8`,
    which uses the Arduino Pin numbers that are available for some boards/MCUs.
 
-   <p id="template_sfm"></p>
+   <a id="template_sfm"></a>
    `TEMPLATE=1` creates a template bootloader with different nop opcodes (`mov rN,rN`) where the
    `SFMCS` pin needs to be manipulated. These template bootloaders cannot be used as they are;
    only after replacing the `mov rN, rN` opcodes with the right `sbi`/`cbi`/`out` opcodes will
@@ -535,7 +535,7 @@ The options below are frills, ie, not really essential for the functionality of 
    `ArduinoPin9`. `LEDPOLARITY` specifies whether the LED is assumed to be low active
    (`LEDPOLARITY=-1`) or high active otherwise (`LEDPOLARITY` undefined or set to 1).
 
-   <p id="template_led"></p>
+   <a id="template_led"></a>
    Using `TEMPLATE=1` is an alternative to specifying the LED pin at compile time. This creates a
    template bootloader with different nop opcodes (`mov rN,rN`) instead of code that operates the
    LED. The desired high-active LED can be addressed with the following replacements:
