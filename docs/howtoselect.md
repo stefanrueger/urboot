@@ -73,12 +73,13 @@ there is. However, consider carefully what you need:
  - **LED** flashing during upload/download costs six additional code bytes. The novelty of
    exercising a LED during upload/download wears quickly off, and projects can not normally
    re-purpose the LED line unless they accept it being toggled as output during external reset.
- - **Template bootloaders.** Pre-compiled bootloaders labelled `_lednop` or `_template` contain
-   nops as placeholders so that just before flashing them, another program can replace the nops
-   with code to pluck the right LED line and/or CS line needed for dual boot. They normally occupy
-   the same space as bootloaders that are compiled for a specific LED and/or CS line, but can be
-   slightly bigger than those with known LED/CS lines, particularly when these are known to sit on
-   the same port.
+ - **[Template](https://github.com/stefanrueger/urboot/blob/main/docs/makeoptions.md#template_sfm)
+   bootloaders.** Pre-compiled bootloaders labelled `_lednop` or `_template` contain nops as
+   placeholders so that just before flashing them, another program can replace the nops with code
+   to pluck the right LED line and/or CS line needed for dual boot. They normally occupy the same
+   space as bootloaders that are compiled for a specific LED and/or CS line, but can be slightly
+   bigger than those with known LED/CS lines, particularly when these are known to sit on the same
+   port.
  - **Frills.** These are features that are not necessary for the working of the bootloader, for
    example that the application is started sooner after upload, or that frame errors in the serial
    communication get the bootloader to exit quickly. It is OK not to have these frills, particlarly

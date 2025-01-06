@@ -15,8 +15,10 @@
      + Subroutine `pgm_write_page(sram, progmem)` for applications so they can change themselves:
        on many MCUs the SPM write flash only works when called from the bootloader section (default on)
      + Dual programming from external SPI flash memory for over-the-air programming
-     + Template bootloader with nops that can be replaced with opcodes to set/clear the right
-       LED or CS pins
+     + [Template](https://github.com/stefanrueger/urboot/blob/main/docs/makeoptions.md#template_sfm)
+       bootloader with nops that can be replaced with opcodes to set/clear the right
+       [LED](https://github.com/stefanrueger/urboot/blob/main/docs/makeoptions.md#template_led) or
+       [CS pins]((https://github.com/stefanrueger/urboot/blob/main/docs/makeoptions.md#template_sfm)
      + Saves the reset flags in R2 for inspection by the application via the .init0 section (default on)
      + Bootloader protects itself from overwriting (default on)
      + Automatic host baud rate detection
