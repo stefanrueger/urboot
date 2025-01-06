@@ -18,7 +18,7 @@
      + [Template](https://github.com/stefanrueger/urboot/blob/main/docs/makeoptions.md#template_sfm)
        bootloader with nops that can be replaced with opcodes to set/clear the right
        [LED](https://github.com/stefanrueger/urboot/blob/main/docs/makeoptions.md#template_led) or
-       [CS pins]((https://github.com/stefanrueger/urboot/blob/main/docs/makeoptions.md#template_sfm)
+       [CS pins](https://github.com/stefanrueger/urboot/blob/main/docs/makeoptions.md#template_sfm)
      + Saves the reset flags in R2 for inspection by the application via the .init0 section (default on)
      + Bootloader protects itself from overwriting (default on)
      + Automatic host baud rate detection
