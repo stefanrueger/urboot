@@ -75,20 +75,26 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    alternative assignments lined out in the data sheet.
 
    If `AUTOBAUD` is set then the generated bootloader will try to initialise the UART with the
-   host communication speed that the bootloader augurs from the first byte that is expected from
-   the host at runtime; the code utilises that the lower 5 bit of that byte (`0x30` =
-   `STK_GET_SYNC`) are `0x10`. `AUTOBAUD` is a bit of a misnomer, as urboot only offers 256
-   different baud rates. Moreover, these must be compatible with `F_CPU`, namely `F_CPU/8`,
-   `F_CPU/16`, `F_CPU/24`, ..., `F_CPU/2048`. The set of compatible baud rates comes with a narrow
-   tolerance band of +/-1.5%. As a consequence, a 16 MHz MCU can only safely communicate in the
-   following 33 baud rate intervals (the last one is the union of 224 overlapping individual baud
-   rate intervals):
+   host communication speed that the bootloader augurs from the first byte that the host is
+   expected to send at runtime. The code utilises that the lower 5 bits of that first byte (`0x30`
+   = `STK_GET_SYNC`) are `10000`. The UART idles transmission at logical 1, therefore using a data
+   start bit of 0, and sends the least significant bit first. This means that the above bit
+   pattern of the first byte creates an initial drop of the MCU RX signal with a duration of 5
+   bits (start bit and the four least significant zero bits of the first byte) divided by the host
+   baud rate. `AUTOBAUD` urboot bootloaders measure this duration and derive the correspondingly
+   needed UART baud rate division factor from it.
+
+   `AUTOBAUD` is a bit of a misnomer as urboot can only select one of 256 different baud rates at
+   run time that are compatible with `F_CPU`, namely `F_CPU/8`, `F_CPU/16`, `F_CPU/24`, ...,
+   `F_CPU/2048`. Each of these baud rates comes with a tolerance band of typically +/-1.5%. As a
+   consequence, a 16 MHz MCU can only safely communicate in the following 33 baud rate intervals
+   (the last one is the union of 224 overlapping individual baud rate intervals):
 
    ```
      [1970000, 2030000] = [0.985*F_CPU/(8*1), 1.015*F_CPU/(8*1)], F_CPU = 16 MHz
      [ 985000, 1015000] = [0.985*F_CPU/(8*2), 1.015*F_CPU/(8*2)]
-     [ 656667,  676667]
-     [ 492500,  507500]
+     [ 656667,  676667] = [0.985*F_CPU/(8*3), 1.015*F_CPU/(8*3)]
+     [ 492500,  507500] = ...
      [ 394000,  406000]
      [ 328333,  338333]
      [ 281429,  290000]
@@ -116,34 +122,34 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
      [  67931,   70000]
      [  65667,   67667]
      [  63548,   65484]
-     [  61563,   63437]
+     [  61563,   63437] = [0.985*F_CPU/(8*32), 1.015*F_CPU/(8*32)]
      [  7695,    61515] = [0.985*F_CPU/(8*256), 1.015*F_CPU/(8*33)]
    ```
 
    Notice that the ubiquitous 115,200 baud is actually out of specs for popular 16 MHz MCU builds.
    In practice, tolerances of up to 2.5% may actually work, though that is not recommended. Also
-   signal noise and cable length play a big role in whether communication is stable. The maximum
-   permitted baud rate of `F_CPU/8` may not always work. In general, lower baud rates are expected
-   to work better, at least they will exhibit a lower quantisation error. If the chosen oscillator
-   source has an unknown but high deviation from the nominal frequency (as is the case for the
-   internal 8 MHz oscillators of a typical MCU) then it is safer to choose a host computer baud
-   rate in the last interval of the above table, ie, a baud rate of less than `F_CPU/260`. In the
-   case of an 8 MHz internal oscillator with an autobaud bootloader this would be, eg, 28,800 baud,
-   though 57,600 baud are likely to work and 115,200 baud might work. External oscillators usually
-   have a good tolerance, even a resonator with a 2000 ppm error will only produce an additional
-   deviation error of 0.2% in addition to the quantisation error caused by limited baud rate
-   division choices for autobaud bootloaders.
+   signal noise and long cables can render communication instable. The maximum permitted baud rate
+   of `F_CPU/8` may not always work. In general, lower baud rates are expected to work better, at
+   least they will exhibit a lower quantisation error. If the chosen oscillator source has an
+   unknown but high deviation from the nominal frequency (as is the case for the internal 8 MHz
+   oscillators of a typical MCU) then it is safer to choose a host computer baud rate in the last
+   interval of the above table, ie, a baud rate of less than `F_CPU/260`. In the case of an 8 MHz
+   internal oscillator with an autobaud bootloader this would be, eg, 28,800 baud, though 57,600
+   baud are likely to work and 115,200 baud might work. External oscillators usually are quite
+   close to the nominal frequency: even a low-quality resonator with a 2000 ppm error will only
+   add a deviation error of 0.2% to the quantisation error caused by limited baud rate division
+   choices for autobaud bootloaders.
 
-   The above set of baud rates is generated by setting `UART2X` to 1, the default when `AUTOBAUD` has
-   been set. Setting `UART2X=0` saves 4 bytes of code and has a higher tolerance of 2% error but will
-   restrict available baud rates to half of the above baud rates: `F_CPU/16`, `F_CPU/32`, `F_CPU/48`,
-   ..., `F_CPU/4096`.
+   The above set of baud rates is generated by setting `UART2X` to 1, the default when `AUTOBAUD`
+   has been set. Setting `UART2X=0` saves 4 bytes of code but restricts the available baud rates
+   to half the speed of the above baud rates: `F_CPU/16`, `F_CPU/32`, `F_CPU/48`, ...,
+   `F_CPU/4096`.
 
-   In order for the `AUTOBAUD` feature to work, urboot will need to (and usually does) know the rx
-   line of the UART so it can measure the host's baud rate. In addition, the rx line needs to
-   reside on a port that is within the bit-addressable bytes of the MCU, which are typically
-   located in [0x20, 0x3f]. Therefore UARTs for which the rx pin is located on Port `H` and above
-   are not available for `AUTOBAUD`, eg, UART2 and UART3 of the ATmega2560.
+   In order for the `AUTOBAUD` feature to work, urboot will need to (and usually does) know the RX
+   line of the UART so it can measure the host's baud rate. In addition, the RX line needs to
+   reside on a port that is within the bit-addressable bytes of the MCU, which are located in
+   [0x20, 0x3f] for classic MCUs. Therefore UARTs for which the RX pin is located on Port `H` and
+   above are not available for `AUTOBAUD`, eg, UART2 and UART3 of the ATmega2560.
 
    If `AUTOBAUD` is not set or if it is set to 0, the code automatically selects reasonably good
    settings to match the desired fixed baud rate `BAUD_RATE`. In the absence of `AUTOBAUD` if
@@ -170,11 +176,11 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    `SWIO=1` creates code for software I/O. That is not only useful for those MCUs that don't have
    a UART, but also for those combinations of `F_CPU` and `BAUD_RATE` where a UART would create
    too large quantisation errors for the baud rate. It might also be necessary to resort to
-   software I/O when the board uses the MCU's rx and tx lines otherwise. The options `RX` and `TX`
+   software I/O when the board uses the MCU's RX and TX lines otherwise. The options `RX` and `TX`
    specify which pins are used for software I/O. The syntax is the same as with `LED` and `SFMCS`:
    Use any pin descriptor in Atmel format such as `AtmelPB2` or as Arduino pin number as in
    `TX=ArduinoPin2`. The default baud rate depends on the CPU frequency of the board and is 115,200
-   for 8 MHz or above. Again, the ports of the rx and tx line need to be below Port `H` for
+   for 8 MHz or above. Again, the ports of the RX and TX line need to be below Port `H` for
    software I/O to work.
 
    Admissible baud rates also depend on the CPU frequency. The table below details the approximate
