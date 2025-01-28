@@ -1651,7 +1651,7 @@ unsigned const int __attribute__ ((section(".version"))) urboot_version[] = {
   :: "n"(sizeof urboot_version+appstart_vec_loc), "r"(mcusr) \
   )
 #else
-#define jmpToAppOpcode() asm(
+#define jmpToAppOpcode() asm( \
   ".global jmp_application\njmp_application:\n" \
     "jmp %0\n" \
   :: "n"(appstart_vec_loc), "r"(mcusr) \
