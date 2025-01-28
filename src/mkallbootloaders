@@ -11,31 +11,29 @@ rm -f /tmp/hex-check.txt
 
 make bauderror >& /dev/null || exit
 
-# Process the popular MCUs first
+# Process MCUs with high compilation effort first (eg, many configurations).
+# Each line is roughly 5% of overall CPU time for all 184 MCUs
 for mcu in \
-  atmega328p atmega1284p atmega644p atmega328pb attiny167 attiny85 attiny88 attiny84 \
-  attiny13 attiny13a attiny87 \
-  at90can128 at90can32 at90can64 atmega128 atmega1280 atmega1281 atmega1284 atmega16 atmega162 \
-  atmega164a atmega164p atmega165a atmega165p atmega168 atmega168p atmega168pb atmega169a \
-  atmega169p atmega2560 atmega2561 atmega32 atmega324a atmega324p atmega324pa atmega324pb \
-  atmega325 atmega3250 atmega3250p atmega325p atmega328 atmega329 atmega3290 atmega3290p \
-  atmega329p atmega48 atmega48p atmega48pb atmega64 atmega640 atmega644a atmega645 atmega6450 \
-  atmega6450p atmega645p atmega649 atmega6490 atmega6490p atmega649p atmega8 atmega8515 \
-  atmega8535 atmega88 atmega88p atmega88pb attiny441 attiny841 \
-  at90pwm1 at90pwm161 at90pwm2 at90pwm216 at90pwm2b at90pwm3 at90pwm316 at90pwm3b at90pwm81 \
-  at90scr100 at90usb1286 at90usb1287 at90usb162 at90usb646 at90usb647 at90usb82 ata5272 ata5505 \
-  ata5702m322 ata5782 ata5790 ata5790n ata5791 ata5795 ata5831 ata6285 ata6286 ata6289 ata6612c \
-  ata6613c ata6614q ata6616c ata6617c ata664251 ata8210 ata8510 atmega1284rfr2 atmega128a \
-  atmega128rfa1 atmega128rfr2 atmega161 atmega163 atmega164pa atmega165 atmega165pa atmega168a \
-  atmega168pa atmega169 atmega169pa atmega16a atmega16hva atmega16hva2 atmega16hvb \
-  atmega16hvbrevb atmega16m1 atmega16u2 atmega16u4 atmega2564rfr2 atmega256rfr2 atmega323 \
-  atmega3250a atmega3250pa atmega325a atmega325pa atmega3290a atmega3290pa atmega329a \
-  atmega329pa atmega32a atmega32c1 atmega32hvb atmega32hvbrevb atmega32m1 atmega32u2 atmega32u4 \
-  atmega32u6 atmega406 atmega48a atmega48pa atmega644 atmega644pa atmega644rfr2 atmega6450a \
-  atmega645a atmega6490a atmega649a atmega64a atmega64c1 atmega64hve atmega64hve2 atmega64m1 \
-  atmega64rfr2 atmega88a atmega88pa atmega8a atmega8hva atmega8u2 attiny1634 attiny2313 \
-  attiny2313a attiny24 attiny24a attiny25 attiny261 attiny261a attiny4313 attiny43u attiny44 \
-  attiny44a attiny45 attiny461 attiny461a attiny48 attiny828 attiny84a attiny861 attiny861a \
+  atmega1284p \
+  atmega328p atmega324pb \
+  atmega1280 atmega2560 atmega164a \
+  atmega164p atmega640 atmega644p \
+  atmega324pa atmega1284 atmega324p atmega324a \
+  atmega644a atmega328pb atmega1281 atmega2561 \
+  attiny167 attiny841 attiny441 atmega162 atmega64c1 \
+  atmega128 atmega64hve atmega64hve2 atmega64 atmega64m1 at90can128 \
+  at90can64 at90can32 atmega64rfr2 atmega644rfr2 atmega64a atmega644pa \
+  attiny13 attiny13a atmega164pa atmega128rfa1 atmega32m1 atmega32c1 atmega16m1 \
+  atmega1284rfr2 atmega128rfr2 atmega256rfr2 atmega2564rfr2 ata6616c ata664251 ata6617c ata5505 \
+  attiny87 atmega16 atmega8535 atmega168p atmega168 atmega168pb atmega32 atmega128a \
+  atmega88pb atmega88p atmega88 attiny85 atmega328 atmega88a attiny1634 atmega8515 atmega8 \
+  atmega169p atmega169a atmega165a atmega165p atmega88pa atmega649p atmega6490p atmega649 atmega6490 atmega645p atmega6450p atmega6450 \
+  atmega3250p atmega645 atmega325p atmega3250 atmega325 atmega329 atmega3290 atmega3290p atmega329p atmega48pb atmega48p atmega649a \
+  ata6613c atmega168pa atmega168a attiny84 atmega48 atmega644 attiny88 attiny45 ata6612c atmega6490a attiny25 ata6614q atmega645a atmega16a atmega169pa \
+  atmega169 atmega165pa atmega165 atmega8a attiny828 atmega6450a ata6286 ata6285 at90pwm2b at90pwm3 at90pwm3b ata5831 at90pwm2 ata5782 ata8510 ata8210 ata6289 \
+  at90pwm1 atmega32u4 atmega32u6 atmega32a atmega163 atmega32u2 at90usb1287 at90usb1286 ata5272 atmega329a atmega329pa atmega3290a atmega3250pa atmega3250a atmega3290pa atmega325a atmega325pa at90pwm216 at90pwm316 atmega8u2 \
+  at90usb646 at90usb647 atmega16u4 ata5790n ata5790 atmega16u2 ata5791 at90usb82 at90usb162 atmega32hvb attiny4313 atmega16hvb atmega48pa ata5795 atmega48a attiny2313a attiny2313 at90scr100 attiny461a \
+  attiny461 attiny44 attiny43u attiny44a attiny861 attiny84a atmega32hvbrevb atmega323 atmega16hvbrevb attiny861a attiny48 attiny261a attiny261 attiny24a attiny24 atmega161 atmega406 atmega8hva atmega16hva2 atmega16hva ata5702m322 at90pwm161 at90pwm81 \
 ; do
 
 sem -j+0 "mkurboots $mcu"
