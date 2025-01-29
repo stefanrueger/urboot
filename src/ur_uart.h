@@ -10,7 +10,7 @@
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
  * v 1.41
- * 18.11.2024
+ * 31.01.2025
  *
  */
 
@@ -2077,7 +2077,8 @@
 #define RXD0           AtmelPB1
 #define TXD0           AtmelPB3
 
-#elif defined(__AVR_ATmega32U6__)
+#elif defined(__AVR_ATmega32U6__) || defined(__AVR_AT90USB646__) || \
+  defined(__AVR_AT90USB647__) || defined(__AVR_AT90USB1286__) || defined(__AVR_AT90USB1287__)
 
 #define UR_UARTTYPE UR_UARTTYPE_CLASSIC
 #define UR_NUMUARTS           1
@@ -2169,6 +2170,9 @@
 #define ISR_UART1_RXC   _uv(25)
 #define ISR_UART1_DRE   _uv(26)
 #define ISR_UART1_TXC   _uv(27)
+
+#define RXD1           AtmelPD2
+#define TXD1           AtmelPD3
 
 #define A_RXCn                7
 #define A_TXCn                6
@@ -6454,130 +6458,6 @@
 
 #define RXD0           AtmelPD0
 #define TXD0           AtmelPD1
-
-#define A_RXCn                7
-#define A_TXCn                6
-#define A_UDREn               5
-#define A_FEn                 4
-#define A_DORn                3
-#define A_UPEn                2
-#define A_U2Xn                1
-#define A_MPCMn               0
-
-#define B_RXCIEn              7
-#define B_TXCIEn              6
-#define B_UDRIEn              5
-#define B_RXENn               4
-#define B_TXENn               3
-#define B_UCSZn2              2
-#define B_RXB8n               1
-#define B_TXB8n               0
-
-#define C_UMSELn1             7
-#define C_UMSELn0             6
-#define C_UPMn1               5
-#define C_UPMn0               4
-#define C_USBSn               3
-#define C_UCSZn1              2
-#define C_UCSZn0              1
-#define C_UCPOLn              0
-
-#elif defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB647__) || \
-  defined(__AVR_AT90USB1286__) || defined(__AVR_AT90USB1287__)
-
-#define UR_UARTTYPE UR_UARTTYPE_CLASSIC
-#define UR_NUMUARTS           1
-
-#define U_UDR1     _ureg8(0xce)
-#define in_udr1(rx)  "lds " #rx ", 0xce\n"
-#define out_udr1(rx) "sts 0xce, " #rx "\n"
-#define sbxs_udr1(rx, b) _sbxs_udr1(rx, b)
-#define sbxc_udr1(rx, b) _sbxc_udr1(rx, b)
-#define sbRs_udr1(rx, b) _sbRs_udr1(rx, b)
-#define sbRc_udr1(rx, b) _sbRc_udr1(rx, b)
-#define _sbxs_udr1(rx, b) in_udr1(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_udr1(rx, b) in_udr1(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_udr1(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_udr1(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define U_UCSR1A   _ureg8(0xc8)
-#define in_ucsr1a(rx)  "lds " #rx ", 0xc8\n"
-#define out_ucsr1a(rx) "sts 0xc8, " #rx "\n"
-#define sbxs_ucsr1a(rx, b) _sbxs_ucsr1a(rx, b)
-#define sbxc_ucsr1a(rx, b) _sbxc_ucsr1a(rx, b)
-#define sbRs_ucsr1a(rx, b) _sbRs_ucsr1a(rx, b)
-#define sbRc_ucsr1a(rx, b) _sbRc_ucsr1a(rx, b)
-#define _sbxs_ucsr1a(rx, b) in_ucsr1a(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_ucsr1a(rx, b) in_ucsr1a(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_ucsr1a(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_ucsr1a(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define U_UCSR1B   _ureg8(0xc9)
-#define in_ucsr1b(rx)  "lds " #rx ", 0xc9\n"
-#define out_ucsr1b(rx) "sts 0xc9, " #rx "\n"
-#define sbxs_ucsr1b(rx, b) _sbxs_ucsr1b(rx, b)
-#define sbxc_ucsr1b(rx, b) _sbxc_ucsr1b(rx, b)
-#define sbRs_ucsr1b(rx, b) _sbRs_ucsr1b(rx, b)
-#define sbRc_ucsr1b(rx, b) _sbRc_ucsr1b(rx, b)
-#define _sbxs_ucsr1b(rx, b) in_ucsr1b(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_ucsr1b(rx, b) in_ucsr1b(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_ucsr1b(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_ucsr1b(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define U_UCSR1C   _ureg8(0xca)
-#define in_ucsr1c(rx)  "lds " #rx ", 0xca\n"
-#define out_ucsr1c(rx) "sts 0xca, " #rx "\n"
-#define sbxs_ucsr1c(rx, b) _sbxs_ucsr1c(rx, b)
-#define sbxc_ucsr1c(rx, b) _sbxc_ucsr1c(rx, b)
-#define sbRs_ucsr1c(rx, b) _sbRs_ucsr1c(rx, b)
-#define sbRc_ucsr1c(rx, b) _sbRc_ucsr1c(rx, b)
-#define _sbxs_ucsr1c(rx, b) in_ucsr1c(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_ucsr1c(rx, b) in_ucsr1c(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_ucsr1c(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_ucsr1c(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define U_UBRR1L   _ureg8(0xcc)
-#define in_ubrr1l(rx)  "lds " #rx ", 0xcc\n"
-#define out_ubrr1l(rx) "sts 0xcc, " #rx "\n"
-#define sbxs_ubrr1l(rx, b) _sbxs_ubrr1l(rx, b)
-#define sbxc_ubrr1l(rx, b) _sbxc_ubrr1l(rx, b)
-#define sbRs_ubrr1l(rx, b) _sbRs_ubrr1l(rx, b)
-#define sbRc_ubrr1l(rx, b) _sbRc_ubrr1l(rx, b)
-#define _sbxs_ubrr1l(rx, b) in_ubrr1l(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_ubrr1l(rx, b) in_ubrr1l(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_ubrr1l(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_ubrr1l(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define U_UBRR1H   _ureg8(0xcd)
-#define in_ubrr1h(rx)  "lds " #rx ", 0xcd\n"
-#define out_ubrr1h(rx) "sts 0xcd, " #rx "\n"
-#define sbxs_ubrr1h(rx, b) _sbxs_ubrr1h(rx, b)
-#define sbxc_ubrr1h(rx, b) _sbxc_ubrr1h(rx, b)
-#define sbRs_ubrr1h(rx, b) _sbRs_ubrr1h(rx, b)
-#define sbRc_ubrr1h(rx, b) _sbRc_ubrr1h(rx, b)
-#define _sbxs_ubrr1h(rx, b) in_ubrr1h(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_ubrr1h(rx, b) in_ubrr1h(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_ubrr1h(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_ubrr1h(rx, b) "sbrc " #rx ", " #b "\n"
-
-
-#define UART1_base   _uad(0xc8)
-#define UART1_addr         0xc8
-#define UART1_size            7
-#define UART1_IOSPACE         0
-#define UDR1_off              6
-#define UCSR1A_off            0
-#define UCSR1B_off            1
-#define UCSR1C_off            2
-#define UBRR1L_off            4
-#define UBRR1H_off            5
-
-#define ISR_UART1_RXC   _uv(25)
-#define ISR_UART1_DRE   _uv(26)
-#define ISR_UART1_TXC   _uv(27)
-
-#define RXD1           AtmelPD2
-#define TXD1           AtmelPD3
 
 #define A_RXCn                7
 #define A_TXCn                6
