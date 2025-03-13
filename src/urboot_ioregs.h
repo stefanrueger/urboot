@@ -9,8 +9,8 @@
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v 1.41
- * 31.01.2025
+ * v 1.43
+ * 13.03.2025
  *
  */
 
@@ -704,7 +704,8 @@
 #define _sbRc_eearh(rx, b) "sbic 0x1f, " #b "\n"
 
 
-#elif defined(__AVR_ATtiny87__) || defined(__AVR_ATtiny167__)
+#elif defined(__AVR_ATtiny87__) || defined(__AVR_ATtiny167__) || defined(__AVR_ATA5505__) || \
+  defined(__AVR_ATA6616C__) || defined(__AVR_ATA6617C__) || defined(__AVR_ATA664251__)
 
 #define RAMSTART        0x0100
 #define RAMSIZE         0x0200
@@ -3608,7 +3609,8 @@
 #elif defined(__AVR_ATmega88__) || defined(__AVR_ATmega88A__) || defined(__AVR_ATmega88P__) || \
   defined(__AVR_ATmega88PA__) || defined(__AVR_ATmega88PB__) || defined(__AVR_ATmega168__) || \
   defined(__AVR_ATmega168A__) || defined(__AVR_ATmega168P__) || defined(__AVR_ATmega168PA__) || \
-  defined(__AVR_ATmega168PB__) || defined(__AVR_LGT8F88P__) || defined(__AVR_LGT8F168P__)
+  defined(__AVR_ATmega168PB__) || defined(__AVR_ATA6612C__) || defined(__AVR_ATA6613C__) || \
+  defined(__AVR_LGT8F88P__) || defined(__AVR_LGT8F168P__)
 
 #define RAMSTART        0x0100
 #define RAMSIZE         0x0400
@@ -4862,7 +4864,7 @@
 
 
 #elif defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__) || \
-  defined(__AVR_ATmega328PB__) || defined(__AVR_LGT8F328P__)
+  defined(__AVR_ATmega328PB__) || defined(__AVR_ATA6614Q__) || defined(__AVR_LGT8F328P__)
 
 #define RAMSTART        0x0100
 #define RAMSIZE         0x0800
@@ -7379,8 +7381,7 @@
 #define EESIZE               0
 
 
-#elif defined(__AVR_ATA5272__) || defined(__AVR_ATA5505__) || defined(__AVR_ATA6616C__) || \
-  defined(__AVR_ATA6617C__) || defined(__AVR_ATA664251__)
+#elif defined(__AVR_ATA5272__)
 
 #define RAMSTART        0x0100
 #define RAMSIZE         0x0200
@@ -8175,236 +8176,6 @@
 #define _sbxc_eearl(rx, b) in_eearl(rx) "sbrc " #rx ", " #b "\n"
 #define _sbRs_eearl(rx, b) "sbrs " #rx ", " #b "\n"
 #define _sbRc_eearl(rx, b) "sbrc " #rx ", " #b "\n"
-
-
-#elif defined(__AVR_ATA6612C__) || defined(__AVR_ATA6613C__)
-
-#define RAMSTART        0x0100
-#define RAMSIZE         0x0400
-#define EESIZE          0x0200
-
-#define SPMCR_addr        0x57
-#define in_spmcr(rx)  "in  " #rx ", 0x37\n"
-#define out_spmcr(rx) "out 0x37, " #rx "\n"
-#define sbxs_spmcr(rx, b) _sbxs_spmcr(rx, b)
-#define sbxc_spmcr(rx, b) _sbxc_spmcr(rx, b)
-#define sbRs_spmcr(rx, b) _sbRs_spmcr(rx, b)
-#define sbRc_spmcr(rx, b) _sbRc_spmcr(rx, b)
-#define _sbxs_spmcr(rx, b) in_spmcr(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_spmcr(rx, b) in_spmcr(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_spmcr(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_spmcr(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define SPCR_addr         0x4c
-#define in_spcr(rx)  "in  " #rx ", 0x2c\n"
-#define out_spcr(rx) "out 0x2c, " #rx "\n"
-#define sbxs_spcr(rx, b) _sbxs_spcr(rx, b)
-#define sbxc_spcr(rx, b) _sbxc_spcr(rx, b)
-#define sbRs_spcr(rx, b) _sbRs_spcr(rx, b)
-#define sbRc_spcr(rx, b) _sbRc_spcr(rx, b)
-#define _sbxs_spcr(rx, b) in_spcr(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_spcr(rx, b) in_spcr(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_spcr(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_spcr(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define SPDR_addr         0x4e
-#define in_spdr(rx)  "in  " #rx ", 0x2e\n"
-#define out_spdr(rx) "out 0x2e, " #rx "\n"
-#define sbxs_spdr(rx, b) _sbxs_spdr(rx, b)
-#define sbxc_spdr(rx, b) _sbxc_spdr(rx, b)
-#define sbRs_spdr(rx, b) _sbRs_spdr(rx, b)
-#define sbRc_spdr(rx, b) _sbRc_spdr(rx, b)
-#define _sbxs_spdr(rx, b) in_spdr(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_spdr(rx, b) in_spdr(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_spdr(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_spdr(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define SPSR_addr         0x4d
-#define in_spsr(rx)  "in  " #rx ", 0x2d\n"
-#define out_spsr(rx) "out 0x2d, " #rx "\n"
-#define sbxs_spsr(rx, b) _sbxs_spsr(rx, b)
-#define sbxc_spsr(rx, b) _sbxc_spsr(rx, b)
-#define sbRs_spsr(rx, b) _sbRs_spsr(rx, b)
-#define sbRc_spsr(rx, b) _sbRc_spsr(rx, b)
-#define _sbxs_spsr(rx, b) in_spsr(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_spsr(rx, b) in_spsr(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_spsr(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_spsr(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define EECR_addr         0x3f
-#define in_eecr(rx)  "in  " #rx ", 0x1f\n"
-#define out_eecr(rx) "out 0x1f, " #rx "\n"
-#define sbxs_eecr(rx, b) _sbxs_eecr(rx, b)
-#define sbxc_eecr(rx, b) _sbxc_eecr(rx, b)
-#define sbRs_eecr(rx, b) _sbRs_eecr(rx, b)
-#define sbRc_eecr(rx, b) _sbRc_eecr(rx, b)
-#define _sbxs_eecr(rx, b) "sbis 0x1f, " #b "\n"
-#define _sbxc_eecr(rx, b) "sbic 0x1f, " #b "\n"
-#define _sbRs_eecr(rx, b) "sbis 0x1f, " #b "\n"
-#define _sbRc_eecr(rx, b) "sbic 0x1f, " #b "\n"
-
-#define EEDR_addr         0x40
-#define in_eedr(rx)  "in  " #rx ", 0x20\n"
-#define out_eedr(rx) "out 0x20, " #rx "\n"
-#define sbxs_eedr(rx, b) _sbxs_eedr(rx, b)
-#define sbxc_eedr(rx, b) _sbxc_eedr(rx, b)
-#define sbRs_eedr(rx, b) _sbRs_eedr(rx, b)
-#define sbRc_eedr(rx, b) _sbRc_eedr(rx, b)
-#define _sbxs_eedr(rx, b) in_eedr(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_eedr(rx, b) in_eedr(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_eedr(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_eedr(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define EEAR_addr         0x41
-#define in_eear(rx)  "in  " #rx ", 0x21\n"
-#define out_eear(rx) "out 0x21, " #rx "\n"
-#define sbxs_eear(rx, b) _sbxs_eear(rx, b)
-#define sbxc_eear(rx, b) _sbxc_eear(rx, b)
-#define sbRs_eear(rx, b) _sbRs_eear(rx, b)
-#define sbRc_eear(rx, b) _sbRc_eear(rx, b)
-#define _sbxs_eear(rx, b) in_eear(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_eear(rx, b) in_eear(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_eear(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_eear(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define EEARL_addr        0x41
-#define in_eearl(rx)  "in  " #rx ", 0x21\n"
-#define out_eearl(rx) "out 0x21, " #rx "\n"
-#define sbxs_eearl(rx, b) _sbxs_eearl(rx, b)
-#define sbxc_eearl(rx, b) _sbxc_eearl(rx, b)
-#define sbRs_eearl(rx, b) _sbRs_eearl(rx, b)
-#define sbRc_eearl(rx, b) _sbRc_eearl(rx, b)
-#define _sbxs_eearl(rx, b) in_eearl(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_eearl(rx, b) in_eearl(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_eearl(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_eearl(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define EEARH_addr        0x42
-#define in_eearh(rx)  "in  " #rx ", 0x22\n"
-#define out_eearh(rx) "out 0x22, " #rx "\n"
-#define sbxs_eearh(rx, b) _sbxs_eearh(rx, b)
-#define sbxc_eearh(rx, b) _sbxc_eearh(rx, b)
-#define sbRs_eearh(rx, b) _sbRs_eearh(rx, b)
-#define sbRc_eearh(rx, b) _sbRc_eearh(rx, b)
-#define _sbxs_eearh(rx, b) in_eearh(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_eearh(rx, b) in_eearh(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_eearh(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_eearh(rx, b) "sbrc " #rx ", " #b "\n"
-
-
-#elif defined(__AVR_ATA6614Q__)
-
-#define RAMSTART        0x0100
-#define RAMSIZE         0x0800
-#define EESIZE          0x0400
-
-#define SPMCR_addr        0x57
-#define in_spmcr(rx)  "in  " #rx ", 0x37\n"
-#define out_spmcr(rx) "out 0x37, " #rx "\n"
-#define sbxs_spmcr(rx, b) _sbxs_spmcr(rx, b)
-#define sbxc_spmcr(rx, b) _sbxc_spmcr(rx, b)
-#define sbRs_spmcr(rx, b) _sbRs_spmcr(rx, b)
-#define sbRc_spmcr(rx, b) _sbRc_spmcr(rx, b)
-#define _sbxs_spmcr(rx, b) in_spmcr(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_spmcr(rx, b) in_spmcr(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_spmcr(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_spmcr(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define SPCR_addr         0x4c
-#define in_spcr(rx)  "in  " #rx ", 0x2c\n"
-#define out_spcr(rx) "out 0x2c, " #rx "\n"
-#define sbxs_spcr(rx, b) _sbxs_spcr(rx, b)
-#define sbxc_spcr(rx, b) _sbxc_spcr(rx, b)
-#define sbRs_spcr(rx, b) _sbRs_spcr(rx, b)
-#define sbRc_spcr(rx, b) _sbRc_spcr(rx, b)
-#define _sbxs_spcr(rx, b) in_spcr(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_spcr(rx, b) in_spcr(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_spcr(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_spcr(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define SPDR_addr         0x4e
-#define in_spdr(rx)  "in  " #rx ", 0x2e\n"
-#define out_spdr(rx) "out 0x2e, " #rx "\n"
-#define sbxs_spdr(rx, b) _sbxs_spdr(rx, b)
-#define sbxc_spdr(rx, b) _sbxc_spdr(rx, b)
-#define sbRs_spdr(rx, b) _sbRs_spdr(rx, b)
-#define sbRc_spdr(rx, b) _sbRc_spdr(rx, b)
-#define _sbxs_spdr(rx, b) in_spdr(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_spdr(rx, b) in_spdr(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_spdr(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_spdr(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define SPSR_addr         0x4d
-#define in_spsr(rx)  "in  " #rx ", 0x2d\n"
-#define out_spsr(rx) "out 0x2d, " #rx "\n"
-#define sbxs_spsr(rx, b) _sbxs_spsr(rx, b)
-#define sbxc_spsr(rx, b) _sbxc_spsr(rx, b)
-#define sbRs_spsr(rx, b) _sbRs_spsr(rx, b)
-#define sbRc_spsr(rx, b) _sbRc_spsr(rx, b)
-#define _sbxs_spsr(rx, b) in_spsr(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_spsr(rx, b) in_spsr(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_spsr(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_spsr(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define EECR_addr         0x3f
-#define in_eecr(rx)  "in  " #rx ", 0x1f\n"
-#define out_eecr(rx) "out 0x1f, " #rx "\n"
-#define sbxs_eecr(rx, b) _sbxs_eecr(rx, b)
-#define sbxc_eecr(rx, b) _sbxc_eecr(rx, b)
-#define sbRs_eecr(rx, b) _sbRs_eecr(rx, b)
-#define sbRc_eecr(rx, b) _sbRc_eecr(rx, b)
-#define _sbxs_eecr(rx, b) "sbis 0x1f, " #b "\n"
-#define _sbxc_eecr(rx, b) "sbic 0x1f, " #b "\n"
-#define _sbRs_eecr(rx, b) "sbis 0x1f, " #b "\n"
-#define _sbRc_eecr(rx, b) "sbic 0x1f, " #b "\n"
-
-#define EEDR_addr         0x40
-#define in_eedr(rx)  "in  " #rx ", 0x20\n"
-#define out_eedr(rx) "out 0x20, " #rx "\n"
-#define sbxs_eedr(rx, b) _sbxs_eedr(rx, b)
-#define sbxc_eedr(rx, b) _sbxc_eedr(rx, b)
-#define sbRs_eedr(rx, b) _sbRs_eedr(rx, b)
-#define sbRc_eedr(rx, b) _sbRc_eedr(rx, b)
-#define _sbxs_eedr(rx, b) in_eedr(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_eedr(rx, b) in_eedr(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_eedr(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_eedr(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define EEAR_addr         0x41
-#define in_eear(rx)  "in  " #rx ", 0x21\n"
-#define out_eear(rx) "out 0x21, " #rx "\n"
-#define sbxs_eear(rx, b) _sbxs_eear(rx, b)
-#define sbxc_eear(rx, b) _sbxc_eear(rx, b)
-#define sbRs_eear(rx, b) _sbRs_eear(rx, b)
-#define sbRc_eear(rx, b) _sbRc_eear(rx, b)
-#define _sbxs_eear(rx, b) in_eear(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_eear(rx, b) in_eear(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_eear(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_eear(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define EEARL_addr        0x41
-#define in_eearl(rx)  "in  " #rx ", 0x21\n"
-#define out_eearl(rx) "out 0x21, " #rx "\n"
-#define sbxs_eearl(rx, b) _sbxs_eearl(rx, b)
-#define sbxc_eearl(rx, b) _sbxc_eearl(rx, b)
-#define sbRs_eearl(rx, b) _sbRs_eearl(rx, b)
-#define sbRc_eearl(rx, b) _sbRc_eearl(rx, b)
-#define _sbxs_eearl(rx, b) in_eearl(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_eearl(rx, b) in_eearl(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_eearl(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_eearl(rx, b) "sbrc " #rx ", " #b "\n"
-
-#define EEARH_addr        0x42
-#define in_eearh(rx)  "in  " #rx ", 0x22\n"
-#define out_eearh(rx) "out 0x22, " #rx "\n"
-#define sbxs_eearh(rx, b) _sbxs_eearh(rx, b)
-#define sbxc_eearh(rx, b) _sbxc_eearh(rx, b)
-#define sbRs_eearh(rx, b) _sbRs_eearh(rx, b)
-#define sbRc_eearh(rx, b) _sbRc_eearh(rx, b)
-#define _sbxs_eearh(rx, b) in_eearh(rx) "sbrs " #rx ", " #b "\n"
-#define _sbxc_eearh(rx, b) in_eearh(rx) "sbrc " #rx ", " #b "\n"
-#define _sbRs_eearh(rx, b) "sbrs " #rx ", " #b "\n"
-#define _sbRc_eearh(rx, b) "sbrc " #rx ", " #b "\n"
 
 
 #elif defined(__AVR_M3000__)

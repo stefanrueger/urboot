@@ -8,8 +8,8 @@
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v 1.41
- * 31.01.2025
+ * v 1.43
+ * 13.03.2025
  *
  */
 
@@ -1093,8 +1093,14 @@
 #elif defined(__AVR_AVR32EB20__)
 #define __AVR_DEVICE_NAME__ avr32eb20
 
+#elif defined(__AVR_AVR32SD20__)
+#define __AVR_DEVICE_NAME__ avr32sd20
+
 #elif defined(__AVR_AVR32DA28__)
 #define __AVR_DEVICE_NAME__ avr32da28
+
+#elif defined(__AVR_AVR32DA28S__)
+#define __AVR_DEVICE_NAME__ avr32da28s
 
 #elif defined(__AVR_AVR32DB28__)
 #define __AVR_DEVICE_NAME__ avr32db28
@@ -1111,8 +1117,14 @@
 #elif defined(__AVR_AVR32EB28__)
 #define __AVR_DEVICE_NAME__ avr32eb28
 
+#elif defined(__AVR_AVR32SD28__)
+#define __AVR_DEVICE_NAME__ avr32sd28
+
 #elif defined(__AVR_AVR32DA32__)
 #define __AVR_DEVICE_NAME__ avr32da32
+
+#elif defined(__AVR_AVR32DA32S__)
+#define __AVR_DEVICE_NAME__ avr32da32s
 
 #elif defined(__AVR_AVR32DB32__)
 #define __AVR_DEVICE_NAME__ avr32db32
@@ -1129,8 +1141,14 @@
 #elif defined(__AVR_AVR32EB32__)
 #define __AVR_DEVICE_NAME__ avr32eb32
 
+#elif defined(__AVR_AVR32SD32__)
+#define __AVR_DEVICE_NAME__ avr32sd32
+
 #elif defined(__AVR_AVR32DA48__)
 #define __AVR_DEVICE_NAME__ avr32da48
+
+#elif defined(__AVR_AVR32DA48S__)
+#define __AVR_DEVICE_NAME__ avr32da48s
 
 #elif defined(__AVR_AVR32DB48__)
 #define __AVR_DEVICE_NAME__ avr32db48
@@ -1147,6 +1165,9 @@
 #elif defined(__AVR_AVR64DA28__)
 #define __AVR_DEVICE_NAME__ avr64da28
 
+#elif defined(__AVR_AVR64DA28S__)
+#define __AVR_DEVICE_NAME__ avr64da28s
+
 #elif defined(__AVR_AVR64DB28__)
 #define __AVR_DEVICE_NAME__ avr64db28
 
@@ -1161,6 +1182,9 @@
 
 #elif defined(__AVR_AVR64DA32__)
 #define __AVR_DEVICE_NAME__ avr64da32
+
+#elif defined(__AVR_AVR64DA32S__)
+#define __AVR_DEVICE_NAME__ avr64da32s
 
 #elif defined(__AVR_AVR64DB32__)
 #define __AVR_DEVICE_NAME__ avr64db32
@@ -1177,6 +1201,9 @@
 #elif defined(__AVR_AVR64DA48__)
 #define __AVR_DEVICE_NAME__ avr64da48
 
+#elif defined(__AVR_AVR64DA48S__)
+#define __AVR_DEVICE_NAME__ avr64da48s
+
 #elif defined(__AVR_AVR64DB48__)
 #define __AVR_DEVICE_NAME__ avr64db48
 
@@ -1185,6 +1212,9 @@
 
 #elif defined(__AVR_AVR64DA64__)
 #define __AVR_DEVICE_NAME__ avr64da64
+
+#elif defined(__AVR_AVR64DA64S__)
+#define __AVR_DEVICE_NAME__ avr64da64s
 
 #elif defined(__AVR_AVR64DB64__)
 #define __AVR_DEVICE_NAME__ avr64db64

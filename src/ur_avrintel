@@ -10,8 +10,8 @@
 # Published under GNU General Public License, version 3 (GPL-3.0)
 # Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
 #
-# v 1.41
-# 31.01.2025
+# v 1.43
+# 13.03.2025
 #
 
 ####
@@ -20,7 +20,7 @@
 declare -A minbootsz
 
 ####
-# UART type (Classic = 1, LIN = 2, XMEGA = 4, AVR8X = 8)
+# UART type (Classic = 1, LIN = 2, XMEGA = 3, AVR8X = 4)
 #
 declare -A uarttype
 
@@ -306,37 +306,47 @@ minbootsz[avr32eb14]=512
 minbootsz[avr32dd20]=512
 minbootsz[avr32du20]=512
 minbootsz[avr32eb20]=512
+minbootsz[avr32sd20]=512
 minbootsz[avr32da28]=512
+minbootsz[avr32da28s]=512
 minbootsz[avr32db28]=512
 minbootsz[avr32dd28]=512
 minbootsz[avr32du28]=512
 minbootsz[avr32ea28]=512
 minbootsz[avr32eb28]=512
+minbootsz[avr32sd28]=512
 minbootsz[avr32da32]=512
+minbootsz[avr32da32s]=512
 minbootsz[avr32db32]=512
 minbootsz[avr32dd32]=512
 minbootsz[avr32du32]=512
 minbootsz[avr32ea32]=512
 minbootsz[avr32eb32]=512
+minbootsz[avr32sd32]=512
 minbootsz[avr32da48]=512
+minbootsz[avr32da48s]=512
 minbootsz[avr32db48]=512
 minbootsz[avr32ea48]=512
 minbootsz[avr64dd14]=512
 minbootsz[avr64dd20]=512
 minbootsz[avr64da28]=512
+minbootsz[avr64da28s]=512
 minbootsz[avr64db28]=512
 minbootsz[avr64dd28]=512
 minbootsz[avr64du28]=512
 minbootsz[avr64ea28]=512
 minbootsz[avr64da32]=512
+minbootsz[avr64da32s]=512
 minbootsz[avr64db32]=512
 minbootsz[avr64dd32]=512
 minbootsz[avr64du32]=512
 minbootsz[avr64ea32]=512
 minbootsz[avr64da48]=512
+minbootsz[avr64da48s]=512
 minbootsz[avr64db48]=512
 minbootsz[avr64ea48]=512
 minbootsz[avr64da64]=512
+minbootsz[avr64da64s]=512
 minbootsz[avr64db64]=512
 minbootsz[avr128da28]=512
 minbootsz[avr128da28s]=512
@@ -589,170 +599,180 @@ uarttype[m3000]=1
 uarttype[lgt8f88p]=1
 uarttype[lgt8f168p]=1
 uarttype[lgt8f328p]=1
-uarttype[atxmega8e5]=4
-uarttype[atxmega16a4]=4
-uarttype[atxmega16a4u]=4
-uarttype[atxmega16c4]=4
-uarttype[atxmega16d4]=4
-uarttype[atxmega16e5]=4
-uarttype[atxmega32c3]=4
-uarttype[atxmega32d3]=4
-uarttype[atxmega32a4]=4
-uarttype[atxmega32a4u]=4
-uarttype[atxmega32c4]=4
-uarttype[atxmega32d4]=4
-uarttype[atxmega32e5]=4
-uarttype[atxmega64a1]=4
-uarttype[atxmega64a1u]=4
-uarttype[atxmega64b1]=4
-uarttype[atxmega64a3]=4
-uarttype[atxmega64a3u]=4
-uarttype[atxmega64b3]=4
-uarttype[atxmega64c3]=4
-uarttype[atxmega64d3]=4
-uarttype[atxmega64a4]=4
-uarttype[atxmega64a4u]=4
-uarttype[atxmega64d4]=4
-uarttype[atxmega128a1]=4
-uarttype[atxmega128a1revd]=4
-uarttype[atxmega128a1u]=4
-uarttype[atxmega128b1]=4
-uarttype[atxmega128a3]=4
-uarttype[atxmega128a3u]=4
-uarttype[atxmega128b3]=4
-uarttype[atxmega128c3]=4
-uarttype[atxmega128d3]=4
-uarttype[atxmega128a4]=4
-uarttype[atxmega128a4u]=4
-uarttype[atxmega128d4]=4
-uarttype[atxmega192a1]=4
-uarttype[atxmega192a3]=4
-uarttype[atxmega192a3u]=4
-uarttype[atxmega192c3]=4
-uarttype[atxmega192d3]=4
-uarttype[atxmega256a1]=4
-uarttype[atxmega256a3]=4
-uarttype[atxmega256a3b]=4
-uarttype[atxmega256a3bu]=4
-uarttype[atxmega256a3u]=4
-uarttype[atxmega256c3]=4
-uarttype[atxmega256d3]=4
-uarttype[atxmega384c3]=4
-uarttype[atxmega384d3]=4
-uarttype[attiny202]=8
-uarttype[attiny204]=8
-uarttype[attiny212]=8
-uarttype[attiny214]=8
-uarttype[attiny402]=8
-uarttype[attiny404]=8
-uarttype[attiny406]=8
-uarttype[attiny412]=8
-uarttype[attiny414]=8
-uarttype[attiny416]=8
-uarttype[attiny416auto]=8
-uarttype[attiny417]=8
-uarttype[attiny424]=8
-uarttype[attiny426]=8
-uarttype[attiny427]=8
-uarttype[attiny804]=8
-uarttype[attiny806]=8
-uarttype[attiny807]=8
-uarttype[attiny814]=8
-uarttype[attiny816]=8
-uarttype[attiny817]=8
-uarttype[attiny824]=8
-uarttype[attiny826]=8
-uarttype[attiny827]=8
-uarttype[attiny1604]=8
-uarttype[attiny1606]=8
-uarttype[attiny1607]=8
-uarttype[attiny1614]=8
-uarttype[attiny1616]=8
-uarttype[attiny1617]=8
-uarttype[attiny1624]=8
-uarttype[attiny1626]=8
-uarttype[attiny1627]=8
-uarttype[attiny3214]=8
-uarttype[attiny3216]=8
-uarttype[attiny3217]=8
-uarttype[attiny3224]=8
-uarttype[attiny3226]=8
-uarttype[attiny3227]=8
-uarttype[atmega808]=8
-uarttype[atmega809]=8
-uarttype[atmega1608]=8
-uarttype[atmega1609]=8
-uarttype[atmega3208]=8
-uarttype[atmega3209]=8
-uarttype[atmega4808]=8
-uarttype[atmega4809]=8
-uarttype[avr8ea28]=8
-uarttype[avr8ea32]=8
-uarttype[avr16dd14]=8
-uarttype[avr16du14]=8
-uarttype[avr16eb14]=8
-uarttype[avr16dd20]=8
-uarttype[avr16du20]=8
-uarttype[avr16eb20]=8
-uarttype[avr16dd28]=8
-uarttype[avr16du28]=8
-uarttype[avr16ea28]=8
-uarttype[avr16eb28]=8
-uarttype[avr16dd32]=8
-uarttype[avr16du32]=8
-uarttype[avr16ea32]=8
-uarttype[avr16eb32]=8
-uarttype[avr16ea48]=8
-uarttype[avr32dd14]=8
-uarttype[avr32du14]=8
-uarttype[avr32eb14]=8
-uarttype[avr32dd20]=8
-uarttype[avr32du20]=8
-uarttype[avr32eb20]=8
-uarttype[avr32da28]=8
-uarttype[avr32db28]=8
-uarttype[avr32dd28]=8
-uarttype[avr32du28]=8
-uarttype[avr32ea28]=8
-uarttype[avr32eb28]=8
-uarttype[avr32da32]=8
-uarttype[avr32db32]=8
-uarttype[avr32dd32]=8
-uarttype[avr32du32]=8
-uarttype[avr32ea32]=8
-uarttype[avr32eb32]=8
-uarttype[avr32da48]=8
-uarttype[avr32db48]=8
-uarttype[avr32ea48]=8
-uarttype[avr64dd14]=8
-uarttype[avr64dd20]=8
-uarttype[avr64da28]=8
-uarttype[avr64db28]=8
-uarttype[avr64dd28]=8
-uarttype[avr64du28]=8
-uarttype[avr64ea28]=8
-uarttype[avr64da32]=8
-uarttype[avr64db32]=8
-uarttype[avr64dd32]=8
-uarttype[avr64du32]=8
-uarttype[avr64ea32]=8
-uarttype[avr64da48]=8
-uarttype[avr64db48]=8
-uarttype[avr64ea48]=8
-uarttype[avr64da64]=8
-uarttype[avr64db64]=8
-uarttype[avr128da28]=8
-uarttype[avr128da28s]=8
-uarttype[avr128db28]=8
-uarttype[avr128da32]=8
-uarttype[avr128da32s]=8
-uarttype[avr128db32]=8
-uarttype[avr128da48]=8
-uarttype[avr128da48s]=8
-uarttype[avr128db48]=8
-uarttype[avr128da64]=8
-uarttype[avr128da64s]=8
-uarttype[avr128db64]=8
+uarttype[atxmega8e5]=3
+uarttype[atxmega16a4]=3
+uarttype[atxmega16a4u]=3
+uarttype[atxmega16c4]=3
+uarttype[atxmega16d4]=3
+uarttype[atxmega16e5]=3
+uarttype[atxmega32c3]=3
+uarttype[atxmega32d3]=3
+uarttype[atxmega32a4]=3
+uarttype[atxmega32a4u]=3
+uarttype[atxmega32c4]=3
+uarttype[atxmega32d4]=3
+uarttype[atxmega32e5]=3
+uarttype[atxmega64a1]=3
+uarttype[atxmega64a1u]=3
+uarttype[atxmega64b1]=3
+uarttype[atxmega64a3]=3
+uarttype[atxmega64a3u]=3
+uarttype[atxmega64b3]=3
+uarttype[atxmega64c3]=3
+uarttype[atxmega64d3]=3
+uarttype[atxmega64a4]=3
+uarttype[atxmega64a4u]=3
+uarttype[atxmega64d4]=3
+uarttype[atxmega128a1]=3
+uarttype[atxmega128a1revd]=3
+uarttype[atxmega128a1u]=3
+uarttype[atxmega128b1]=3
+uarttype[atxmega128a3]=3
+uarttype[atxmega128a3u]=3
+uarttype[atxmega128b3]=3
+uarttype[atxmega128c3]=3
+uarttype[atxmega128d3]=3
+uarttype[atxmega128a4]=3
+uarttype[atxmega128a4u]=3
+uarttype[atxmega128d4]=3
+uarttype[atxmega192a1]=3
+uarttype[atxmega192a3]=3
+uarttype[atxmega192a3u]=3
+uarttype[atxmega192c3]=3
+uarttype[atxmega192d3]=3
+uarttype[atxmega256a1]=3
+uarttype[atxmega256a3]=3
+uarttype[atxmega256a3b]=3
+uarttype[atxmega256a3bu]=3
+uarttype[atxmega256a3u]=3
+uarttype[atxmega256c3]=3
+uarttype[atxmega256d3]=3
+uarttype[atxmega384c3]=3
+uarttype[atxmega384d3]=3
+uarttype[attiny202]=4
+uarttype[attiny204]=4
+uarttype[attiny212]=4
+uarttype[attiny214]=4
+uarttype[attiny402]=4
+uarttype[attiny404]=4
+uarttype[attiny406]=4
+uarttype[attiny412]=4
+uarttype[attiny414]=4
+uarttype[attiny416]=4
+uarttype[attiny416auto]=4
+uarttype[attiny417]=4
+uarttype[attiny424]=4
+uarttype[attiny426]=4
+uarttype[attiny427]=4
+uarttype[attiny804]=4
+uarttype[attiny806]=4
+uarttype[attiny807]=4
+uarttype[attiny814]=4
+uarttype[attiny816]=4
+uarttype[attiny817]=4
+uarttype[attiny824]=4
+uarttype[attiny826]=4
+uarttype[attiny827]=4
+uarttype[attiny1604]=4
+uarttype[attiny1606]=4
+uarttype[attiny1607]=4
+uarttype[attiny1614]=4
+uarttype[attiny1616]=4
+uarttype[attiny1617]=4
+uarttype[attiny1624]=4
+uarttype[attiny1626]=4
+uarttype[attiny1627]=4
+uarttype[attiny3214]=4
+uarttype[attiny3216]=4
+uarttype[attiny3217]=4
+uarttype[attiny3224]=4
+uarttype[attiny3226]=4
+uarttype[attiny3227]=4
+uarttype[atmega808]=4
+uarttype[atmega809]=4
+uarttype[atmega1608]=4
+uarttype[atmega1609]=4
+uarttype[atmega3208]=4
+uarttype[atmega3209]=4
+uarttype[atmega4808]=4
+uarttype[atmega4809]=4
+uarttype[avr8ea28]=4
+uarttype[avr8ea32]=4
+uarttype[avr16dd14]=4
+uarttype[avr16du14]=4
+uarttype[avr16eb14]=4
+uarttype[avr16dd20]=4
+uarttype[avr16du20]=4
+uarttype[avr16eb20]=4
+uarttype[avr16dd28]=4
+uarttype[avr16du28]=4
+uarttype[avr16ea28]=4
+uarttype[avr16eb28]=4
+uarttype[avr16dd32]=4
+uarttype[avr16du32]=4
+uarttype[avr16ea32]=4
+uarttype[avr16eb32]=4
+uarttype[avr16ea48]=4
+uarttype[avr32dd14]=4
+uarttype[avr32du14]=4
+uarttype[avr32eb14]=4
+uarttype[avr32dd20]=4
+uarttype[avr32du20]=4
+uarttype[avr32eb20]=4
+uarttype[avr32sd20]=4
+uarttype[avr32da28]=4
+uarttype[avr32da28s]=4
+uarttype[avr32db28]=4
+uarttype[avr32dd28]=4
+uarttype[avr32du28]=4
+uarttype[avr32ea28]=4
+uarttype[avr32eb28]=4
+uarttype[avr32sd28]=4
+uarttype[avr32da32]=4
+uarttype[avr32da32s]=4
+uarttype[avr32db32]=4
+uarttype[avr32dd32]=4
+uarttype[avr32du32]=4
+uarttype[avr32ea32]=4
+uarttype[avr32eb32]=4
+uarttype[avr32sd32]=4
+uarttype[avr32da48]=4
+uarttype[avr32da48s]=4
+uarttype[avr32db48]=4
+uarttype[avr32ea48]=4
+uarttype[avr64dd14]=4
+uarttype[avr64dd20]=4
+uarttype[avr64da28]=4
+uarttype[avr64da28s]=4
+uarttype[avr64db28]=4
+uarttype[avr64dd28]=4
+uarttype[avr64du28]=4
+uarttype[avr64ea28]=4
+uarttype[avr64da32]=4
+uarttype[avr64da32s]=4
+uarttype[avr64db32]=4
+uarttype[avr64dd32]=4
+uarttype[avr64du32]=4
+uarttype[avr64ea32]=4
+uarttype[avr64da48]=4
+uarttype[avr64da48s]=4
+uarttype[avr64db48]=4
+uarttype[avr64ea48]=4
+uarttype[avr64da64]=4
+uarttype[avr64da64s]=4
+uarttype[avr64db64]=4
+uarttype[avr128da28]=4
+uarttype[avr128da28s]=4
+uarttype[avr128db28]=4
+uarttype[avr128da32]=4
+uarttype[avr128da32s]=4
+uarttype[avr128db32]=4
+uarttype[avr128da48]=4
+uarttype[avr128da48s]=4
+uarttype[avr128db48]=4
+uarttype[avr128da64]=4
+uarttype[avr128da64s]=4
+uarttype[avr128db64]=4
 
 mcuio[attiny4]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[attiny5]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
@@ -1112,37 +1132,47 @@ mcuio[avr32eb14]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=3 RX=Atmel
 mcuio[avr32dd20]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
 mcuio[avr32du20]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4"
 mcuio[avr32eb20]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=0 UARTALT=6 RX=AtmelPF6 TX=AtmelPF7"
+mcuio[avr32sd20]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
 mcuio[avr32da28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
+mcuio[avr32da28s]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
 mcuio[avr32db28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
 mcuio[avr32dd28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
 mcuio[avr32du28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4"
 mcuio[avr32ea28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
 mcuio[avr32eb28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=0 UARTALT=6 RX=AtmelPF6 TX=AtmelPF7"
+mcuio[avr32sd28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
 mcuio[avr32da32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[avr32da32s]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
 mcuio[avr32db32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
 mcuio[avr32dd32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
 mcuio[avr32du32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4"
 mcuio[avr32ea32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
 mcuio[avr32eb32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=0 UARTALT=6 RX=AtmelPF6 TX=AtmelPF7"
+mcuio[avr32sd32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
 mcuio[avr32da48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0"
+mcuio[avr32da48s]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0"
 mcuio[avr32db48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0"
 mcuio[avr32ea48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
 mcuio[avr64dd14]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
 mcuio[avr64dd20]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
 mcuio[avr64da28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
+mcuio[avr64da28s]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
 mcuio[avr64db28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
 mcuio[avr64dd28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
 mcuio[avr64du28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4"
 mcuio[avr64ea28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
 mcuio[avr64da32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
+mcuio[avr64da32s]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
 mcuio[avr64db32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
 mcuio[avr64dd32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6"
 mcuio[avr64du32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4"
 mcuio[avr64ea32]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
 mcuio[avr64da48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0"
+mcuio[avr64da48s]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0"
 mcuio[avr64db48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0"
 mcuio[avr64ea48]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=0 UARTALT=2 RX=AtmelPA3 TX=AtmelPA2|UARTNUM=0 UARTALT=3 RX=AtmelPD5 TX=AtmelPD4|UARTNUM=0 UARTALT=4 RX=AtmelPC2 TX=AtmelPC1|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=1 UARTALT=2 RX=AtmelPD7 TX=AtmelPD6|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4"
 mcuio[avr64da64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0|UARTNUM=4 UARTALT=1 RX=AtmelPE5 TX=AtmelPE4|UARTNUM=5 RX=AtmelPG1 TX=AtmelPG0|UARTNUM=5 UARTALT=1 RX=AtmelPG5 TX=AtmelPG4"
+mcuio[avr64da64s]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0|UARTNUM=4 UARTALT=1 RX=AtmelPE5 TX=AtmelPE4|UARTNUM=5 RX=AtmelPG1 TX=AtmelPG0|UARTNUM=5 UARTALT=1 RX=AtmelPG5 TX=AtmelPG4"
 mcuio[avr64db64]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=1 UARTALT=1 RX=AtmelPC5 TX=AtmelPC4|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0|UARTNUM=2 UARTALT=1 RX=AtmelPF5 TX=AtmelPF4|UARTNUM=3 RX=AtmelPB1 TX=AtmelPB0|UARTNUM=3 UARTALT=1 RX=AtmelPB5 TX=AtmelPB4|UARTNUM=4 RX=AtmelPE1 TX=AtmelPE0|UARTNUM=4 UARTALT=1 RX=AtmelPE5 TX=AtmelPE4|UARTNUM=5 RX=AtmelPG1 TX=AtmelPG0|UARTNUM=5 UARTALT=1 RX=AtmelPG5 TX=AtmelPG4"
 mcuio[avr128da28]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
 mcuio[avr128da28s]="UARTNUM=0 RX=AtmelPA1 TX=AtmelPA0|UARTNUM=0 UARTALT=1 RX=AtmelPA5 TX=AtmelPA4|UARTNUM=1 RX=AtmelPC1 TX=AtmelPC0|UARTNUM=2 RX=AtmelPF1 TX=AtmelPF0"
@@ -1515,37 +1545,47 @@ intfcpus[avr32eb14]=20000000/16000000
 intfcpus[avr32dd20]=4000000/32768
 intfcpus[avr32du20]=4000000/32768
 intfcpus[avr32eb20]=20000000/16000000
+intfcpus[avr32sd20]=1000000
 intfcpus[avr32da28]=4000000/32768
+intfcpus[avr32da28s]=4000000/32768
 intfcpus[avr32db28]=4000000/32768
 intfcpus[avr32dd28]=4000000/32768
 intfcpus[avr32du28]=4000000/32768
 intfcpus[avr32ea28]=20000000/16000000
 intfcpus[avr32eb28]=20000000/16000000
+intfcpus[avr32sd28]=1000000
 intfcpus[avr32da32]=4000000/32768
+intfcpus[avr32da32s]=4000000/32768
 intfcpus[avr32db32]=4000000/32768
 intfcpus[avr32dd32]=4000000/32768
 intfcpus[avr32du32]=4000000/32768
 intfcpus[avr32ea32]=20000000/16000000
 intfcpus[avr32eb32]=20000000/16000000
+intfcpus[avr32sd32]=1000000
 intfcpus[avr32da48]=4000000/32768
+intfcpus[avr32da48s]=4000000/32768
 intfcpus[avr32db48]=4000000/32768
 intfcpus[avr32ea48]=20000000/16000000
 intfcpus[avr64dd14]=4000000/32768
 intfcpus[avr64dd20]=4000000/32768
 intfcpus[avr64da28]=4000000/32768
+intfcpus[avr64da28s]=4000000/32768
 intfcpus[avr64db28]=4000000/32768
 intfcpus[avr64dd28]=4000000/32768
 intfcpus[avr64du28]=4000000/32768
 intfcpus[avr64ea28]=20000000/16000000
 intfcpus[avr64da32]=4000000/32768
+intfcpus[avr64da32s]=4000000/32768
 intfcpus[avr64db32]=4000000/32768
 intfcpus[avr64dd32]=4000000/32768
 intfcpus[avr64du32]=4000000/32768
 intfcpus[avr64ea32]=20000000/16000000
 intfcpus[avr64da48]=4000000/32768
+intfcpus[avr64da48s]=4000000/32768
 intfcpus[avr64db48]=4000000/32768
 intfcpus[avr64ea48]=20000000/16000000
 intfcpus[avr64da64]=4000000/32768
+intfcpus[avr64da64s]=4000000/32768
 intfcpus[avr64db64]=4000000/32768
 intfcpus[avr128da28]=4000000/32768
 intfcpus[avr128da28s]=4000000/32768
@@ -1918,37 +1958,47 @@ nickname[avr32eb14]=32eb14
 nickname[avr32dd20]=32dd20
 nickname[avr32du20]=32du20
 nickname[avr32eb20]=32eb20
+nickname[avr32sd20]=avr32sd20
 nickname[avr32da28]=32da28
+nickname[avr32da28s]=avr32da28s
 nickname[avr32db28]=32db28
 nickname[avr32dd28]=32dd28
 nickname[avr32du28]=32du28
 nickname[avr32ea28]=32ea28
 nickname[avr32eb28]=32eb28
+nickname[avr32sd28]=avr32sd28
 nickname[avr32da32]=32da32
+nickname[avr32da32s]=avr32da32s
 nickname[avr32db32]=32db32
 nickname[avr32dd32]=32dd32
 nickname[avr32du32]=32du32
 nickname[avr32ea32]=32ea32
 nickname[avr32eb32]=32eb32
+nickname[avr32sd32]=avr32sd32
 nickname[avr32da48]=32da48
+nickname[avr32da48s]=avr32da48s
 nickname[avr32db48]=32db48
 nickname[avr32ea48]=32ea48
 nickname[avr64dd14]=64dd14
 nickname[avr64dd20]=64dd20
 nickname[avr64da28]=64da28
+nickname[avr64da28s]=avr64da28s
 nickname[avr64db28]=64db28
 nickname[avr64dd28]=64dd28
 nickname[avr64du28]=64du28
 nickname[avr64ea28]=64ea28
 nickname[avr64da32]=64da32
+nickname[avr64da32s]=avr64da32s
 nickname[avr64db32]=64db32
 nickname[avr64dd32]=64dd32
 nickname[avr64du32]=64du32
 nickname[avr64ea32]=64ea32
 nickname[avr64da48]=64da48
+nickname[avr64da48s]=avr64da48s
 nickname[avr64db48]=64db48
 nickname[avr64ea48]=64ea48
 nickname[avr64da64]=64da64
+nickname[avr64da64s]=avr64da64s
 nickname[avr64db64]=64db64
 nickname[avr128da28]=128da28
 nickname[avr128da28s]=128da28s
@@ -2321,37 +2371,47 @@ flashsize[avr32eb14]=32768
 flashsize[avr32dd20]=32768
 flashsize[avr32du20]=32768
 flashsize[avr32eb20]=32768
+flashsize[avr32sd20]=32768
 flashsize[avr32da28]=32768
+flashsize[avr32da28s]=32768
 flashsize[avr32db28]=32768
 flashsize[avr32dd28]=32768
 flashsize[avr32du28]=32768
 flashsize[avr32ea28]=32768
 flashsize[avr32eb28]=32768
+flashsize[avr32sd28]=32768
 flashsize[avr32da32]=32768
+flashsize[avr32da32s]=32768
 flashsize[avr32db32]=32768
 flashsize[avr32dd32]=32768
 flashsize[avr32du32]=32768
 flashsize[avr32ea32]=32768
 flashsize[avr32eb32]=32768
+flashsize[avr32sd32]=32768
 flashsize[avr32da48]=32768
+flashsize[avr32da48s]=32768
 flashsize[avr32db48]=32768
 flashsize[avr32ea48]=32768
 flashsize[avr64dd14]=65536
 flashsize[avr64dd20]=65536
 flashsize[avr64da28]=65536
+flashsize[avr64da28s]=65536
 flashsize[avr64db28]=65536
 flashsize[avr64dd28]=65536
 flashsize[avr64du28]=65536
 flashsize[avr64ea28]=65536
 flashsize[avr64da32]=65536
+flashsize[avr64da32s]=65536
 flashsize[avr64db32]=65536
 flashsize[avr64dd32]=65536
 flashsize[avr64du32]=65536
 flashsize[avr64ea32]=65536
 flashsize[avr64da48]=65536
+flashsize[avr64da48s]=65536
 flashsize[avr64db48]=65536
 flashsize[avr64ea48]=65536
 flashsize[avr64da64]=65536
+flashsize[avr64da64s]=65536
 flashsize[avr64db64]=65536
 flashsize[avr128da28]=131072
 flashsize[avr128da28s]=131072
