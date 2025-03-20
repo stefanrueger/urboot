@@ -1,0 +1,355 @@
+#!/bin/bash
+
+# Published under GNU General Public License, version 3 (GPL-3.0)
+# Author Stefan Rueger <stefan.rueger@urclocks.com>
+#
+# v 1.0 (first version 08.02.2025)
+# 20.03.2025
+
+# Compile template bootloaders for one MCU
+
+progname=$(basename $0)
+
+Usage() {
+cat <<END
+Syntax: $progname [<opt>] <mcu>
+Function: create template bootloaders for the 8-bit AVR MCU <mcu> (all lower case)
+Option:
+    -m <dir>  Directory in which mcu bootloaders are created (default mcus)
+    -d        Dry run: show which bootloaders would be created
+END
+}
+
+shopt -s extglob
+
+run=1
+mcu_bls=mcus
+
+while getopts ":dm:" opt; do
+  case ${opt} in
+    m) mcu_bls=$OPTARG
+        ;;
+    d) run=0
+        ;;
+    --) shift;
+        break
+        ;;
+   \?) echo "Invalid option: $OPTARG" 1>&2
+       Usage 1>&2; exit 1
+       ;;
+   : ) echo "Invalid option: $OPTARG requires an argument" 1>&2
+       Usage 1>&2; exit 1
+       ;;
+  esac
+done
+shift $((OPTIND -1))
+
+if [ $# != 1 ]; then Usage 1>&2; exit 1; fi
+
+
+mcu="$1"
+
+####
+# Some intell about parts in general
+#
+
+source ur_avrintel
+
+if [ -z "${uarttype[$mcu]}" ]; then
+  echo "Unknown MCU $mcu; exiting"
+  exit
+fi
+
+####
+# setarray arr , 1,2,3,
+# Split a string into an array
+#
+
+setarray(){ declare -n a=$1; local IFS=$2 -; set -f; a=($3); }
+
+iostring=${mcuio[$mcu]}
+
+####
+#
+declare -A baud
+
+####
+#
+declare -A ioname
+ioname[auto]=autobaud
+
+# Does the classic part have an UART2X bit that enables 8 samples instead of 16?
+uart2x=1; [[ /atmega103/at43usb320/at90s2313/at90s2333/at90s4433/at90s4414/at90s8515/at90s4434/at90s8535/ =~ /$mcu/ ]] && uart2x=0
+
+# Classic UARTs with 8-bit baud rate divisor (instead of 12)
+div8=0; [[ /atmega103/atmega163/at43usb320/at90s2313/at90s4414/at90s8515/at90s4434/at90s8535/ =~ /$mcu/ ]] && div8=1
+
+baud[auto]=auto
+# Do not change fcpu: the baud rates below rely on F_cpu = 160 kHz
+fcpu=160000
+if [[ "${uarttype[$mcu]}" -eq 1 && ${iostring:0:4} == UART ]]; then
+  # Classic UARTs
+  ioname[6]=u2x12
+  ioname[10]=u1x12
+  ioname[351]=u2x8
+  ioname[500]=u1x8
+  if [[ $uart2x -eq 0 && $div8 -eq 1 ]]; then
+    # No UART2X bit and baud rate divisor is only 8 bits wide
+    baud[$fcpu]=500/
+  elif [[  $uart2x -eq 0 ]]; then
+    # No UART2X bit and baud rate divisor is 12 bits wide
+    baud[$fcpu]=10/500/
+  elif [[ $div8 -eq 1 ]]; then
+    # UART2X bit and baud rate divisor is only 8 bits wide
+    baud[$fcpu]=351/500/
+  else
+    baud[$fcpu]=6/10/351/500/
+  fi
+elif [[ "${uarttype[$mcu]}" -eq 2 && ${iostring:0:4} == UART ]]; then
+  # LIN UART only needs one template
+  baud[$fcpu]=300/
+  ioname[300]=lin
+fi
+
+# Add those SWIO baud rates that need considering
+if [[ ${flashsize[$mcu]} -gt 131072 ]]; then
+  # 22-bit PC, ie, flash size > 2**17; rcall/ret take longer and affect SWIO timing
+  baud[$fcpu]+=4200/4300/4400/4550/4700/4850/5000/5150/5300/5500/5700/5900
+  ioname[4200]=swio15
+  ioname[4300]=swio14
+  ioname[4400]=swio13
+  ioname[4550]=swio12
+  ioname[4700]=swio11
+  ioname[4850]=swio10
+  ioname[5000]=swio05
+  ioname[5150]=swio04
+  ioname[5300]=swio03
+  ioname[5500]=swio02
+  ioname[5700]=swio01
+  ioname[5900]=swio00
+else
+  # 16-bit PC, ie, flash size up to, and including, 128 kB
+  baud[$fcpu]+=4700/4850/5000/5150/5300/5500/5700/5900/6100/6400/6700/6950
+  ioname[4700]=swio15
+  ioname[4850]=swio14
+  ioname[5000]=swio13
+  ioname[5150]=swio12
+  ioname[5300]=swio11
+  ioname[5500]=swio10
+  ioname[5700]=swio05
+  ioname[5900]=swio04
+  ioname[6100]=swio03
+  ioname[6400]=swio02
+  ioname[6700]=swio01
+  ioname[6950]=swio00
+fi
+
+####
+# Urboot configurations considered
+#
+declare -A config
+
+# Vector bootloaders
+        config[_]="VBL=1                EEPROM=0 CHIP_ERASE=0"
+      config[_pr]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=0"
+   config[_pr_ce]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=1"
+   config[_pr_ee]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=0"
+config[_pr_ee_ce]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=1"
+
+# Hardware supported bootloaders
+if [[ minbootsz[$mcu] -gt 0 ]]; then
+  if [[ minbootsz[$mcu] -eq 256 ]]; then
+    config[_hw]="VBL=0 EEPROM=0 CHIP_ERASE=0"
+  fi
+  config[_ee_ce_hw]="VBL=0 EEPROM=1 CHIP_ERASE=1"
+fi
+
+# Generate at least two bootloaders: no LED, template LED
+board=no-led:BLINK=0/lednop:TEMPLATE=1
+# Unless SPI not implemented add template DUAL+LED bootloader
+[[ /atmega406/attiny13/attiny13a/attiny1634/attiny2313/attiny2313a/attiny24/attiny24a/attiny25/attiny261/attiny261a/attiny4313/attiny43u/attiny44/attiny44a/attiny45/attiny461/attiny461a/attiny84/attiny84a/attiny85/attiny861/attiny861a/ =~ /$mcu/ ]] \
+  || board+=/dual:TEMPLATE=1_DUAL=1
+
+####
+# Board configurations
+#
+declare -A bcfg
+declare -A bnames
+
+setarray brd / "$board"
+for bb in ${brd[@]}; do
+  bcfg[$bb]=${bb#*:}
+  [[ ! "${bcfg[$bb]}" == *BLINK=* ]] && bcfg[$bb]+=_BLINK=1
+  bnames[$bb]=${bb%:*}
+done
+
+# All the I/O specs for *this* MCU
+setarray iospecs \| "${mcuio[$mcu]}"
+
+# Variation of autobaud on certain parts that can only detect fcpu/16, fcpu/32, fcpu/24, ..., i.e., have no UART2X bit
+autovar=; [[ $uart2x -eq 0 ]] && autovar=2
+
+####
+# Set global variables based on $fbase $ftype $b
+#  - fcpu $fbase
+#  - fbfilenm (autobaud, autobaud2 or sth like lin/u2x12/swio13)
+
+mkfbvars() {
+  local fbase=$1
+  local ftype=$2
+  local b=$3
+
+  fcpu=$fbase
+
+  if [[ $ftype == a ]]; then
+    fbfilenm=autobaud$autovar
+  else
+    fbfilenm=${ioname[$b]}
+  fi
+}
+
+
+####
+# Set a global variable ioport for use in file and directory names from make options
+#
+mkioport() {
+  ioport="$1"
+  ioport=${ioport/SWIO=1/}
+  ioport=${ioport/UARTNUM=/_uart}
+  ioport=${ioport/UARTALT=0/}
+  ioport=${ioport/UARTALT=/_alt}
+  ioport=${ioport/RX=AtmelP/_rx}
+  ioport=${ioport/TX=AtmelP/_tx}
+  ioport=${ioport// /}
+  ioport=${ioport,,}
+  ioport=${ioport:1}
+}
+
+####
+# Construct a global variable filename for the basename of the bootloader
+# Also set global variables shortname, ioport and pinconfig. Example paramters
+#
+# atmega328p x24m0_1000k0 LED=AtmelPB1_BLINK=1 _ee_ce_hw_stk500 'UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1'
+#
+mkfilename() {
+  local part=${nickname[$1]}
+  [[ -z $part ]] && part=$1
+
+  # echo "@ $1 $2 $3 $4 '$5'"
+
+  pinconfig=$3
+  [[ "$pinconfig" == TEMPLATE=1_BLINK=1 ]] && pinconfig=_lednop
+  [[ "$pinconfig" == BLINK=0 ]] && pinconfig=_no-led
+  pinconfig=${pinconfig/_BLINK=?/}
+  [[ "$pinconfig" == TEMPLATE=1_DUAL=1 ]] && pinconfig=_dual
+  pinconfig=${pinconfig/LEDPOLARITY=-1_LED=AtmelP/_led-}
+  pinconfig=${pinconfig/LED=AtmelP/_led+}
+  pinconfig=${pinconfig/_SFMCS=AtmelP/_cs}
+  pinconfig=${pinconfig/_DUAL=1/_dual}
+  pinconfig=${pinconfig,,}
+  pinconfig=${pinconfig:1}
+
+  mkioport "$5"
+
+  filename="urboot_${part}_$2_${ioport}_$pinconfig"
+  [[ "$4" != _ ]] && filename+=$4
+  filename=${filename,,}
+  filename=${filename// /_}     # Sanity, should not be necessary
+
+  shortname=urboot_$1           # Must include the part to enable parallising in mkallbootloaders
+  [[ "$4" != _ ]] && shortname+=$4
+}
+
+alphabet=({a..z})
+
+declare -A duplicate
+declare -A hexdirs
+
+topmdir="$mcu_bls/$mcu"
+
+for fc in $fcpu auto; do
+  if [[ $fc == auto ]]; then
+    ftype=a
+    fbase=160000
+  else
+    ftype=x
+    fbase=$fc
+  fi
+
+  setarray bauds / "${baud[$fc]}"
+  for b in ${bauds[@]}; do
+    mkfbvars $fbase $ftype $b
+    if [[ $b == auto ]]; then
+      br=AUTOBAUD=1
+    else
+      br=BAUD_RATE=$b
+    fi
+
+    for io in "${iospecs[@]}"; do
+      mkioport "$io"; dirport="$ioport"
+      thisio="$io"
+      if [[ $b == auto ]]; then
+        if [[ ${io:0:4} == SWIO ]]; then
+          continue
+        fi
+        # Autobaud needs UART and must have RX in I/O space: exclude ports H..L
+        if [[ $io =~ RX=AtmelP[H-L] && "${uarttype[$mcu]}" -lt 3 ]]; then
+          continue
+        fi
+      else
+        # baud rates in excess of 4000 are meant for SWIO templates
+        if [[ ${thisio:0:4} == UART && $b -gt 4000 ]]; then
+          # Switch to SWIO instead of using the UART
+          thisio=${thisio/UARTNUM=?/SWIO=1}
+          thisio=${thisio/UARTALT=?/}
+        fi
+
+        if [[ ${thisio:0:4} == SWIO ]]; then
+          # Also needs RX/TX in I/O space: exclude ports H..L
+          if [[ $io =~ [RT]X=AtmelP[H-L] && "${uarttype[$mcu]}" -lt 3 ]]; then
+            continue
+          fi
+        fi
+      fi
+
+      for bb in ${brd[@]}; do
+        for cfg in ${!config[@]}; do
+          extra="AUTOFRILLS=0,6,8..10,5,4,3,2"
+          [[ ${minbootsz[$mcu]} -gt 4096 && ${config[$cfg]} == *VBL=0* ]] && extra+=" PGMWRITEPAGE=0"
+          mkfilename "$mcu" "$fbfilenm" "${bcfg[$bb]}" "$cfg" "$thisio" "1S"
+          args="MCU=$mcu "WDTO=1S" F_CPU=${fcpu}L $br $thisio ${config[$cfg]} ${bcfg[$bb]//_/ } $extra NAME=$filename"
+          if [[ $run -eq 1 ]]; then
+            { echo make $args; make $args; } >& $filename.out
+            if [[ -r $filename.hex ]]; then
+              mkstub_h -p $mcu $filename.hex
+            else
+              echo warning compilation for $filename failed
+              continue
+            fi
+
+            mdir="$topmdir"
+
+            if [[ -z ${hexdirs[$mdir]} ]]; then
+              mkdir -p "$mdir"
+              hexdirs[$mdir]="$mcu"
+            fi
+            mv $filename.{hex,out,elf,lst} "$mdir/"
+          else
+            echo make $args
+            # echo "$mdir/$filename.hex"
+            if [[ -n ${duplicate[$filename]} ]]; then
+              echo duplicate $filename ${duplicate[$filename]}
+              echo duplicate $filename $args
+            else
+              duplicate[$filename]="$args"
+            fi
+          fi
+        done
+      done
+      # baud rates in excess of 4000 should only be used once; skip alternative IO UART configs
+      if [[ $b != auto && $b -gt 4000 ]]; then
+        break
+      fi
+    done
+  done
+done

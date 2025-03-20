@@ -1,0 +1,207 @@
+#!/usr/bin/perl
+
+# Reads a <name>.hex file, creates a raw code word list using avrdude, adds
+# locations where parameters in code are used, and write the corresponding
+# stub file as header file <dir><name>.h. <dir> is bootloader-stubs' by
+# default.
+#
+# published under GNU General Public License, version 3 (GPL-3.0)
+# author Stefan Rueger
+#
+# v 1.12
+# 20.03.2025
+#
+
+use strict;
+use warnings;
+use File::Basename;
+use File::HomeDir;
+use Getopt::Long qw(GetOptions);
+use File::Temp qw/ :mktemp  /;
+use List::Pairwise qw(mapp grepp);
+
+my $progname = basename($0);
+my $myvers = "1.12";
+my $outdir = 'bootloader-stubs';
+my $part = 'unknown';
+
+my $Usage = <<"END_USAGE";
+Syntax: $progname {<boot>.hex}
+Function: reads .hex file and creates a corresponding .h file in bootloader-stubs/ with contents of .hex
+Options:
+  -version      print version ($myvers) and exit
+  -outdir <dir> create file <dir>/<basename boot>.h (default $outdir)
+  -part <name>  part name (MCU)
+Note: wants to read a parallel .elf file if present to determine locations
+END_USAGE
+
+my ($version, $rjmpwp, $fntbl, $fnhex, $fnelf, $fnchh, $tb, $fh, %todef, @locs);
+
+GetOptions(
+  'version' => \$version,
+  'outdir=s' => \$outdir,
+  'part=s' => \$part,
+) or die $Usage;
+
+print("$progname version $myvers\n"), exit(0) if $version;
+
+# Looking to define these constants
+@locs = qw(
+  main _etext urboot_version
+  ldi_brrlo ldi_brrhi ldi_brrshared ldi_linbrrlo ldi_linlbt swio_extra12 ldi_bvalue
+  ldi_wdto ldi_stk_insync ldi_stk_ok rjmp_application jmp_application
+  cbi_tx sbi_tx sbic_rx_start sbic_rx
+  ldi_starthhz ldi_starthi cpi_starthi cpi_startlo
+);
+
+
+my %parts = map { $_ => 1 } qw(attiny4 attiny5 attiny9 attiny10 attiny20 attiny40 attiny102
+  attiny104 attiny11 attiny12 attiny15 attiny22 attiny13 attiny13a attiny25 attiny45 attiny85
+  attiny2313 attiny2313a attiny4313 attiny24 attiny24a attiny44 attiny44a attiny84 attiny84a
+  attiny441 attiny841 attiny26 attiny261 attiny261a attiny461 attiny461a attiny861 attiny861a
+  attiny48 attiny88 attiny28 attiny43u attiny828 attiny828r attiny87 attiny167 attiny1634
+  attiny1634r at90can32 at90can64 at90can128 at90pwm81 at90pwm161 at90pwm1 at90pwm2 at90pwm2b
+  at90pwm3 at90pwm3b at90pwm216 at90pwm316 at90usb646 at90usb647 at90usb1286 at90usb1287 at90usb82
+  at90usb162 at90s1200 at90s2313 at90s2323 at90s2343 at90s2333 at90s4433 at90s4414 at90s8515
+  at90s4434 at90s8535 atmega103 atmega161 atmega162 atmega163 atmega8515 atmega8535 atmega8
+  atmega8a atmega16 atmega16a atmega32 atmega32a atmega64 atmega64a atmega128 atmega128a atmega640
+  atmega1280 atmega1281 atmega2560 atmega2561 atmega164p atmega164a atmega164pa atmega324p
+  atmega324a atmega324pa atmega324pb atmega644 atmega644p atmega644a atmega644pa atmega1284
+  atmega1284p atmega128rfa1 atmega644rfr2 atmega1284rfr2 atmega2564rfr2 atmega64rfr2 atmega128rfr2
+  atmega256rfr2 atmega165 atmega165p atmega165a atmega165pa atmega325 atmega325p atmega325a
+  atmega325pa atmega3250 atmega3250p atmega3250a atmega3250pa atmega645 atmega645p atmega645a
+  atmega6450 atmega6450p atmega6450a atmega48 atmega48p atmega48a atmega48pa atmega88 atmega88p
+  atmega88a atmega88pa atmega168 atmega168p atmega168a atmega168pa atmega328 atmega328p atmega48pb
+  atmega88pb atmega168pb atmega328pb atmega169 atmega169p atmega169a atmega169pa atmega329
+  atmega329p atmega329a atmega329pa atmega3290 atmega3290p atmega3290a atmega3290pa atmega649
+  atmega649p atmega649a atmega6490 atmega6490p atmega6490a atmega8hva atmega16hva atmega32hve2
+  atmega64hve2 atmega16hvb atmega16hvbrevb atmega32hvb atmega32hvbrevb atmega16m1 atmega32c1
+  atmega32m1 atmega64c1 atmega64m1 atmega8u2 atmega16u2 atmega32u2 atmega16u4 atmega32u4 atmega406
+  ata6612c ata6613c ata6616c ata6617c ata5505 ata6614q ata664251 lgt8f88p lgt8f168p lgt8f328p
+  at89s51 at89s52 atxmega16a4u atxmega16c4 atxmega16d4 atxmega16a4 atxmega32a4u atxmega32c4
+  atxmega32d4 atxmega32a4 atxmega64a4u atxmega32c3 atxmega32d3 atxmega64c3 atxmega64d3 atxmega64d4
+  atxmega64a1 atxmega64a1u atxmega64a3 atxmega64a3u atxmega64a4 atxmega64b1 atxmega64b3
+  atxmega128c3 atxmega128d3 atxmega128d4 atxmega128a1 atxmega128a1revd atxmega128a1u atxmega128a3
+  atxmega128a3u atxmega128a4 atxmega128a4u atxmega128b1 atxmega128b3 atxmega192c3 atxmega192d3
+  atxmega192a1 atxmega192a3 atxmega192a3u atxmega256c3 atxmega256d3 atxmega256a1 atxmega256a3
+  atxmega256a3u atxmega256a3b atxmega256a3bu atxmega384c3 atxmega384d3 atxmega8e5 atxmega16e5
+  atxmega32e5 at32uc3a0512 attiny202 attiny204 attiny402 attiny404 attiny406 attiny804 attiny806
+  attiny807 attiny1604 attiny1606 attiny1607 attiny212 attiny214 attiny412 attiny414 attiny416
+  attiny416auto attiny417 attiny814 attiny816 attiny817 attiny1614 attiny1616 attiny1617 attiny3216
+  attiny3217 attiny424 attiny426 attiny427 attiny824 attiny826 attiny827 attiny1624 attiny1626
+  attiny1627 attiny3224 attiny3226 attiny3227 atmega808 atmega809 atmega1608 atmega1609 atmega3208
+  atmega3209 atmega4808 atmega4809 avr32da28 avr32da32 avr32da48 avr64da28 avr64da32 avr64da48
+  avr64da64 avr128da28 avr128da32 avr128da48 avr128da64 avr128da28s avr128da32s avr128da48s
+  avr128da64s avr32db28 avr32db32 avr32db48 avr64db28 avr64db32 avr64db48 avr64db64 avr128db28
+  avr128db32 avr128db48 avr128db64 avr16dd14 avr16dd20 avr16dd28 avr16dd32 avr32dd14 avr32dd20
+  avr32dd28 avr32dd32 avr64dd14 avr64dd20 avr64dd28 avr64dd32 avr64du28 avr64du32 avr16du14
+  avr16du20 avr16du28 avr16du32 avr32du14 avr32du20 avr32du28 avr32du32 avr8ea28 avr8ea32 avr16ea28
+  avr16ea32 avr16ea48 avr32ea28 avr32ea32 avr32ea48 avr64ea28 avr64ea32 avr64ea48 avr16eb14
+  avr16eb20 avr16eb28 avr16eb32 avr32eb14 avr32eb20 avr32eb28 avr32eb32
+
+  t4 t5 t9 t10 t20 t40 t102 t104 t11 t12 t15 t22 t13 t13a t25 t45 t85 t2313 t2313a t4313 t24 t24a
+  t44 t44a t84 t84a t441 t841 t26 t261 t261a t461 t461a t861 t861a t48 t88 t28 t43u t828 t828r t87
+  t167 t1634 t1634r c32 c64 c128 pwm81 pwm161 pwm1 pwm2 pwm2b pwm3 pwm3b pwm216 pwm316 usb646
+  usb647 usb1286 usb1287 usb82 usb162 1200 2313 2323 2343 2333 4433 4414 8515 4434 8535 m103 m161
+  m162 m163 m8515 m8535 m8 m8a m16 m16a m32 m32a m64 m64a m128 m128a m640 m1280 m1281 m2560 m2561
+  m164p m164a m164pa m324p m324a m324pa m324pb m644 m644p m644a m644pa m1284 m1284p m128rfa1
+  m644rfr2 m1284rfr2 m2564rfr2 m64rfr2 m128rfr2 m256rfr2 m165 m165p m165a m165pa m325 m325p m325a
+  m325pa m3250 m3250p m3250a m3250pa m645 m645p m645a m6450 m6450p m6450a m48 m48p m48a m48pa m88
+  m88p m88a m88pa m168 m168p m168a m168pa m328 m328p m48pb m88pb m168pb m328pb m169 m169p m169a
+  m169pa m329 m329p m329a m329pa m3290 m3290p m3290a m3290pa m649 m649p m649a m6490 m6490p m6490a
+  m8hva m16hva m32hve2 m64hve2 m16hvb m16hvbrevb m32hvb m32hvbrevb m16m1 m32c1 m32m1 m64c1 m64m1
+  m8u2 m16u2 m32u2 m16u4 m32u4 m406 ata6612c ata6613c ata6616c ata6617c ata5505 ata6614q ata664251
+  lgt8f88p lgt8f168p lgt8f328p 89S51 89S52 x16a4u x16c4 x16d4 x16a4 x32a4u x32c4 x32d4 x32a4 x64a4u
+  x32c3 x32d3 x64c3 x64d3 x64d4 x64a1 x64a1u x64a3 x64a3u x64a4 x64b1 x64b3 x128c3 x128d3 x128d4
+  x128a1 x128a1d x128a1u x128a3 x128a3u x128a4 x128a4u x128b1 x128b3 x192c3 x192d3 x192a1 x192a3
+  x192a3u x256c3 x256d3 x256a1 x256a3 x256a3u x256a3b x256a3bu x384c3 x384d3 x8e5 x16e5 x32e5
+  uc3a0512 t202 t204 t402 t404 t406 t804 t806 t807 t1604 t1606 t1607 t212 t214 t412 t414 t416
+  t416auto t417 t814 t816 t817 t1614 t1616 t1617 t3216 t3217 t424 t426 t427 t824 t826 t827 t1624
+  t1626 t1627 t3224 t3226 t3227 m808 m809 m1608 m1609 m3208 m3209 m4808 m4809 32da28 32da32 32da48
+  64da28 64da32 64da48 64da64 128da28 128da32 128da48 128da64 128da28s 128da32s 128da48s 128da64s
+  32db28 32db32 32db48 64db28 64db32 64db48 64db64 128db28 128db32 128db48 128db64 16dd14 16dd20
+  16dd28 16dd32 32dd14 32dd20 32dd28 32dd32 64dd14 64dd20 64dd28 64dd32 64du28 64du32 16du14 16du20
+  16du28 16du32 32du14 32du20 32du28 32du32 8ea28 8ea32 16ea28 16ea32 16ea48 32ea28 32ea32 32ea48
+  64ea28 64ea32 64ea48 16eb14 16eb20 16eb28 16eb32 32eb14 32eb20 32eb28 32eb32);
+
+# Default to a part with large flash memory
+$part = 'at'.$part if !exists $parts{$part} && $part =~ /^a[0-9]/;
+$part = 'm2560' if !exists $parts{$part};
+
+foreach $fnhex (@ARGV) {
+  die "$progname: don't know what to do with $fnhex\n" if $fnhex !~ /\.hex$/;
+  my ($start, $size, $usage, %addr, %locs, @indices);
+
+  # Find locations from .elf
+  $fnelf = $fnhex;
+  $fnelf =~ s/\.hex$/.elf/;
+  die "cannot read $fnelf" if ! -r $fnelf;
+
+  %addr = map { substr($_, 9) => hex(substr($_, 0, 8)) } split("\n",
+    `avr-nm -g "$fnelf"  | grep " [TR] " | sort | cut -d" " -f1,3 | grep -v ^008`);
+
+  # Start address in flash memory
+  $start = exists $addr{__trampolines_end}? $addr{__trampolines_end}:
+    exists $addr{main}? $addr{main}: -1;
+  die "unable to figure out start address in $fnelf" if $start < 0;
+
+  # Byte locations and list of word indices of variable values
+  %locs = map { $_ => exists $addr{$_}? $addr{$_}-$start: -2 } @locs;
+  @indices = map { $locs{$_}/2 } @locs[3..$#locs];
+
+  # Effective size and usage of bootloader
+  $size = $locs{_etext}+6;
+  $usage = $locs{urboot_version}+6;
+
+  $fntbl = $fnchh = "$outdir/".basename($fnhex);
+  $fnchh =~ s/\.hex$/.h/;
+  $fntbl =~ s/\.hex$/-XXXXXX/;
+
+  ($tb, $fntbl) = mkstemp($fntbl);
+  close($tb) or die "$progname: cannot close temporary table $fntbl\n";
+
+  die "$progname: cannot open $fnhex\n" if !-r $fnhex;
+  system "avrdude -qqp $part -c dryrun -U $fnhex \\\
+   -T \"save flash $start $locs{_etext} $fntbl:h\" \\\
+   -T \"save flash $addr{urboot_version} 6 $fntbl-version:h\"\n";
+  die "$progname: cannot create $fntbl from $fnhex\n " if ! -r $fntbl;
+
+  my ($doadd, @words, @consts, @defines);
+  open($tb, "<", $fntbl) or die "$progname: cannot open $fntbl\n";
+  while(<$tb>) {
+    push @words, mapp { hexextract($a)+hexextract($b)*256 } split(',', $_);
+  }
+  close($tb);
+  die "$progname: implausible size $#words of $fntbl\n" if @words < 2 || @words > 4096;
+  unlink($fntbl);
+
+  open($tb, "<", "$fntbl-version") or die "$progname: cannot open $fntbl-version\n";
+  push @words, mapp { hexextract($a)+hexextract($b)*256 } grep { /0x/ } split(',', <$tb>);
+  close($tb);
+  unlink("$fntbl-version");
+
+  # Store a nop (opcode 0x0000) at the swio_extra12 label
+  map { $words[$_] = 0 } grep { $_ >= 0 && $_ < @words-3 } map { $locs{$_}/2 } qw(swio_extra12);
+
+  # cpi/ldi a zero at distinct ldi_/cpi_ labels
+  map { $words[$_] &= 0xf0f0 } grep { $_ >= 0 && $_ < @words-3 } map { $locs{$_}/2 }
+    qw(ldi_stk_insync ldi_stk_ok ldi_starthhz ldi_starthi cpi_starthi cpi_startlo);
+
+  open($fh, ">", $fnchh) or die "$progname: cannot create $fnchh\n";
+
+  print $fh "  $size, $usage,\n ";
+  print $fh " $_,", for @indices;
+  print $fh "\n";
+  printf $fh "%s0x%04X,%s", $_%8==0? "  ": "", $words[$_], ($_+1)%8 == 0 || $_ == $#words? "\n": " " for (0..$#words);
+  close($fh) or die "$progname: error closing $fnchh\n";
+}
+
+exit(0);
+
+sub hexextract {
+  my $var = shift;
+  $var =~ s/\s+//g;
+
+  return hex($var);
+}
+
