@@ -1150,7 +1150,7 @@ void bitDelay();
 
 /*
  *
- * Software serial I/O follows largely the space-efficient algorithm in  Atmel's Applictaion Note
+ * Software serial I/O follows largely the space-efficient algorithm of Atmel's Applictaion Note
  * AVR305: Half Duplex Compact Software UART (Rev. 0952C-AVR-0905). The equation for the delay
  * counter SWIO_B_VALUE = (((F_CPU/BAUD_RATE)-23+3)/6) from AVR305 is correct for the Mega
  * architecture with 16 bit PC. Different 8-bit AVR architecture families have slightly different
@@ -1747,12 +1747,10 @@ int main(void) {
     "ldi  r26, 0x7f\n"          /* Initialise X with -0.5 in 8-bit fixed point representation */ \
     "ldi  r27, 0xff\n"          /* Want XH = UBRRnL = F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
   "1:\n" \
-  ".global sbic_rx\nsbic_rx:\n" \
     "sbic %[RXPin], %[RXBit]\n" /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
     "rjmp 1b\n" \
   "2: " \
     adiw(r26, auto_inc)         /* Increment r27:26 so that final value of r27 is BRRL divisor */ \
-  ".global sbis_rx\nsbis_rx:\n" \
     "sbis %[RXPin], %[RXBit]\n" /* Loop as long as rx bit is low */ \
     "rjmp 2b\n"                 /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */ \
     store_brrl                  /* Store r27 to BRRL register */ \
@@ -1793,13 +1791,15 @@ int main(void) {
     autobaud(out_ubrrnl(r27))
 #else // !AUTOBAUD
 #if SHARED_BRRH
+  ".global ldi_brrshared\nldi_brrshared:\n"
     ldi(r24, %[shared_setting]) // Sic! UART0's high BRR nibble serves as bit 9:11 of UART1's
     out_ubrr0h(r24)             // U_UBRR0H = (BAUD_SETTING>>8) << 4;
 #elif defined(UBRRnH) && BAUD_SETTING > 255
+  ".global ldi_brrhi\nldi_brrhi:\n"
     ldi(r24, hi8(%[baud_setting]))
     out_ubrrnh(r24)             // UBRRnH = BAUD_SETTING>>8;
 #endif
-  ".global ldi_baud\nldi_baud:\n"
+  ".global ldi_brrlo\nldi_brrlo:\n"
     ldi(r24, lo8(%[baud_setting]))
     out_ubrrnl(r24)             // UBRRnL = BAUD_SETTING & 0xff;
 #endif // AUTOBAUD
@@ -1834,10 +1834,11 @@ int main(void) {
     autobaud("std Z+%[brrl_off], r27\n")
 #else
 #if defined(UBRRnH_off) && BAUD_SETTING > 255
+  ".global ldi_brrhi\nldi_brrhi:\n"
     "ldi r27, hi8(%[brrl_val])\n"
     "std Z+%[brrh_off], r27\n"
 #endif
-  ".global ldi_baud\nldi_baud: "
+  ".global ldi_brrlo\nldi_brrlo:\n"
     "ldi r27, lo8(%[brrl_val])\n"
     "std Z+%[brrl_off], r27\n"
 #endif // AUTOBAUD
@@ -1893,7 +1894,7 @@ int main(void) {
   ".global ldi_linlbt\nldi_linlbt:\n"
     "ldi r27, %[btr_val]\n"
     "std Z+%[btr_off], r27\n"
-  ".global ldi_linbaud\nldi_linbaud:\n"
+  ".global ldi_linbrrlo\nldi_linbrrlo:\n"
     "ldi r27, %[brrl_val]\n"
     "std Z+%[brrl_off], r27\n"
 #endif
@@ -2094,6 +2095,7 @@ void putch(char chr) {
     "cbi %[TXPort], %[TXBit]\n" // Set carry puts line low
     "rjmp 3f\n"
   "2: "
+  ".global sbi_tx\nsbi_tx:\n"
     "sbi %[TXPort], %[TXBit]\n" // Clear carry puts line high
     "nop\n"
   "3: "
@@ -2183,14 +2185,14 @@ uint8_t getch(void) {
 
     "ldi   r18, 9\n"            // 8 bit + 1 stop bit
   "1:\n"
-  ".global sbic_rx\nsbic_rx:\n"
+  ".global sbic_rx_start\nsbic_rx_start:\n"
     "sbic  %[RXPin], %[RXBit]\n" // Wait for falling edge of start bit
     "rjmp  1b\n"
     "rcall halfBitDelay\n"      // Get to middle of start bit
   "2: "
     "rcall bitDelay\n"          // Wait 1 bit & sample
     "clc\n"
-  ".global sbic_rx_stop\nsbic_rx_stop:\n"
+  ".global sbic_rx\nsbic_rx:\n"
     "sbic  %[RXPin], %[RXBit]\n"
     "sec\n"
     "dec   r18\n"
