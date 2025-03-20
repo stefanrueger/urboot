@@ -41,7 +41,7 @@ Uart_info *uinfo(const char *p) {
 
 // Max value of Baud Rate Register
 int maxbrr(Uart_info *up) {
-  return up->brr_is12bit? 4095: 255;
+  return (1 << up->brr_nbits) - 1;
 }
 
 int rawuartbrr(Uart_info *up, long f_cpu, long br, int nsamples) {
@@ -238,10 +238,11 @@ int main(int argc, char **argv) {
   mcu = up->avrname;
 
   if(up->uarttype == 2)         // Urboot.c only uses LINBRRL, not the high 4 bit
-    up->brr_is12bit = 0;
+    up->brr_nbits = 8;
 
   if(!swio) {
     switch((parm.type = up->uarttype)) {
+    case -1:
     case 0:
       swio = 1;
       break;
@@ -259,7 +260,7 @@ int main(int argc, char **argv) {
       break;
     case 2:                     // Classic parts with LINUART
       if(f_cpu > brate*64L*(maxbrr(up)+1)) // Quantisation error 64/63, ie, ca 1.6%
-        errstr = up->brr_is12bit?
+        errstr = up->brr_nbits > 8?
           "baud rate too small for 12-bit LINBRR": "baud rate too small for 8-bit LINBRR";
       else if(f_cpu < 79L*brate/10L) // Quantisation error 79/80, ie, ca 1.25%
         errstr = "baud rate too big";
