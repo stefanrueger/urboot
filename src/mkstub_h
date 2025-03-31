@@ -185,7 +185,9 @@ foreach $fnhex (@ARGV) {
 
   # cpi/ldi a zero at distinct ldi_/cpi_ labels
   map { $words[$_] &= 0xf0f0 } grep { $_ >= 0 && $_ < @words-3 } map { $locs{$_}/2 }
-    qw(ldi_stk_insync ldi_stk_ok ldi_starthhz ldi_starthi cpi_starthi cpi_startlo);
+    qw(ldi_starthhz ldi_starthi cpi_starthi cpi_startlo);
+
+  modify_insync_ok(\@words, map { $locs{$_}/2 } qw(ldi_stk_insync ldi_stk_ok));
 
   open($fh, ">", $fnchh) or die "$progname: cannot create $fnchh\n";
 
@@ -198,10 +200,55 @@ foreach $fnhex (@ARGV) {
 
 exit(0);
 
+######
+# Modify ldi rXX, STK_INSYNC and ldi rXX, STK_OK opcodes to remove MCUID from STK_xxx codes
+#
+sub modify_insync_ok {
+  my ($wordp, $inloc, $okloc) = @_;
+
+  die "stk_insync index $inloc out of range" if $inloc < 0 || $inloc >= @{$wordp}-3;
+  die "stk_ok index $okloc out of range" if $okloc < 0 || $okloc >= @{$wordp}-3;
+
+  my $UB_N_MCU = 2040;          # MCU id 0..2039
+  my ($ind, $okd) = (getimmediate($wordp->[$inloc]), getimmediate($wordp->[$okloc]));
+
+  if($ind == 255 && $okd == 254) {
+    $ind = 0x14; $okd = 0x10;  # 0x14 = Resp_STK_INSYNC, 0x10 = Resp_STK_OK
+  } elsif($okd > $ind) {
+    $okd--;
+  }
+
+  my $bootinfo = $ind*255 + $okd;
+  my $features = int($bootinfo/$UB_N_MCU);
+
+  $bootinfo = $features*$UB_N_MCU + 0; # Set mcuid to zero
+  $ind = int($bootinfo/255);
+  $okd = $bootinfo % 255;
+  if($okd >= $ind) {
+    $okd++;
+  }
+  if($ind == 0x14 && $okd == 0x10) {
+    $ind = 255;
+    $okd = 254;
+  }
+
+  setimmediate($wordp, $inloc, $ind);
+  setimmediate($wordp, $okloc, $okd);
+}
+
+sub getimmediate {
+  my $opcode = shift;
+  return (($opcode & 0x0f00) >> 4) | ($opcode & 0x000f);
+}
+
+sub setimmediate {
+  my ($wordp, $idx, $imm) = @_;
+  $wordp->[$idx] = ($wordp->[$idx] & 0xf0f0) | ((($imm & 0xf0) << 4) | ($imm & 0x0f));
+}
+
 sub hexextract {
   my $var = shift;
   $var =~ s/\s+//g;
 
   return hex($var);
 }
-
