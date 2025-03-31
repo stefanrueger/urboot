@@ -50,7 +50,7 @@ print("$progname version $myvers\n"), exit(0) if $version;
   main _etext urboot_version
   ldi_brrlo ldi_brrhi ldi_brrshared ldi_linbrrlo ldi_linlbt swio_extra12 ldi_bvalue
   ldi_wdto ldi_stk_insync ldi_stk_ok rjmp_application jmp_application
-  cbi_tx sbi_tx sbic_rx_start sbic_rx
+  sbi_ddrtx cbi_tx sbi_tx sbic_rx_start sbic_rx
   ldi_starthhz ldi_starthi cpi_starthi cpi_startlo
 );
 

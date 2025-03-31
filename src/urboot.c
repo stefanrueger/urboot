@@ -1703,6 +1703,7 @@ int main(void) {
 #error you need to define TX for SWIO
 #elif SWIO
 
+  asm volatile(".global sbi_ddrtx\nsbi_ddrtx:\n" :::);
   // Set TX pin as output
   UR_DDR(TX) |= UR_BV(TX);
 
