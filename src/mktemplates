@@ -15,7 +15,7 @@ cat <<END
 Syntax: $progname [<opt>] <mcu>
 Function: create template bootloaders for the 8-bit AVR MCU <mcu> (all lower case)
 Option:
-    -m <dir>  Directory in which mcu bootloaders are created (default mcus)
+    -m <dir>  Directory in which mcu bootloaders are created (default templates)
     -d        Dry run: show which bootloaders would be created
 END
 }
@@ -23,7 +23,7 @@ END
 shopt -s extglob
 
 run=1
-mcu_bls=mcus
+mcu_bls=templates
 
 while getopts ":dm:" opt; do
   case ${opt} in
