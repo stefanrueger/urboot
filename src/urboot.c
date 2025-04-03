@@ -798,11 +798,11 @@
   _brrret < 0? 0L: _brrret > 255L? 255L: _brrret; \
 })
 
-// Baud rate given LBT value (number of samples in 8..63) and target baud rate bd
-#define _linbaud(lbt, bd) ({ const int _baudlbt = (lbt); F_CPU/((_baudlbt)*(_linbrr(_baudlbt, bd)+1L)); })
+// 10 times baud rate given LBT value (number of samples in 8..63) and target baud rate bd
+#define _linbaud10(lbt, bd) ({ const int _baudlbt = (lbt); (10L*F_CPU)/((_baudlbt)*(_linbrr(_baudlbt, bd)+1L)); })
 
 // Baud rate quantisation error in 0.1 percent given LBT value and target baud rate bd
-#define _linabserr(lbt, bd) ({ const long _aebdf = 1000L*(_linbaud(lbt, bd) - (bd)); _aebdf >= 0? _aebdf/(bd): -_aebdf/(bd); })
+#define _linabserr(lbt, bd) ({ const long _aebdf = 100L*(_linbaud10(lbt, bd) - 10L*(bd)); _aebdf >= 0? _aebdf/(bd): -_aebdf/(bd); })
 
 // Better of two LBT values: if the quantised(!) quantisation error is the same, the larger number of samples wins
 #define _better2(l1, l2, bd) ({ const int _l1 = (l1), _l2 = (l2); long _e1 = _linabserr(_l1, bd), _e2 = _linabserr(_l2, bd); \

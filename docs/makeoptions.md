@@ -74,6 +74,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
    pin assignment for RX/TX. It is usually a small number that aligns with the available
    alternative assignments lined out in the data sheet.
 
+   <a id="autobaud"></a>
    If `AUTOBAUD` is set then the generated bootloader will try to initialise the UART with the
    host communication speed that the bootloader augurs from the first byte that the host is
    expected to send at runtime. The code utilises that the lower 5 bits of that first byte (`0x30`

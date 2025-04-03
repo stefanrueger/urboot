@@ -653,8 +653,15 @@ uint16_t *urboottemplate(const char *mcu, const char *iotype, const char *config
   Ul_urlist key = { UL_BLN(m, i, c), NULL }, *res;
   res = bsearch(&key, urbootlist, sizeof urbootlist/sizeof*urbootlist, sizeof *urbootlist, urlistsearch);
   if(!res) {
-    pmsg_error("no urboot template available for (%s, %s, %s) combination\\n", mcu, iotype, config);
-    return NULL;
+    // If _hw not available, check if _ee_ce_hw is (parts with min bootsection of 512+ bytes don't benefit from small b/l)
+    if(str_ends(config, "_hw") && !str_ends(config, "ce_hw") && c < UL_CONFIG_N-1 && str_ends(configs[c+1], "_ee_ce_hw")) {
+      key.n = UL_BLN(m, i, c+1);
+      res = bsearch(&key, urbootlist, sizeof urbootlist/sizeof*urbootlist, sizeof *urbootlist, urlistsearch);
+    }
+    if(!res) {
+      pmsg_error("no urboot template available for (%s, %s, %s) combination\\n", mcu, iotype, config);
+      return NULL;
+    }
   }
 
   return ul_urtemplate(res->bl);
