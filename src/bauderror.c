@@ -62,21 +62,16 @@ int uartbrr(Uart_info *up, long f_cpu, long br, int nsamples) {
   return parm.brr;
 }
 
-// 10 times actual baud rate given f_cpu, desired baud rated and number 8..63 of samples
-long uartbaud10(Uart_info *up, long f_cpu, long br, int nsamples) {
-  parm.ns = nsamples;
-  return (10*f_cpu)/(nsamples*(uartbrr(up, f_cpu, br, nsamples) + 1));
-}
-
 // Actual baud rate given f_cpu, desired baud rated and number 8..63 of samples
-long uartbaud(Uart_info *up, long f_cpu, long br, int nsamples) {
-  return (uartbaud10(up, f_cpu, br, nsamples) + 5)/10;
+double uartbaud(Uart_info *up, long f_cpu, long br, int nsamples) {
+  parm.ns = nsamples;
+  return (1.0*f_cpu)/(nsamples*(uartbrr(up, f_cpu, br, nsamples) + 1));
 }
 
-// Absolute UART quanitisation error in per mille
-int absuartqerr(Uart_info *up, long f_cpu, long br, int nsamples) {
-  long bdiff = (uartbaud10(up, f_cpu, br, nsamples) - 10*br)*100;
-  return bdiff<0? -bdiff/br: bdiff/br;
+// Absolute UART quanitisation error in 0.01%
+long absuartqerr(Uart_info *up, long f_cpu, long br, int nsamples) {
+  double bdiff = (uartbaud(up, f_cpu, br, nsamples) - br)*1e4;
+  return fabs(bdiff/br) + 0.5;
 }
 
 
@@ -92,15 +87,15 @@ int uart2x(Uart_info *up, long f_cpu, long br, int u2x) {
    * less than normal mode considering that normal mode has higher tolerances than 2x speed mode.
    * The reason for a slight preference for UART2X=0 is that is costs less code in urboot.c.
    */
-  int e1 = absuartqerr(up, f_cpu, br, 8), e0 = absuartqerr(up, f_cpu, br, 16);
+  long e1 = absuartqerr(up, f_cpu, br, 8), e0 = absuartqerr(up, f_cpu, br, 16);
 
-  return 20*e1 < 15*e0 && e0 > 14;
+  return 20*e1 < 15*e0 && e0 > 140; // e0 > 1.4%
 }
 
 
 // Return l1 or l2, whichever causes less error; on same quantised error return the larger value
 int linbetter2_ns(Uart_info *up, long f_cpu, long br, int l1, int l2) {
-  int e1 = absuartqerr(up, f_cpu, br, l1), e2 = absuartqerr(up, f_cpu, br, l2);
+  long e1 = absuartqerr(up, f_cpu, br, l1), e2 = absuartqerr(up, f_cpu, br, l2);
   return e1 < e2? l1: e1 > e2? l2: l1 > l2? l1: l2;
 }
 
@@ -168,8 +163,8 @@ int main(int argc, char **argv) {
 
   int u2x = 1, swio = 0, ppt = 0, ppm = 0, absnum = 0, verbose = 0, raw, mxb, smp;
   const char *mcu = "ATmega328P", *errstr = NULL, *mode = "UNKNOWN", *pparms = NULL;
-  long f_cpu = 16000000L, brate = 115200L, gotbaud = 123L;
-  double err;
+  long f_cpu = 16000000L, brate = 115200L;
+  double err, gotbaud = 123.0;
 
   while(--argc) {
     if(*(p=argv[++i]) == '-') {
@@ -296,7 +291,7 @@ int main(int argc, char **argv) {
     else {
       parm.b_value = b_value;
       parm.b_extra = b_extra;
-      gotbaud = f_cpu/(swio_cpb(up, b_value) + b_extra);
+      gotbaud = (1.0*f_cpu)/(swio_cpb(up, b_value) + b_extra);
     }
     mode = "SWIO";
   }
