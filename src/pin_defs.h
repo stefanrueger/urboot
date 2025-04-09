@@ -24,11 +24,11 @@
 #if defined(MCUCSR)
 #define UB_MCUSR         MCUCSR
 
-#else                            // need #else/#if as MCUSR is poisoned in ATmega128's iom128.h
+#else                           // Need #else/#if as MCUSR is poisoned in ATmega128's iom128.h
 #if defined(MCUSR)
 #define UB_MCUSR          MCUSR
 
-#elif defined(RST_STATUS)
+#elif defined(RST_STATUS)       // ATxmega*
 #define UB_MCUSR     RST_STATUS
 
 #define BORF  RST_BORF_bp       // Brown-out Reset Flag

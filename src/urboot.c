@@ -1348,10 +1348,13 @@ static void chip_erase() {
 // SPI communication
 static uint8_t spi_transfer(uint8_t data) {
   asm volatile(
+   "out_spdr: "
     out_spdr(%[data])           // SPDR = data;
  "1: "
+   "sbxs_spsr: "
     sbxs_spsr(%[data], SPIF)    // while(!(SPSR & _BV(SPIF)))
     "rjmp 1b\n"                 //   continue;
+   "in_spdr: "
     in_spdr(%[data])            // data = SPDR;
   : [data] "=r"(data) : "0"(data)
   );
@@ -1436,6 +1439,7 @@ static void dual_boot() {
   sfm_setupcs();
 #endif
 
+  asm volatile("set_spcr: " :::);
   SPCR = _BV(MSTR) | _BV(SPE);  // Init SPI: Master, F_CPU/4, MSBFIRST, SPI_MODE0
 
   zaddress = 0;                 // RAMPZ will be 0 here
@@ -1487,6 +1491,7 @@ static void dual_boot() {
 
 startingapp:
   // Crude initialisation before starting the app (WDT reset would result in an endless loop)
+  asm volatile("zap_spcr: " :::);
   SPCR = 0;                     // Always switch off SPI
 
 #ifndef DUAL_NO_SPI_RESET
@@ -1646,14 +1651,12 @@ unsigned const int __attribute__ ((section(".version"))) urboot_version[] = {
 // Normal app start: jump to reset vector or dedicated VBL vector and tell compiler mcusr is needed
 #if FLASHin8k || FLASHWRAPS
 #define jmpToAppOpcode() asm( \
-  ".global rjmp_application\nrjmp_application:\n" \
-    "rjmp urboot_version+%0\n" \
+    "rjmp_application: rjmp urboot_version+%0\n" \
   :: "n"(sizeof urboot_version+appstart_vec_loc), "r"(mcusr) \
   )
 #else
 #define jmpToAppOpcode() asm( \
-  ".global jmp_application\njmp_application:\n" \
-    "jmp %0\n" \
+    "jmp_application: jmp %0\n" \
   :: "n"(appstart_vec_loc), "r"(mcusr) \
   )
 #endif
@@ -1663,12 +1666,40 @@ unsigned const int __attribute__ ((section(".version"))) urboot_version[] = {
 int main(void) {
   register uint8_t mcusr asm("r2"); // Ask compiler to allocate r2 for reset flags
 
+  asm volatile(".global \
+    update_fl4, update_fl3, update_fl2, update_fl1, \
+    ldi_brrlo, ldi_brrhi, ldi_brrshared, ldi_linbrrlo, ldi_linlbt, swio_extra12, ldi_bvalue, \
+    ldi_wdto, ldi_stk_insync, ldi_stk_ok, rjmp_application, jmp_application, \
+    sbi_ddrtx, cbi_tx, sbi_tx, sbic_rx_start, sbic_rx, \
+    ldi_starthhz, ldi_starthi, cpi_starthi, cpi_startlo, \
+    sbis_auto_rx, sbic_auto_rx, \
+    watchdogConfig, watchdog_setting, \
+    zap_mcusr, \
+    in_eedr, out_eearh_r, out_eearh_w, out_eearl_r, out_eearl_w, out_eedr, sbi_eecr, sbi_eecr_x2, sbxc_eecr, \
+    in_spdr, out_spdr, out_spmcr, sbxc_spmcr, sbxs_spsr, set_spcr, zap_spcr, \
+    in_lindatn, out_lindatn, sbR_linsirn, sbxc_linsirn, sbxs_linsirn, \
+    store_brrl, ldi_zuartbase, \
+    in_udrn, out_udrn, out_ubrr0h, out_ubrrnh, out_ucsrna, out_ucsrnb, out_ucsrnc, sbR_ucsrna, sbxc_ucsrna, sbxs_ucsrna, \
+    std_zbrrh, std_zbtr, std_zlincr, std_zsra, std_zsrb, std_zsrc\n"
+  );
+
+#if UPDATE_FL >= 4
+  asm volatile("update_fl4: " :::);
+#elif UPDATE_FL >= 3
+  asm volatile("update_fl3: " :::);
+#elif UPDATE_FL >= 2
+  asm volatile("update_fl2: " :::);
+#elif UPDATE_FL >= 1
+  asm volatile("update_fl1: " :::);
+#endif
+
   asm volatile(" eor r1, r1");  // Clear temporary register r1 to zero
 #if !UB_INIT_SP_IS_RAMEND       // Some MCUs initialise SP to 0, not RAMEND, after reset
   SP = RAMEND;
 #endif
 
   // Copy reset flags and clear them
+  asm volatile("zap_mcusr: " :::);
   mcusr = UB_MCUSR;
   UB_MCUSR = 0;
   watchdogConfig(WATCHDOG_OFF);
@@ -1694,8 +1725,8 @@ int main(void) {
 
 // Start of bootloader
 
-  asm volatile(".global watchdog_setting\nwatchdog_setting:\n" :::);
-  asm volatile(".global ldi_wdto\nldi_wdto:\n" :::);
+  asm volatile("watchdog_setting: " :::);
+  asm volatile("ldi_wdto: " :::);
   watchdogConfig(WATCHDOG_TIMEOUT(WDTO));
 
 
@@ -1703,7 +1734,7 @@ int main(void) {
 #error you need to define TX for SWIO
 #elif SWIO
 
-  asm volatile(".global sbi_ddrtx\nsbi_ddrtx:\n" :::);
+  asm volatile("sbi_ddrtx: " :::);
   // Set TX pin as output
   UR_DDR(TX) |= UR_BV(TX);
 
@@ -1748,13 +1779,15 @@ int main(void) {
     "ldi  r26, 0x7f\n"          /* Initialise X with -0.5 in 8-bit fixed point representation */ \
     "ldi  r27, 0xff\n"          /* Want XH = UBRRnL = F_CPU/(8*baudrate)-1 = cycles/(8*bits)-1 */ \
   "1:\n" \
+    "sbic_auto_rx: " \
     "sbic %[RXPin], %[RXBit]\n" /* Wait for falling start bit edge of 0x30=STK_GET_SYNC */ \
     "rjmp 1b\n" \
   "2: " \
     adiw(r26, auto_inc)         /* Increment r27:26 so that final value of r27 is BRRL divisor */ \
+    "sbis_auto_rx: " \
     "sbis %[RXPin], %[RXBit]\n" /* Loop as long as rx bit is low */ \
     "rjmp 2b\n"                 /* 5-cycle loop for 5 low bits (start bit + 4 lsb of 0x30) */ \
-    store_brrl                  /* Store r27 to BRRL register */ \
+    "store_brrl: " store_brrl   /* Store r27 to BRRL register */ \
   "3: " \
     "sbiw r26, 1\n"             /* Drain input: run down X for 25.6 rx bits (256/8 * 4 c/5 c) */ \
     "brne 3b\n"                 /* 4-cycle loop */
@@ -1792,27 +1825,33 @@ int main(void) {
     autobaud(out_ubrrnl(r27))
 #else // !AUTOBAUD
 #if SHARED_BRRH
-  ".global ldi_brrshared\nldi_brrshared:\n"
+   "ldi_brrshared: "
     ldi(r24, %[shared_setting]) // Sic! UART0's high BRR nibble serves as bit 9:11 of UART1's
+   "out_ubrr0h: "
     out_ubrr0h(r24)             // U_UBRR0H = (BAUD_SETTING>>8) << 4;
 #elif defined(UBRRnH) && BAUD_SETTING > 255
-  ".global ldi_brrhi\nldi_brrhi:\n"
+   "ldi_brrhi: "
     ldi(r24, hi8(%[baud_setting]))
+   "out_ubrrnh: "
     out_ubrrnh(r24)             // UBRRnH = BAUD_SETTING>>8;
 #endif
-  ".global ldi_brrlo\nldi_brrlo:\n"
+   "ldi_brrlo: "
     ldi(r24, lo8(%[baud_setting]))
+   "store_brrl: "
     out_ubrrnl(r24)             // UBRRnL = BAUD_SETTING & 0xff;
 #endif // AUTOBAUD
 
 #if UART2X
     ldi(r24, _BV(A_U2Xn))
+   "out_ucsrna: "
     out_ucsrna(r24)             // UCSRnA = _BV(A_U2Xn);
 #endif
     ldi(r24, (_BV(B_RXENn) | _BV(B_TXENn)))
+   "out_ucsrnb: "
     out_ucsrnb(r24)             // UCSRnB = (_BV(B_RXENn) | _BV(B_TXENn));
 #if UB_INIT_UCSRnC && defined(UCSRnC_val)
     ldi(r24, UCSRnC_val)
+   "out_ucsrnc: "
     out_ucsrnc(r24)             // UCSRnC = UCSRnC_val;
 #endif
   ::
@@ -1828,6 +1867,7 @@ int main(void) {
 #else // 3 or more registers to be initialised: assign via store indirect Z+offset
 
   asm volatile(
+    "ldi_zuartbase: "
     "ldi r30, lo8(%[base])\n"   // Load Z for st Z+offset, r27
     "ldi r31, hi8(%[base])\n"
 
@@ -1835,23 +1875,28 @@ int main(void) {
     autobaud("std Z+%[brrl_off], r27\n")
 #else
 #if defined(UBRRnH_off) && BAUD_SETTING > 255
-  ".global ldi_brrhi\nldi_brrhi:\n"
+    "ldi_brrhi: "
     "ldi r27, hi8(%[brrl_val])\n"
+    "std_zbrrh: "
     "std Z+%[brrh_off], r27\n"
 #endif
-  ".global ldi_brrlo\nldi_brrlo:\n"
+    "ldi_brrlo: "
     "ldi r27, lo8(%[brrl_val])\n"
+    "store_brrl: " \
     "std Z+%[brrl_off], r27\n"
 #endif // AUTOBAUD
 
 #if UART2X
     "ldi r27, lo8(%[sra_val])\n"
+    "std_zsra: "
     "std Z+%[sra_off], r27\n"
 #endif
     "ldi r27, lo8(%[srb_val])\n"
+    "std_zsrb: "
     "std Z+%[srb_off], r27\n"
 #if UB_INIT_UCSRnC && defined(UCSRnC_val)
     "ldi r27, lo8(%[src_val])\n"
+    "std_zsrc: "
     "std Z+%[src_off], r27\n"
 #endif
   ::
@@ -1885,21 +1930,26 @@ int main(void) {
 // LINCRn = _BV(C_LENAn) | _BV(C_LCMDn2) | _BV(C_LCMDn1) | _BV(C_LCMDn0);
 
   asm volatile(
+    "ldi_zuartbase: "
     "ldi r30, lo8(%[base])\n"   // Load Z for st Z+offset, r27
     "ldi r31, hi8(%[base])\n"
 #if AUTOBAUD
     "ldi r27, %[btr_val]\n"
+    "std_zbtr: "
     "std Z+%[btr_off], r27\n"
     autobaud("std Z+%[brrl_off], r27\n")
 #else
-  ".global ldi_linlbt\nldi_linlbt:\n"
+    "ldi_linlbt: "
     "ldi r27, %[btr_val]\n"
+    "std_zbtr: "
     "std Z+%[btr_off], r27\n"
-  ".global ldi_linbrrlo\nldi_linbrrlo:\n"
+    "ldi_linbrrlo: "
     "ldi r27, %[brrl_val]\n"
+    "store_brrl: " \
     "std Z+%[brrl_off], r27\n"
 #endif
     "ldi r27, %[lincr_val]\n"
+    "std_zlincr: "
     "std Z+%[lincr_off], r27\n"
   ::
     [brrl_off] "I"(LINBRRnL_off),
@@ -1976,15 +2026,20 @@ int main(void) {
       if(ch == UR_PROG_PAGE_EE) { asm volatile(
       "1: "
 #if EESIZE > 256
+       "out_eearh_w: "
         out_eearh(r31)
 #endif                          // do {
+       "out_eearl_w: "
         out_eearl(r30)          //   EEAR = zaddress;
         "ld  r24, X+\n"         //   EEDR = *bufp++;
+       "out_eedr: "
         out_eedr(r24)            //
+        "sbi_eecr_x2: "
         "sbi %[eecr], %[eempe]\n" // EECR |= _BV(EEMPE); // EEPROM master write enable
         "sbi %[eecr], %[eepe]\n"  // EECR |= _BV(EEPE);  // EEPROM write enable
         "adiw r30, 1\n"         //   zaddress++;
       "2: "
+       "sbxc_eecr: "
         sbxc_eecr(xx, EEPE)     //   while(EECR & _BV(EEPE))
         "rjmp 2b\n"             //     continue;
         "subi %[len], 1\n"
@@ -2028,10 +2083,14 @@ int main(void) {
       asm volatile(
       "1: "
 #if EESIZE > 256
+       "out_eearh_r: "
         out_eearh(r31)
 #endif                          // do {
+       "out_eearl_r: "
         out_eearl(r30)          //   EEAR = zaddress;
+        "sbi_eecr: "
         "sbi %[eecr], %[eere]\n" //  EECR |= _BV(EERE); // Start EEPROM read
+       "in_eedr: "
         in_eedr(r24)            //   putch(EEDR);
         "rcall putch\n"         //
         "adiw r30, 1\n"         //   zaddress++;
@@ -2063,7 +2122,7 @@ int main(void) {
       get_sync();               // Covers the rest, eg, STK_ENTER_PROGMODE, STK_GET_SYNC, ...
     }
 
-    asm volatile(".global ldi_stk_ok\nldi_stk_ok:\n" :::);
+    asm volatile("ldi_stk_ok: " :::);
     putch(STK_OK);
   }
 }
@@ -2075,12 +2134,16 @@ void putch(char chr) {
 
   "1: "
 #if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
+   "sbxc_ucsrna: "
     sbxs_ucsrna(r25, A_UDREn)   // while(!(UCSRnA & _BV(A_UDREn)))
     "rjmp 1b\n"                 //   continue;
+   "out_udrn: "
     out_udrn(%[chr])            // UDRn = chr;
 #elif UR_UARTTYPE == UR_UARTTYPE_LIN
+   "sbxc_linsirn: "
     sbxc_linsirn(r25, A_LBUSYn) // while(LINSIRn & _BV(A_LBUSYn))
     "rjmp 1b\n"                 //   continue;
+   "out_lindatn: "
     out_lindatn(%[chr])         // LINDATn = chr;
 #endif
   :: [chr] "r"(chr) : "r25"
@@ -2092,11 +2155,11 @@ void putch(char chr) {
     "sec\n"                     // Set carry (for start bit)
   "1: "
     "brcc 2f\n"
-  ".global cbi_tx\ncbi_tx:\n"
+    "cbi_tx: "
     "cbi %[TXPort], %[TXBit]\n" // Set carry puts line low
     "rjmp 3f\n"
   "2: "
-  ".global sbi_tx\nsbi_tx:\n"
+    "sbi_tx: "
     "sbi %[TXPort], %[TXBit]\n" // Clear carry puts line high
     "nop\n"
   "3: "
@@ -2111,7 +2174,7 @@ void putch(char chr) {
 
   "bitDelay: \n"
 #if B_EXTRA == 1 || B_EXTRA == 2
-  ".global swio_extra12\nswio_extra12:\n"
+    "swio_extra12: "
 #endif
 #if B_EXTRA & 1
     "nop\n"
@@ -2122,7 +2185,7 @@ void putch(char chr) {
     ".word 0xd000\n"            // "rcall .+0\n" was changed to rjmp .+0 when no code followed
   "halfBitDelay: "
 #if SWIO_B_VALUE > 0
-  ".global ldi_bvalue\nldi_bvalue:\n"
+    "ldi_bvalue: "
     "ldi r25, %[bvalue]\n"
   "1: "
     "dec r25\n"
@@ -2151,32 +2214,40 @@ uint8_t getch(void) {
 
 #if UR_UARTTYPE == UR_UARTTYPE_CLASSIC
   "1: "
+   "sbxs_ucsrna: "
     sbxs_ucsrna(%[chr], A_RXCn)
     "rjmp 1b\n"
 
     // Watchdog reset wdr (possibly skipped when rx error bit is set in uart status reg USRAn)
 #if EXITFE==2
+    "sbR_ucsrna: "
     sbRc_ucsrna(%[chr], A_FEn)  // Skip 2-byte exit code if error bit is clear in uart status register
     RJMPQEXIT
 #elif EXITFE==1
+    "sbR_ucsrna: "
     sbRs_ucsrna(%[chr], A_FEn)  // Skip wdr if error bit is set in uart status register
 #endif
     "wdr\n"
+   "in_udrn: "
     in_udrn(%[chr])             // Load UART data register
 
 #elif UR_UARTTYPE == UR_UARTTYPE_LIN
   "1: "
+   "sbxs_linsirn: "
     sbxs_linsirn(%[chr], A_LRXOKn)
     "rjmp 1b\n"
 
     // Watchdog reset wdr (possibly skipped when rx error bit is set in uart status reg USRAn)
 #if EXITFE==2
+    "sbR_linsirn: "
     sbRc_linsirn(%[chr], A_LERRn) // Skip 2-byte exit code if error bit is clear in uart status register
     RJMPQEXIT
 #elif EXITFE==1
+    "sbR_linsirn: "
     sbRs_linsirn(%[chr], A_LERRn) // Skip wdr if error bit is set in uart status register#endif
 #endif
     "wdr\n"
+   "in_lindatn: "
     in_lindatn(%[chr])          // Load UART data register
 
 #endif // UR_UARTTYPE
@@ -2186,14 +2257,14 @@ uint8_t getch(void) {
 
     "ldi   r18, 9\n"            // 8 bit + 1 stop bit
   "1:\n"
-  ".global sbic_rx_start\nsbic_rx_start:\n"
+    "sbic_rx_start: "
     "sbic  %[RXPin], %[RXBit]\n" // Wait for falling edge of start bit
     "rjmp  1b\n"
     "rcall halfBitDelay\n"      // Get to middle of start bit
   "2: "
     "rcall bitDelay\n"          // Wait 1 bit & sample
     "clc\n"
-  ".global sbic_rx\nsbic_rx:\n"
+    "sbic_rx: "
     "sbic  %[RXPin], %[RXBit]\n"
     "sec\n"
     "dec   r18\n"
@@ -2245,7 +2316,7 @@ void get_sync(void) {
   );
 #endif
 
-  asm volatile(".global ldi_stk_insync\nldi_stk_insync:\n" :::);
+  asm volatile("ldi_stk_insync: " :::);
   putch(STK_INSYNC);
 }
 
@@ -2349,17 +2420,17 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
 
 #if PROTECTME
 #if START & 0xff
-  ".global cpi_startlo\ncpi_startlo:\n"
+    "cpi_startlo: "
     "cpi  r30, lo8(%[start])\n" // zaddress >= START?
-  ".global ldi_starthi\nldi_starthi:\n"
+    "ldi_starthi: "
     "ldi  r24, hi8(%[start])\n"
     "cpc  r31, r24\n"
 #else                           // Low byte of START zero, easier comparison
-  ".global cpi_starthi\ncpi_starthi:\n"
+    "cpi_starthi: "
     "cpi  r31, hi8(%[start])\n" // zaddress >= START?
 #endif
 #if FLASHabove64k
-  ".global ldi_starthhz\nldi_starthhz:\n"
+    "ldi_starthhz: "
     "ldi  r24, hh8(%[start])\n"
     "cpc  r22, r24\n"           // RAMPZ
 #endif
@@ -2417,7 +2488,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
     sbiw(r26, SPM_PAGESIZE)
 #elif !PGMWRITEPAGE && (RAMBUFFER+SPM_PAGESIZE)/256 == RAMBUFFER/256
     ldi(r26, lo8(RAMBUFFER))    // sram was RAMBUFFER if we don't offer pgm_write_page()
-#else                           // Any sram, subtracy SPM_PAGESIZE to go to start
+#else                           // Any sram, subtract SPM_PAGESIZE to go to start
     subi(r26, SPM_PAGESIZE)
     "sbc r27, r1\n"
 #endif
@@ -2470,6 +2541,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
 #endif                          // Fall through to ub_spm and return
 
   "ub_spm: "
+   "out_spmcr: "
     out_spmcr(r24)
     "spm\n"
 #if defined(__AVR_ATmega161__) || defined(__AVR_ATmega163__) || defined(__AVR_ATmega323__)
@@ -2477,6 +2549,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
    "nop\n"
 #endif
   "2: "
+  "sbxc_spmcr: "
    sbxc_spmcr(r1, __SPM_ENABLE)
     "rjmp 2b\n"
   "ub_ret: "
