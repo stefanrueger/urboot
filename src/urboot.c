@@ -330,6 +330,11 @@
 #define VERSION            0100 // u8.0 in octal, as minor version is in 3 least significant bits
 #endif
 
+#if VERSION == 0100 && defined(DUAL) && DUAL
+#undef VERSION
+#define VERSION 0101
+#endif
+
 #define MAJORVER (VERSION >> 3) // Max 31
 #define MINORVER (VERSION & 7)  // Max 7
 
@@ -1701,9 +1706,13 @@ int main(void) {
 #endif
 
   // Copy reset flags and clear them
-  asm volatile("zap_mcusr: " :::);
-  mcusr = UB_MCUSR;
-  UB_MCUSR = 0;
+  asm volatile("zap_mcusr: "
+    "in r2, %[mcusr]\n"
+    "out %[mcusr], r1\n"
+    :: [mcusr] "I"(_SFR_IO_ADDR(UB_MCUSR)) :
+  );
+//  mcusr = UB_MCUSR;
+//  UB_MCUSR = 0;
   watchdogConfig(WATCHDOG_OFF);
 
   // Unless there was an external reset jump to application
@@ -2560,7 +2569,7 @@ void writebufferX(void) {       // Write buffer from sram at X to PROGMEM at RAM
 #if UPDATE_FL
     [differ] "I"(0),            // Do SRAM and PROGMEM effecively differ? (bit 0 in r25)
 #if ERASE_B4_WRITE
-#if UPDATE_FL >=4
+#if UPDATE_FL >= 4
     [notff] "I"(1),             // Is one of the new bytes in SRAM 0xff?
 #endif
 #if UPDATE_FL >= 3
