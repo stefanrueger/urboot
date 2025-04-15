@@ -469,7 +469,9 @@
 #endif
 
 #ifndef PROTECTRESET
-#if defined(_urboot_AVAILABLE) && VBL
+#if !FLASHWRAPS && VBL
+#define PROTECTRESET          0
+#elif defined(_urboot_AVAILABLE) && VBL
 #if FLASHabove64k && _urboot_AVAILABLE >= 18
 #define PROTECTRESET          1
 #define _urboot_AVAILABLE_r1 (_urboot_AVAILABLE - 18)
