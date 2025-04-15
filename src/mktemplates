@@ -3,8 +3,8 @@
 # Published under GNU General Public License, version 3 (GPL-3.0)
 # Author Stefan Rueger <stefan.rueger@urclocks.com>
 #
-# v 1.0 (first version 08.02.2025)
-# 20.03.2025
+# v 1.1 (first version 08.02.2025)
+# 14.04.2025
 
 # Compile template bootloaders for one MCU
 
@@ -114,34 +114,36 @@ fi
 # Add those SWIO baud rates that need considering
 if [[ ${flashsize[$mcu]} -gt 131072 ]]; then
   # 22-bit PC, ie, flash size > 2**17; rcall/ret take longer and affect SWIO timing
-  baud[$fcpu]+=4200/4300/4400/4550/4700/4850/5000/5150/5300/5500/5700/5900
+  baud[$fcpu]+=4200/4300/4400/4550/4700/4850
+# /5000/5150/5300/5500/5700/5900
   ioname[4200]=swio15
   ioname[4300]=swio14
   ioname[4400]=swio13
   ioname[4550]=swio12
   ioname[4700]=swio11
   ioname[4850]=swio10
-  ioname[5000]=swio05
-  ioname[5150]=swio04
-  ioname[5300]=swio03
-  ioname[5500]=swio02
-  ioname[5700]=swio01
-  ioname[5900]=swio00
+#  ioname[5000]=swio05
+#  ioname[5150]=swio04
+#  ioname[5300]=swio03
+#  ioname[5500]=swio02
+#  ioname[5700]=swio01
+#  ioname[5900]=swio00
 else
   # 16-bit PC, ie, flash size up to, and including, 128 kB
-  baud[$fcpu]+=4700/4850/5000/5150/5300/5500/5700/5900/6100/6400/6700/6950
+  baud[$fcpu]+=4700/4850/5000/5150/5300/5500
+# /5700/5900/6100/6400/6700/6950
   ioname[4700]=swio15
   ioname[4850]=swio14
   ioname[5000]=swio13
   ioname[5150]=swio12
   ioname[5300]=swio11
   ioname[5500]=swio10
-  ioname[5700]=swio05
-  ioname[5900]=swio04
-  ioname[6100]=swio03
-  ioname[6400]=swio02
-  ioname[6700]=swio01
-  ioname[6950]=swio00
+#  ioname[5700]=swio05
+#  ioname[5900]=swio04
+#  ioname[6100]=swio03
+#  ioname[6400]=swio02
+#  ioname[6700]=swio01
+#  ioname[6950]=swio00
 fi
 
 ####
@@ -150,18 +152,25 @@ fi
 declare -A config
 
 # Vector bootloaders
-        config[_]="VBL=1                EEPROM=0 CHIP_ERASE=0"
-      config[_pr]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=0"
-   config[_pr_ce]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=1"
-   config[_pr_ee]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=0"
-config[_pr_ee_ce]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=1"
+           config[_]="VBL=1                EEPROM=0 CHIP_ERASE=0"
+         config[_pr]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=0"
+      config[_pr_u4]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=0 UPDATE_FL=4"
+      config[_pr_ce]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=1"
+   config[_pr_ce_u4]="VBL=1 PROTECTRESET=1 EEPROM=0 CHIP_ERASE=1 UPDATE_FL=4"
+      config[_pr_ee]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=0"
+   config[_pr_ee_u4]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=0 UPDATE_FL=4"
+   config[_pr_ee_ce]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=1"
+config[_pr_ee_ce_u4]="VBL=1 PROTECTRESET=1 EEPROM=1 CHIP_ERASE=1 UPDATE_FL=4"
 
 # Hardware supported bootloaders
 if [[ minbootsz[$mcu] -gt 0 ]]; then
   if [[ minbootsz[$mcu] -eq 256 ]]; then
-    config[_hw]="VBL=0 EEPROM=0 CHIP_ERASE=0"
+           config[_hw]="VBL=0 EEPROM=0 CHIP_ERASE=0"
+        config[_ce_hw]="VBL=0 EEPROM=0 CHIP_ERASE=1"
   fi
-  config[_ee_ce_hw]="VBL=0 EEPROM=1 CHIP_ERASE=1"
+        config[_ee_hw]="VBL=0 EEPROM=1 CHIP_ERASE=0"
+     config[_ee_ce_hw]="VBL=0 EEPROM=1 CHIP_ERASE=1"
+  config[_ee_ce_u4_hw]="VBL=0 EEPROM=1 CHIP_ERASE=1 UPDATE_FL=4"
 fi
 
 # Generate at least two bootloaders: no LED, template LED

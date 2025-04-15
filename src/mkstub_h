@@ -8,8 +8,8 @@
 # published under GNU General Public License, version 3 (GPL-3.0)
 # author Stefan Rueger
 #
-# v 1.12
-# 20.03.2025
+# v 1.2
+# 14.04.2025
 #
 
 use strict;
@@ -21,7 +21,7 @@ use File::Temp qw/ :mktemp  /;
 use List::Pairwise qw(mapp grepp);
 
 my $progname = basename($0);
-my $myvers = "1.12";
+my $myvers = "1.2";
 my $outdir = 'bootloader-stubs';
 my $part = 'unknown';
 
@@ -53,7 +53,14 @@ print("$progname version $myvers\n"), exit(0) if $version;
   sbi_ddrtx cbi_tx sbi_tx sbic_rx_start sbic_rx
   ldi_starthhz ldi_starthi cpi_starthi cpi_startlo
 );
-
+# zap_mcusr
+# in_eedr out_eearh_r out_eearh_w out_eearl_r out_eearl_w out_eedr sbi_eecr sbi_eecr_x2 sbxc_eecr
+# in_spdr out_spdr out_spmcr sbxc_spmcr sbxs_spsr set_spcr zap_spcr
+# in_lindatn out_lindatn sbR_linsirn sbxc_linsirn sbxs_linsirn
+# store_brrl
+# in_udrn out_udrn out_ubrr0h out_ubrrnh out_ucsrna out_ucsrnb out_ucsrnc sbR_ucsrna sbxc_ucsrna sbxs_ucsrna
+# std_zbrrh std_zbtr std_zlincr std_zsra std_zsrb std_zsrc ldi_zuartbase
+# sbis_auto_rx sbic_auto_rx
 
 my %parts = map { $_ => 1 } qw(attiny4 attiny5 attiny9 attiny10 attiny20 attiny40 attiny102
   attiny104 attiny11 attiny12 attiny15 attiny22 attiny13 attiny13a attiny25 attiny45 attiny85
@@ -130,7 +137,7 @@ $part = 'm2560' if !exists $parts{$part};
 
 foreach $fnhex (@ARGV) {
   die "$progname: don't know what to do with $fnhex\n" if $fnhex !~ /\.hex$/;
-  my ($start, $size, $usage, %addr, %locs, @indices);
+  my ($start, $size, $usage, $update_fl_level, %addr, %locs, @indices);
 
   # Find locations from .elf
   $fnelf = $fnhex;
@@ -139,6 +146,11 @@ foreach $fnhex (@ARGV) {
 
   %addr = map { substr($_, 9) => hex(substr($_, 0, 8)) } split("\n",
     `avr-nm -g "$fnelf"  | grep " [TR] " | sort | cut -d" " -f1,3 | grep -v ^008`);
+
+  $update_fl_level = 0;
+  for (1..4) {
+    $update_fl_level = $_ if exists $addr{"update_fl$_"};
+  }
 
   # Start address in flash memory
   $start = exists $addr{__trampolines_end}? $addr{__trampolines_end}:
@@ -191,7 +203,10 @@ foreach $fnhex (@ARGV) {
 
   open($fh, ">", $fnchh) or die "$progname: cannot create $fnchh\n";
 
-  print $fh "  $size, $usage,\n ";
+  # If b/loader does not have its own chip erase then level 2 does not exist
+  $update_fl_level = 1 if $update_fl_level == 2 && !($words[-1] & 1);
+
+  print $fh "  $size, $usage, $update_fl_level,\n ";
   print $fh " $_,", for @indices;
   print $fh "\n";
   printf $fh "%s0x%04X,%s", $_%8==0? "  ": "", $words[$_], ($_+1)%8 == 0 || $_ == $#words? "\n": " " for (0..$#words);

@@ -10,20 +10,12 @@
 # Published under GNU General Public License, version 3 (GPL-3.0)
 #
 # v 1.2
-# 31.03.2025
+# 14.04.2025
 
 use strict;
 use warnings;
 use Getopt::Long qw(GetOptions);
 use File::Basename;
-use Math::Cartesian::Product;
-# use List::Util qw(first min max sum);
-# use File::HomeDir;
-# use List::MoreUtils qw(first_index only_index);
-# use Scalar::Util qw(looks_like_number);
-# use List::Compare;
-# use HTML::Entities;
-# use String::Scanf; # imports sscanf()
 
 my $progname = basename($0);
 
@@ -48,12 +40,20 @@ my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime();
 my $today = sprintf("%02d.%02d.%04d", $mday, $mon+1, 1900+$year);
 
 my @sizelocs = qw(
-  size usage
+  size usage update_fl_level
   ldi_brrlo ldi_brrhi ldi_brrshared ldi_linbrrlo ldi_linlbt swio_extra12 ldi_bvalue
   ldi_wdto ldi_stk_insync ldi_stk_ok rjmp_application jmp_application
   sbi_ddrtx cbi_tx sbi_tx sbic_rx_start sbic_rx
   ldi_starthhz ldi_starthi cpi_starthi cpi_startlo
 );
+# zap_mcusr
+# in_eedr out_eearh_r out_eearh_w out_eearl_r out_eearl_w out_eedr sbi_eecr sbi_eecr_x2 sbxc_eecr
+# in_spdr out_spdr out_spmcr sbxc_spmcr sbxs_spsr set_spcr zap_spcr
+# in_lindatn out_lindatn sbR_linsirn sbxc_linsirn sbxs_linsirn
+# store_brrl
+# in_udrn out_udrn out_ubrr0h out_ubrrnh out_ucsrna out_ucsrnb out_ucsrnc sbR_ucsrna sbxc_ucsrna sbxs_ucsrna
+# std_zbrrh std_zbtr std_zlincr std_zsra std_zsrb std_zsrc ldi_zuartbase
+# sbis_auto_rx sbic_auto_rx
 
 my (%uniqbootloaderlist, %bootloaderlist, %nbootloaders, @blpaths,
     %config, %check, %blpathinfo);
@@ -253,12 +253,12 @@ my %io = ( # Number of different bootloaders
   u2x12_uart1 => 4096,
   u2x12_uart2 => 4096,
   u2x12_uart3 => 4096,
-  swio00 => 1,
-  swio01 => 1,
-  swio02 => 1,
-  swio03 => 1,
-  swio04 => 1,
-  swio05 => 1,
+# swio00 => 1,
+# swio01 => 1,
+# swio02 => 1,
+# swio03 => 1,
+# swio04 => 1,
+# swio05 => 1,
   swio10 => 256,
   swio11 => 256,
   swio12 => 256,
@@ -267,33 +267,43 @@ my %io = ( # Number of different bootloaders
   swio15 => 256,
 );
 
+my @bltypes = qw(noled lednop dual);
+my %bltypes = map { $_ => 0 } @bltypes;
+
 @blpaths = glob("bootloader-stubs/*.h");
 for my $pp (@blpaths) {
   my $name = basename($pp, ".h") =~ s/^urboot_//r;
   $name =~ s/no-led/noled/;
   $name =~ s/_[rt]x[a-r][0-9]//g;
 
-  # Unique description of the bootloader split into mcu, io, config
+  # Unique description of the bootloader split into mcu, io, bltype, config
   my $desc = "${name}_";
   $desc =~ s/_uart/-uart/;
   $desc =~ s/_alt/-alt/;
+  $desc =~ s/ee_ce_u4_hw_$/ee-ce-u4-hw/;
   $desc =~ s/ee_ce_hw_$/ee-ce-hw/;
+  $desc =~ s/ee_hw_$/ee-hw/;
+  $desc =~ s/ce_hw_$/ce-hw/;
   $desc =~ s/hw_$/hw/;
+  $desc =~ s/pr_ee_ce_u4_$/pr-ee-ce-u4/;
+  $desc =~ s/pr_ee_u4_$/pr-ee-u4/;
+  $desc =~ s/pr_ce_u4_$/pr-ce-u4/;
+  $desc =~ s/pr_u4_$/pr-u4/;
   $desc =~ s/pr_ce_$/pr-ce/;
   $desc =~ s/pr_ee_ce_$/pr-ee-ce/;
   $desc =~ s/pr_ee_$/pr-ee/;
   $desc =~ s/pr_$/pr/;
   my @desc = split('_', $desc, -1);
-  die "unknown format of $name\n" if @desc != 4;
+  die "unknown format @desc of $name\n" if @desc != 4;
   map { s/^$/min/; s/-/_/g } @desc;
   die "unknown MCU $desc[0]" if !exists $mcu{$desc[0]};
   die "unknown I/O mode $desc[1]" if !exists $io{$desc[1]};
-  # $io{$desc[1]}++;
-  $config{"$desc[2]_$desc[3]"}++;
+  die "unknown bootloader type $desc[2]" if !exists $bltypes{$desc[2]};
+  $config{"$desc[3]"}++;
   $check{"@desc"}++;
   # print STDERR "@desc $name\n";
 
-  $blpathinfo{$pp} = [$name, $desc[0], $desc[1], "$desc[2]_$desc[3]"];
+  $blpathinfo{$pp} = [$name, $desc[0], $desc[1], $desc[2], $desc[3]];
 }
 
 die "Not unique description in \@desc" if 0+keys %check != 0+@blpaths;
@@ -360,10 +370,6 @@ printf $ubc "static const char *mcus[%d] = {\n", 0+@mcus;
 printf $ubc "%s\"%s\",%s", $_%8==0? "  ": "", $mcus[$_], ($_+1)%8 == 0 || $_ == $#mcus? "\n": " " for (0..$#mcus);
 printf $ubc "};\n\n";
 
-# printf $ubh "enum {\n";
-# printf $ubh "%s%s,%s", $_%8==0? "  ": "", 'UL_'.uc $mcus[$_], ($_+1)%8 == 0 || $_ == $#mcus? "\n": " " for (0..$#mcus);
-# printf $ubh "  UL_MCU_N\n} Ul_mcu;\n\n";
-
 # I/O types
 my @iotypes = map { s/zwio/swio/r } map { s/x9/x12/r } sort map { s/swio/zwio/r } map { s/x12/x9/r } keys %io;
 
@@ -378,43 +384,36 @@ for (@iotypes) {
 }
 print $ubc "\n};\n\n";
 
-# printf $ubh "enum {";
-# $iobeg = 'xxxx';
-# for (@iotypes) {
-#   if(substr($_, 0, 5) ne $iobeg) {
-#     print $ubh "\n ";
-#     $iobeg = substr($_, 0, 5);
-#   }
-#   printf $ubh " %s,", 'UL_'.uc $_;
-# }
-# printf $ubh "\n  UL_IOTYPE_N\n} Ul_iotype;\n\n";
-
 # Configurations
-my @configs;
-cartesian { push(@configs, join("_", @_)); } [qw(noled lednop dual)], [qw(min pr pr_ee pr_ce pr_ee_ce hw ee_ce_hw)];
+my @configs = qw(min pr pr_u4 pr_ee pr_ee_u4 pr_ce pr_ce_u4 pr_ee_ce pr_ee_ce_u4 hw ee_hw ce_hw ee_ce_hw ee_ce_u4_hw);
 die "unforeseen configurations" if join("/", sort @configs) ne join("/", sort keys %config);
 
-printf $ubc "static const char *configs[%d] = {\n", 0+@configs;
-printf $ubc "%s\"%s\",%s", $_%7==0? "  ": "", $configs[$_], ($_+1)%7 == 0 || $_ == $#configs? "\n": " " for (0..$#configs);
-printf $ubc "};\n\n";
+printf $ubc "static const char *bltypes[%d] = {\n ", 0+@bltypes;
+printf $ubc " \"%s\",", $_ for @bltypes;
+printf $ubc "\n};\n\n";
 
-# printf $ubh "enum {\n";
-# printf $ubh "%s%s,%s", $_%7==0? "  ": "", 'UL_'.uc $configs[$_], ($_+1)%7 == 0 || $_ == $#configs? "\n": " " for (0..$#configs);
-# printf $ubh "  UL_CONFIG_N\n} Ul_config;\n\n";
+printf $ubc "static const char *configs[%d] = {\n ", 0+@configs;
+printf $ubc " \"%s\",%s", $configs[$_], $_+1 == 9? "\n ": "" for (0..$#configs);
+printf $ubc "\n};\n\n";
+
+printf $ubc "enum {\n ";
+printf $ubc " U_%s,%s", uc $configs[$_], $_+1 == 9? "\n ": "" for (0..$#configs);
+printf $ubc "\n};\n\n";
 
 # Assign a uniqne number bln() to each path and sort @blpaths accordingly
-my (%mcun, %iotypen, %confign);
+my (%mcun, %iotypen, %bltypen, %confign);
 $mcun{$mcus[$_]} = $_ for (0..$#mcus);
 $iotypen{$iotypes[$_]} = $_ for (0..$#iotypes);
+$bltypen{$bltypes[$_]} = $_ for (0..$#bltypes);
 $confign{$configs[$_]} = $_ for (0..$#configs);
-@blpaths = sort { bln(@{$blpathinfo{$a}}[1..3]) <=> bln(@{$blpathinfo{$b}}[1..3]) } @blpaths;
+@blpaths = sort { bln(@{$blpathinfo{$a}}[1..4]) <=> bln(@{$blpathinfo{$b}}[1..4]) } @blpaths;
 
 ######
 # Identify bootloaders with same contents
 #
 for my $pp (@blpaths) {
   my $name = $blpathinfo{$pp}->[0];
-  # next if $name =~ /_swio0/;
+  next if $name =~ /_swio0/;
 
   open(my $fh, $pp) or die "cannot open $pp\n";
   my $ppbl = undef;
@@ -496,10 +495,11 @@ my $publ = undef;
 open(my $ubl, '>', \$publ) or die "$progname: cannot write to variable publ\n";
 for my $pp (@blpaths) {
   my $nm = $blpathinfo{$pp}->[0];
-  $nvariants += nderived(@{$blpathinfo{$pp}}[1..3]);
-  printf $ubl " {%7d, ur_%s },\n", bln(@{$blpathinfo{$pp}}[1..3]), $uniqbootloaderlist{$bootloaderlist{$nm}}->[0]
-    if exists $bootloaderlist{$nm};
-}
+  if(exists $bootloaderlist{$nm}) {
+    my $unibl = $uniqbootloaderlist{$bootloaderlist{$nm}}->[0];
+    printf $ubl " {%7d, ur_%s },\n", bln(@{$blpathinfo{$pp}}[1..4]), $unibl;
+    $nvariants += nderived(@{$blpathinfo{$pp}}[1..4], $unibl);
+  }}
 close($ubl);
 
 for my $pp (@blpaths) {
@@ -539,14 +539,16 @@ print $ubc <<"END";
 /*
  * This is a list of $nbl bootloader templates, each one described by a unique number
  *
- *   n = (mcu*UL_IOTYPE_N + io)*UL_CONFIG_N + config,
+ *   n = ((mcu*UL_IOTYPE_N + io)*UL_BLTYPE_N + blt)*UL_CONFIG_N + cfg,
  *
- * where mcu [0, $#mcus] specifies the MCU; io in [0, $#iotypes] the iotype; config in [0, $#configs]
- * the configuration type of the bootloader. These values can be obtained from n by
+ * where mcu in [0, $#mcus] specifies the MCU; io in [0, $#iotypes] the I/O type; blt in [0, $#bltypes] the
+ * bootloader type, cfg in [0, $#configs] the configuration type of the bootloader. These values can be
+ * obtained from n by
  *
- *     mcu = n/(UL_IOTYPE_N*UL_CONFIG_N) = n/${\((0+@iotypes)*(0+@configs))}
- *      io = (n/UL_CONFIG_N)%UL_IOTYPE_N = (n/${\(0+@configs)})%${\(0+@iotypes)}
- *  config = n%UL_CONFIG_N = n%${\(0+@configs)}
+ *  mcu = n/(UL_IOTYPE_N*UL*BLTYPE_N*UL_CONFIG_N) = n/${\((0+@iotypes)*(0+@bltypes)*(0+@configs))}
+ *   io = (n/(UL_BLTYPE_N*UL_CONFIG_N))%UL_IOTYPE_N = (n/${\((0+@configs)*(0+@bltypes))})%${\(0+@iotypes)}
+ *  blt = (n/UL_CONFIG_N)%UL_BLTYPE_N = (n/${\(0+@configs)})%${\(0+@bltypes)}
+ *  cfg = n%UL_CONFIG_N = n%${\(0+@configs)}
  *
  * This list dispatches to ${\(0+keys %uniqbootloaderlist)} unique/different bootloader templates, which can be parametrised
  * to create specific working bootloaders for a certain baud rate, IO pin, LED pin etc. The data
@@ -554,7 +556,8 @@ print $ubc <<"END";
  * are
  *   - Size of the bootloader in bytes (number of code bytes incl 6 bytes for table at flash end)
  *   - Usage of the bootloader in bytes (smallest hardware boot section or multiple of page size)
- *   - ${\(@sizelocs-2)} word indices into the bootloader code where parameters can be set (0 if n/a)
+ *   - Update flash level: extent to which flash is checked whether it needs writing/erasing
+ *   - ${\(@sizelocs-3)} word indices into the bootloader code where parameters can be set (0 if n/a)
  *   - Size/2 - 3 words of bootloader code
  *   - 3 words of a version table to be put on top of flash
  *
@@ -595,7 +598,7 @@ static uint16_t *ul_urtemplate(const uint64_t *bl) {
     hc = (hc<<1) | (h64 & 1), hcn++;
     h64 >>= 1, hn++;
     if(hcn > 27) {
-      pmsg_error("unexpected problem decoding bootloader code\\n");
+      pmsg_error("unexpected problem decoding bootloader code");
       return NULL;
     }
     // Test whether Huffman code variable is in prefix table of codes
@@ -604,7 +607,7 @@ static uint16_t *ul_urtemplate(const uint64_t *bl) {
       if(!end) {
         end = ${\(0+@sizelocs)} + res->word/2; // First decoded word is size of b/l incl 6 byte table
         if(end < 32+${\(0+@sizelocs)} || end > 2048+${\(0+@sizelocs)}) {
-          pmsg_error("unexpected bootloader code size\\n");
+          pmsg_error("unexpected bootloader code size");
           return NULL;
         }
         ret = mmt_malloc(2*end);
@@ -617,60 +620,270 @@ static uint16_t *ul_urtemplate(const uint64_t *bl) {
   return ret;
 }
 
-
 static int urlistsearch(const void *p1, const void *p2) {
   return ((Ul_urlist *) p1)->n - ((Ul_urlist *) p2)->n;
 }
 
-// Returns malloc'd urboot template bootloader for (mcu, iotype, config) or NULL if not possible
-uint16_t *urboottemplate(const char *mcu, const char *iotype, const char *config) {
-  size_t m, i, c;
+// Put version string into a buffer of max 16 characters incl nul; must be u8.0
+static void urbootPutVersion(char *buf, uint16_t *vertable) {
+  uint16_t ver = vertable[2], rjmpwp = vertable[1];
+
+  uint8_t hi = ver>>8, type = ver & 0xff, flags;
+
+  sprintf(buf, "u%d.%d ", hi>>3, hi&7);
+  buf += strlen(buf);
+  *buf++ = (rjmpwp & 0xf000) == 0xc000? 'w': '-'; // An rjmp opcode? It's to writepage()
+  *buf++ = type & UR_EEPROM? 'e': '-';
+  *buf++ = type & UR_UPDATE_FL? 'U': '-';
+  *buf++ = type & UR_DUAL? 'd': '-';
+  flags = (type/(UR_VBLMASK & -UR_VBLMASK)) & 1; // Only use 1 bit for v8.0+
+  *buf++ = flags? 'j': 'h';
+  *buf++ = type & UR_PROTECTME? 'P': 'p';
+  *buf++ = 'r';
+  *buf++ = type & UR_AUTOBAUD? 'a': '-';
+  *buf++ = type & UR_HAS_CE? 'c': '-';
+  *buf = 0;
+
+  return;
+}
+
+// Configuration of supported features: boil 32 combos down to those in configs table
+static const int urfeat[] = {   // u4 hw ce ee pr
+  U_MIN,                        //  0  0  0  0  0 // Can have more features space allowing
+  U_PR,                         //  0  0  0  0  1
+  U_PR_EE,                      //  0  0  0  1  0 // Use _pr for all but min, even if not set
+  U_PR_EE,                      //  0  0  0  1  1
+  U_PR_CE,                      //  0  0  1  0  0
+  U_PR_CE,                      //  0  0  1  0  1
+  U_PR_EE_CE,                   //  0  0  1  1  0
+  U_PR_EE_CE,                   //  0  0  1  1  1
+
+  U_HW,                         //  0  1  0  0  0 // H/w bootloaders do not need vector protection
+  U_HW,                         //  0  1  0  0  1
+  U_EE_HW,                      //  0  1  0  1  0
+  U_EE_HW,                      //  0  1  0  1  1
+  U_CE_HW,                      //  0  1  1  0  0
+  U_CE_HW,                      //  0  1  1  0  1
+  U_EE_CE_HW,                   //  0  1  1  1  0
+  U_EE_CE_HW,                   //  0  1  1  1  1
+
+  U_PR_U4,                      //  1  0  0  0  0
+  U_PR_U4,                      //  1  0  0  0  1
+  U_PR_EE_U4,                   //  1  0  0  1  0
+  U_PR_EE_U4,                   //  1  0  0  1  1
+  U_PR_CE_U4,                   //  1  0  1  0  0
+  U_PR_CE_U4,                   //  1  0  1  0  1
+  U_PR_EE_CE_U4,                //  1  0  1  1  0
+  U_PR_EE_CE_U4,                //  1  0  1  1  1
+
+  U_EE_CE_U4_HW,                //  1  1  0  0  0
+  U_EE_CE_U4_HW,                //  1  1  0  0  1
+  U_EE_CE_U4_HW,                //  1  1  0  1  0
+  U_EE_CE_U4_HW,                //  1  1  0  1  1
+  U_EE_CE_U4_HW,                //  1  1  1  0  0
+  U_EE_CE_U4_HW,                //  1  1  1  0  1
+  U_EE_CE_U4_HW,                //  1  1  1  1  0
+  U_EE_CE_U4_HW,                //  1  1  1  1  1
+};
+
+static int blcmp(const void *v1, const void *v2) {
+  const Urboot_template *t1 = *(const Urboot_template **) v1, *t2 = *(const Urboot_template **) v2;
+  int cmp, f1 = t1->features, f2 = t2->features;
+
+  if(t1 == t2)
+    return 0;
+  if((cmp = t2->match_req - t1->match_req))
+    return cmp;
+  if((cmp = t1->usage - t2->usage))
+    return cmp;
+  if((cmp = !!(f2 & URFEATURE_EE) - !!(f1 & URFEATURE_EE)))
+    return cmp;
+  cmp = !!(f2 & URFEATURE_EE) + !!(f2 & URFEATURE_CE) + !!(f2 & URFEATURE_U4)
+      - !!(f1 & URFEATURE_EE) - !!(f1 & URFEATURE_CE) - !!(f1 & URFEATURE_U4);
+  if(cmp)
+    return cmp;
+  if((cmp = !!(f2 & URFEATURE_HW) - !!(f1 & URFEATURE_HW)))
+    return cmp;
+  if((cmp = !!(f2 & URFEATURE_PR) - !!(f1 & URFEATURE_PR)))
+    return cmp;
+  if((cmp = !!(f2 & URFEATURE_CE) - !!(f1 & URFEATURE_CE)))
+    return cmp;
+  if((cmp = t2->update_level - t1->update_level))
+    return cmp;
+  if((cmp = t1->size - t2->size))
+    return cmp;
+  return memcmp(t1->code, t2->code, t1->size);
+}
+
+#define Return(...) do { pmsg_error(__VA_ARGS__); goto error; } while (0)
+
+// Returns malloc'd list of *np urboot templates, NULL if nothing matches
+Urboot_template **urboottemplate(const Avrintel *up, const char *mcu, const char *io, const char *blt,
+  int req_feats, int req_ulevel, int showall, int *np) {
+
+  size_t m, i, b, c, req_c, n = -1U;
+  Urboot_template **ret = NULL;
 
   for(m=0; m<UL_MCU_N; m++)
     if(str_eq(mcus[m], mcu))
       break;
-  if(m >= UL_MCU_N) {
-    pmsg_error("mcu id %s not available for urboot templates\\n", mcu);
-    return NULL;
-  }
+  if(m >= UL_MCU_N)
+    Return("mcu id %s not available for urboot templates", mcu);
 
   for(i=0; i<UL_IOTYPE_N; i++)
-    if(str_eq(iotypes[i], iotype))
+    if(str_eq(iotypes[i], io))
       break;
-  if(i >= UL_IOTYPE_N) {
-    pmsg_error("io type %s not available for urboot templates\\n", iotype);
-    return NULL;
-  }
+  if(i >= UL_IOTYPE_N)
+    Return("io type %s not available for urboot templates", io);
 
-  for(c=0; c<UL_CONFIG_N; c++)
-    if(str_eq(configs[c], config))
+  for(b=0; b<UL_BLTYPE_N; b++)
+    if(str_eq(bltypes[b], blt))
       break;
-  if(c >= UL_CONFIG_N) {
-    pmsg_error("configuration %s not available for urboot templates\\n", config);
-    return NULL;
-  }
+  if(b >= UL_BLTYPE_N)
+    Return("bootloader type %s not available for urboot templates", blt);
 
-  Ul_urlist key = { UL_BLN(m, i, c), NULL }, *res;
-  res = bsearch(&key, urbootlist, sizeof urbootlist/sizeof*urbootlist, sizeof *urbootlist, urlistsearch);
-  if(!res) {
-    // If _hw not available, check if _ee_ce_hw is (parts with min bootsection of 512+ bytes don't benefit from small b/l)
-    if(str_ends(config, "_hw") && !str_ends(config, "ce_hw") && c < UL_CONFIG_N-1 && str_ends(configs[c+1], "_ee_ce_hw")) {
-      key.n = UL_BLN(m, i, c+1);
+  if(req_feats < 0 || req_feats >= (int) (sizeof urfeat/sizeof*urfeat))
+    Return("unexpected feature request");
+  req_c = urfeat[req_feats];
+  // Specific feature set chosen? Then only one bootloader needs decoding and requesting
+  int spec = !showall && (req_ulevel == 0 || req_ulevel == 4) ;
+
+  ret = mmt_malloc(sizeof *ret * UL_CONFIG_N);
+  *np = 0;
+
+  for(c = 0; c < UL_CONFIG_N; c++) {
+    if(!spec || c == req_c) {
+      const char *cfg = configs[c];
+
+      Ul_urlist key = { UL_BLN(m, i, b, c), NULL }, *res;
       res = bsearch(&key, urbootlist, sizeof urbootlist/sizeof*urbootlist, sizeof *urbootlist, urlistsearch);
-    }
-    if(!res) {
-      pmsg_error("no urboot template available for (%s, %s, %s) combination\\n", mcu, iotype, config);
-      return NULL;
+      if(!res && spec) {
+        // If _hw not there, check if _ee_hw is (parts with large boot sections don't need small b/l)
+        if((c == U_HW || c == U_CE_HW) && c+1 < UL_CONFIG_N) {
+          key.n = UL_BLN(m, i, b, c+1);
+          res = bsearch(&key, urbootlist, sizeof urbootlist/sizeof*urbootlist, sizeof *urbootlist, urlistsearch);
+          if(res)
+            cfg = configs[c+1];
+        }
+        if(!res)
+          Return("no urboot template for (%s, %s, %s, %s)", mcu, io, blt, cfg);
+      }
+      if(!res)
+        continue;
+
+      uint16_t *ut = ul_urtemplate(res->bl);
+      if(!ut)
+        goto error;
+
+      ret[*np] = mmt_malloc(sizeof **ret);
+      ret[n = (*np)++]->tofree = ut;
+
+      int size = ut[0];         // Bootloader size including 6-byte-table in top flash
+      int usage = ut[1];        // Flash usage, ie, boot section size or multiple of flash pages
+      int update_level = ut[2]; // 0..4: update level the bootloader template was compiled with
+
+      if(size < 32 || size > 2048)
+        Return("unexpected bootloader size of %d", size);
+      if(usage < 32 || usage > 32768)
+        Return("unexpected bootloader usage of %d", usage);
+      if(usage < size)
+        Return("bootloader size %d exceeds usage %d unexpectedly", size, usage);
+      if(update_level < 0 || update_level > 4)
+        Return("unexpected bootloader UPDATE_FL %d", update_level);
+
+      ret[n] = mmt_malloc(sizeof **ret);
+      ret[n]->size = size;
+      ret[n]->usage = usage;
+      ret[n]->update_level = update_level;
+      ret[n]->locs =  ut + 3;
+      ret[n]->code =  ut + 3 + UL_CODELOCS_N;
+      ret[n]->table = ut + 3 + UL_CODELOCS_N + size/2-3;
+
+      int features = 0, flags = ret[n]->table[2] & 0xff;
+      int vecnum = 0x7f & (ret[n]->table[0] >> 8);
+      if(flags & UR_PROTECTME)
+        features |= URFEATURE_PR;
+      if(flags & UR_EEPROM)
+        features |= URFEATURE_EE;
+      if(flags & UR_HAS_CE)
+        features |= URFEATURE_CE;
+      if(!((flags/(UR_VBLMASK & -UR_VBLMASK)) & 1)) // Check flag
+        features |= URFEATURE_HW;
+      if(!((flags/(UR_VBLMASK & -UR_VBLMASK)) & 1) ^ (vecnum == 0))
+        pmsg_warning("unexpected contradictory HW/vector info");
+      if(update_level == 4)
+        features |= URFEATURE_U4;
+
+      ret[n]->features = features;
+      urbootPutVersion(ret[n]->urversion, ret[n]->table);
+
+      if(features & URFEATURE_HW) {
+        strcpy(ret[n]->type, "hardware-supported");
+      } else {
+        char *q = str_vectorname(up, vecnum);
+        snprintf(ret[n]->type, sizeof ret[n]->type, "vector/%s", q);
+        mmt_free(q);
+      }
     }
   }
 
-  return ul_urtemplate(res->bl);
+  if(!*np)
+    Return("no urboot template for (%s, %s, %s, 0x%02x, u%d)", mcu, io, blt, req_feats, req_ulevel);
+
+  if(*np == 1 || spec)
+    return ret;
+
+  // Identify bootloaders matching the req_feats
+  int nmatches = 0;
+  if(req_feats & URFEATURE_HW)  // _pr never on for h/w bootloaders
+    req_feats &= ~URFEATURE_PR;
+  for(int k=0; k < *np; k++)    // Requested update level 1..3 is advisory, can match any 1..4
+    if((req_feats & ret[k]->features) == req_feats && !!req_ulevel <= !!ret[k]->update_level)
+      ret[k]->match_req = 1, nmatches++;
+
+  if(!nmatches)
+    Return("no urboot template matches (%s, %s, %s, 0x%02x, u%d)", mcu, io, blt, req_feats, req_ulevel);
+
+  qsort(ret, *np, sizeof *ret, blcmp);
+
+  // Deduplicate list of bootloaders
+  Urboot_template **unq = mmt_malloc(sizeof *ret * nmatches);
+  int u = 0;
+  for(int k=0; k<nmatches; k++) {
+    unq[u] = ret[k]; ret[k] = NULL;
+    for(; k+1 < nmatches; k++)
+      if(blcmp(unq+u, ret+k+1))
+        break;
+    u++;
+  }
+
+  for(int n = 0; n < *np; n++) {
+    if(ret[n]) {
+      mmt_free(ret[n]->tofree);
+      mmt_free(ret[n]);
+    }
+  }
+  mmt_free(ret);
+
+  *np = u;
+  return unq;
+
+error:
+  if(ret) {
+    for(int n = 0; n < *np; n++) {
+      mmt_free(ret[n]->tofree);
+      mmt_free(ret[n]);
+    }
+    mmt_free(ret);
+  }
+
+  return NULL;
 }
 END
 
 my $len = 2;
 print $ubh "// Code locations (in words) for urboot parametrisation\nenum {\n  ";
-for (2..$#sizelocs) {
+for (3..$#sizelocs) {
   printf $ubh "UL_%s,", uc $sizelocs[$_];
   if($_ == $#sizelocs || ($len += 3+length($sizelocs[$_])) > 72) {
     print $ubh "\n  ";
@@ -684,10 +897,9 @@ print $ubh "UL_CODELOCS_N\n};\n\n";
 print $ubh <<"END";
 #define UL_MCU_N            ${\(0+@mcus)}
 #define UL_IOTYPE_N          ${\(0+@iotypes)}
+#define UL_BLTYPE_N           ${\(0+@bltypes)}
 #define UL_CONFIG_N          ${\(0+@configs)}
-#define UL_BLN(mcu, io, config) (((mcu)*UL_IOTYPE_N + (io))*UL_CONFIG_N + (config))
-
-uint16_t *urboottemplate(const char *mcu, const char *iotype, const char *config);
+#define UL_BLN(mcu, io, blt, cfg) ((((mcu)*UL_IOTYPE_N + (io))*UL_BLTYPE_N + (blt))*UL_CONFIG_N + (cfg))
 
 #endif
 END
@@ -738,7 +950,7 @@ sub mcuorder {
     'a' => 'f',
     'c' => 'c',
     'm' => 'a',
-    'p' => 'd',   
+    'p' => 'd',
     't' => 'b',
     'u' => 'e',
   );
@@ -761,29 +973,30 @@ sub mcuorder {
 # Order number of a bootloader
 #
 sub bln {
-  my ($mcu, $iotype, $config) = @_;
-  return ($mcun{$mcu}*(0+@iotypes) + $iotypen{$iotype})*(0+@configs) + $confign{$config};
+  my ($mcu, $iotype, $bltype, $config) = @_;
+  return (($mcun{$mcu}*(0+@iotypes) + $iotypen{$iotype})*(0+@bltypes) + $bltypen{$bltype})*(0+@configs) + $confign{$config};
 }
 
 ######
 # Number of distinct bootloader that can be derived from this template
 #
+my %blseen;
 sub nderived {
-  my ($mcu, $iotype, $config) = @_;
+  my ($mcu, $iotype, $bltype, $config, $uniquebl) = @_;
 
   die "unknown MCU $mcu" if ! exists $mcu{$mcu};
   my ($ngpio, $nin, $nout, $ninterrupts, $nwdt) = @{$mcu{$mcu}};
   die "unknown iotype $iotype" if ! exists $io{$iotype};
   my $ret = $io{$iotype}*$nwdt;
 
-  $ret *= $ninterrupts if $config !~ /_hw/;
+  $ret *= $ninterrupts if $config !~ /hw/;
 
-  if($config =~ /(lednop|dual)_/) {
+  if($bltype =~ /^(lednop|dual)$/) {
     $ret *= 2*($ngpio + $nout) + 1; # LED polarity, output pin config and no LED specified
     $ngpio--;                   # Approximation: fewer GPIO pins available for next signal
   }
 
-  if($config =~ /dual_/) {
+  if($bltype eq 'dual') {
     $ret *= $ngpio + $nout;     # CS
     $ngpio--;                   # Approximation: fewer GPIO pins available for next signal
   }
@@ -793,5 +1006,12 @@ sub nderived {
     $ret *= $ngpio - 1 + $nin;  # RX
   }
 
+  my $idx="$mcu-$uniquebl";
+  if(exists $blseen{$idx}) {
+    warn "inconsistent nvariants $ret vs $blseen{$idx} for $idx\n" if $ret != $blseen{$idx};
+    return 0;
+  }
+
+  $blseen{$idx} = $ret;
   return $ret;
 }
