@@ -254,14 +254,14 @@ my %io = ( # Number of different bootloaders
   u2x12_uart2 => 4096,
   u2x12_uart3 => 4096,
 # swio00 => 1,
-# swio01 => 1,
-# swio02 => 1,
+# swio01 => 2*1, # swio01 and swio02 share template, double count here
+# swio02 => 2*1,
 # swio03 => 1,
 # swio04 => 1,
 # swio05 => 1,
   swio10 => 256,
-  swio11 => 256,
-  swio12 => 256,
+  swio11 => 2*256, # swio11 and swio12 share template, double count here
+  swio12 => 2*256,
   swio13 => 256,
   swio14 => 256,
   swio15 => 256,
@@ -715,7 +715,36 @@ static int blcmp(const void *v1, const void *v2) {
   return memcmp(t1->code, t2->code, t1->size);
 }
 
-#define Return(...) do { pmsg_error(__VA_ARGS__); goto error; } while (0)
+int urbootexists(const char *mcu, const char *io, const char *blt, int req_feats) {
+  size_t m, i, b, c;
+
+  for(m=0; m<UL_MCU_N; m++)
+    if(str_eq(mcus[m], mcu))
+      break;
+  if(m >= UL_MCU_N)
+    return 0;
+
+  for(i=0; i<UL_IOTYPE_N; i++)
+    if(str_eq(iotypes[i], io))
+      break;
+  if(i >= UL_IOTYPE_N)
+    return 0;
+
+  for(b=0; b<UL_BLTYPE_N; b++)
+    if(str_eq(bltypes[b], blt))
+      break;
+  if(b >= UL_BLTYPE_N)
+    return 0;
+
+  if(req_feats < 0 || req_feats >= (int) (sizeof urfeat/sizeof*urfeat))
+    return 0;
+  c = urfeat[req_feats];
+
+  Ul_urlist key = { UL_BLN(m, i, b, c), NULL };
+  return !!bsearch(&key, urbootlist, sizeof urbootlist/sizeof*urbootlist, sizeof *urbootlist, urlistsearch);
+}
+
+#define Return(...) do { pmsg_error("(urboot) "); msg_error(__VA_ARGS__); goto error; } while (0)
 
 // Returns malloc'd list of *np urboot templates, NULL if nothing matches
 Urboot_template **urboottemplate(const Avrintel *up, const char *mcu, const char *io, const char *blt,
