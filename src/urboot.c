@@ -433,19 +433,28 @@
 
 #if !defined(SPDR) || !defined(SPSR) || !defined(SPCR) || \
     !defined(SPIF) || !defined(MSTR) || !defined(SPE) || \
-    !defined(AtmelCS) || !defined(AtmelPOCI) || !defined(AtmelPICO)
+    !defined(AtmelCS) || !defined(AtmelPOCI) || !defined(AtmelPICO) || !defined(AtmelSCK)
 // Might be as simple as renaming registers... but then the part might not have SPI
 #warning SPI communication not implemented for this MCU, switching off DUAL
 #undef  DUAL
 #define DUAL                  0
+
+#elif UR_PORT_VALUE(AtmelPOCI) != UR_PORT_VALUE(AtmelPICO) || UR_PORT_VALUE(AtmelPOCI) != UR_PORT_VALUE(AtmelSCK)
+#warning POCI, PICO and SCK not on the same port, switching off DUAL
+#undef  DUAL
+#define DUAL                  0
 #endif
 
+#endif // DUAL
+
+#if DUAL
+// POCI, PICO and SCK are on the same port but CS can be on a different port
+#define SPI_ON_ONE_PORT (UR_PORT_VALUE(AtmelPOCI) == UR_PORT_VALUE(AtmelCS))
 #if TEMPLATE
-#define SAME_PORT_SFMCS_CS    0
+#define SAME_PORT_SPI_SFMCS   0
 #else
-#define SAME_PORT_SFMCS_CS (UR_PORT_VALUE(SFMCS) == UR_PORT_VALUE(AtmelCS))
+#define SAME_PORT_SPI_SFMCS (SPI_ON_ONE_PORT && UR_PORT_VALUE(SFMCS) == UR_PORT_VALUE(AtmelCS))
 #endif
-
 #endif // DUAL
 
 
@@ -1432,16 +1441,22 @@ static void dual_boot() {
   * Define relevant SPI pins as outputs - CS must be output for SPI to work in master mode. Pull
   * up CS to deactivate any attached device (eg, RFM module); pull up the chip select CS for the
   * external memory; and pull up POCI, so a stream of 1's is seen without an external SPI flash.
-  * There is a slight code saving when CS is on the same port as SFMCS of the SPI interface. The
-  * code makes the reasonable(?) assumption that the lines for SPI are all on the same port.
+  * There is a slight code saving when CS is on the same port as SFMCS of the SPI interface.
   */
 
-#if SAME_PORT_SFMCS_CS
+#if SAME_PORT_SPI_SFMCS
   UR_PORT(AtmelCS) = UR_BV(SFMCS) | UR_BV(AtmelCS) | UR_BV(AtmelPOCI);
   UR_DDR(AtmelCS)  = UR_BV(SFMCS) | UR_BV(AtmelCS) | UR_BV(AtmelPICO) | UR_BV(AtmelSCK);
-#else
+#elif SPI_ON_ONE_PORT
   UR_PORT(AtmelCS) = UR_BV(AtmelCS) | UR_BV(AtmelPOCI);
   UR_DDR(AtmelCS) = UR_BV(AtmelCS) | UR_BV(AtmelPICO) | UR_BV(AtmelSCK);
+  sfm_release();
+  sfm_setupcs();
+#else
+  UR_PORT(AtmelCS) |= UR_BV(AtmelCS);
+  UR_DDR(AtmelCS) |= UR_BV(AtmelCS);
+  UR_PORT(AtmelPOCI) |= UR_BV(AtmelPOCI);
+  UR_DDR(AtmelPICO) = UR_BV(AtmelPICO) | UR_BV(AtmelSCK);
   sfm_release();
   sfm_setupcs();
 #endif
@@ -1504,9 +1519,16 @@ startingapp:
 #ifndef DUAL_NO_SPI_RESET
   UR_DDR(AtmelCS) = 0;
   UR_PORT(AtmelCS) = 0;
-#if !SAME_PORT_SFMCS_CS
+#if !SPI_ON_ONE_PORT
+  UR_DDR(AtmelPOCI) = 0;
+  UR_PORT(AtmelPOCI) = 0;
+#endif
+#if TEMPLATE
   sfm_resetddr();
   sfm_resetport();
+#elif UR_PORT_VALUE(SFMCS) != UR_PORT_VALUE(AtmelCS) && UR_PORT_VALUE(SFMCS) != UR_PORT_VALUE(AtmelPOCI)
+  UR_DDR(SFMCS)  = 0;
+  UR_PORT(SFMCS) = 0;
 #endif
 #endif // DUAL_NO_SPI_RESET
 }
