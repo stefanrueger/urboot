@@ -203,7 +203,7 @@ for all `F_CPU` and a range of associated baudrates.
 |454|512|u7.7|`wes-hprac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/u7.7/mcus/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+b5/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+b5_ee_ce_hw_stk500.hex)|
 |474|512|o8.3|`--s-h-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex) from the optiboot project|
 |504|512|u8.0|`weUdhprac`|[urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+d5_csb0_dual_ee_ce_hw.hex](https://raw.githubusercontent.com/stefanrueger/urboot.hex/main/boards/urclockusb/atmega328p/watchdog_1_s/autobaud/uart0_rxd0_txd1/led+d5_csb0_dual/urboot_m328p_1s_autobaud_uart0_rxd0_txd1_led+d5_csb0_dual_ee_ce_hw.hex)|
-|512|512|u8.0|`weUdhprac`|[atmega328p_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_ad.hex)|
+|510|512|u8.1|`weUdhprac`|[atmega328p_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_ad.hex)|
 |710|1024|o8.3|`-es-h-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex) from the optiboot project|
 
 - **Size:** Bootloader code size including small table at top end

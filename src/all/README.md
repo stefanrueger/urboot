@@ -62,19 +62,19 @@
 |438|512|u8.0|`weU-jPrac`|[atmega1284p_a.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_a.hex)|
 |438|512|u8.0|`weU-jPrac`|[atmega2560_a.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_a.hex)|
 |474|512|o8.3|`-.s-.-r--`|[optiboot_atmega328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/optiboot_atmega328.hex)|
-|490|512|u8.0|`we-djPr--`|[atmega1284p_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_d.hex)|
-|492|512|u8.0|`we-djPr--`|[atmega1280_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_d.hex)|
-|492|512|u8.0|`we-djPr--`|[atmega2560_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_d.hex)|
-|496|512|u8.0|`weUdhpr-c`|[atmega328p_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_d.hex)|
-|496|512|u8.0|`weUdjPra-`|[attiny167_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny167_ad.hex)|
-|504|512|u8.0|`weUdhprac`|[moteino_cs8_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/moteino_cs8_ad.hex)|
-|504|512|u8.0|`weUdhprac`|[timeduino_cs8_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/timeduino_cs8_ad.hex)|
-|504|512|u8.0|`weUdhprac`|[urclock_cs8_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/urclock_cs8_ad.hex)|
-|506|512|u8.0|`we-djPra-`|[atmega1284p_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_ad.hex)|
-|508|512|u8.0|`we-djPra-`|[atmega1280_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_ad.hex)|
-|508|512|u8.0|`we-djPra-`|[atmega2560_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_ad.hex)|
-|512|512|u8.0|`weUdhprac`|[anarduino_cs5_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/anarduino_cs5_ad.hex)|
-|512|512|u8.0|`weUdhprac`|[atmega328p_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_ad.hex)|
+|490|512|u8.1|`we-djPr--`|[atmega1280_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_d.hex)|
+|490|512|u8.1|`we-djPr--`|[atmega2560_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_d.hex)|
+|494|512|u8.1|`weUdhpr-c`|[atmega328p_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_d.hex)|
+|494|512|u8.1|`weUdjPra-`|[attiny167_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/attiny167_ad.hex)|
+|502|512|u8.1|`weUdhprac`|[moteino_cs8_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/moteino_cs8_ad.hex)|
+|502|512|u8.1|`weUdhprac`|[timeduino_cs8_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/timeduino_cs8_ad.hex)|
+|502|512|u8.1|`weUdhprac`|[urclock_cs8_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/urclock_cs8_ad.hex)|
+|504|512|u8.1|`we-djPra-`|[atmega1284p_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_ad.hex)|
+|506|512|u8.1|`we-djPra-`|[atmega1280_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1280_ad.hex)|
+|506|512|u8.1|`we-djPra-`|[atmega2560_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega2560_ad.hex)|
+|510|512|u8.1|`weUdhprac`|[anarduino_cs5_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/anarduino_cs5_ad.hex)|
+|510|512|u8.1|`weUdhprac`|[atmega328p_ad.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega328p_ad.hex)|
+|512|512|u8.1|`weUdjPr--`|[atmega1284p_d.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/atmega1284p_d.hex)|
 |710|1024|o8.3|`-.s-.-r--`|[bigboot_328.hex](https://raw.githubusercontent.com/stefanrueger/urboot/main/src/all/bigboot_328.hex)|
 
 - **Size:** Bootloader code size including small table at top end
