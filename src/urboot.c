@@ -1443,7 +1443,7 @@ static void dual_boot() {
   * external memory; and pull up POCI, so a stream of 1's is seen without an external SPI flash.
   * There is a slight code saving when CS is on the same port as SFMCS of the SPI interface.
   */
-
+  asm volatile("sfm_boot: " :::);
 #if SAME_PORT_SPI_SFMCS
   UR_PORT(AtmelCS) = UR_BV(SFMCS) | UR_BV(AtmelCS) | UR_BV(AtmelPOCI);
   UR_DDR(AtmelCS)  = UR_BV(SFMCS) | UR_BV(AtmelCS) | UR_BV(AtmelPICO) | UR_BV(AtmelSCK);
@@ -1709,7 +1709,9 @@ int main(void) {
     in_lindatn, out_lindatn, sbR_linsirn, sbxc_linsirn, sbxs_linsirn, \
     store_brrl, ldi_zuartbase, \
     in_udrn, out_udrn, out_ubrr0h, out_ubrrnh, out_ucsrna, out_ucsrnb, out_ucsrnc, sbR_ucsrna, sbxc_ucsrna, sbxs_ucsrna, \
-    std_zbrrh, std_zbtr, std_zlincr, std_zsra, std_zsrb, std_zsrc\n"
+    std_zbrrh, std_zbtr, std_zlincr, std_zsra, std_zsrb, std_zsrc, \
+    eeprom_write, eeprom_read, bitDelay, halfBitDelay, getaddrlength, qexiterr, sfm_boot, spi_transfer, \
+    not_reset_page, rww_enable, skip_erase, ub_spm, writebufferX\n"
   );
 
 #if UPDATE_FL >= 4
@@ -2057,7 +2059,7 @@ int main(void) {
       write_sram(length);
       get_sync();
       if(ch == UR_PROG_PAGE_EE) { asm volatile(
-      "1: "
+      "eeprom_write: "
 #if EESIZE > 256
        "out_eearh_w: "
         out_eearh(r31)
@@ -2066,17 +2068,17 @@ int main(void) {
         out_eearl(r30)          //   EEAR = zaddress;
         "ld  r24, X+\n"         //   EEDR = *bufp++;
        "out_eedr: "
-        out_eedr(r24)            //
+        out_eedr(r24)           //
         "sbi_eecr_x2: "
         "sbi %[eecr], %[eempe]\n" // EECR |= _BV(EEMPE); // EEPROM master write enable
-        "sbi %[eecr], %[eepe]\n"  // EECR |= _BV(EEPE);  // EEPROM write enable
+        "sbi %[eecr], %[eepe]\n" // EECR |= _BV(EEPE);  // EEPROM write enable
         "adiw r30, 1\n"         //   zaddress++;
       "2: "
        "sbxc_eecr: "
         sbxc_eecr(xx, EEPE)     //   while(EECR & _BV(EEPE))
         "rjmp 2b\n"             //     continue;
         "subi %[len], 1\n"
-        "brne 1b\n"             // } while(--length);
+        "brne eeprom_write\n"   // } while(--length);
       : /*
          * No need to tell gcc that length or zaddress is changed; they
          * won't be needed and the compiler doesn't know what they are.
@@ -2114,7 +2116,7 @@ int main(void) {
       uint8_t length = getaddrlength();
       get_sync();
       asm volatile(
-      "1: "
+      "eeprom_read: "
 #if EESIZE > 256
        "out_eearh_r: "
         out_eearh(r31)
@@ -2128,7 +2130,7 @@ int main(void) {
         "rcall putch\n"         //
         "adiw r30, 1\n"         //   zaddress++;
         "subi %[len], 1\n"      // } while(--length);
-        "brne 1b\n"
+        "brne eeprom_read\n"
       : // Don't tell gcc length has changed
       : [len] "d"(length), "z"(zaddress),
         [eecr] "I"(_SFR_IO_ADDR(EECR)), [eere] "I"(EERE)

@@ -9,8 +9,8 @@
 # meta-author Stefan Rueger
 # Published under GNU General Public License, version 3 (GPL-3.0)
 #
-# v 1.2
-# 14.04.2025
+# v 1.22
+# 24.05.2025
 
 use strict;
 use warnings;
@@ -19,7 +19,7 @@ use File::Basename;
 
 my $progname = basename($0);
 
-my $ver = 'v 1.2';
+my $ver = 'v 1.22';
 
 my $Usage = <<"END_USAGE";
 Syntax: $progname
@@ -45,6 +45,11 @@ my @sizelocs = qw(
   ldi_wdto ldi_stk_insync ldi_stk_ok rjmp_application jmp_application
   sbi_ddrtx cbi_tx sbi_tx sbic_rx_start sbic_rx
   ldi_starthhz ldi_starthi cpi_starthi cpi_startlo
+
+  getaddrlength get_sync qexiterr getch putch bitDelay halfBitDelay
+  eeprom_read eeprom_write watchdogConfig pgm_write_page
+  writebufferX ub_spm not_reset_page rww_enable skip_erase
+  sfm_boot spi_transfer
 );
 # zap_mcusr
 # in_eedr out_eearh_r out_eearh_w out_eearl_r out_eearl_w out_eedr sbi_eecr sbi_eecr_x2 sbxc_eecr
@@ -595,7 +600,7 @@ static uint16_t *ul_urtemplate(const uint64_t *bl) {
       hn = 0;
     }
     // Move 1 bit from Huffman bootloader bit string to a single Huffman code variable
-    hc = (hc<<1) | (h64 & 1), hcn++;
+    hc = ((uint64_t) hc << 1) | (h64 & 1), hcn++;
     h64 >>= 1, hn++;
     if(hcn > 27) {
       pmsg_error("unexpected problem decoding bootloader code");
@@ -716,7 +721,7 @@ static int blcmp(const void *v1, const void *v2) {
 }
 
 int urbootexists(const char *mcu, const char *io, const char *blt, int req_feats) {
-  size_t m, i, b, c;
+  int m, i, b, c;
 
   for(m=0; m<UL_MCU_N; m++)
     if(str_eq(mcus[m], mcu))
@@ -744,13 +749,20 @@ int urbootexists(const char *mcu, const char *io, const char *blt, int req_feats
   return !!bsearch(&key, urbootlist, sizeof urbootlist/sizeof*urbootlist, sizeof *urbootlist, urlistsearch);
 }
 
-#define Return(...) do { pmsg_error("(urboot) "); msg_error(__VA_ARGS__); goto error; } while (0)
+#define Return(...) do { \\
+  if(!silent) { \\
+    pmsg_error("(urboot) "); \\
+    msg_error(__VA_ARGS__); \\
+    msg_error("\\n"); \\
+  } \\
+  goto error; \\
+} while (0)
 
 // Returns malloc'd list of *np urboot templates, NULL if nothing matches
 Urboot_template **urboottemplate(const Avrintel *up, const char *mcu, const char *io, const char *blt,
-  int req_feats, int req_ulevel, int showall, int *np) {
+  int req_feats, int req_ulevel, int showall, int *np, int silent) {
 
-  size_t m, i, b, c, req_c, n = -1U;
+  int m, i, b;
   Urboot_template **ret = NULL;
 
   for(m=0; m<UL_MCU_N; m++)
@@ -773,14 +785,14 @@ Urboot_template **urboottemplate(const Avrintel *up, const char *mcu, const char
 
   if(req_feats < 0 || req_feats >= (int) (sizeof urfeat/sizeof*urfeat))
     Return("unexpected feature request");
-  req_c = urfeat[req_feats];
+  int req_c = urfeat[req_feats];
   // Specific feature set chosen? Then only one bootloader needs decoding and requesting
   int spec = !showall && (req_ulevel == 0 || req_ulevel == 4) ;
 
   ret = mmt_malloc(sizeof *ret * UL_CONFIG_N);
   *np = 0;
 
-  for(c = 0; c < UL_CONFIG_N; c++) {
+  for(int c = 0; c < UL_CONFIG_N; c++) {
     if(!spec || c == req_c) {
       const char *cfg = configs[c];
 
@@ -805,7 +817,8 @@ Urboot_template **urboottemplate(const Avrintel *up, const char *mcu, const char
         goto error;
 
       ret[*np] = mmt_malloc(sizeof **ret);
-      ret[n = (*np)++]->tofree = ut;
+      int n = (*np)++;
+      ret[n]->tofree = ut;
 
       int size = ut[0];         // Bootloader size including 6-byte-table in top flash
       int usage = ut[1];        // Flash usage, ie, boot section size or multiple of flash pages
@@ -839,7 +852,8 @@ Urboot_template **urboottemplate(const Avrintel *up, const char *mcu, const char
       if(!((flags/(UR_VBLMASK & -UR_VBLMASK)) & 1)) // Check flag
         features |= URFEATURE_HW;
       if(!((flags/(UR_VBLMASK & -UR_VBLMASK)) & 1) ^ (vecnum == 0))
-        pmsg_warning("unexpected contradictory HW/vector info");
+        if(!silent)
+          pmsg_warning("unexpected contradictory HW/vector info");
       if(update_level == 4)
         features |= URFEATURE_U4;
 
@@ -911,17 +925,21 @@ error:
 END
 
 my $len = 2;
-print $ubh "// Code locations (in words) for urboot parametrisation\nenum {\n  ";
+print $ubh "// Code locations (in words) for urboot parametrisation and tag files\nenum {\n";
 for (3..$#sizelocs) {
-  printf $ubh "UL_%s,", uc $sizelocs[$_];
-  if($_ == $#sizelocs || ($len += 3+length($sizelocs[$_])) > 72) {
-    print $ubh "\n  ";
-    $len = 2;
+  my $eop = $sizelocs[$_] eq 'getaddrlength';
+
+  print $ubh ($_ == 3? "  ": $len > 62 || $eop? ",\n  ": ", ");
+  if($eop) {
+    print $ubh "UL_PARAMETERS_N,\n\n  UL_GETADDRLENGTH = UL_PARAMETERS_N";
+    $len = 22;
   } else {
-    print $ubh " ";
+    printf $ubh "UL_%s", uc $sizelocs[$_];
   }
+  $len = 0 if $len > 62;
+  $len += 3+length($sizelocs[$_]);
 }
-print $ubh "UL_CODELOCS_N\n};\n\n";
+print $ubh ",\n  UL_CODELOCS_N\n};\n\n";
 
 print $ubh <<"END";
 #define UL_MCU_N            ${\(0+@mcus)}

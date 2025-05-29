@@ -52,6 +52,11 @@ print("$progname version $myvers\n"), exit(0) if $version;
   ldi_wdto ldi_stk_insync ldi_stk_ok rjmp_application jmp_application
   sbi_ddrtx cbi_tx sbi_tx sbic_rx_start sbic_rx
   ldi_starthhz ldi_starthi cpi_starthi cpi_startlo
+
+  getaddrlength get_sync qexiterr getch putch bitDelay halfBitDelay
+  eeprom_read eeprom_write watchdogConfig pgm_write_page
+  writebufferX ub_spm not_reset_page rww_enable skip_erase
+  sfm_boot spi_transfer
 );
 # zap_mcusr
 # in_eedr out_eearh_r out_eearh_w out_eearl_r out_eearl_w out_eedr sbi_eecr sbi_eecr_x2 sbxc_eecr
