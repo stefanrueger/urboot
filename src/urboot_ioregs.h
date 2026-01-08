@@ -9,8 +9,8 @@
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v 1.43
- * 13.03.2025
+ * v 1.45
+ * 07.01.2026
  *
  */
 
@@ -3366,7 +3366,7 @@
 #define AtmelSCK      AtmelPB5
 
 
-#elif defined(__AVR_ATmega64C1__) || defined(__AVR_ATmega64M1__)
+#elif defined(__AVR_ATmega64C1__) || defined(__AVR_ATmegaS64M1__) || defined(__AVR_ATmega64M1__)
 
 #define RAMSTART        0x0100
 #define RAMSIZE         0x1000
@@ -3858,7 +3858,7 @@
 #define EESIZE              -1
 
 
-#elif defined(__AVR_ATmega128__) || defined(__AVR_ATmega128A__)
+#elif defined(__AVR_ATmega128__) || defined(__AVR_ATmegaS128__) || defined(__AVR_ATmega128A__)
 
 #define RAMSTART        0x0100
 #define RAMSIZE         0x1000
@@ -5826,13 +5826,6 @@
 #define RAMSTART        0x0060
 #define RAMSIZE         0x0080
 #define EESIZE          0x0080
-
-
-#elif defined(__AVR_AT89S51__) || defined(__AVR_AT89S52__)
-
-#define RAMSTART            -1
-#define RAMSIZE             -1
-#define EESIZE               0
 
 
 #elif defined(__AVR_AT90PWM1__) || defined(__AVR_AT90PWM2__) || defined(__AVR_AT90PWM2B__) || \
@@ -8182,6 +8175,13 @@
 
 #define RAMSTART        0x1000
 #define RAMSIZE         0x1000
+#define EESIZE               0
+
+
+#elif defined(__AVR_AT89S51__) || defined(__AVR_AT89S52__)
+
+#define RAMSTART            -1
+#define RAMSIZE             -1
 #define EESIZE               0
 
 

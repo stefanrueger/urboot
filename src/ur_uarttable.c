@@ -9,8 +9,8 @@
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v 1.43
- * 13.03.2025
+ * v 1.45
+ * 07.01.2026
  *
  */
 
@@ -116,6 +116,7 @@ Uart_info Uart_table[] = {
   { "ATmega64A", 2, UART_CLASSIC_2x12, 0 },
   { "ATmega64HVE", 1, UART_LIN, 0 },
   { "ATmega64C1", 1, UART_LIN, 0 },
+  { "ATmegaS64M1", 1, UART_LIN, 0 },
   { "ATmega64M1", 1, UART_LIN, 0 },
   { "ATmega64HVE2", 1, UART_LIN, 0 },
   { "ATmega64RFR2", 2, UART_CLASSIC_2x12, 0 },
@@ -127,6 +128,7 @@ Uart_info Uart_table[] = {
   { "ATmega103", 1, UART_CLASSIC_1x08, 0 },
   { "ATmega103comp", 0, UART_UNKNOWN, 0 },
   { "ATmega128", 2, UART_CLASSIC_2x12, 0 },
+  { "ATmegaS128", 2, UART_CLASSIC_2x12, 0 },
   { "ATmega128A", 2, UART_CLASSIC_2x12, 0 },
   { "ATmega128RFA1", 2, UART_CLASSIC_2x12, 0 },
   { "ATmega128RFR2", 2, UART_CLASSIC_2x12, 0 },
@@ -208,8 +210,6 @@ Uart_info Uart_table[] = {
   { "AT43USB355", 0, UART_UNKNOWN, 0 },
   { "AT76C711", 0, UART_UNKNOWN, 0 },
   { "AT86RF401", 0, UART_NONE, 0 },
-  { "AT89S51", 0, UART_UNKNOWN, 0 },
-  { "AT89S52", 0, UART_UNKNOWN, 0 },
   { "AT90PWM1", 0, UART_NONE, 0 },
   { "AT90PWM2", 1, UART_CLASSIC_2x12, 0 },
   { "AT90PWM2B", 1, UART_CLASSIC_2x12, 0 },
@@ -379,24 +379,30 @@ Uart_info Uart_table[] = {
   { "AVR16DD14", 2, UART_AVR8X, 0 },
   { "AVR16DU14", 2, UART_AVR8X, 0 },
   { "AVR16EB14", 1, UART_AVR8X, 0 },
+  { "AVR16LA14", 1, UART_AVR8X, 0 },
   { "AVR16DD20", 2, UART_AVR8X, 0 },
   { "AVR16DU20", 2, UART_AVR8X, 0 },
   { "AVR16EB20", 1, UART_AVR8X, 0 },
+  { "AVR16LA20", 1, UART_AVR8X, 0 },
   { "AVR16DD28", 2, UART_AVR8X, 0 },
   { "AVR16DU28", 2, UART_AVR8X, 0 },
   { "AVR16EA28", 3, UART_AVR8X, 0 },
   { "AVR16EB28", 1, UART_AVR8X, 0 },
+  { "AVR16LA28", 1, UART_AVR8X, 0 },
   { "AVR16DD32", 2, UART_AVR8X, 0 },
   { "AVR16DU32", 2, UART_AVR8X, 0 },
   { "AVR16EA32", 3, UART_AVR8X, 0 },
   { "AVR16EB32", 1, UART_AVR8X, 0 },
+  { "AVR16LA32", 1, UART_AVR8X, 0 },
   { "AVR16EA48", 3, UART_AVR8X, 0 },
   { "AVR32DD14", 2, UART_AVR8X, 0 },
   { "AVR32DU14", 2, UART_AVR8X, 0 },
   { "AVR32EB14", 1, UART_AVR8X, 0 },
+  { "AVR32LA14", 1, UART_AVR8X, 0 },
   { "AVR32DD20", 2, UART_AVR8X, 0 },
   { "AVR32DU20", 2, UART_AVR8X, 0 },
   { "AVR32EB20", 1, UART_AVR8X, 0 },
+  { "AVR32LA20", 1, UART_AVR8X, 0 },
   { "AVR32SD20", 2, UART_AVR8X, 0 },
   { "AVR32DA28", 3, UART_AVR8X, 0 },
   { "AVR32DA28S", 3, UART_AVR8X, 0 },
@@ -405,6 +411,7 @@ Uart_info Uart_table[] = {
   { "AVR32DU28", 2, UART_AVR8X, 0 },
   { "AVR32EA28", 3, UART_AVR8X, 0 },
   { "AVR32EB28", 1, UART_AVR8X, 0 },
+  { "AVR32LA28", 1, UART_AVR8X, 0 },
   { "AVR32SD28", 3, UART_AVR8X, 0 },
   { "AVR32DA32", 3, UART_AVR8X, 0 },
   { "AVR32DA32S", 3, UART_AVR8X, 0 },
@@ -413,6 +420,7 @@ Uart_info Uart_table[] = {
   { "AVR32DU32", 2, UART_AVR8X, 0 },
   { "AVR32EA32", 3, UART_AVR8X, 0 },
   { "AVR32EB32", 1, UART_AVR8X, 0 },
+  { "AVR32LA32", 1, UART_AVR8X, 0 },
   { "AVR32SD32", 3, UART_AVR8X, 0 },
   { "AVR32DA48", 5, UART_AVR8X, 0 },
   { "AVR32DA48S", 5, UART_AVR8X, 0 },
@@ -451,4 +459,6 @@ Uart_info Uart_table[] = {
   { "AVR128DA64", 6, UART_AVR8X, 0 },
   { "AVR128DA64S", 6, UART_AVR8X, 0 },
   { "AVR128DB64", 6, UART_AVR8X, 0 },
+  { "AT89S51", 0, UART_UNKNOWN, 0 },
+  { "AT89S52", 0, UART_UNKNOWN, 0 },
 };
