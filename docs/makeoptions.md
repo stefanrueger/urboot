@@ -1,6 +1,6 @@
 # Make options
 
-This repository should work out of the box on a typical PC under Linux. Just `cd src` and type
+This repository should work out of the box on a typical PC under Linux. Just `cd src` and execute
 ```
   make atmega328p_autobaud_ur
 ```
@@ -16,9 +16,11 @@ modules:
   Getopt::Long
   Number::Range
 ```
-They can normally be installed using `cpan install <module>`. On the first run, `cpan` may need
-to be configured. Follow the recommendations there; my personal choice for the way cpan installs
-perl modules is via `sudo`, but it should not matter what is chosen.
+Some Linux distributions install perl modules via packages, eg, `sudo apt install
+libnumber-range-perl` for `Number::Range` on a debian system. Other than this, missing modules can
+also be installed using `cpan install <module>`. On the first run, `cpan` may need to be
+configured. Follow the recommendations there; my personal choice for the way cpan installs perl
+modules is via `sudo`, but it should not matter what is chosen.
 
 Urboot bootloaders have many configuration options for avr-gcc. With the notable exception of
 `-DSTART` and `-DRJMPWP` (which are set by the `avr-gcc` wrapper `urboot-gcc`, see below) almost
