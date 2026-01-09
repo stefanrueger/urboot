@@ -8,8 +8,8 @@
 # published under GNU General Public License, version 3 (GPL-3.0)
 # author Stefan Rueger
 #
-# v 1.2
-# 14.04.2025
+# v 1.3
+# 08.01.2026
 #
 
 use strict;
@@ -110,6 +110,9 @@ my %parts = map { $_ => 1 } qw(attiny4 attiny5 attiny9 attiny10 attiny20 attiny4
   avr16du20 avr16du28 avr16du32 avr32du14 avr32du20 avr32du28 avr32du32 avr8ea28 avr8ea32 avr16ea28
   avr16ea32 avr16ea48 avr32ea28 avr32ea32 avr32ea48 avr64ea28 avr64ea32 avr64ea48 avr16eb14
   avr16eb20 avr16eb28 avr16eb32 avr32eb14 avr32eb20 avr32eb28 avr32eb32
+  avr16la14 avr16la20 avr16la28 avr16la32 avr32da28s avr32da32s avr32da48s avr32la14 avr32la20
+  avr32la28 avr32la32 avr32sd20 avr32sd28 avr32sd32 avr64da28s avr64da32s avr64da48s avr64da64s
+  atmegas128 atmegas64m1
 
   t4 t5 t9 t10 t20 t40 t102 t104 t11 t12 t15 t22 t13 t13a t25 t45 t85 t2313 t2313a t4313 t24 t24a
   t44 t44a t84 t84a t441 t841 t26 t261 t261a t461 t461a t861 t861a t48 t88 t28 t43u t828 t828r t87
@@ -134,7 +137,9 @@ my %parts = map { $_ => 1 } qw(attiny4 attiny5 attiny9 attiny10 attiny20 attiny4
   32db28 32db32 32db48 64db28 64db32 64db48 64db64 128db28 128db32 128db48 128db64 16dd14 16dd20
   16dd28 16dd32 32dd14 32dd20 32dd28 32dd32 64dd14 64dd20 64dd28 64dd32 64du28 64du32 16du14 16du20
   16du28 16du32 32du14 32du20 32du28 32du32 8ea28 8ea32 16ea28 16ea32 16ea48 32ea28 32ea32 32ea48
-  64ea28 64ea32 64ea48 16eb14 16eb20 16eb28 16eb32 32eb14 32eb20 32eb28 32eb32);
+  64ea28 64ea32 64ea48 16eb14 16eb20 16eb28 16eb32 32eb14 32eb20 32eb28 32eb32
+  16la14 16la20 16la28 16la32 32da28s 32da32s 32da48s 32la14 32la20 32la28 32la32 32sd20 32sd28
+  32sd32 64da28s 64da32s 64da48s 64da64s ms128 ms64m1);
 
 # Default to a part with large flash memory
 $part = 'at'.$part if !exists $parts{$part} && $part =~ /^a[0-9]/;
