@@ -2,7 +2,8 @@
 
 # Published under GNU General Public License, version 3 (GPL-3.0)
 # Author Stefan Rueger <stefan.rueger@urclocks.com>
-# 08.02.2025
+# v 1.1
+# 08.01.2026
 
 rm -rf bootloader-stubs
 mkdir bootloader-stubs
@@ -37,3 +38,13 @@ sem -j+0 "mktemplates $mcu"
 
 done
 sem --wait
+
+# Ensure aliased parts get their own bootloader stub
+declare -A aliased=([m128]=ms128 [m64m1]=ms64m1)
+
+cd bootloader-stubs/
+for i in "${!aliased[@]}"; do
+  for f in urboot_"$i"_*.h; do
+    ln -f $f ${f/urboot_${i}_/urboot_${aliased[$i]}_}
+  done
+done

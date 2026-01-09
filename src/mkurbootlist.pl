@@ -9,8 +9,8 @@
 # meta-author Stefan Rueger
 # Published under GNU General Public License, version 3 (GPL-3.0)
 #
-# v 1.22
-# 24.05.2025
+# v 1.3
+# 08.01.2026
 
 use strict;
 use warnings;
@@ -19,7 +19,7 @@ use File::Basename;
 
 my $progname = basename($0);
 
-my $ver = 'v 1.22';
+my $ver = 'v 1.3';
 
 my $Usage = <<"END_USAGE";
 Syntax: $progname
@@ -165,9 +165,11 @@ my %mcu = ( # #gpio, #in, #out, #isr, #wdt
   m64c1 => [27, 0, 0, 31, 6],
   m64hve2 => [10, 0, 0, 25, 6],
   m64m1 => [27, 0, 0, 31, 6],
+  ms64m1 => [27, 0, 0, 31, 6],
   m64rfr2 => [54, 0, 0, 77, 6],
   m640 => [54, 0, 0, 57, 6],
   m128 => [40, 8, 0, 35, 4],
+  ms128 => [40, 8, 0, 35, 4],
   m128a => [40, 8, 0, 35, 4],
   m128rfa1 => [54, 0, 0, 72, 6],
   m128rfr2 => [54, 0, 0, 77, 6],
@@ -991,17 +993,18 @@ sub commentnames {
 sub mcuorder {
   my $part = shift;
 
-  return "z" if length($part) < 2;
-
-  my %orderletter = (
-    'a' => 'f',
-    'c' => 'c',
-    'm' => 'a',
-    'p' => 'd',
-    't' => 'b',
-    'u' => 'e',
+  my %order = (
+    m   => 'a',                  # ATmega
+    t   => 'b',                  # ATtiny
+    c   => 'c',                  # AT90can
+    pwm => 'd',                  # AT90pwm
+    usb => 'e',                  # AT90usb
+    a   => 'f',                  # ATA
+    ms  => 'g',                  # ATmegaS
   );
-  my $ret = $orderletter{substr($part, 0, 1)};
+
+  my $ret = $order{$part =~ s/[0-9].*$//r};
+  $ret = 'y' if !$ret;
   my $n = $part; $n =~ s/^[a-z]*//; $n =~ s/^([0-9]*).*$/$1/;
   my $m = $n;
   # Order the ATmegas/ATtinys in reverse family group order
@@ -1055,7 +1058,9 @@ sub nderived {
 
   my $idx="$mcu-$uniquebl";
   if(exists $blseen{$idx}) {
-    warn "inconsistent nvariants $ret vs $blseen{$idx} for $idx\n" if $ret != $blseen{$idx};
+    if($ret != $blseen{$idx}) {
+      warn "inconsistent nvariants $ret vs $blseen{$idx} for $idx\n";
+    }
     return 0;
   }
 
