@@ -9,8 +9,8 @@
 # meta-author Stefan Rueger
 # Published under GNU General Public License, version 3 (GPL-3.0)
 #
-# v 1.3
-# 08.01.2026
+# v 1.31
+# 02.04.2026
 
 use strict;
 use warnings;
@@ -19,7 +19,7 @@ use File::Basename;
 
 my $progname = basename($0);
 
-my $ver = 'v 1.3';
+my $ver = 'v 1.31';
 
 my $Usage = <<"END_USAGE";
 Syntax: $progname
@@ -631,8 +631,8 @@ static int urlistsearch(const void *p1, const void *p2) {
   return ((Ul_urlist *) p1)->n - ((Ul_urlist *) p2)->n;
 }
 
-// Put version string into a buffer of max 16 characters incl nul; must be u8.0
-static void urbootPutVersion(char *buf, uint16_t *vertable) {
+// Put version string into a buffer of max 16 characters incl nul; must be u8.0+
+static void urbootPutVersion8(char *buf, uint16_t *vertable) {
   uint16_t ver = vertable[2], rjmpwp = vertable[1];
 
   uint8_t hi = ver>>8, type = ver & 0xff, flags;
@@ -860,7 +860,7 @@ Urboot_template **urboottemplate(const Avrintel *up, const char *mcu, const char
         features |= URFEATURE_U4;
 
       ret[n]->features = features;
-      urbootPutVersion(ret[n]->urversion, ret[n]->table);
+      urbootPutVersion8(ret[n]->urversion, ret[n]->table);
 
       if(features & URFEATURE_HW) {
         strcpy(ret[n]->type, "hardware-supported");
