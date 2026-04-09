@@ -9,8 +9,8 @@
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v 1.45
- * 07.01.2026
+ * v 1.46
+ * 09.04.2026
  *
  */
 
@@ -298,7 +298,7 @@ Uart_info Uart_table[] = {
   { "ATxmega64B3", 1, UART_XMEGA, 0 },
   { "ATxmega64C3", 3, UART_XMEGA, 0 },
   { "ATxmega64D3", 3, UART_XMEGA, 0 },
-  { "ATxmega64A4", 0, UART_XMEGA, 0 },
+  { "ATxmega64A4", 5, UART_XMEGA, 0 },
   { "ATxmega64A4U", 5, UART_XMEGA, 0 },
   { "ATxmega64D4", 2, UART_XMEGA, 0 },
   { "ATxmega128A1", 8, UART_XMEGA, 1 },
@@ -310,15 +310,15 @@ Uart_info Uart_table[] = {
   { "ATxmega128B3", 1, UART_XMEGA, 1 },
   { "ATxmega128C3", 3, UART_XMEGA, 1 },
   { "ATxmega128D3", 3, UART_XMEGA, 1 },
-  { "ATxmega128A4", 0, UART_XMEGA, 1 },
+  { "ATxmega128A4", 5, UART_XMEGA, 0 },
   { "ATxmega128A4U", 5, UART_XMEGA, 1 },
   { "ATxmega128D4", 2, UART_XMEGA, 1 },
-  { "ATxmega192A1", 0, UART_XMEGA, 1 },
+  { "ATxmega192A1", 8, UART_XMEGA, 1 },
   { "ATxmega192A3", 7, UART_XMEGA, 1 },
   { "ATxmega192A3U", 7, UART_XMEGA, 1 },
   { "ATxmega192C3", 3, UART_XMEGA, 1 },
   { "ATxmega192D3", 3, UART_XMEGA, 1 },
-  { "ATxmega256A1", 0, UART_XMEGA, 1 },
+  { "ATxmega256A1", 8, UART_XMEGA, 1 },
   { "ATxmega256A3", 7, UART_XMEGA, 1 },
   { "ATxmega256A3B", 6, UART_XMEGA, 1 },
   { "ATxmega256A3BU", 6, UART_XMEGA, 1 },

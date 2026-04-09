@@ -9,8 +9,8 @@
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v 1.45
- * 07.01.2026
+ * v 1.46
+ * 09.04.2026
  *
  */
 
