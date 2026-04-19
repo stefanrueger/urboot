@@ -470,7 +470,7 @@ unless an option can only be issued to `avr-gcc` this help file will leave the l
 
    This function and other utility functions are available in
    `urboot-utils.cpp` in the directory
-   [`urboot-utils`](https://github.com/stefanrueger/urboot/blob/main/urboot-utils)
+   [`urboot-utils`](../urboot-utils)
 
 ## Frills
 
@@ -750,18 +750,18 @@ Options:
 
 Example:
 ```
-$ hexls -sort -md *.hex
+$ hexls -sort -md=https://github.com/stefanrueger/urboot/tree/main/src/all *.hex
 ```
 
 |Size|Usage|Version|Features|Hex file|
 |:-:|:-:|:-:|:-:|:--|
-|256|256|u8.0|`w---jPr--`|[atmega328p_min.hex](atmega328p_7875khz_swio.hex/atmega328p_min.hex)|
-|256|256|u8.0|`w---jPra-`|[atmega328p_amin.hex](atmega328p_7875khz_swio.hex/atmega328p_amin.hex)|
-|366|384|u8.0|`weU-jPr--`|[atmega328p_8000khz_swio.hex](atmega328p_7875khz_swio.hex/atmega328p_8000khz_swio.hex)|
-|384|384|u8.0|`weU-jPr-c`|[atmega328p_led9_50Hz_fp9.hex](atmega328p_7875khz_swio.hex/atmega328p_led9_50Hz_fp9.hex)|
-|384|384|u8.0|`weU-jPrac`|[atmega328p_a.hex](atmega328p_7875khz_swio.hex/atmega328p_a.hex)|
-|406|512|u8.0|`weU-hprac`|[atmega328p_h.hex](atmega328p_7875khz_swio.hex/atmega328p_h.hex)|
-|512|512|u8.0|`weUdhprac`|[atmega328p_ad.hex](atmega328p_7875khz_swio.hex/atmega328p_ad.hex)|
+|256|256|u8.0|`w---jPr--`|[atmega328p_min.hex](https://github.com/stefanrueger/urboot/tree/main/src/all/atmega328p_min.hex)|
+|256|256|u8.0|`w---jPra-`|[atmega328p_amin.hex](https://github.com/stefanrueger/urboot/tree/main/src/all/atmega328p_amin.hex)|
+|366|384|u8.0|`weU-jPr--`|[atmega328p_8000khz_swio.hex](https://github.com/stefanrueger/urboot/tree/main/src/all/atmega328p_8000khz_swio.hex)|
+|384|384|u8.0|`weU-jPr-c`|[atmega328p_led9_50Hz_fp9.hex](https://github.com/stefanrueger/urboot/tree/main/src/all/atmega328p_led9_50Hz_fp9.hex)|
+|384|384|u8.0|`weU-jPrac`|[atmega328p_a.hex](https://github.com/stefanrueger/urboot/tree/main/src/all/atmega328p_a.hex)|
+|406|512|u8.0|`weU-hprac`|[atmega328p_h.hex](https://github.com/stefanrueger/urboot/tree/main/src/all/atmega328p_h.hex)|
+|512|512|u8.0|`weUdhprac`|[atmega328p_ad.hex](https://github.com/stefanrueger/urboot/tree/main/src/all/atmega328p_ad.hex)|
 
 - **Size:** Bootloader code size including small table at top end
 - **Usage:** How many bytes of flash are needed, ie, HW boot section or a multiple of the page size
