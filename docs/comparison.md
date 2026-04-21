@@ -1,7 +1,7 @@
 # Comparison table
 
 The table below lists a sample of the range of 184 parts for which
-[urboot](https://github.com/stefanrueger/urboot/blob/main/README.md) compiles. It shows their
+[urboot](../README.md) compiles. It shows their
 features alongside vanilla optiboot and its larger bigboot variant for EEPROM access. The
 non-autobaud examples are mostly for a 16 MHz MCU and 115,200 baud serial communication speed,
 except for the ATtiny167 (8 MHz LINUART) and one ATmega328P example (8 MHz SWIO).

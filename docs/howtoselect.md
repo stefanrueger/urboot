@@ -29,7 +29,7 @@ there is. However, consider carefully what you need:
    detection whilst the MCU uses slightly more power during flash write of the first page that
    contains the reset vector.<p> Either way, when installing bootloaders take care to program the
    right fuses (see *Usage* in
-   [readme](https://github.com/stefanrueger/urboot/blob/main/README.md)). There are three types of
+   [readme](../README.md)). There are three types of
    vector bootloaders that the urboot project offers:
     + `j` versions cost minimal to no extra space in the bootloader and need applications to be
       patched during upload. `avrdude -c urclock` does that auto-magically.
@@ -75,11 +75,10 @@ there is. However, consider carefully what you need:
    re-purpose the LED line unless they accept it being toggled as output during external reset.
  - **Template bootloaders.** Pre-compiled bootloaders labelled `_lednop` or `_template` contain
    nops as placeholders so that just before flashing them, [another program can replace the nops
-   with code](https://github.com/stefanrueger/urboot/blob/main/docs/makeoptions.md#template_sfm) to
-   pluck the right LED line and/or CS line needed for dual boot. They normally occupy the same
-   space as bootloaders that are compiled for a specific LED and/or CS line, but can be slightly
-   bigger than those with known LED/CS lines, particularly when these are known to sit on the same
-   port.
+   with code](makeoptions.md#template_sfm) to pluck the right LED line and/or CS line needed for
+   dual boot. They normally occupy the same space as bootloaders that are compiled for a specific
+   LED and/or CS line, but can be slightly bigger than those with known LED/CS lines, particularly
+   when these are known to sit on the same port.
  - **Frills.** These are features that are not necessary for the working of the bootloader, for
    example that the application is started sooner after upload, or that frame errors in the serial
    communication get the bootloader to exit quickly. It is OK not to have these frills, particlarly
