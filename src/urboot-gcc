@@ -105,26 +105,26 @@ use constant {
   UR_VBLMASK => 0x0C,       # Mask for vector boot loader
   UR_PGMWRITEPAGE   => 128, # pgm_write_page() subroutine that can be called from application at FLASHEND+1-4
 # _features bits of table below
-  F_ERRATA_SKIP_JMP_CALL => 0x00001,
-  F_ERRATA_SKIP          => 0x00002,
-  F_ENHANCED             => 0x00004,
-  F_3_BYTE_PC            => 0x00008,
-  F_HAVE_MOVW            => 0x00010,
-  F_HAVE_MUL             => 0x00020,
-  F_HAVE_LPMX            => 0x00040,
-  F_HAVE_ELPMX           => 0x00080,
-  F_HAVE_ELPM            => 0x00100,
-  F_HAVE_JMP_CALL        => 0x00200,
-  F_ISA_RMW              => 0x00400,
-  F_HAVE_EIJMP_EICALL    => 0x00800,
-  F_HAVE_RAMPD           => 0x01000,
-  F_HAVE_RAMPX           => 0x02000,
-  F_HAVE_RAMPY           => 0x04000,
-  F_HAVE_RAMPZ           => 0x08000,
-  F_MEGA                 => 0x10000,
-  F_TINY                 => 0x20000,
-  F_XMEGA                => 0x40000,
-  F_ASM_ONLY             => 0x80000,
+  F_ERRATA_SKIP_JMP_CALL => 0x00001, # ATmega103 must not skip jmp/call instructions because of hardware error; skip instructions are SBRS, SBRC, SBIS, SBIC and CPSE
+  F_ERRATA_SKIP          => 0x00002, # AT90S8515, ATmega103 must not skip 32-bit instructions because of hardware error; skip instructions as above
+  F_ENHANCED             => 0x00004, # "Enhanced" architectures (avr4, avr5, avr51, avr6 but also xmegas, modern parts), ie, almost evrything
+  F_3_BYTE_PC            => 0x00008, # PC is 3 bytes wide, ie, flash is more than 128 kB
+  F_HAVE_MOVW            => 0x00010, # Has the movw instruction
+  F_HAVE_MUL             => 0x00020, # Has the mul instruction
+  F_HAVE_LPMX            => 0x00040, # Has lpm Rn,Z and lpm Rn,Z+ instructions
+  F_HAVE_ELPMX           => 0x00080, # Has elpm Rn,Z and elpm Rn,Z+ instructions (ie, also 128 kB or more flash)
+  F_HAVE_ELPM            => 0x00100, # Has the elpm instruction (ie, 128 kB or more flash)
+  F_HAVE_JMP_CALL        => 0x00200, # Has jmp and call instructions (ie, 8 kB or more flash)
+  F_ISA_RMW              => 0x00400, # Has Read-Modify-Write instructions (XCH, LAC, LAS and LAT)
+  F_HAVE_EIJMP_EICALL    => 0x00800, # Part has eijmp and eicall opcodes as flash is more than 128 kB
+  F_HAVE_RAMPD           => 0x01000, # Has the RAMPD register (9 parts with RAM extension x64a1, x128a1, x128a1revd, x192a1, x256a1, x64a1u, x128a1u, x128a4, x128a4u)
+  F_HAVE_RAMPX           => 0x02000, # Has the RAMPX register (9 parts with RAM extension x64a1, x128a1, x128a1revd, x192a1, x256a1, x64a1u, x128a1u, x128a4, x128a4u)
+  F_HAVE_RAMPY           => 0x04000, # Has the RAMPY register (9 parts with RAM extension x64a1, x128a1, x128a1revd, x192a1, x256a1, x64a1u, x128a1u, x128a4, x128a4u)
+  F_HAVE_RAMPZ           => 0x08000, # Has the RAMPZ register (more than 64 kB flash)
+  F_MEGA                 => 0x10000, # Mega architecture (apparently, modern parts are subsumed as well?)
+  F_TINY		 => 0x20000, # Tiny architecture (TPI programming, only 8 parts)
+  F_XMEGA                => 0x40000, # Xmega architecture (apparently, modern parts are subsumed as well?)
+  F_ASM_ONLY             => 0x80000, # AT90S1200, ATtiny11, ATtiny12, ATtiny15, ATtiny28
 # Indices in table below
   _sig0 => 0, _sig1 => 1, _sig2 => 2,
   _archnum => 3, _features => 4,
