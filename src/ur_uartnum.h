@@ -12,8 +12,8 @@
  * Known shortcut: pretends ATmega161 has no UBRR1H register rather than inventing a way to
  * encode and set the upper 4 bit of the register UBRRHI that is shared with UBRR0H.
  *
- * v 1.51
- * 20.04.2026
+ * v 1.57
+ * 20.11.2026
  *
  */
 
@@ -5778,7 +5778,7 @@
 #warning UARTNUM value not recognised
 #endif
 
-#elif defined(__AVR_ATmega103__)
+#elif defined(__AVR_ATmega103__) || defined(__AVR_ATmega103comp__)
 
 #if !defined UARTNUM || (defined(UARTNUM) && UARTNUM == 0)
 #define UDRn       _ureg8(0x2c)

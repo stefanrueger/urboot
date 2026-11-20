@@ -9,8 +9,8 @@
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v 1.51
- * 20.04.2026
+ * v 1.57
+ * 20.11.2026
  *
  */
 
@@ -559,8 +559,7 @@
 
 #elif defined(__AVR_AT90S8515comp__) || defined(__AVR_AT90S8535comp__) || \
   defined(__AVR_AT89S51__) || defined(__AVR_AT89S52__) || defined(__AVR_AT76C711__) || \
-  defined(__AVR_AT43USB355__) || defined(__AVR_ATmega161comp__) || \
-  defined(__AVR_ATmega103comp__) || defined(__AVR_ATA6289__)
+  defined(__AVR_AT43USB355__) || defined(__AVR_ATmega161comp__) || defined(__AVR_ATA6289__)
 
 #define UR_UARTTYPE UR_UARTTYPE_UNKNOWN
 #define UR_NUMUARTS           0
@@ -6816,7 +6815,7 @@
 #define C_UCSZn0              1
 #define C_UCPOLn              0
 
-#elif defined(__AVR_ATmega103__)
+#elif defined(__AVR_ATmega103__) || defined(__AVR_ATmega103comp__)
 
 #define UR_UARTTYPE UR_UARTTYPE_CLASSIC
 #define UR_NUMUARTS           1

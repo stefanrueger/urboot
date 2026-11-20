@@ -10,8 +10,8 @@
 # Published under GNU General Public License, version 3 (GPL-3.0)
 # Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
 #
-# v 1.51
-# 20.04.2026
+# v 1.57
+# 20.11.2026
 #
 
 ####
@@ -583,7 +583,7 @@ uarttype[lgt8f88p]=1
 uarttype[lgt8f168p]=1
 uarttype[lgt8f328p]=1
 uarttype[atmega103]=1
-uarttype[atmega103comp]=-1
+uarttype[atmega103comp]=1
 uarttype[atmega8hva]=0
 uarttype[atmega16hva]=0
 uarttype[atmega16hva2]=0
@@ -1015,7 +1015,7 @@ mcuio[lgt8f88p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
 mcuio[lgt8f168p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
 mcuio[lgt8f328p]="UARTNUM=0 RX=AtmelPD0 TX=AtmelPD1"
 mcuio[atmega103]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
-mcuio[atmega103comp]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
+mcuio[atmega103comp]="UARTNUM=0 RX=AtmelPE0 TX=AtmelPE1"
 mcuio[atmega8hva]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[atmega16hva]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
 mcuio[atmega16hva2]="SWIO=1 RX=AtmelPB0 TX=AtmelPB1"
@@ -2311,7 +2311,7 @@ flashsize[lgt8f88p]=8192
 flashsize[lgt8f168p]=16384
 flashsize[lgt8f328p]=32768
 flashsize[atmega103]=131072
-flashsize[atmega103comp]=-1
+flashsize[atmega103comp]=131072
 flashsize[atmega8hva]=8192
 flashsize[atmega16hva]=16384
 flashsize[atmega16hva2]=16384

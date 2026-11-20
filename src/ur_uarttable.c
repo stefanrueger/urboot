@@ -9,8 +9,8 @@
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v 1.51
- * 20.04.2026
+ * v 1.57
+ * 20.11.2026
  *
  */
 
@@ -238,7 +238,7 @@ Uart_info Uart_table[] = {
   { "LGT8F168P", 1, UART_CLASSIC_2x12, 0 },
   { "LGT8F328P", 1, UART_CLASSIC_2x12, 0 },
   { "ATmega103", 1, UART_CLASSIC_1x08, 0 },
-  { "ATmega103comp", 0, UART_UNKNOWN, 0 },
+  { "ATmega103comp", 1, UART_CLASSIC_2x12, 0 },
   { "ATmega8HVA", 0, UART_NONE, 0 },
   { "ATmega16HVA", 0, UART_NONE, 0 },
   { "ATmega16HVA2", 0, UART_NONE, 0 },

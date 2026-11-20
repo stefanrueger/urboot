@@ -9,8 +9,8 @@
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v 1.51
- * 20.04.2026
+ * v 1.57
+ * 20.11.2026
  *
  */
 
@@ -702,7 +702,7 @@
 
 
 #elif defined(__AVR_AT90S8515comp__) || defined(__AVR_AT90S8535comp__) || \
-  defined(__AVR_ATmega161comp__) || defined(__AVR_ATmega103comp__)
+  defined(__AVR_ATmega161comp__)
 
 #define RAMSTART            -1
 #define RAMSIZE             -1
@@ -6609,7 +6609,7 @@
 #define AtmelSCK      AtmelPB5
 
 
-#elif defined(__AVR_ATmega103__)
+#elif defined(__AVR_ATmega103__) || defined(__AVR_ATmega103comp__)
 
 #define RAMSTART        0x0060
 #define RAMSIZE         0x0fa0

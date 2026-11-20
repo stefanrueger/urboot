@@ -8,8 +8,8 @@
  * Published under GNU General Public License, version 3 (GPL-3.0)
  * Meta-author Stefan Rueger <stefan.rueger@urclocks.com>
  *
- * v 1.51
- * 20.04.2026
+ * v 1.57
+ * 20.11.2026
  *
  */
 
@@ -650,6 +650,7 @@
 #define vbu_lgt8f168p        26
 #define vbu_lgt8f328p        26
 #define vbu_atmega103        24
+#define vbu_atmega103comp    24
 #define vbu_atmega8hva       21
 #define vbu_atmega16hva      21
 #define vbu_atmega16hva2     22
