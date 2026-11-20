@@ -473,7 +473,7 @@ typedef struct {
 
 // Huffman code table for compression of bootloader templates
 static Ul_huffcode hcodes[${\(0+keys %huffenc)}] = {
-#define ulhc(n, code) (((n)<<27) | (code))
+#define ulhc(n, code) (((unsigned) (n) << 27) | (code))
 END
 
 sub huffcode {
